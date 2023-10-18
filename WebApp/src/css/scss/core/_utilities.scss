@@ -1,0 +1,47 @@
+.html, body {
+    font-family: $font;
+    font-weight: $font-weight-regular;
+    font-size: 1rem;
+    color: black;
+}
+
+.wrapper{
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+}
+
+main{
+    flex: 1;
+}
+
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 0.7rem;
+
+    @include md {
+        max-width: $breakpoint-md-max-width;
+    }
+    @include lg {
+        max-width: $breakpoint-lg-max-width;
+    }
+    @include xl {
+        max-width: $breakpoint-xl-max-width;
+    }
+    @include xxl {
+        max-width: $breakpoint-xxl-max-width;
+    }
+}
+
+a {
+    text-decoration: none;
+    transition: all 300ms;
+    color:$color-grey;
+
+    &:hover{
+        text-decoration:underline;
+    }
+}
+
+

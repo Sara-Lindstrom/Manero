@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600;700&display=swap');
+
+$font: 'Mulish';
+
+$font-weight-light : 300;
+$font-weight-regular : 400;
+$font-weight-semibold : 600;
+$font-weight-bold : 700;
+
+//Colors
+$color-white: #FFFFFF;
+$color-orange: #FFBE00;
+$color-green: #00824B;
+$color-red: #F4303C;
+$color-blue: #DBE3F5;
+$color-grey: #626262;
+$color-dark: #111111;
+
+// BREAKPOINTS
+$breakpoint-md: 768px;
+$breakpoint-md-max-width: 720px;
+$breakpoint-lg: 992px;
+$breakpoint-lg-max-width: 960px;
+$breakpoint-xl: 1140px;
+$breakpoint-xl-max-width: 1140px;
+$breakpoint-xxl: 1400px;
+$breakpoint-xxl-max-width: 1320px;
