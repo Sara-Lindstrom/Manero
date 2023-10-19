@@ -1,9 +1,11 @@
 import React from 'react';
-import './css/Style.min.css';
+import './Style.css';
+
 
 function App() {
   return (
     <>
+  
     </>
   );
 }
