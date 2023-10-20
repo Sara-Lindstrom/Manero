@@ -1,0 +1,91 @@
+.paymentMethod {
+    margin-top: 60px;
+
+    .container {
+        .cards {
+            
+            .titles {
+                display: flex;
+                justify-content: space-between;
+                text-align: center;
+                align-items: center;
+                margin-bottom: 20px;
+
+                h1 {
+                    font-size: 16px;
+                    font-weight: 400;
+                }
+
+                .newCard {
+                    display: flex;
+                    text-align: center;
+                    align-items: center;
+
+                    h2 {
+                        font-size: 14px;
+                        margin: 0 15px 0 0;
+                        font-weight: 300;
+                    }
+
+                    a {
+                        color: black;           
+                    }
+                }
+            }
+
+            .cards-slider {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                overflow: hidden;
+                width: 279px;
+
+                .card {
+                    width: 100%;
+                    display: none;
+                    padding: 20px;
+                    margin-right: 10px;
+                    border-radius: 15px;
+                    width: 279px;
+                    height: 170px;
+                    background-color: rgb(155, 76, 155);
+                
+                    &.active {
+                        display: block;
+                    }
+
+                    .bank {
+                        font-weight: 500;
+                        font-size: 25px;
+                        color: white;
+                        margin-bottom: 25px;
+                    }
+                    .card-number {
+                        color: white;
+                        font-size: 16px;
+                        font-weight: 400;
+                        margin-bottom: 25px;
+                    }
+                    .card-owner, .card-date {
+                        color: white;
+                        font-size: 10px;
+                        display: inline-block;
+                    }
+            
+                    .card-date {
+                        margin-left: 80px;
+                    }
+                }           
+            }
+        }
+        .buttons {         
+            text-align: center;
+
+            .card-button {
+                border: none;
+                text-decoration: none;
+                background-color: white;
+            }
+        }     
+    }
+}
