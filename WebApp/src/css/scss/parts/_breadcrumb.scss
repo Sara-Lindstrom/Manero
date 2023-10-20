@@ -1,0 +1,16 @@
+.breadcrumb {
+    .container {
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+        
+        .breadcrumb-list {
+            margin: 0;
+            padding: 0;
+            li {
+                list-style: none;
+                font-size: 18px;
+            }
+        }
+    }
+}
