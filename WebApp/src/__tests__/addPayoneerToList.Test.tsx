@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import PayoneersSection from '../sections/PayoneerSection';
 
 test('Have all the Payoneers in the menu', () => {
-    // Render the PayoneersSection component
+    // Render the PayoneersSection componentt
     render(<PayoneersSection />);
   
     // Define a list of Payoneer options you expect to find in the menu
