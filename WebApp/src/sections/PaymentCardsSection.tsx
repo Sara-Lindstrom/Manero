@@ -5,11 +5,14 @@ const PaymentCardsSection: React.FC = () => {
   const [currentCard, setCurrentCard] = useState<number>(0);
   const cards = useRef<NodeListOf<HTMLElement> | null>(null);
 
+
+  // UseEffect runs when the 'currentCard' changes and initializes the 'cards' reference.
   useEffect(() => {
     cards.current = document.querySelectorAll('.card');
     showCard(currentCard);
   }, [currentCard]);
 
+  // Adds the 'active' class to the card at 'cardIndex' and removes it from others.
   function showCard(cardIndex: number): void {
     if (cards.current) {
       cards.current.forEach((card) => card.classList.remove('active'));
@@ -17,10 +20,12 @@ const PaymentCardsSection: React.FC = () => {
     }
   }
 
+  // Increments 'currentCard' to show the next card in the list.
   function nextCard(): void {
     setCurrentCard((prevCard) => (prevCard + 1) % (cards.current?.length || 0));
   }
   
+  // Decrements 'currentCard' to show the previous card in the list, looping back to the end if at the beginning.
   function prevCard(): void {
     setCurrentCard((prevCard) => (prevCard - 1 + (cards.current?.length || 0)) % (cards.current?.length || 0));
   }

@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 
 const PayoneersSection: React.FC = () => {
+  // Store the selected payoneers
   const [selectedPayoneers, setSelectedPayoneers] = useState<string[]>([]);
+  // List of available payoneers
   const payoneers = ["Apple Pay", "Pay Pal", "Swish", "Klarna"];
 
+  // Function to handle the selection of a payoneer
   const handlePayoneerSelection = (payoneer: string) => {
+    // Check if the selectedPayoneers array does not already include the chosen payoneer.
     if (!selectedPayoneers.includes(payoneer)) {
+      // and adding the new payoneer to it. Then, set this new array as the new value of selectedPayoneers.
       setSelectedPayoneers([...selectedPayoneers, payoneer]);
     }
   };

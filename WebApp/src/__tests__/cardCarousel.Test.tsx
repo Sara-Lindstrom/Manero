@@ -9,25 +9,24 @@ test('nextCard function updates currentCard correctly', () => {
       < PaymentCardsSection/>
     </MemoryRouter>
   );
-  
-    // Hitta det element som är aktivt innan nextCard-klick
+    // Find the element that is active before nextCard-klick
     const activeCard = container.querySelector('.card.active');
   
-    // Hitta nästa-knappen
+    // Find the next-button 
     const nextButton = container.querySelector('.fa-arrow-right');
   
-    // Kontrollera om elementen är tillgängliga innan interaktion
+    //  Check if the elements are available before interaction
     if (activeCard && nextButton) {
-      // Simulera klick på nästa-knappen
+      // Simulate click on the next button
       fireEvent.click(nextButton);
   
-      // Hitta det element som är aktivt efter nextCard-klick
+      //  Find the element that is active after nextCard click
       const updatedActiveCard = container.querySelector('.card.active');
   
-      // Verifiera att det aktiva kortet har ändrats
+      //  Verify that the active card has been changed
       expect(updatedActiveCard).not.toBe(activeCard);
     } else {
-      // Lägg till hantering om elementen inte hittas
+      // Add management if elements are not found
       throw new Error('Active card or next button not found');
     }
   });
