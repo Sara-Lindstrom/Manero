@@ -1,11 +1,13 @@
 import React from 'react';
 import './css/Style.min.css';
+import AddCard from './sections/AddCard';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <>
-    </>
+    <div>
+    <AddCard/>
+    </div>
   );
-}
+};
 
 export default App;

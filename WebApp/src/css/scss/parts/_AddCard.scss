@@ -1,0 +1,65 @@
+.AddCard {
+ display: flex;
+    .container {
+        display: flex;
+        flex-direction: column;
+        .headerCard {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            a {
+
+            }
+            h2 {
+                font-size: 18px;
+                font-family: $font;
+            }
+        }
+        .cardImg {
+        
+        }
+        }
+        .cardform {
+            font-family: $font;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-weight: $font-weight-semibold;
+            font-size: 12px;
+
+            input{ 
+                border: none;
+                font-weight: 400;
+            }
+            .infoField {
+                margin: 10px;
+                font-style: $font;
+            }
+            .dark-btn {
+                border-radius: 25px;
+                width: 350px;
+                margin: 10px;
+                border: none;
+                font-style: $font;
+            }
+            .cvvrow {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                label {
+                    display: inline-block;
+                    margin: 20px 10px 20px 10px;
+
+                }
+                input {
+                    border: none;
+                    max-width: 10%;
+                }
+
+                a {
+                    margin-left: 25px;
+                }
+            }
+        }
+    }
