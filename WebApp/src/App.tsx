@@ -1,5 +1,5 @@
 import React from 'react';
-import './Style.min.css';
+import './css/Style.min.css';
 
 
 function App() {
