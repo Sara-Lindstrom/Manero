@@ -1,4 +1,3 @@
-import React from 'react'
 import SignUpFormSection from '../sections/SignUpFormSection'
 import BreadcrumbSection from '../sections/BreadcrumbSection'
 import { NavLink } from 'react-router-dom'
