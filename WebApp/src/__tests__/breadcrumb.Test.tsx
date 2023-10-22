@@ -2,14 +2,15 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
 
-test('Visa aktuell sida i breadcrumb', () => {
-  const currentPage = 'Payment Method'; // Ange den aktuella sidan
+test('Show specific page in breadcrumb', () => {
+  const currentPage = 'Payment Method'; // Specify the page
 
+  // Render the page in breadcrumb section
   render(<BreadcrumbSection currentPage={currentPage} />);
 
-  // Hitta texten för den aktuella sidan i breadcrumb
+  // Find the specific page by text
   const breadcrumbText = screen.getByText(currentPage);
 
-  // Verifiera att breadcrumb visar den aktuella sidan korrekt
+  // Verify that the specific page is showing 
   expect(breadcrumbText).toBeTruthy();
 });
