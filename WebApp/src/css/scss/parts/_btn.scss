@@ -55,3 +55,14 @@
         color: black;
     }
 }
+
+.invisible-btn{
+    padding: 0;
+    margin: 0;
+    border: none;
+    background-color: transparent;
+
+    &:focus-visible{
+        outline: none;
+    }
+}
