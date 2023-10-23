@@ -2,6 +2,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import './css/Style.min.css';
 import SignUpView from './views/SignUpView';
 import PaymentMethodView from './views/PaymentMethodView';
+import OnboardingView from './views/OnboardingView';
 
 
 
@@ -10,6 +11,7 @@ function App() {
 
     <BrowserRouter>
         <Routes>
+            <Route path='/welcome' element={<OnboardingView />} />
             <Route path='/signup' element={<SignUpView />} />
             <Route path='/paymentMethodView' element={<PaymentMethodView />} />
         </Routes>
