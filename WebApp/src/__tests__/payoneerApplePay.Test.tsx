@@ -7,13 +7,13 @@ test (('Can add Apple Pay from menu to list'), () => {
     render(<PayoneersSection />);
     const payoneerToAdd = 'Apple Pay';
 
-    // Hitta alla element som innehåller texten "Apple Pay"
+    // Find all elements that contain the text "Apple Pay"
     const allPayPalElements = screen.getAllByText(payoneerToAdd);
 
-    // Välj det specifika elementet från listan
+    // Select the specific element from the list"
     const addedPayoneer = allPayPalElements.find((element) => element.textContent === payoneerToAdd);
 
-    // Verifiera att Payoneer har lagts till i listan
+    // Verify that Payoneer has been added to the list
     expect(addedPayoneer).toBeTruthy();
 
 });
