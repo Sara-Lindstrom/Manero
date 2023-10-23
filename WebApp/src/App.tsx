@@ -10,7 +10,7 @@ function App() {
 
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<PaymentMethodView />} />
+        <Route path='/paymentMethodView' element={<PaymentMethodView />} />
       </Routes>
        
     </BrowserRouter>
