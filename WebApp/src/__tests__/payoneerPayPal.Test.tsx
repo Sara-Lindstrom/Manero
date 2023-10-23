@@ -7,13 +7,13 @@ test('Can add Pay Pal from the menu to the list', () => {
     render(<PayoneersSection />);
     const payoneerToAdd = 'Pay Pal';
   
-    // Hitta alla element som innehåller texten "Pay Pal"
+    // Find all elements that contain the text "Pay Pal"
     const allPayPalElements = screen.getAllByText(payoneerToAdd);
   
-    // Välj det specifika elementet från listan
+    // Select the specific element from the list
     const addedPayoneer = allPayPalElements.find((element) => element.textContent === payoneerToAdd);
   
-    // Verifiera att Payoneer har lagts till i listan
+    // Verify that Payoneer has been added to the list
     expect(addedPayoneer).toBeTruthy();
   });
   
