@@ -39,7 +39,8 @@ const PaymentCardsSection: React.FC = () => {
                     <div className="titles">
                     <h1>Cards</h1>
                     <div className="newCard">
-                        {/* add component navlink */}
+                        <h2>Add a new card</h2>
+                        <NavLink to="/addANewCard" data-testid="addNewCardLink" ><i className="fa-regular fa-plus"></i></NavLink> 
                     </div>
                 </div>
                 <div className="cards-slider">
