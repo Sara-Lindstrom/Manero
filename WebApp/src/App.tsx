@@ -4,14 +4,17 @@ import SignUpView from './views/SignUpView';
 import PaymentMethodView from './views/PaymentMethodView';
 
 
+
 function App() {
   return (
+
     <BrowserRouter>
-      <Routes>
-        <Route path='/signup' element={<SignUpView/>}/>
-        <Route path='/paymentmethod' element={<PaymentMethodView/>}/>
-      </Routes>
+        <Routes>
+            <Route path='/signup' element={<SignUpView />} />
+            <Route path='/paymentMethodView' element={<PaymentMethodView />} />
+        </Routes>
     </BrowserRouter>
+
   );
 }
 
