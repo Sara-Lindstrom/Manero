@@ -1,12 +1,12 @@
 import React from 'react';
 import './css/Style.min.css';
-import AddCard from './sections/AddCard';
+import AddCardView from './views/AddCardView';
 
 const App: React.FC = () => {
   return (
-    <div>
-    <AddCard/>
-    </div>
+    <>
+    <AddCardView />
+    </>
   );
 };
 
