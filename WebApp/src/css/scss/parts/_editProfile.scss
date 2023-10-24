@@ -1,21 +1,15 @@
-.editProfileSection {
+.editprofile{
 
-    .container {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        
-        .vl {
+    .heading{
+        .vertical-line {
             width: 50%;
             border-right: 2px solid $color-dark;
             height: 30px;
             margin-top: 30px;
             margin-bottom: 30px;
           }
-
-        
-        .profilePictureSection {
+    
+          .profilePictureSection {
 
             position: relative;
                 width: 200px;
@@ -62,66 +56,11 @@
             }
             
         }
-
-
-        .fieldSection{
-
-            .editProfileForm{
-                display: flex;
-            flex-direction: column;           
-            margin-top: 60px;
-            gap: 30px;
-
-            @media (min-width: 768px) {
-
-                gap: 50px;              
-            }
-           
-            .text-fields{
-                position: relative;
-                width: 100%;
-
-                .text-field{
-                    label{
-                        background-color: $color-white;
-                        position: absolute;
-                        top: -10px;
-                        left: 30px;                   
-                        text-align: center;
-                        color: $color-grey;
-                        padding-left: 6px;
-                        padding-right: 6px;
-                    }
-    
-                    input{
-                       border-radius: 25px;
-                       border: 1px solid $color-blue;
-                       height: 55px;
-                       width: 100%;
-                       padding-left: 30px;
-    
-                        &:focus{
-                            outline: none;
-                         }
-                    }
-
-                    p{
-                        color: $color-red;
-                        padding-left: 20px;
-                    }
-                }
-
-            }
-
-            .dark-btn{
-                border-radius: 25px;
-                height: 50px;
-                margin-bottom: 150px;
-            }
-            }
-            
-        }
-
-        
     }
 }
+
+
+
+
+
+

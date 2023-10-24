@@ -1,0 +1,46 @@
+.payoneerSection {
+    .container {
+
+        .drop-down-list {            
+            list-style: none;
+            margin-top: 20px;
+            padding: 0;
+            
+            .selected-item {
+                font-size: 16px;
+                margin-bottom: 15px;
+                border-bottom: 1px solid lightgray;
+                padding-bottom: 15px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                .fa-check {
+                    color: green;
+                    margin-left: 10px;
+                }
+                .editBtn {
+                    border: none;
+                    background-color: white;
+                }
+            }
+        }
+
+        .dropdown {
+
+            .btn {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                text-align: left;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                &.dropdown-toggle::after {
+                    content: none;
+                }
+            }
+        }
+    }
+}

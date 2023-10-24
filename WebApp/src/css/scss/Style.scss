@@ -1,8 +1,15 @@
 // CORE
 @import "./core/variables";
-@import "./core/_mixins.scss";
+@import "./core/mixins";
 @import "./core/_utilities.scss";
 
 //PARTS
 @import "./parts/_btn.scss";
-@import './parts/_EditProfile.scss';
+@import "./parts/_breadcrumb.scss";
+@import "./parts/_form";
+@import "./parts/payoneerSection";
+@import "./parts/paymentCardsSection";
+
+//VIEWS
+@import "./view/_signUpView";
+@import './parts/_editProfile.scss';
