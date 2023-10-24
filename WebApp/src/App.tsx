@@ -11,6 +11,7 @@ const App: React.FC = () => {
         <Routes>
             <Route path='/signup' element={<SignUpView />} />
             <Route path='/paymentMethodView' element={<PaymentMethodView />} />
+            <Route path='/AddCard' element={<AddCardView />} />
         </Routes>
     </BrowserRouter>
 
