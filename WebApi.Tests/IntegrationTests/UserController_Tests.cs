@@ -8,17 +8,13 @@ using WebApi;
 
 namespace WebApi.Tests.IntegrationTests;
 
-[Collection("IntegrationTestCollection")]
-public class UserController_Tests : IClassFixture<WebApplicationFactory<Program>>
+public class UserController_Tests 
 {
     private readonly HttpClient _client;
-    private readonly WebApplicationFactory<Program> _factory;
 
     public UserController_Tests(WebApplicationFactory<Program> factory)
 	{
-        _factory = factory;
         _client = factory.CreateClient();
-
 
         //_client = new HttpClient
         //{
