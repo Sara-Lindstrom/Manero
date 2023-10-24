@@ -2,8 +2,8 @@ import React from 'react'
 
 interface IBreadcrumbProps {
   currentPage: string
-  showBackButton?: boolean; // En flagga för att visa eller dölja knappen
-  onNavigateBack?: () => void; // En funktion som anropas när användaren klickar på knappen för att gå tillbaka
+  showBackButton?: boolean; // visa eller dölj knappen funktion
+  onNavigateBack?: () => void; // funktion som anropas när användaren klickar på knappen för att  gå tillbaka
 }
 
 const BreadcrumbSection: React.FC<IBreadcrumbProps> = ( {currentPage, showBackButton, onNavigateBack } ) => {
