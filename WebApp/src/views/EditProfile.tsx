@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import * as EditProfileValidation from '../helpers/EditProfileValidation';
+import * as FormValidation from '../helpers/FormValidation';
+import BreadcrumbSection from '../sections/BreadcrumbSection';
 
 interface User {
   id: number;
@@ -36,10 +37,10 @@ const EditProfile: React.FC<EditProfileType> = ({user}) => {
 
   //validates form when user clicks submit and sends inputs to hook for DB 
   const ValidateOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    let validName = EditProfileValidation.ValidateText(name).isValid;
-    let validEmail = EditProfileValidation.ValidateEmail(email).isValid;
-    let validPhoneNumber = EditProfileValidation.ValidatePhoneNumber(phoneNumber).isValid;
-    let validLocation =  EditProfileValidation.ValidateText(location).isValid;
+    let validName = FormValidation.ValidateName(name).isValid;
+    let validEmail = FormValidation.ValidateEmail(email).isValid;
+    let validPhoneNumber = FormValidation.ValidatePhoneNumber(phoneNumber).isValid;
+    let validLocation =  FormValidation.ValidateName(location).isValid;
     
 
     // if everything is valid, save to DB
@@ -79,14 +80,17 @@ const EditProfile: React.FC<EditProfileType> = ({user}) => {
   }
 
   return (
-    
-    <div className='editProfileSection'>
-      <div className='container'>
-        <div className="vl"></div>
+
+    <>
+    <BreadcrumbSection currentPage='Edit Profile' />
+
+    <div className='container editprofile'>
+      <div className='heading'>
+        <div className="vertical-line"></div>
         <div className='profilePictureSection'>
           <img src={fileSelected} alt='' />
           <div className='icon'>
-            <label className="upload-area">
+          <label className="upload-area">
               <input type="file" onChange={(e) => convertFile(e.target.files)}/>
               <span className="upload-button">
                 <i className="fa-light fa-camera"></i>
@@ -94,62 +98,104 @@ const EditProfile: React.FC<EditProfileType> = ({user}) => {
             </label>
           </div>
         </div>
-
-        <div className='fieldSection'>
-          <form className='editProfileForm' onSubmit={ValidateOnSubmit} noValidate>
-              <div className='text-fields'>
-                <div className='text-field'>
-                  <label> NAME </label>
-                    <input className='input' id='EditName' value={name}
-                      onChange={(event) => {
-                        setName(event.target.value);
-                        const validationResult = EditProfileValidation.ValidateText(event.target.value);
-                        setNameError(validationResult.error);
-
-                    }}/> 
-                    <p className='input-error'>{nameError}</p>            
-                </div>
-                <div className='text-field'>
-                  <label> Email </label>
-                    <input className='input' id='EditEmail' value={email}
-                      onChange={(event) => {
-                        setEmail(event.target.value);
-                        const validationResult = EditProfileValidation.ValidateEmail(event.target.value);
-                        setEmailError(validationResult.error);
-
-                    }}/> 
-                    <p className='input-error'>{emailError}</p>            
-                </div>
-                <div className='text-field'>
-                  <label> Phone Number </label>
-                    <input className='input' id='EditPhone' value={phoneNumber}
-                      onChange={(event) => {
-                        setPhoneNumber(event.target.value);
-                        const validationResult = EditProfileValidation.ValidatePhoneNumber(event.target.value);
-                        setPhoneNumberError(validationResult.error);
-
-                    }}/> 
-                    <p className='input-error'>{phoneNumberError}</p>            
-                </div>
-                <div className='text-field'>
-                  <label> Location </label>
-                    <input className='input' id='EditLocation' value={location}
-                      onChange={(event) => {
-                        setLocation(event.target.value);
-                        const validationResult = EditProfileValidation.ValidateText(event.target.value);
-                        setLocationError(validationResult.error);
-
-                    }}/> 
-                    <p className='input-error'>{locationError}</p>            
-                </div>
-                
-              </div>
-                
-              <button className='dark-btn' type='submit' /*onClick={handleSaveClick}*/>SAVE CHANGES</button>
-            </form>
-        </div>
       </div>
-    </div>
+
+    <form onSubmit={ValidateOnSubmit} noValidate>
+      <div className='input-container'>
+          <p className='input-label'>NAME</p>
+
+          <input className='input' id='Editname' value={name}
+            onChange={(event) => {
+                setName(event.target.value);
+                const validationResult = FormValidation.ValidateName(event.target.value);
+                setNameError(validationResult.error);
+            }}/>
+          {/* if input valid show tick else show ex */}
+          {nameError === "" ?
+            <div className='input-validation-icon'>
+              <i className="fa-solid fa-check"></i>
+            </div>
+            :
+            <div className='input-validation-icon'>
+              <i className="fa-regular fa-x"></i>
+            </div>
+          }
+
+      </div>
+      <p className='input-error'>{nameError}</p>
+
+      <div className='input-container'>
+          <p className='input-label'>EMAIL</p>
+          <input className='input' id='Editemail' value={email}
+            onChange={(event) => {
+              setEmail(event.target.value);
+                const validationResult = FormValidation.ValidateEmail(event.target.value);
+                setEmailError(validationResult.error);
+            }}/>
+            {/* if input valid show tick else show ex */}
+          {emailError === "" ?
+            <div className='input-validation-icon'>
+              <i className="fa-solid fa-check"></i>
+            </div>
+            :
+            <div className='input-validation-icon'>
+              <i className="fa-regular fa-x"></i>
+            </div>
+          }
+      </div>
+      <p className='input-error'>{emailError}</p>
+
+      <div className='input-container'>
+          <p className='input-label'>Phone Number</p>
+          <input className='input' id='Editphonenumber'  value={phoneNumber}               
+            onChange={(event) => {
+                setPhoneNumber(event.target.value);
+                const validationResult = FormValidation.ValidatePassword(event.target.value);
+                setPhoneNumberError(validationResult.error);
+            }}/>
+            {/* button for display of password text */}
+            {phoneNumberError === "" ?
+            <div className='input-validation-icon'>
+              <i className="fa-solid fa-check"></i>
+            </div>
+            :
+            <div className='input-validation-icon'>
+              <i className="fa-regular fa-x"></i>
+            </div>
+          }
+      </div>
+      <p className='input-error'>{phoneNumberError}</p>
+
+      <div className='input-container'>
+          <p className='input-label'>Location</p>
+
+          <input className='input' id='Editname' value={location}
+            onChange={(event) => {
+                setLocation(event.target.value);
+                const validationResult = FormValidation.ValidateName(event.target.value);
+                setLocationError(validationResult.error);
+            }}/>
+          {/* if input valid show tick else show ex */}
+          {locationError=== "" ?
+            <div className='input-validation-icon'>
+              <i className="fa-solid fa-check"></i>
+            </div>
+            :
+            <div className='input-validation-icon'>
+              <i className="fa-regular fa-x"></i>
+            </div>
+          }
+
+      </div>
+      <p className='input-error'>{locationError}</p>
+
+      <button className='btn dark-btn form-btn' type='submit'>SAVE CHANGES</button>
+    </form>
+</div>
+    </>
+  
+
+
     
   )
 }
