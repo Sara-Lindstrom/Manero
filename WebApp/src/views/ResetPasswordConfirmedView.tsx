@@ -2,7 +2,7 @@ import React from 'react'
 import ResetPasswordConfirmedSection from '../sections/ResetPasswordConfirmedSection'
 
 
-const LoginView: React.FC = () => {
+const ResetPasswordConfirmedView: React.FC = () => {
   return (
     <>
         
@@ -11,4 +11,4 @@ const LoginView: React.FC = () => {
   )
 }
 
-export default LoginView
+export default ResetPasswordConfirmedView
