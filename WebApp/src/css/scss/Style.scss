@@ -3,12 +3,19 @@
 @import "./core/mixins";
 @import "./core/_utilities.scss";
 
+
 //PARTS
 @import "./parts/_btn.scss";
 @import "./parts/_breadcrumb.scss";
+
+@import "./parts/resetPasswordConfirmedSection.scss";
+@import "./parts/forgotPasswordSection";
 @import "./parts/_form";
 @import "./parts/payoneerSection";
 @import "./parts/paymentCardsSection";
+@import "./parts/changePasswordSection.scss";
+@import "./parts/AddCard";
 
 //VIEWS
 @import "./view/_signUpView";
+

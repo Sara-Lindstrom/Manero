@@ -15,7 +15,7 @@ const SignUpView = () => {
       <SignUpFormSection/>
 
       <div className='container my-4 text-center'>
-        <NavLink to="/signin">Already Have An Account? Sign In.</NavLink>
+        <NavLink className="link" to="/signin">Already Have An Account? Sign In.</NavLink>
       </div>
 
       <div className='container d-flex justify-content-center'>

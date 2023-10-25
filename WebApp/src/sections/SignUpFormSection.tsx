@@ -1,56 +1,60 @@
 import React, { useState } from 'react'
 import * as FormValidation from '../helpers/FormValidation'
+import { handleSignupSubmit, FormData } from '../helpers/FormHandlers'
 
-const SignUpFormSection = () => {
+const SignUpFormSection: React.FC = () => {
 
-  //useSTate for visibility of password input
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const [passwordConfirmVisible, setPasswordConfirmVisible] = useState(false);
+    //useSTate for visibility of password input
+    const [passwordVisible, setPasswordVisible] = useState(false);
+    const [passwordConfirmVisible, setPasswordConfirmVisible] = useState(false);
 
-  //UseStates for error messages in frontend validation
-  const [nameError, setNameError] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState(''); 
-  const [confirmPasswordError, setConfirmPasswordError] = useState(''); 
+    //UseStates for error messages in frontend validation
+    const [nameError, setNameError] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
-  //useStates for setting input values both for validation and populate new User
-  const [name, setName] = useState ('');
-  const [email, setEmail] = useState ('');
-  const [password, setPassword] = useState ('');
-  const [confirmPassword, setConfirmPassword] = useState ('');
+    //useStates for setting input values both for validation and populate new User
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
-  //validates form when user clicks submit and sends inputs to hook for DB 
-  const ValidateOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    let validName = FormValidation.ValidateName(name).isValid;
-    let validEmail = FormValidation.ValidateEmail(email).isValid;
-    let validpassword =  FormValidation.ValidatePassword(password).isValid;
-    let validConfirmPassword = FormValidation.ValidateConfirmPassword(password,confirmPassword).isValid;
-    
-    // if everything is valid, save to DB
-    if(validName === true && validEmail === true && validpassword === true && validConfirmPassword === true){
+    //validates form when user clicks submit and sends inputs to hook for DB 
+    const ValidateOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
-      //const formdata : modelName = {
-        //   name: name,
-        //   email: email,
-        //   password: password
-      //}
+        try {
+            const validName = FormValidation.ValidateName(name).isValid;
+            const validEmail = FormValidation.ValidateEmail(email).isValid;
+            const validPassword = FormValidation.ValidatePassword(password).isValid;
+            const validConfirmPassword = FormValidation.ValidateConfirmPassword(password, confirmPassword).isValid;
 
-      // handleSignupSubmit(formData)
+            // If everything is valid, save to DB
+            if (validName && validEmail && validPassword && validConfirmPassword) {
+                const formData: FormData = {
+                    name,
+                    email,
+                    password
+                };
 
-    }
-    // stos from submitting
-    else{
-      e.preventDefault()
-    }
-  }
-  
-  return (
-    <div className='container'>
-      <form onSubmit={ValidateOnSubmit} noValidate>
-        <div className='input-container'>
-            <p className='input-label'>NAME</p>
+                await handleSignupSubmit(e, formData,
+                    () => { console.log('Signup successful') },
+                    () => { console.log('Signup failed') }
+                );
+            }
+        } catch (error) {
+            console.error("An error occurred during the signup process:", error);
+        }
+    };
 
-            <input className='input' id='SignUpFormName'
+    return (
+        <div className='container'>
+            <form onSubmit={ValidateOnSubmit} noValidate data-testid="SignUpForm">
+                <div className='input-container'>
+                    <p className='input-label'>NAME</p>
+
+            <input className='input' id='SignUpFormName' data-testid="SignUpFormName"
               onChange={(event) => {
                   setName(event.target.value);
                   const validationResult = FormValidation.ValidateName(event.target.value);
@@ -67,12 +71,12 @@ const SignUpFormSection = () => {
               </div>
             }
 
-        </div>
-        <p className='input-error'>{nameError}</p>
+                </div>
+                <p className='input-error'>{nameError}</p>
 
         <div className='input-container'>
             <p className='input-label'>EMAIL</p>
-            <input className='input' id='SignUpFormemail'
+            <input className='input' id='SignUpFormEmail' data-testid="SignUpFormEmail"
               onChange={(event) => {
                 setEmail(event.target.value);
                   const validationResult = FormValidation.ValidateEmail(event.target.value);
@@ -93,7 +97,7 @@ const SignUpFormSection = () => {
 
         <div className='input-container'>
             <p className='input-label'>PASSWORD</p>
-            <input className='input' type={passwordVisible ? "text" : "password"} id='SignUpFormpassword'                
+            <input className='input' type={passwordVisible ? "text" : "password"} id='SignUpFormPassword' data-testid="SignUpFormPassword"                
               onChange={(event) => {
                   setPassword(event.target.value);
                   const validationResult = FormValidation.ValidatePassword(event.target.value);
@@ -108,7 +112,7 @@ const SignUpFormSection = () => {
 
         <div className='input-container'>
             <p className='input-label'>CONFIRM PASSWORD</p>
-            <input className='input' type={passwordConfirmVisible ? "text" : "password"} id='SignUpFormConfirmPassword'        
+            <input className='input' type={passwordConfirmVisible ? "text" : "password"} id='SignUpFormConfirmPassword' data-testid="SignUpFormConfirmPassword"        
             onChange={(event) => {
                   setConfirmPassword(event.target.value);
                   const validationResult = FormValidation.ValidateConfirmPassword(password, event.target.value);
@@ -116,12 +120,12 @@ const SignUpFormSection = () => {
               }}/>
             {/* button for display of confirm password text */}
             <div className='input-validation-icon'>
-              <button className='invisible-btn' onClick={() => setPasswordConfirmVisible(!passwordConfirmVisible)}><i className={passwordConfirmVisible ? "fa-regular fa-eye" : "fa-regular fa-eye-slash"}></i></button>
+              <button className='invisible-btn'  onClick={() => setPasswordConfirmVisible(!passwordConfirmVisible)}><i className={passwordConfirmVisible ? "fa-regular fa-eye" : "fa-regular fa-eye-slash"}></i></button>
             </div>
         </div>
         <p className='input-error'>{confirmPasswordError}</p>
 
-        <button className='btn dark-btn form-btn' type='submit'>SIGN UP</button>
+        <button className='btn dark-btn form-btn' data-testid="submitButton" type='submit'>SIGN UP</button>
       </form>
     </div>
   )
