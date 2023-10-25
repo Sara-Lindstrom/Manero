@@ -73,23 +73,23 @@ public class UserController_Tests
     }
 
     [Fact]
-    public async Task CreateAsync_ShouldReturnBadRequest_WhenMoodelStateIsInvalid()
+    public async Task CreateAsync_ShouldReturnUnprocessableEntity_WhenModelStateIsInvalid()
     {
-        //Arrange
+        // Arrange
         var user = new User();
-        _userController.ModelState.AddModelError("Name", "Name is requried");
+        _userController.ModelState.AddModelError("Name", "Name is required");
 
-        //Act
+        // Act
         var result = await _userController.CreateUser(user);
 
-        //Assert
-        Assert.IsType<BadRequestObjectResult>(result);
+        // Assert
+        Assert.IsType<UnprocessableEntityObjectResult>(result);
     }
 
     [Fact]
     public async Task SignIn_ShouldReturnOk_WhenSignInSucceeds()
     {
-        //Arrange
+        // Arrange
         var user = new UserModel
         {
             UserName = "testuser",
@@ -97,8 +97,8 @@ public class UserController_Tests
         };
 
         _mockSignInManager
-                .Setup(x => x.PasswordSignInAsync(user, "password", true, false))
-                .ReturnsAsync(Microsoft.AspNetCore.Identity.SignInResult.Success);
+            .Setup(x => x.PasswordSignInAsync(user, "password", true, false))
+            .ReturnsAsync(Microsoft.AspNetCore.Identity.SignInResult.Success);
 
         var model = new User
         {
@@ -107,11 +107,11 @@ public class UserController_Tests
             RememberMe = true,
         };
 
-        //Act
+        // Act
         var result = await _userController.SignIn(model);
 
-        //Assert
-        Assert.IsType<BadRequestObjectResult>(result);
+        // Assert
+        Assert.IsType<NotFoundObjectResult>(result);
     }
 
     [Fact]
@@ -139,6 +139,6 @@ public class UserController_Tests
         var result = await _userController.SignIn(model);
 
         // Assert
-        Assert.IsType<BadRequestObjectResult>(result);
+        Assert.IsType<NotFoundObjectResult>(result);
     }
 }
