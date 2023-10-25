@@ -120,7 +120,7 @@ function AddCardSection() {
         </form>
       </div>
     </section>
-  );
+  )
 }
 
-export default AddCardSection;
+export default AddCardSection
