@@ -5,7 +5,7 @@ import PaymentCardsSection from '../sections/PaymentCardsSection'
 
 const paymentMethodView: React.FC = () => {
   const handleNavigateBack = () => {
-    window.history.back(); // Använder window.history för att gå tillbaka ett steg
+    window.history.back(); // Using window.history to go back to previous view
   };
 
   // state true or false on showBackbutton
