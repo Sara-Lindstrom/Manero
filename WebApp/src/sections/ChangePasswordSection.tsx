@@ -46,6 +46,7 @@ const ChangePasswordSection = () => {
                     type={newPasswordVisible ? 'text' : 'password'}
                     value={newPassword}
                     onChange={handlePasswordChange}
+                    aria-label='NEW PASSWORD'
                     className='input'
                 />
                 <div className='input-validation-icon'>
@@ -64,6 +65,7 @@ const ChangePasswordSection = () => {
                     type={confirmPasswordVisible ? 'text' : 'password'}
                     value={confirmPassword}
                     onChange={handleConfirmPasswordChange}
+                    aria-label='CONFIRM PASSWORD'
                     className='input'
                 />
                 <div className='input-validation-icon'>

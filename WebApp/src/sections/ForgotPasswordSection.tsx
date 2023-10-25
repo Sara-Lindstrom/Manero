@@ -33,7 +33,8 @@ const ForgotPasswordSection = () => {
         <p className='input-label'>EMAIL</p>
         <input 
           className='input' 
-          id='email-input' 
+          id='email-input'
+          aria-label='EMAIL' 
           value={email} 
           onChange={handleEmailChange}
         />
