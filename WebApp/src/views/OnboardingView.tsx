@@ -22,17 +22,17 @@ const OnboardingView = () => {
                     <div className="carousel-inner welcome-carousel-slide">
                         <div className="carousel-item active">
                             <i>|</i> 
-                            <h1>Welcome To Manero!</h1>
+                            <h1 className="main-title">Welcome To Manero!</h1>
                             <p>Labore sunt culpa excepteur culpa ipsum. Labore occaecat ex nisi mollit.</p>
                         </div>
                         <div className="carousel-item">
                             <i>|</i>
-                            <h1>Easy Track Order!</h1>
+                            <h1 className="main-title">Easy Track Order!</h1>
                             <p>Labore sunt culpa excepteur culpa ipsum. Labore occaecat ex nisi mollit.</p>
                         </div>
                         <div className="carousel-item">
                             <i>|</i>
-                            <h1>ADoor To Door Delivery!</h1>
+                            <h1 className="main-title">ADoor To Door Delivery!</h1>
                             <p>Labore sunt culpa excepteur culpa ipsum. Labore occaecat ex nisi mollit.</p>
                         </div>
                     </div>
