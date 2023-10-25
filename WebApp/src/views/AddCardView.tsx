@@ -4,7 +4,7 @@ import AddCardSection from '../sections/AddCardSection';
 
 const AddCardView: React.FC = () => {
   const handleNavigateBack = () => {
-    window.history.back(); // Använder window.history för att gå tillbaka ett steg
+    window.history.back();
   };
 
   return (
