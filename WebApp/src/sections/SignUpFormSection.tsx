@@ -42,12 +42,43 @@ const SignUpFormSection: React.FC = () => {
                     () => { console.log('Signup successful') },
                     () => { console.log('Signup failed') }
                 );
+<<<<<<< HEAD
+=======
             }
         } catch (error) {
             console.error("An error occurred during the signup process:", error);
         }
     };
 
+    return (
+        <div className='container'>
+            <form onSubmit={ValidateOnSubmit} noValidate data-testid="SignUpForm">
+                <div className='input-container'>
+                    <p className='input-label'>NAME</p>
+
+            <input className='input' id='SignUpFormName' data-testid="SignUpFormName"
+              onChange={(event) => {
+                  setName(event.target.value);
+                  const validationResult = FormValidation.ValidateName(event.target.value);
+                  setNameError(validationResult.error);
+              }}/>
+            {/* if input valid show tick else show ex */}
+            {nameError === "" ?
+              <div className='input-validation-icon'>
+                <i className="fa-solid fa-check"></i>
+              </div>
+              :
+              <div className='input-validation-icon'>
+                <i className="fa-regular fa-x"></i>
+              </div>
+>>>>>>> 7c0fdf721ded27a9a235f34b1ccf7840c91de544
+            }
+        } catch (error) {
+            console.error("An error occurred during the signup process:", error);
+        }
+    };
+
+<<<<<<< HEAD
     return (
         <div className='container'>
             <form onSubmit={ValidateOnSubmit} noValidate data-testid="SignUpForm">
@@ -129,6 +160,66 @@ const SignUpFormSection: React.FC = () => {
             </form>
         </div>
     )
+=======
+                </div>
+                <p className='input-error'>{nameError}</p>
+
+        <div className='input-container'>
+            <p className='input-label'>EMAIL</p>
+            <input className='input' id='SignUpFormEmail' data-testid="SignUpFormEmail"
+              onChange={(event) => {
+                setEmail(event.target.value);
+                  const validationResult = FormValidation.ValidateEmail(event.target.value);
+                  setEmailError(validationResult.error);
+              }}/>
+              {/* if input valid show tick else show ex */}
+            {emailError === "" ?
+              <div className='input-validation-icon'>
+                <i className="fa-solid fa-check"></i>
+              </div>
+              :
+              <div className='input-validation-icon'>
+                <i className="fa-regular fa-x"></i>
+              </div>
+            }
+        </div>
+        <p className='input-error'>{emailError}</p>
+
+        <div className='input-container'>
+            <p className='input-label'>PASSWORD</p>
+            <input className='input' type={passwordVisible ? "text" : "password"} id='SignUpFormPassword' data-testid="SignUpFormPassword"                
+              onChange={(event) => {
+                  setPassword(event.target.value);
+                  const validationResult = FormValidation.ValidatePassword(event.target.value);
+                  setPasswordError(validationResult.error);
+              }}/>
+              {/* button for display of password text */}
+            <div className='input-validation-icon'>
+              <button className='invisible-btn' onClick={() => setPasswordVisible(!passwordVisible)}><i className={passwordVisible ? "fa-regular fa-eye" : "fa-regular fa-eye-slash"}></i></button>
+            </div>
+        </div>
+        <p className='input-error'>{passwordError}</p>
+
+        <div className='input-container'>
+            <p className='input-label'>CONFIRM PASSWORD</p>
+            <input className='input' type={passwordConfirmVisible ? "text" : "password"} id='SignUpFormConfirmPassword' data-testid="SignUpFormConfirmPassword"        
+            onChange={(event) => {
+                  setConfirmPassword(event.target.value);
+                  const validationResult = FormValidation.ValidateConfirmPassword(password, event.target.value);
+                  setConfirmPasswordError(validationResult.error);
+              }}/>
+            {/* button for display of confirm password text */}
+            <div className='input-validation-icon'>
+              <button className='invisible-btn'  onClick={() => setPasswordConfirmVisible(!passwordConfirmVisible)}><i className={passwordConfirmVisible ? "fa-regular fa-eye" : "fa-regular fa-eye-slash"}></i></button>
+            </div>
+        </div>
+        <p className='input-error'>{confirmPasswordError}</p>
+
+        <button className='btn dark-btn form-btn' data-testid="submitButton" type='submit'>SIGN UP</button>
+      </form>
+    </div>
+  )
+>>>>>>> 7c0fdf721ded27a9a235f34b1ccf7840c91de544
 }
 
 export default SignUpFormSection
