@@ -7,5 +7,14 @@
 //PARTS
 @import "./parts/_btn.scss";
 @import "./parts/_breadcrumb.scss";
-@import "./parts/payoneerSection.scss";
-@import "./parts/_paymentCardsSection.scss";
+
+@import "./parts/resetPasswordConfirmedSection.scss";
+@import "./parts/forgotPasswordSection";
+@import "./parts/_form";
+@import "./parts/payoneerSection";
+@import "./parts/paymentCardsSection";
+@import "./parts/changePasswordSection.scss";
+
+//VIEWS
+@import "./view/_signUpView";
+
