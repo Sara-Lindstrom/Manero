@@ -10,7 +10,7 @@ public class UserController : ControllerBase
 {
     private readonly UserManager<UserModel> _userManager; // Need this to be able to create a new user using Identity
     private readonly UserDbContext _context;
-    private readonly SignInManager<UserModel> _signInManager; // Need this to be able to sign in
+    private readonly SignInManager<UserModel> _signInManager; // Need this to be able to sign in using Sign in Manager
 
     // Initialize
     public UserController(UserManager<UserModel> userManager, UserDbContext context, SignInManager<UserModel> signInManager)
@@ -34,23 +34,21 @@ public class UserController : ControllerBase
     {
         if (!ModelState.IsValid)
         {
-            return BadRequest(ModelState);
+            return UnprocessableEntity(ModelState);
         }
 
-        var user = new UserModel
-        {
-            UserName = model.Email,
-            Email = model.Email
-        };
-
+        var user = new UserModel { UserName = model.Email, Email = model.Email };
         var result = await _userManager.CreateAsync(user, model.Password);
 
         if (result.Succeeded)
         {
-            return Ok(new { Message = "Yeay, the registration was successful!" });
+            // Add the name as a claim
+            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("name", model.Name));
+
+            return Ok(new { Message = "Registration was successful." });
         }
 
-        return BadRequest(result.Errors);
+        return BadRequest(new { Errors = result.Errors.Select(x => x.Description) });
     }
 
     // Method and endpoint for signing in
@@ -59,26 +57,23 @@ public class UserController : ControllerBase
     {
         if (!ModelState.IsValid)
         {
-            return BadRequest(ModelState);
+            return UnprocessableEntity(ModelState); // Error 422 Unprocessable Entity for validation errors
         }
 
-        // Find user by email address
         var user = await _userManager.FindByEmailAsync(model.Email);
-
         if (user == null)
         {
-            return BadRequest(new { Message = "Invalid email or password" });
+            return NotFound(new { Message = "User not found." }); // Error 404 Not Found for non-existing users
         }
 
-        // Sign in
         var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
 
         if (result.Succeeded)
         {
-            return Ok(new { Message = "Yeay, the sign in was successful!" });
+            return Ok(new { Message = "Sign in was successful." });
         }
 
-        return BadRequest(new { Message = "Invalid email or password" });
+        return Unauthorized(new { Message = "Invalid credentials." }); // Error 401 Unauthorized for invalid sign-in
     }
 
     // Method for signing out
@@ -96,13 +91,13 @@ public class UserController : ControllerBase
     {
         if (!ModelState.IsValid)
         {
-            return BadRequest(ModelState);
+            return UnprocessableEntity(ModelState); // Error 422 Unprocessable Entity for validation errors
         }
 
         var user = await _userManager.FindByEmailAsync(model.Email);
         if (user == null)
         {
-            return BadRequest("Invalid user.");
+            return NotFound(new { Message = "User not found." }); // Error 404 Not Found for non-existing users
         }
 
         var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
@@ -110,9 +105,9 @@ public class UserController : ControllerBase
 
         if (result.Succeeded)
         {
-            return Ok("Password reset successfully.");
+            return Ok(new { Message = "Password reset successfully." });
         }
 
-        return BadRequest(result.Errors);
+        return BadRequest(new { Errors = result.Errors.Select(x => x.Description) });
     }
 }

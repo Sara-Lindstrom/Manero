@@ -1,3 +1,4 @@
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import './css/Style.min.css';
 import PaymentMethodView from './views/PaymentMethodView';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
