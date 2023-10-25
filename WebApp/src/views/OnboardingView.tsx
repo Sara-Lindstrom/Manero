@@ -36,7 +36,7 @@ const OnboardingView = () => {
                             <p>Labore sunt culpa excepteur culpa ipsum. Labore occaecat ex nisi mollit.</p>
                         </div>
                     </div>
-                    <button className="btn dark-btn">GET STARTED</button>
+                    <a className="btn dark-btn" href="/signup">GET STARTED</a>
                 </div>
             </div>
         </section>
