@@ -1,54 +1,58 @@
 import React, { useState } from 'react'
 import * as FormValidation from '../helpers/FormValidation'
+import { handleSignupSubmit, FormData } from '../helpers/FormHandlers'
 
-const SignUpFormSection = () => {
+const SignUpFormSection: React.FC = () => {
 
-  //useSTate for visibility of password input
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const [passwordConfirmVisible, setPasswordConfirmVisible] = useState(false);
+    //useSTate for visibility of password input
+    const [passwordVisible, setPasswordVisible] = useState(false);
+    const [passwordConfirmVisible, setPasswordConfirmVisible] = useState(false);
 
-  //UseStates for error messages in frontend validation
-  const [nameError, setNameError] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState(''); 
-  const [confirmPasswordError, setConfirmPasswordError] = useState(''); 
+    //UseStates for error messages in frontend validation
+    const [nameError, setNameError] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
-  //useStates for setting input values both for validation and populate new User
-  const [name, setName] = useState ('');
-  const [email, setEmail] = useState ('');
-  const [password, setPassword] = useState ('');
-  const [confirmPassword, setConfirmPassword] = useState ('');
+    //useStates for setting input values both for validation and populate new User
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
-  //validates form when user clicks submit and sends inputs to hook for DB 
-  const ValidateOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    let validName = FormValidation.ValidateName(name).isValid;
-    let validEmail = FormValidation.ValidateEmail(email).isValid;
-    let validpassword =  FormValidation.ValidatePassword(password).isValid;
-    let validConfirmPassword = FormValidation.ValidateConfirmPassword(password,confirmPassword).isValid;
-    
-    // if everything is valid, save to DB
-    if(validName === true && validEmail === true && validpassword === true && validConfirmPassword === true){
+    //validates form when user clicks submit and sends inputs to hook for DB 
+    const ValidateOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
-      //const formdata : modelName = {
-        //   name: name,
-        //   email: email,
-        //   password: password
-      //}
+        try {
+            const validName = FormValidation.ValidateName(name).isValid;
+            const validEmail = FormValidation.ValidateEmail(email).isValid;
+            const validPassword = FormValidation.ValidatePassword(password).isValid;
+            const validConfirmPassword = FormValidation.ValidateConfirmPassword(password, confirmPassword).isValid;
 
-      // handleSignupSubmit(formData)
+            // If everything is valid, save to DB
+            if (validName && validEmail && validPassword && validConfirmPassword) {
+                const formData: FormData = {
+                    name,
+                    email,
+                    password
+                };
 
-    }
-    // stos from submitting
-    else{
-      e.preventDefault()
-    }
-  }
-  
-  return (
-    <div className='container'>
-      <form onSubmit={ValidateOnSubmit} noValidate data-testid="SignUpForm">
-        <div className='input-container'>
-            <p className='input-label'>NAME</p>
+                await handleSignupSubmit(e, formData,
+                    () => { console.log('Signup successful') },
+                    () => { console.log('Signup failed') }
+                );
+            }
+        } catch (error) {
+            console.error("An error occurred during the signup process:", error);
+        }
+    };
+
+    return (
+        <div className='container'>
+            <form onSubmit={ValidateOnSubmit} noValidate data-testid="SignUpForm">
+                <div className='input-container'>
+                    <p className='input-label'>NAME</p>
 
             <input className='input' id='SignUpFormName' data-testid="SignUpFormName"
               onChange={(event) => {
@@ -67,8 +71,8 @@ const SignUpFormSection = () => {
               </div>
             }
 
-        </div>
-        <p className='input-error'>{nameError}</p>
+                </div>
+                <p className='input-error'>{nameError}</p>
 
         <div className='input-container'>
             <p className='input-label'>EMAIL</p>
