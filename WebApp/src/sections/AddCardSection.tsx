@@ -115,7 +115,7 @@ function AddCardSection() {
           </div>
 
           <div className='card-btn'>
-            <button className='dark-btn' type="submit">SAVE CARD</button>
+            <button className='btn dark-btn form-btn' type="submit">SAVE CARD</button>
           </div>
         </form>
       </div>
