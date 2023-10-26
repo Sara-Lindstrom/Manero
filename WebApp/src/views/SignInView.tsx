@@ -1,9 +1,8 @@
-import React from 'react';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
 import { NavLink } from 'react-router-dom'
 import SignInFormSection from '../sections/SignInFormSection';
 
-const SignInView: React.FC = () => {
+const SignInView = () => {
     const handleNavigateBack = () => {
       window.history.back(); 
     };
@@ -17,9 +16,11 @@ const SignInView: React.FC = () => {
         </div> 
 
         <SignInFormSection />
+
         <div className='container my-4 text-center'>
-            Don’t have an account?<NavLink className="link" to="/signup"> Sign Up.</NavLink>
-        </div>
+          <NavLink className="link" to="/signup">Don’t have an account? Sign Up.</NavLink>
+            </div>
+
         <div className='container d-flex justify-content-center'>
             <button className='round-btn'><i className="fa-brands fa-facebook-f"></i></button>
             <button className='round-btn'><i className="fa-brands fa-twitter"></i></button>
