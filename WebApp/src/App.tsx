@@ -15,22 +15,13 @@ function App() {
         <Routes>
             <Route path='/welcome' element={<OnboardingView />} />
             <Route path='/signup' element={<SignUpView />} />
+            <Route path='/signin' element={<SignInView />} />
             <Route path='/paymentMethodView' element={<PaymentMethodView />} />
             <Route path='/resetPasswordConfirmed' element={<ResetPasswordConfirmedView />} />
             <Route path='/forgotPassword' element={<ForgotPasswordView />} />
             <Route path='/changePassword' element={<ChangePasswordView />} />
             <Route path='/AddCardView' element={<AddCardView />} />
         </Routes>
-      <Routes>
-        <Route path='/signup' element={<SignUpView />} />
-        <Route path='/signin' element={<SignInView />} />
-        <Route path='/paymentMethodView' element={<PaymentMethodView />} />
-        <Route path='/resetPasswordConfirmed' element={<ResetPasswordConfirmedView />} />
-        <Route path='/forgotPassword' element={<ForgotPasswordView />} />
-        <Route path='/changePassword' element={<ChangePasswordView />} />
-        <Route path='/AddCardView' element={<AddCardView />} />
-      </Routes>
-
     </BrowserRouter>
 
   );
