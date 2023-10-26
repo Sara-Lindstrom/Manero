@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
 import AddCardSection from '../sections/AddCardSection';
 
 test('tests if the button resets the form when pressed', () => {
