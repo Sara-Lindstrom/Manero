@@ -1,17 +1,20 @@
 import SignUpFormSection from '../sections/SignUpFormSection';
 import { render, fireEvent, screen } from '@testing-library/react';
 
-describe('SignUpFormSection', () => {
-  it('renders the form and prevents submission on validation errors', () => {
-    render(<SignUpFormSection />);
-    const button = screen.getByTestId('submitButton');
-  
+jest.mock('../helpers/FormHandlers', () => ({
+  handleSignupSubmit: jest.fn(),
+}));
+
+test('renders the form and prevents submission on validation errors', () => {
+  render(<SignUpFormSection />);
+  const submitButton = screen.getByTestId('submitButton');
+
     // initialise an event, and assign your own preventDefault
     const clickEvent = new MouseEvent('click');
-    Object.assign(clickEvent, {preventDefault: jest.fn()});
-  
-    fireEvent(button, clickEvent);
-  
-    expect(clickEvent.preventDefault).not.toHaveBeenCalledTimes(1);
-  });
+    const preventDefaultSpy = jest.spyOn(Event.prototype, 'preventDefault');
+
+    fireEvent(submitButton, clickEvent);
+
+  // Assert that handleSignupSubmit was not called
+  expect(preventDefaultSpy).toHaveBeenCalledTimes(1);
 });

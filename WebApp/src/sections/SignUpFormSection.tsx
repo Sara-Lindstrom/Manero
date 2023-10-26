@@ -22,7 +22,7 @@ const SignUpFormSection: React.FC = () => {
 
     //validates form when user clicks submit and sends inputs to hook for DB 
     const ValidateOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+      e.preventDefault();
 
         try {
             const validName = FormValidation.ValidateName(name).isValid;
