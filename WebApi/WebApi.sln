@@ -26,6 +26,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebApp", "..\WebApp\", "{3C
 		SlnRelativePath = "..\WebApp\"
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.Tests", "..\WebApi.Tests\WebApi.Tests.csproj", "{F7842779-466B-4911-80F5-DBAE64649473}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{3C28B67B-66A0-4D47-A295-6D0791E6A3C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C28B67B-66A0-4D47-A295-6D0791E6A3C5}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{3C28B67B-66A0-4D47-A295-6D0791E6A3C5}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{F7842779-466B-4911-80F5-DBAE64649473}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7842779-466B-4911-80F5-DBAE64649473}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7842779-466B-4911-80F5-DBAE64649473}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7842779-466B-4911-80F5-DBAE64649473}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
