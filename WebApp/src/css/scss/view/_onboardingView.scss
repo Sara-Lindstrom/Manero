@@ -1,4 +1,4 @@
-// This is for the "Loading/Logo Display Page"
+// This is for the "Loading/Logo Display Page (not implemented)"
 .welcome-transition {
     z-index: 1;
     position: absolute;
@@ -47,13 +47,19 @@
     } 
 }
 
-// This is for the OnboardingView with slides
+//This is for info slide page
 .welcome-information {
     z-index: 0;
     position: relative;
     background-color: $color-blue;
     height: 100vh;
     overflow: hidden;
+
+        @media (min-width: 420px) {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
     .welcome-iformation-circle {
         top: 100%;
@@ -68,9 +74,16 @@
         box-shadow: inset 0px 0px 0px 20px $color-blue;
         border: 4px solid white;
 
-        .carousel-indicators {
-            bottom: 17%;
+        @media (min-width: 420px) {
+            top: auto;
+            left: auto;
+            transform: none;
+            position: static;
+            width: 415px;
+            height: 415px;
+            
         }
+        
 
         .carousel-inner-container {
             display: flex;
@@ -82,46 +95,66 @@
             align-items: center;
             padding: 50px 40px 0px 40px;
 
+            @media (min-width: 420px) {
+                height: auto;
+                width: auto;
+                padding: 20px 40px 0px 40px;
+            }
+            
             .welcome-carousel-slide {
                 display: flex;
                 flex: 0 0 100%;
                 text-align: center;
                 padding: 20px 20px 0px 20px;
-    
-                i {
-                    font-size: 48px;
+                overflow: hidden;
+
+                .carousel-item {
+
+                    i {
+                        font-size: 48px;
+                    }
+
+                    h1 {
+                        font-weight: $font-weight-bold;
+                        font-size: 2rem;
+                    }
+
+                    p {
+                        font-weight: $font-weight-regular;
+                    }
                 }
-                
-                h1 {
-                    font-weight: $font-weight-bold;
-                    font-size: 2rem;
+            }
+            
+            .btn-get-started {
+                width: auto;
+                padding-left: 50px;
+                padding-right: 50px;
+            }
+
+            .carousel-indicators {
+                bottom: 17%;
+
+                @media (min-width: 420px) {
+                    bottom: 30%;
+
                 }
+
+                .dot {
+                    background-color: black !important;
+                    opacity: 100% !important;
+                    border: 1px solid black !important;
+                    width: 8px !important;
+                    height: 8px !important;
+                    border-radius: 50%;
+                    transition: all 300ms !important;
                 
-                p {
-                    font-weight: $font-weight-regular;
+                    &.active {
+                        width: 30px !important;
+                        border-radius: 50px;
+                        background-color: $color-white !important;
+                    }
                 }
             }
         }
-    }
-}
-
-
-
-
-// For navigation button text slide
-.dot {
-    background-color: black !important;
-    opacity: 100% !important;
-    border: 1px solid black !important;
-    width: 8px !important;
-    height: 8px !important;
-    border-radius: 50%;
-    transition: all 300ms !important;
-    
-
-    &.active {
-        width: 30px !important;
-        border-radius: 50px;
-        background-color: $color-white !important;
     }
 }

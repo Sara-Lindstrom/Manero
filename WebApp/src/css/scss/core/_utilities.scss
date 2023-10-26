@@ -20,6 +20,10 @@ main{
     margin: 0 auto;
     padding: 0 35px;
 
+    @include sm {
+        max-width: $breakpoint-sm-max-width;
+    }
+
     @include md {
         max-width: $breakpoint-md-max-width;
     }
