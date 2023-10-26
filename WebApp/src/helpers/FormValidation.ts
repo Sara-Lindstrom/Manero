@@ -1,5 +1,3 @@
-import React from 'react'
-
 type ValidationResult = {
     error: string;
     isValid: boolean;

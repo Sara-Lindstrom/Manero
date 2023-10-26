@@ -102,6 +102,8 @@ const SignUpFormSection: React.FC = () => {
                   setPassword(event.target.value);
                   const validationResult = FormValidation.ValidatePassword(event.target.value);
                   setPasswordError(validationResult.error);
+                  const confirmValidationResult = FormValidation.ValidateConfirmPassword(event.target.value, confirmPassword);
+                  setConfirmPasswordError(confirmValidationResult.error);
               }}/>
               {/* button for display of password text */}
             <div className='input-validation-icon'>

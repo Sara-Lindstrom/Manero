@@ -94,21 +94,24 @@ function AddCardSection() {
           </div>
 
           <label className='infoField' htmlFor="cardHolder">NAME</label>
-          <input type="text" id="cardHolder" placeholder="" name="cardHolder" required
+          <input className='p-1 add-card-input' type="text" id="cardHolder" placeholder="" name="cardHolder" required
             value={formData.cardHolder} onChange={handleChange} />
 
           <label className='infoField' htmlFor="cardNumber">CARD NUMBER</label>
-          <input type="text" id="cardNumber" placeholder="" name="cardNumber" required
+          <input className='p-1  add-card-input' type="text" id="cardNumber" placeholder="" name="cardNumber" required
             value={formData.cardNumber} onChange={handleChange} />
 
           <div className='cvvrow'>
-            <label className='infoField' htmlFor="expiryDate">MM/YY</label>
-            <input type="text" id="expiryDate" placeholder="" name="expiryDate" required
-              value={formData.expiryDate} onChange={handleChange} />
-
-            <label className='infoField' htmlFor="cvv">CVV</label>
-            <input type="text" id="cvv" placeholder="" name="cvv" required
-              value={formData.cvv} onChange={handleChange} />
+            <div className='test'>
+              <label className='infoField' htmlFor="expiryDate">MM/YY</label>
+              <input className=' add-card-input input-test' type="text" id="expiryDate" placeholder="" name="expiryDate" required
+                value={formData.expiryDate} onChange={handleChange} />
+            </div>
+            <div className='test'>
+              <label className='infoField' htmlFor="cvv">CVV</label>
+              <input className=' add-card-input input-test' type="text" id="cvv" placeholder="" name="cvv" required
+                value={formData.cvv} onChange={handleChange} />
+            </div>
             <a className='Camera' target='_blank' rel='noreferrer' href="https://www.matspar.se/produkt/julmust-1-4l-apotekarnas">
               <i className="fa-regular fa-camera"></i>
             </a>

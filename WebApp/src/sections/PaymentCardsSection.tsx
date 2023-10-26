@@ -40,7 +40,7 @@ const PaymentCardsSection: React.FC = () => {
                     <h1>Cards</h1>
                     <div className="newCard">
                         <h2>Add a new card</h2>
-                        <NavLink to="/addANewCard" data-testid="addNewCardLink" ><i className="fa-regular fa-plus"></i></NavLink> 
+                        <NavLink to="/AddCardView" data-testid="addNewCardLink" ><i className="fa-regular fa-plus"></i></NavLink> 
                     </div>
                 </div>
                 <div className="cards-slider">
