@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as FormValidation from '../helpers/FormValidation'
 import { handleSignupSubmit, FormData } from '../helpers/FormHandlers'
 
 const SignUpFormSection: React.FC = () => {
+
+    const navigate = useNavigate();
 
     //useSTate for visibility of password input
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -38,7 +41,7 @@ const SignUpFormSection: React.FC = () => {
                     password
                 };
 
-                await handleSignupSubmit(e, formData,
+                await handleSignupSubmit(e, formData, navigate,
                     () => { console.log('Signup successful') },
                     () => { console.log('Signup failed') }
                 );
@@ -105,7 +108,7 @@ const SignUpFormSection: React.FC = () => {
               }}/>
               {/* button for display of password text */}
             <div className='input-validation-icon'>
-              <button className='invisible-btn' onClick={() => setPasswordVisible(!passwordVisible)}><i className={passwordVisible ? "fa-regular fa-eye" : "fa-regular fa-eye-slash"}></i></button>
+              <button type="button" className='invisible-btn' onClick={() => setPasswordVisible(!passwordVisible)}><i className={passwordVisible ? "fa-regular fa-eye" : "fa-regular fa-eye-slash"}></i></button>
             </div>
         </div>
         <p className='input-error'>{passwordError}</p>
@@ -120,7 +123,7 @@ const SignUpFormSection: React.FC = () => {
               }}/>
             {/* button for display of confirm password text */}
             <div className='input-validation-icon'>
-              <button className='invisible-btn'  onClick={() => setPasswordConfirmVisible(!passwordConfirmVisible)}><i className={passwordConfirmVisible ? "fa-regular fa-eye" : "fa-regular fa-eye-slash"}></i></button>
+              <button type="button" className='invisible-btn' onClick={() => setPasswordConfirmVisible(!passwordConfirmVisible)}><i className={passwordConfirmVisible ? "fa-regular fa-eye" : "fa-regular fa-eye-slash"}></i></button>
             </div>
         </div>
         <p className='input-error'>{confirmPasswordError}</p>

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Context;
 using WebApi.Models;
+using WebApi.DTO;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -18,6 +19,30 @@ public class UserController : ControllerBase
         _userManager = userManager;
         _signInManager = signInManager;
         _context = context;
+    }
+
+    // Method for signing in
+    [HttpPost("SignIn")]
+    public async Task<IActionResult> SignIn([FromBody] UserCredentials credentials)
+    {
+        // Validate email and password
+        if (string.IsNullOrEmpty(credentials.Email) || string.IsNullOrEmpty(credentials.Password))
+        {
+            return BadRequest("Email or password cannot be empty.");
+        }
+
+        // Find user by email
+        var user = await _userManager.FindByEmailAsync(credentials.Email);
+        if (user != null)
+        {
+            // Sign in with password
+            var result = await _signInManager.PasswordSignInAsync(user, credentials.Password, false, false);
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+        }
+        return Unauthorized();
     }
 
     // Method for fetching all users and display them
@@ -55,31 +80,6 @@ public class UserController : ControllerBase
         }
 
         return BadRequest(new { Errors = result.Errors.Select(x => x.Description) });
-    }
-
-    // Method and endpoint for signing in
-    [HttpPost("SignIn")]
-    public async Task<IActionResult> SignIn([FromBody] User model)
-    {
-        if (!ModelState.IsValid)
-        {
-            return UnprocessableEntity(ModelState); // Error 422 Unprocessable Entity for validation errors
-        }
-
-        var user = await _userManager.FindByEmailAsync(model.Email);
-        if (user == null)
-        {
-            return NotFound(new { Message = "User not found." }); // Error 404 Not Found for non-existing users
-        }
-
-        var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
-
-        if (result.Succeeded)
-        {
-            return Ok(new { Message = "Sign in was successful." });
-        }
-
-        return Unauthorized(new { Message = "Invalid credentials." }); // Error 401 Unauthorized for invalid sign-in
     }
 
     // Method for signing out
