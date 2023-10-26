@@ -17,10 +17,10 @@ const SignIn = () => {
         const validPassword = FormValidation.ValidatePassword(password).isValid;
 
         if (validEmail && validPassword) {
-            // const formData = {
-            //     email,
-            //     password
-            // };
+            const formData = {
+                email,
+                password
+            };
         }
     };
 

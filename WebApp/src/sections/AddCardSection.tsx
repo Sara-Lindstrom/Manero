@@ -102,14 +102,14 @@ function AddCardSection() {
             value={formData.cardNumber} onChange={handleChange} />
 
           <div className='cvvrow'>
-            <div className='test'>
+            <div className='cvv-input-container'>
               <label className='infoField' htmlFor="expiryDate">MM/YY</label>
-              <input className=' add-card-input input-test' type="text" id="expiryDate" placeholder="" name="expiryDate" required
+              <input className=' add-card-input input-width' type="text" id="expiryDate" placeholder="" name="expiryDate" required
                 value={formData.expiryDate} onChange={handleChange} />
             </div>
-            <div className='test'>
+            <div className='cvv-input-container'>
               <label className='infoField' htmlFor="cvv">CVV</label>
-              <input className=' add-card-input input-test' type="text" id="cvv" placeholder="" name="cvv" required
+              <input className=' add-card-input input-width' type="text" id="cvv" placeholder="" name="cvv" required
                 value={formData.cvv} onChange={handleChange} />
             </div>
             <a className='Camera' target='_blank' rel='noreferrer' href="https://www.matspar.se/produkt/julmust-1-4l-apotekarnas">
