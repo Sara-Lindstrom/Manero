@@ -1,12 +1,14 @@
-import React from 'react';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import SignInFormSection from '../sections/SignInFormSection';
 
-const SignInView: React.FC = () => {
+const SignInView = () => {
+
+    const navigate = useNavigate();
     const handleNavigateBack = () => {
       window.history.back(); 
     };
+
     return (
       <>
         <BreadcrumbSection currentPage="Sign in" showBackButton={true} onNavigateBack={handleNavigateBack}/>
@@ -16,10 +18,12 @@ const SignInView: React.FC = () => {
             <h1 className='sign-up-title'>Welcome Back!</h1> 
         </div> 
 
-        <SignInFormSection />
+        <SignInFormSection navigate={navigate}/>
+
         <div className='container my-4 text-center'>
-            Don’t have an account?<NavLink className="link" to="/signup"> Sign Up.</NavLink>
-        </div>
+          <NavLink className="link" to="/signup">Don’t have an account? Sign Up.</NavLink>
+            </div>
+
         <div className='container d-flex justify-content-center'>
             <button className='round-btn'><i className="fa-brands fa-facebook-f"></i></button>
             <button className='round-btn'><i className="fa-brands fa-twitter"></i></button>

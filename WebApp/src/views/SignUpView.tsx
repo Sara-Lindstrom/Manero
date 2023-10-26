@@ -1,8 +1,11 @@
 import SignUpFormSection from '../sections/SignUpFormSection'
 import BreadcrumbSection from '../sections/BreadcrumbSection'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 const SignUpView = () => {
+
+  const navigate = useNavigate();
+
   return (
     <>
       <BreadcrumbSection currentPage="Sign up"/>
@@ -12,7 +15,7 @@ const SignUpView = () => {
         <h1 className='sign-up-title'>Sign Up</h1> 
       </div> 
 
-      <SignUpFormSection/>
+      <SignUpFormSection navigate={navigate}/>
 
       <div className='container my-4 text-center'>
         <NavLink className="link" to="/signin">Already Have An Account? Sign In.</NavLink>
