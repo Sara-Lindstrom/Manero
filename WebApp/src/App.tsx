@@ -1,4 +1,4 @@
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './css/Style.min.css';
 import AddCardView from './views/AddCardView';
 import PaymentMethodView from './views/PaymentMethodView';
@@ -12,8 +12,8 @@ import SignInView from './views/SignInView';
 function App() {
   return (
     <BrowserRouter>
-        <Routes>
-            <Route path='/welcome' element={<OnboardingView />} />
+          <Routes>
+            <Route path="/" element={<OnboardingView />} /> {/*Changed start to be /welcome when starting up the app*/}
             <Route path='/signup' element={<SignUpView />} />
             <Route path='/signin' element={<SignInView />} />
             <Route path='/paymentMethodView' element={<PaymentMethodView />} />
@@ -28,4 +28,3 @@ function App() {
 };
 
 export default App;
-
