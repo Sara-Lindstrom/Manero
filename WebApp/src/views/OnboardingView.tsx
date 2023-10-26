@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const OnboardingView = () => {
   return (
     <>  
@@ -35,8 +37,8 @@ const OnboardingView = () => {
                             <h1 className="main-title">ADoor To Door Delivery!</h1>
                             <p>Labore sunt culpa excepteur culpa ipsum. Labore occaecat ex nisi mollit.</p>
                         </div>
-                    </div>
-                    <a className="btn dark-btn" href="/signup">GET STARTED</a>
+                      </div>
+                      <Link className="btn dark-btn" to="/signup">GET STARTED</Link> {/*Replace this with Link attribute instead of a to follow React*/}
                 </div>
             </div>
         </section>
