@@ -37,6 +37,12 @@ public class UserController : ControllerBase
             return UnprocessableEntity(ModelState);
         }
 
+        var existingUser = await _userManager.FindByEmailAsync(model.Email);
+        if (existingUser != null)
+        {
+            return Conflict(new { Message = "User already exists." });
+        }
+
         var user = new UserModel { UserName = model.Email, Email = model.Email };
         var result = await _userManager.CreateAsync(user, model.Password);
 
