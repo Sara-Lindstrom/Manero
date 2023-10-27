@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import * as FormValidation from '../helpers/FormValidation'
 import { handleSignupSubmit, FormData } from '../helpers/FormHandlers'
+import { NavigateFunction } from 'react-router-dom';
 
-const SignUpFormSection: React.FC = () => {
+type SignUpFormProps = {
+  navigate: NavigateFunction
+}
 
-    const navigate = useNavigate();
+const SignUpFormSection: React.FC<SignUpFormProps> = ({navigate} : SignUpFormProps) => {
 
-    //useSTate for visibility of password input
+    //useState for visibility of password input
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [passwordConfirmVisible, setPasswordConfirmVisible] = useState(false);
 
@@ -105,6 +107,8 @@ const SignUpFormSection: React.FC = () => {
                   setPassword(event.target.value);
                   const validationResult = FormValidation.ValidatePassword(event.target.value);
                   setPasswordError(validationResult.error);
+                  const confirmValidationResult = FormValidation.ValidateConfirmPassword(event.target.value, confirmPassword);
+                  setConfirmPasswordError(confirmValidationResult.error);
               }}/>
               {/* button for display of password text */}
             <div className='input-validation-icon'>

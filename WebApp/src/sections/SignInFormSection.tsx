@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import * as FormValidation from '../helpers/FormValidation'
 import { handleSigninSubmit, FormDataSignIn } from '../helpers/FormHandlers';
+import { NavigateFunction } from 'react-router-dom';
 
-const SignInFormSection: React.FC = () => {
+type SignInProps = {
+    navigate: NavigateFunction
+}
 
-    const navigate = useNavigate();
+const SignInFormSection: React.FC<SignInProps> = ({navigate} : SignInProps) => {
 
     //useSTate for visibility of password input
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -49,8 +51,7 @@ const SignInFormSection: React.FC = () => {
     };
 
     return (
-        <div className='container'>
-        <div className="sign-in-page">
+        <div className="container">
             <p className='signin-sub-titel'>Sign in to continue</p>
             <form onSubmit={handleSignIn}>
 
@@ -91,28 +92,23 @@ const SignInFormSection: React.FC = () => {
                 </div>
                 <p className='input-error'>{passwordError}</p>
 
-                <table className="actions-container">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div className="remember-me">
-                                    <input
-                                        type="checkbox"
-                                        checked={rememberMe}
-                                        onChange={(e) => setRememberMe(e.target.checked)}
-                                    />
-                                    <label>Remember Me</label>
-                                </div>
-                            </td>
-                            <td>
-                                <a href="/forgotPassword" onClick={handleForgotPasswordClick}>Forgot Password?</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button className='btn dark-btn form-btn' style={{ marginTop: '20px' }} type='submit'>SIGN IN</button>
-                </form>
-            </div>
+                <div className="actions-container">
+                    <div>
+                        <div className="remember-me">
+                            <input
+                                type="checkbox"
+                                checked={rememberMe}
+                                onChange={(e) => setRememberMe(e.target.checked)}
+                            />
+                            <label>Remember Me</label>
+                        </div>
+                    </div>
+                    <div>
+                        <a href="/forgotPassword" onClick={handleForgotPasswordClick}>Forgot Password?</a>
+                    </div>
+                </div>
+                <button className='btn dark-btn form-btn' data-testid="submitButton" style={{ marginTop: '20px' }} type='submit'>SIGN IN</button>
+            </form>
         </div>
     );
 }

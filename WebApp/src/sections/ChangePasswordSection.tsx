@@ -14,6 +14,8 @@ const ChangePasswordSection = () => {
         setNewPassword(event.target.value);
         const validationResult = ValidatePassword(event.target.value);
         setNewPasswordError(validationResult.error);
+        const confirmValidationResult = ValidateConfirmPassword(event.target.value, confirmPassword);
+        setConfirmPasswordError(confirmValidationResult.error);
     };
 
     const handleConfirmPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -35,7 +37,7 @@ const ChangePasswordSection = () => {
     
     };
     return (
-        <div className="change-password-page">
+        <div className="container change-password-page">
             <p className="instruction-message">Enter new password and confirm.</p>
             
             <div className='input-container'>

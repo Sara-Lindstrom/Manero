@@ -60,17 +60,14 @@
                 border-radius: 5px;
                 border: 1px solid #c4c0c0;
                 font-weight: $font-weight-regular;
-                font-size: 16px;
-                margin-left: 45px;
-                margin-right: 45px;
             }
+
             .infoField {
-                margin: 10px 45px;
+                margin: 10px 5px;
                 color: #626262;
                 font-weight: $font-weight-semibold;
-                font-size: 12px;
-
             }
+
             .card-btn {
                 
                 display: flex;
@@ -90,23 +87,24 @@
             .cvvrow {
                 display: flex;
                 align-items: center;
-                padding: 10px;
-                label {
-                    display: inline-block;
-                    margin: 0;
-                    margin-left: 35px;
-                    
+                justify-content: space-between;
+                padding: 20px 0px;
 
-                }
-                input {
-                    max-width: 15%;
-                    border: 1px solid #c4c0c0;
-                    margin: 15px;
+                .cvv-input-container{
+                    max-width: 30%;
+                    flex: 2;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
                 }
 
-                a {
-                    margin-left: 20px;
-                    font-size: 1rem;
+                .Camera{
+                    display: inline;
+                    font-size: 1.2rem;
+                }
+
+                .input-width {
+                    width: 100px;
                 }
             }
         }
