@@ -11,7 +11,7 @@ const OnboardingView = () => {
             </div>
         </section>
 
-        {/* This is for the OnboardingView with slides */}
+        {/* This is for the OnboardingView slides */}
         <section className="welcome-information">
             <div id="carouselExampleIndicators" className="carousel slide welcome-iformation-circle" >
                 <div className="carousel-inner-container">
