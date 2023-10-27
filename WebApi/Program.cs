@@ -13,14 +13,14 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy",
         builder => builder
-        .WithOrigins("http://localhost:3001", "http://localhost:3000") // React to run on duplicated port if needed
+        .WithOrigins("http://localhost:3000", "http://localhost:3001", "https://localhost:3000", "https://localhost:3001") // React to run on duplicated port if needed
         .AllowAnyMethod()
         .AllowAnyHeader());
 });
 
 // DbContext and Identity
 builder.Services.AddDbContext<UserDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConn")));
 
 // Enforce unique emails
 builder.Services.AddIdentity<UserModel, IdentityRole>(options =>

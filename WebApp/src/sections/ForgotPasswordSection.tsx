@@ -24,7 +24,7 @@ const ForgotPasswordSection = () => {
   };
 
   return (
-    <section className="forgot-password-page">
+    <section className="container forgot-password-page">
       <p className="instruction-message">
         Please enter your email address. You will receive a link to create a new password via email.
       </p>

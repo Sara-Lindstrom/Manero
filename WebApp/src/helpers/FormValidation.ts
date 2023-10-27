@@ -1,5 +1,3 @@
-import React from 'react'
-
 type ValidationResult = {
     error: string;
     isValid: boolean;
@@ -85,6 +83,27 @@ export const ValidateConfirmPassword = (password:string, confirmPassword:string)
     }
     if (password !== confirmPassword){
         error = "The Confirm Password doesn't match your Password";
+    }
+
+    return {
+        error,
+        isValid: error === '',
+    }
+}
+
+// validate phone number 
+export const ValidatePhoneNumber = (text:string): ValidationResult => {
+    let error = '';
+    const regExText = /^[0-9]+$/;
+
+    if (text === ''){
+        error = "You need to fill this field"
+    }
+    else if (text.length < 8){
+        error ="This feild must be at least 8 characters long"
+    }
+    else if (!regExText.test(text)){
+        error = "This field can only contain numbers"
     }
 
     return {
