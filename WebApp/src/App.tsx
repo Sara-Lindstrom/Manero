@@ -8,6 +8,7 @@ import ForgotPasswordView from './views/ForgotPasswordView';
 import ResetPasswordConfirmedView from './views/ResetPasswordConfirmedView';
 import ChangePasswordView from './views/ChangePasswordView';
 import SignInView from './views/SignInView';
+import EditProfileView from './views/EditProfileView';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path='/forgotPassword' element={<ForgotPasswordView />} />
             <Route path='/changePassword' element={<ChangePasswordView />} />
             <Route path='/AddCardView' element={<AddCardView />} />
+            <Route path='/EditProfile' element={<EditProfileView /> }/>
         </Routes>
     </BrowserRouter>
 
