@@ -15,7 +15,7 @@ test('Should navigate to /addANewCard when the link is clicked', async () => {
   const addCardNavLink = getByTestId('addNewCardLink');
 
    // Ensure that the "href" attribute of the link is '/addANewCard'.
-  expect(addCardNavLink.getAttribute('href')).toBe('/addANewCard');
+  expect(addCardNavLink.getAttribute('href')).toBe('/AddCardView');
 
    // Simulate a click event on the link.
   fireEvent.click(addCardNavLink);
@@ -23,7 +23,7 @@ test('Should navigate to /addANewCard when the link is clicked', async () => {
   // Wait for navigation to occur, then check if the URL matches '/addANewCard'.
   await waitFor(() => {
     // Compare with window.location.pathname
-    expect(window.location.pathname).toBe('/addANewCard');
+    expect(window.location.pathname).toBe('/AddCardView');
   });
 });
 

@@ -1,0 +1,111 @@
+.AddCard {
+ display: flex;
+    .container {
+        display: flex;
+        flex-direction: column;
+
+        .cardbox {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .card {
+                width: 100%;
+                display: flex;
+                padding: 20px;
+                border-radius: 15px;
+                width: 279px;
+                height: 170px;
+                background-color: rgb(155, 76, 155);
+                margin-top: 50px;
+                margin-bottom: 40px;
+    
+                .bank {
+                    font-weight: 500;
+                    font-size: 25px;
+                    color: white;
+                    margin-bottom: 25px;
+                }
+                .card-number {
+                    color: white;
+                    font-size: 16px;
+                    font-weight: 400;
+                    margin-bottom: 25px;
+                }
+                .cardinfo {
+                    display: flex;
+                    justify-content: space-between;
+                    color: white;
+                    font-size: 10px;
+                }
+            }
+        }
+
+        }
+        .cardform {
+            font-family: $font;
+            display: flex;
+            flex-direction: column;
+
+            .error-messages {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                color: red;
+            }
+
+            input{ 
+                border: none;
+                font-weight: 400;
+                border-radius: 5px;
+                border: 1px solid #c4c0c0;
+                font-weight: $font-weight-regular;
+            }
+
+            .infoField {
+                margin: 10px 5px;
+                color: #626262;
+                font-weight: $font-weight-semibold;
+            }
+
+            .card-btn {
+                
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .dark-btn {
+                    border-radius: 25px;
+                    width: 350px;
+                    margin: 10px;
+                    border: none;
+                    font-size: 14px;
+                    padding: 10px;
+                }
+            }
+
+            .cvvrow {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 20px 0px;
+
+                .cvv-input-container{
+                    max-width: 30%;
+                    flex: 2;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                }
+
+                .Camera{
+                    display: inline;
+                    font-size: 1.2rem;
+                }
+
+                .input-width {
+                    width: 100px;
+                }
+            }
+        }
+    }

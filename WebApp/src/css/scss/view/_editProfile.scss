@@ -7,17 +7,17 @@
             height: 30px;
             margin-top: 30px;
             margin-bottom: 30px;
-          }
-    
-          .profilePictureSection {
+        }
 
-                position: relative;
-                width: 200px;
-                height: 200px;
-                border-radius: 50%;
-                border: 10px solid $color-blue;
-                margin: 0 auto;
-                
+        .profilePictureSection {
+
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 10px solid $color-blue;
+            margin: 0 auto;
+
             img {
                 width: 180px;
                 height: 180px;
@@ -39,18 +39,18 @@
 
                 .upload-area {
                     cursor: pointer;
-                  
+
                     input {
-                      display: none;
+                        display: none;
                     }
-                  
+
                     .upload-button {
-                      width: 60px;
-                      height: 60px;
- 
-                      i {
-                        font-size: 17px;
-                      }
+                        width: 60px;
+                        height: 60px;
+
+                        i {
+                            font-size: 17px;
+                        }
                     }
                 }
             }

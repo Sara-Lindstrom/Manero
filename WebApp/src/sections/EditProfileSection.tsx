@@ -1,32 +1,27 @@
 import React, { useState } from 'react';
 import * as FormValidation from '../helpers/FormValidation';
-import BreadcrumbSection from '../sections/BreadcrumbSection';
 
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-  location: string;
-  imgUrl: string;
-}
+export  interface User {
+    id: number;
+    name: string;
+    email: string;
+    phone: string;
+    location: string;
+    imgUrl: string;
+  }
 
-interface EditProfileType {
-  user: User;
-}
+  //interface EditProfileType {
+  //  user: User;
+  //}
 
+const EditProfileSection: React.FC = () => {
 
-const EditProfile: React.FC<EditProfileType> = ({user}) => {
-
-
-  //useStates for setting input values both for validation and populate new User
-  const [name, setName] = useState (user.name);
-  const [email, setEmail] = useState (user.email);
-  const [phoneNumber, setPhoneNumber] = useState (user.phone);
-  const [location, setLocation] = useState (user.location);
-   const [fileSelected, setFileSelected] = useState<string>(user.imgUrl);
- 
-
+    //useStates for setting input values both for validation and populate new User
+  const [name, setName] = useState ("namn");
+  const [email, setEmail] = useState ("info@mail.se");
+  const [phoneNumber, setPhoneNumber] = useState ("0645-123345");
+  const [location, setLocation] = useState ("Ankeborg");
+   const [fileSelected, setFileSelected] = useState<string>("Test");
 
   //UseStates for error messages in frontend validation
   const [nameError, setNameError] = useState('');
@@ -41,7 +36,7 @@ const EditProfile: React.FC<EditProfileType> = ({user}) => {
     let validEmail = FormValidation.ValidateEmail(email).isValid;
     let validPhoneNumber = FormValidation.ValidatePhoneNumber(phoneNumber).isValid;
     let validLocation =  FormValidation.ValidateName(location).isValid;
-    
+
 
     // if everything is valid, save to DB
     if(validName === true && validEmail === true && validPhoneNumber === true && validLocation === true)
@@ -54,11 +49,10 @@ const EditProfile: React.FC<EditProfileType> = ({user}) => {
           location: location,
           fileSelected: fileSelected
       }
-
       handleEditSubmit(formData)
       */
     }
-   
+
     else{
       e.preventDefault()
     }
@@ -79,11 +73,8 @@ const EditProfile: React.FC<EditProfileType> = ({user}) => {
     }
   }
 
+
   return (
-
-    <>
-    <BreadcrumbSection currentPage='Edit Profile' />
-
     <div className='container editprofile'>
       <div className='heading'>
         <div className="vertical-line"></div>
@@ -104,7 +95,7 @@ const EditProfile: React.FC<EditProfileType> = ({user}) => {
       <div className='input-container'>
           <p className='input-label'>NAME</p>
 
-          <input className='input' id='Editname' value={name}
+          <input className='input' id='Editname' value={name} aria-label='NEW NAME'
             onChange={(event) => {
                 setName(event.target.value);
                 const validationResult = FormValidation.ValidateName(event.target.value);
@@ -126,7 +117,7 @@ const EditProfile: React.FC<EditProfileType> = ({user}) => {
 
       <div className='input-container'>
           <p className='input-label'>EMAIL</p>
-          <input className='input' id='Editemail' value={email}
+          <input className='input' id='Editemail' value={email} aria-label='NEW EMAIL'
             onChange={(event) => {
               setEmail(event.target.value);
                 const validationResult = FormValidation.ValidateEmail(event.target.value);
@@ -147,7 +138,7 @@ const EditProfile: React.FC<EditProfileType> = ({user}) => {
 
       <div className='input-container'>
           <p className='input-label'>Phone Number</p>
-          <input className='input' id='Editphonenumber'  value={phoneNumber}               
+          <input className='input' id='Editphonenumber'  value={phoneNumber}   aria-label='NEW PHONENUMBER'          
             onChange={(event) => {
                 setPhoneNumber(event.target.value);
                 const validationResult = FormValidation.ValidatePassword(event.target.value);
@@ -169,7 +160,7 @@ const EditProfile: React.FC<EditProfileType> = ({user}) => {
       <div className='input-container'>
           <p className='input-label'>Location</p>
 
-          <input className='input' id='Editname' value={location}
+          <input className='input' id='Editname' value={location} aria-label='NEW LOCATION'
             onChange={(event) => {
                 setLocation(event.target.value);
                 const validationResult = FormValidation.ValidateName(event.target.value);
@@ -192,12 +183,7 @@ const EditProfile: React.FC<EditProfileType> = ({user}) => {
       <button className='btn dark-btn form-btn' type='submit'>SAVE CHANGES</button>
     </form>
 </div>
-    </>
-  
-
-
-    
   )
 }
 
-export default EditProfile
+export default EditProfileSection

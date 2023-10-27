@@ -1,5 +1,3 @@
-import React from 'react'
-
 type ValidationResult = {
     error: string;
     isValid: boolean;
@@ -92,7 +90,6 @@ export const ValidateConfirmPassword = (password:string, confirmPassword:string)
         isValid: error === '',
     }
 }
-
 
 // validate phone number 
 export const ValidatePhoneNumber = (text:string): ValidationResult => {
