@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import * as FormValidation from '../helpers/FormValidation';
 
+/*
 export  interface User {
     id: number;
     name: string;
@@ -10,18 +11,19 @@ export  interface User {
     imgUrl: string;
   }
 
-  //interface EditProfileType {
-  //  user: User;
-  //}
+  interface EditProfileType {
+    user: User;
+  }
+  */
 
 const EditProfileSection: React.FC = () => {
 
     //useStates for setting input values both for validation and populate new User
   const [name, setName] = useState ("namn");
   const [email, setEmail] = useState ("info@mail.se");
-  const [phoneNumber, setPhoneNumber] = useState ("0645-123345");
+  const [phoneNumber, setPhoneNumber] = useState ("0645123345");
   const [location, setLocation] = useState ("Ankeborg");
-   const [fileSelected, setFileSelected] = useState<string>("Test");
+   const [fileSelected, setFileSelected] = useState<string>("https://www.wilsoncenter.org/sites/default/files/media/images/person/james-person-1.jpg");
 
   //UseStates for error messages in frontend validation
   const [nameError, setNameError] = useState('');
@@ -141,7 +143,7 @@ const EditProfileSection: React.FC = () => {
           <input className='input' id='Editphonenumber'  value={phoneNumber}   aria-label='NEW PHONENUMBER'          
             onChange={(event) => {
                 setPhoneNumber(event.target.value);
-                const validationResult = FormValidation.ValidatePassword(event.target.value);
+                const validationResult = FormValidation.ValidatePhoneNumber(event.target.value);
                 setPhoneNumberError(validationResult.error);
             }}/>
             {/* button for display of password text */}

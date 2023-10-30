@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './css/Style.min.css';
 import AddCardView from './views/AddCardView';
 import PaymentMethodView from './views/PaymentMethodView';
+import EditProfile from './views/EditProfileView';
+import ViewProfile from './views/ViewProfileView';
 import OnboardingView from './views/OnboardingView';
 import SignUpView from './views/SignUpView';
 import ForgotPasswordView from './views/ForgotPasswordView';
@@ -11,6 +13,9 @@ import SignInView from './views/SignInView';
 import EditProfileView from './views/EditProfileView';
 
 function App() {
+
+  
+  
   return (
     <BrowserRouter>
           <Routes>
@@ -23,6 +28,7 @@ function App() {
             <Route path='/changePassword' element={<ChangePasswordView />} />
             <Route path='/AddCardView' element={<AddCardView />} />
             <Route path='/EditProfile' element={<EditProfileView /> }/>
+            <Route path='/viewProfile' element={<ViewProfile />} />
         </Routes>
     </BrowserRouter>
 
