@@ -11,6 +11,7 @@ import ResetPasswordConfirmedView from './views/ResetPasswordConfirmedView';
 import ChangePasswordView from './views/ChangePasswordView';
 import SignInView from './views/SignInView';
 import EditProfileView from './views/EditProfileView';
+import HomeView from './views/HomeView';
 import BestSellersView from './views/BestSellersView';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
             <Route path="/" element={<OnboardingView />} /> {/*Changed start to be /welcome when starting up the app*/}
             <Route path='/signup' element={<SignUpView />} />
             <Route path='/signin' element={<SignInView />} />
+            <Route path='/home' element={<HomeView />} />
             <Route path='/paymentMethodView' element={<PaymentMethodView />} />
             <Route path='/resetPasswordConfirmed' element={<ResetPasswordConfirmedView />} />
             <Route path='/forgotPassword' element={<ForgotPasswordView />} />
