@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
-import { NavLink } from 'react-router-dom'
 import ProductList from '../sections/ProductList';
 
 const BestSellersView: React.FC = () => {
@@ -27,7 +26,7 @@ const BestSellersView: React.FC = () => {
 
     const handleCategorySelect = (category: string) => {
         setSelectedCategory(category);
-        setDropdownVisible(false); // Close the dropdown after selecting a category.
+        setDropdownVisible(false);
     };
 
     const handleNavigateBack = () => {
@@ -39,28 +38,30 @@ const BestSellersView: React.FC = () => {
          <BreadcrumbSection currentPage="Best Sellers" showBackButton={true} onNavigateBack={handleNavigateBack}/>
 
         <div className='best-seller-filter'>
-            <i className="slider fa-solid fa-sliders" onClick={toggleSliderDropdown}></i>
+            <div className="slider" onClick={toggleSliderDropdown}>
+                <i className="fa-solid fa-sliders"></i>
                 {isSliderDropdownVisible && (
                     <div className="category-dropdown">
                         <ul>
-                            {sliderCategories.map((category) => (
-                                <li
-                                    key={category}
-                                    onClick={() => handleSliderCategorySelect(category)}
+                            {sliderCategories.map((sliderCategory) => (
+                                <li className='category-dropdown-obejcts'
+                                    key={sliderCategory}
+                                    onClick={() => handleSliderCategorySelect(sliderCategory)}
                                 >
-                                    {category}
+                                    {sliderCategory}
                                 </li>
                             ))}
                         </ul>
                     </div>
                 )}
+            </div>
             <div className="sorting-by" onClick={toggleDropdown}>
                 Sorting By <i className={`fa-solid ${isDropdownVisible ? 'fa-arrow-up' : 'fa-arrow-down'}`}></i>
                 {isDropdownVisible && (
                     <div className="category-dropdown">
                         <ul>
                             {categories.map((category) => (
-                                <li
+                                <li className='category-dropdown-obejcts'
                                     key={category}
                                     onClick={() => handleCategorySelect(category)}
                                 >
@@ -73,7 +74,7 @@ const BestSellersView: React.FC = () => {
             </div>
         </div>
 
-         <ProductList selectedCategory={selectedCategory}  />
+        <ProductList  selectedCategory={selectedCategory} limit={4}  />
         </>
     )
 }
