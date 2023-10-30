@@ -1,0 +1,12 @@
+.best-seller-filter {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+
+    .slider {
+        margin-left: 33px;
+    }
+    .sorting-by {
+        margin-right: 33px;
+    }
+}

@@ -16,9 +16,11 @@
 @import "./parts/changePasswordSection.scss";
 @import "./parts/AddCard";
 @import "./parts/signInFormSection";
+@import "./parts/productList";
 
 //VIEWS
 @import "./view/onboardingView";
 @import "./view/_signUpView";
 @import "./view/editProfile";
 @import "./view/viewProvile";
+@import "./view/bestSellersView";

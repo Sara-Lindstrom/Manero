@@ -56,4 +56,45 @@ a {
     }
 }
 
+ul {
+    list-style: none;
+}
+
+.product-card-name {
+    font-family: $font;
+    font-size: 14px;
+    margin: 0.5px;
+}
+
+.product-card-price-container {
+    display: flex;
+
+    .product-card-price {
+        font-family: $font;
+        font-size: 14px;
+        margin: 0.5px;
+    }
+    
+    .product-card-salesprice {
+        font-family: $font;
+        font-size: 14px;
+        margin: 0.5px;
+        color: $color-red;
+        margin-left: 15px;
+    }
+
+    .product-card-price-strikethrough {
+        font-family: $font;
+        font-size: 14px;
+        margin: 0.5px;
+        text-decoration: line-through;
+    }
+}
+
+.product-card-rating {
+    font-family: $font;
+    font-size: 12px;
+    margin: 1px;
+    color: $color-orange;
+}
 
