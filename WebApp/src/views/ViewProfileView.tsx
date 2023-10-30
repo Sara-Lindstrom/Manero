@@ -7,7 +7,7 @@ const ViewProfile :React.FC = () => {
 
   return (
     <>
-    <BreadcrumbSection currentPage='My Profile' />
+    <BreadcrumbSection currentPage='My Profile' showHamburgerButton={true} showCurrentPage={true} showCartItem={true}/>
     <ViewProfileSection />
     </>
   )
