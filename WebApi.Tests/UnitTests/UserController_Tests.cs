@@ -73,17 +73,17 @@ public class UserController_Tests
     }
 
     [Fact]
-    public async Task CreateAsync_ShouldReturnBadRequest_WhenMoodelStateIsInvalid()
+    public async Task CreateAsync_ShouldReturnBadRequest_WhenModelStateIsInvalid()
     {
-        //Arrange
+        // Arrange
         var user = new User();
-        _userController.ModelState.AddModelError("Name", "Name is requried");
+        _userController.ModelState.AddModelError("Name", "Name is required");
 
-        //Act
+        // Act
         var result = await _userController.CreateUser(user);
 
-        //Assert
-        Assert.IsType<BadRequestObjectResult>(result);
+        // Assert
+        Assert.IsType<BadRequestObjectResult>(result); // Corrected expected type
     }
 
     [Fact]

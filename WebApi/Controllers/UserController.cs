@@ -37,6 +37,12 @@ public class UserController : ControllerBase
             return BadRequest(ModelState);
         }
 
+        var existingUser = await _userManager.FindByEmailAsync(model.Email);
+        if (existingUser != null)
+        {
+            return Conflict(new { Message = "User already exists." });
+        }
+
         var user = new UserModel
         {
             UserName = model.Email,
