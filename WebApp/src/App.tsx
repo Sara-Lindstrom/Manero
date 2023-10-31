@@ -36,7 +36,6 @@ function App() {
             <Route path='/viewProfile' element={<ViewProfile />} />
             <Route path='/leaveAReview' element={<LeaveAReviewView />} />
             <Route path='/bestSellersView' element={<BestSellersView />} />
-            <Route path='/home' element={< HomeView />} />
             <Route path='/category' element={<Categoryview />} />
         </Routes>
     </BrowserRouter>
