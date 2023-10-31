@@ -41,7 +41,31 @@ a {
 
     &:hover{
         text-decoration:underline;
+        color: $color-dark;
     }
 }
 
+.link {
+    text-decoration: none;
+    transition: all 300ms;
+    color:$color-grey;
 
+    &:hover{
+        text-decoration:underline;
+        color: $color-dark;
+    }
+}
+
+ul {
+    list-style: none;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+li {
+    list-style: none;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}

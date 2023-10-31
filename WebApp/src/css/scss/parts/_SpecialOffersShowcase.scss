@@ -1,0 +1,27 @@
+.home-page-showcase {
+    margin: 20px;
+
+
+    .showcase-offers {
+        background-color: $color-blue;
+        height: 9.375rem;
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        justify-content: center;
+
+
+        h2 {
+            font-family: $font;
+            font-weight: $font-weight-bold;
+            font-size: 1.375rem;
+            color: $color-white;
+        }
+
+        a {
+            font-size: 0.875rem;
+            width: auto;
+            padding: 10px 30px;
+        }
+    }
+}
