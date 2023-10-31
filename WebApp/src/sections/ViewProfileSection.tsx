@@ -2,6 +2,24 @@ import React from 'react'
 
 const ViewProfileSection = () => {
 
+  function signout () {
+    //signout function
+    const popup = document.getElementById("popup");
+    popup?.classList.remove("open-popup");
+}
+
+
+function showPopup () {
+    const popup = document.getElementById("popup");
+    popup?.classList.add("open-popup");
+}
+
+function closePopup () {
+    const popup = document.getElementById("popup");
+    popup?.classList.remove("open-popup");
+}
+
+  /*
     function confirmSignOut() {
         const userConfirmed = window.confirm("Are you sure you want to sign out?");
       
@@ -14,10 +32,11 @@ const ViewProfileSection = () => {
           console.log("User canceled sign out.");
         }
       }
+      */
 
   return (
-    <div className='view-profile'>
-      
+    <>
+    <div className='view-profile'>     
         <div className="vertical-line"></div>
         <div className='photo-section'>
           <img src="https://www.wilsoncenter.org/sites/default/files/media/images/person/james-person-1.jpg" alt='Adam' />
@@ -30,7 +49,7 @@ const ViewProfileSection = () => {
           <h5>adam@domain.com</h5>
         </div>
         <div className='Fields-section'>
-            <a className='field' href='#' id='order-history'>
+            <a className='field' href='/orderhistory' id='order-history'>
               <div className='field-details'>
                 <div className='icon-name'>
                   <i className="fa-light fa-calendar"></i>
@@ -66,7 +85,7 @@ const ViewProfileSection = () => {
                 <i id='right-arrow' className="fa-solid fa-chevron-right"></i>
               </div>
             </a>
-            <a className='field' href='#' onClick={confirmSignOut} id='signout'>
+            <a className='field' href='#' /*onClick={confirmSignOut}*/ onClick={e => {showPopup()}} id='signout'>
               <div className='field-details'>
                 <div className='icon-name'>
                   <i className="fa-regular fa-arrow-right-from-bracket"></i>
@@ -75,14 +94,26 @@ const ViewProfileSection = () => {
                 <i id='right-arrow' className="fa-solid fa-chevron-right"></i>
               </div>
             </a>
-            
-            
-
-
         </div>
-      
+     </div>
 
-    </div>
+     <div className='modal-section' id='popup'>
+            <div className='container'>
+                <div className='content'>
+                    <div className='verticla-line'>|</div>
+                    <div className='message'>
+                        <p>
+                            Are you sure you want to sign out ?
+                        </p>
+                    </div>
+                    <div className='buttons'>
+                        <button type='button' className='yes-btn' onClick={e => {signout()}}>SURE</button>
+                        <button type='button' className='no-btn' onClick={e => {closePopup()}}>Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </>
   )
 }
 
