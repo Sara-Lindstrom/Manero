@@ -17,13 +17,17 @@
 @import "./parts/AddCard";
 @import "./parts/signInFormSection";
 @import "./parts/iconsNavigationSection";
+@import "./parts/_scrollMenu.scss";
 
     //HomeView Start
+@import "./view/homeView";
 @import "./parts/SpecialOffersShowcase";
 @import "./parts/BestSellerPreviewSection";
+@import "./parts/productList";
 
 //VIEWS
 @import "./view/onboardingView";
 @import "./view/_signUpView";
 @import "./view/editProfile";
 @import "./view/viewProvile";
+@import "./view/bestSellersView";

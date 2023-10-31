@@ -1,0 +1,48 @@
+.categorynav {
+
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+        .scrollmenu {
+            display: flex;
+            background-color: #fff;
+            overflow: auto;
+            white-space: nowrap;
+
+            a {
+                display: inline-block;
+                color: black;
+                padding: 15px;
+                margin-left: 5px;
+                margin-right: 5px;
+                text-decoration: none;
+                margin-bottom: 15px;
+            
+                &:hover {
+                    background-color: black;
+                    color: #fff;
+                    border-radius: 25px;
+                    transition: 0.3s;
+                }
+            }
+            .active {
+                background-color: black;
+                color: #fff;
+                border-radius: 25px;
+                transition: 0.3s;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+  

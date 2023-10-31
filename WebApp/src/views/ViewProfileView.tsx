@@ -2,7 +2,7 @@ import React from 'react'
 import BreadcrumbSection from '../sections/BreadcrumbSection'
 import ViewProfileSection from '../sections/ViewProfileSection'
 
-const ViewProfile :React.FC = () => { 
+const ViewProfile: React.FC = () => { 
    
 
   return (
