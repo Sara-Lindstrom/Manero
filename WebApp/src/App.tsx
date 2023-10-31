@@ -13,6 +13,7 @@ import SignInView from './views/SignInView';
 import EditProfileView from './views/EditProfileView';
 import HomeView from './views/HomeView';
 import BestSellersView from './views/BestSellersView';
+import Categoryview from './views/CategoryView';
 
 function App() {
 
@@ -29,11 +30,12 @@ function App() {
             <Route path='/resetPasswordConfirmed' element={<ResetPasswordConfirmedView />} />
             <Route path='/forgotPassword' element={<ForgotPasswordView />} />
             <Route path='/changePassword' element={<ChangePasswordView />} />
-            <Route path='/AddCardView' element={<AddCardView />} />
+            <Route path='/addCardView' element={<AddCardView />} />
             <Route path='/EditProfile' element={<EditProfileView /> }/>
             <Route path='/viewProfile' element={<ViewProfile />} />
             <Route path='/bestSellersView' element={<BestSellersView />} />
             <Route path='/home' element={< HomeView />} />
+            <Route path='/category' element={<Categoryview />} />
         </Routes>
     </BrowserRouter>
 
