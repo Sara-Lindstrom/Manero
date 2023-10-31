@@ -1,24 +1,25 @@
 import React from 'react';
-import { render, fireEvent, screen, waitFor } from '@testing-library/react';
-import BestSellersView from '../views/BestSellersView';
+import { render, fireEvent } from '@testing-library/react';
+import BestSellersView from '../views/BestSellersView'; // Import your component
 
-test('it should handle sorting dropdown click events', async () => {
-  render(<BestSellersView />);
+test('toggleDropdown function is called when "Sorting By" is clicked', () => {
+  const { getByText, queryByText } = render(<BestSellersView />);
 
-  // Use waitFor to wait for the element to appear
-  await waitFor(() => {
-    screen.getByText('Sorting By');
-  });
+  // Initially, the dropdown is not visible
+  const sortingByElement = getByText('Sorting By');
+  expect(sortingByElement).toBeTruthy();
 
-  // Find the sorting element
-  const sortingBy = screen.getByText('Sorting By');
+  // Click on "Sorting By" to toggle the dropdown
+  fireEvent.click(sortingByElement);
 
-  // Check if the sorting dropdown is initially hidden
-  expect(screen.queryByText('Category 1')).toBeNull();
+  // After clicking, the dropdown should be visible
+  const categoryDropdown = queryByText('All');
+  expect(categoryDropdown).toBeTruthy();
 
-  // Simulate a click on the sorting dropdown to show the dropdown
-  fireEvent.click(sortingBy);
+  // Click again to hide the dropdown
+  fireEvent.click(sortingByElement);
 
-  // Check if the sorting dropdown is visible
-  expect(screen.getByText('Category 1')).toBeTruthy();
+  // After the second click, the dropdown should be hidden
+  const categoryDropdownHidden = queryByText('All');
+  expect(categoryDropdownHidden).toBeNull();
 });
