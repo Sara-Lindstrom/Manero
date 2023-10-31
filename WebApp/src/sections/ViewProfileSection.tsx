@@ -4,16 +4,16 @@ const ViewProfileSection = () => {
 
     function confirmSignOut() {
         const userConfirmed = window.confirm("Are you sure you want to sign out?");
-      
+
         if (userConfirmed) {
-          // Perform sign-out logic here
-          console.log("User confirmed sign out.");
-        } 
-        else {
-          // Handle the case where the user cancels the sign-out
-          console.log("User canceled sign out.");
+            // Perform sign-out logic here
+            console.log("User confirmed sign out.");
         }
-      }
+        else {
+            // Handle the case where the user cancels the sign-out
+            console.log("User canceled sign out.");
+        }
+    }
 
   return (
     <div className='view-profile'>
