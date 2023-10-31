@@ -1,0 +1,109 @@
+.best-seller-filter {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+
+    .slider {
+        position: relative;
+        margin-left: 20px;
+        font-size: 14px;
+
+        .category-dropdown {
+            position: absolute;
+            top: 30px; 
+            left: 0; 
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            padding-right: 70px;
+            z-index: 2;
+            font-size: 12px;
+            text-align: left;
+
+            @include md {
+                position: absolute;
+                top: 30px; 
+                left: 0; 
+                background-color: white;
+                border: 1px solid #ccc;
+                padding: 10px;
+                padding-right: 170px;
+                z-index: 2;
+                font-size: 12px;
+                text-align: left;
+            }
+
+            .category-dropdown-obejcts {
+                display: flex;
+                align-items: center;
+                justify-content: start;
+                width: 70px;
+
+                @include md {
+                    display: flex;
+                    align-items: center;
+                    justify-content: start;
+                    width: 170px;
+                }
+            }
+
+            li:hover {
+                transition: all 0.25s ease-in-out;
+                transform: scale(1.05);
+                font-weight: $font-weight-bold;
+            }
+        }
+    }
+    
+    .sorting-by {
+        position: relative;
+        margin-right: 20px;
+        font-size: 14px;
+
+        .category-dropdown {
+            position: absolute;
+            top: 30px; 
+            right: 0;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            padding-right: 70px;
+            z-index: 2;
+            font-size: 12px;
+            text-align: left;
+
+            @include md {
+                position: absolute;
+                top: 30px; 
+                right: 0; 
+                background-color: white;
+                border: 1px solid #ccc;
+                padding: 10px;
+                padding-right: 170px;
+                z-index: 2;
+                font-size: 12px;
+                text-align: left;
+            }
+
+            .category-dropdown-obejcts {
+                display: flex;
+                align-items: center;
+                justify-content: start;
+                width: 70px;
+
+                @include md {
+                    display: flex;
+                    align-items: center;
+                    justify-content: start;
+                    width: 170px;
+                }
+            }
+
+            li:hover {
+                transition: all 0.25s ease-in-out;
+                transform: scale(1.05);
+                font-weight: $font-weight-bold;
+            }
+        }
+    }
+}
