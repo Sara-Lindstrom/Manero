@@ -2,8 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\src",
+    "\\src\\css",
     "\\src\\sections",
     "\\src\\views"
   ],
+  "SelectedNode": "\\src\\views\\SignUpView.tsx",
   "PreviewInSolutionExplorer": false
 }
