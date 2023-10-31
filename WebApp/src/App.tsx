@@ -33,6 +33,7 @@ function App() {
             <Route path='/EditProfile' element={<EditProfileView /> }/>
             <Route path='/viewProfile' element={<ViewProfile />} />
             <Route path='/bestSellersView' element={<BestSellersView />} />
+            <Route path='/home' element={< HomeView />} />
         </Routes>
     </BrowserRouter>
 
