@@ -8,6 +8,10 @@ const BestSellerPreviewSection = () => {
             <h2>Best Seller</h2>
             <a href="#">view all<i className="fa-solid fa-chevron-right"></i></a>
         </div>
+        <div className=''>
+
+        </div>
+
     </section>
   )
 }
