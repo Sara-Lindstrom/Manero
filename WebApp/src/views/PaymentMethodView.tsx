@@ -12,7 +12,7 @@ const paymentMethodView: React.FC = () => {
 
   return (
     <>
-        <BreadcrumbSection currentPage='Payment Method' showBackButton={true} onNavigateBack={handleNavigateBack} showSearchField={true} />
+        <BreadcrumbSection currentPage='Payment Method' showBackButton={true} onNavigateBack={handleNavigateBack} showCurrentPage={true} />
         <PaymentCardsSection />
         <PayoneersSection />
     </>

@@ -11,6 +11,7 @@ import ResetPasswordConfirmedView from './views/ResetPasswordConfirmedView';
 import ChangePasswordView from './views/ChangePasswordView';
 import SignInView from './views/SignInView';
 import EditProfileView from './views/EditProfileView';
+import LeaveAReviewView from './views/LeaveAReviewView';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
             <Route path='/AddCardView' element={<AddCardView />} />
             <Route path='/EditProfile' element={<EditProfileView /> }/>
             <Route path='/viewProfile' element={<ViewProfile />} />
+            <Route path='/leaveAReview' element={<LeaveAReviewView />} />
         </Routes>
     </BrowserRouter>
 
