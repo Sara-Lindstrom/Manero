@@ -2,24 +2,49 @@ import React from 'react'
 
 const ViewProfileSection = () => {
 
+  
+
   function signout () {
     //signout function
     const popup = document.getElementById("popup");
     popup?.classList.remove("open-popup");
-}
+  }
 
 
 function showPopup () {
     const popup = document.getElementById("popup");
+    const img = document.getElementById("photo-section");
+    const field1 = document.getElementById("order-history");
+    const field2 = document.getElementById("payment-method");
+    const field3 = document.getElementById("my-address");
+    const field4 = document.getElementById("my-promocode");
+    const field5 = document.getElementById("signout");
     popup?.classList.add("open-popup");
+    img?.classList.add("opened-popup");
+    field1?.classList.add("opened-popup");
+    field2?.classList.add("opened-popup");
+    field3?.classList.add("opened-popup");
+    field4?.classList.add("opened-popup");
+    field5?.classList.add("opened-popup");
 }
 
 function closePopup () {
     const popup = document.getElementById("popup");
+    const img = document.getElementById("photo-section");
+    const field1 = document.getElementById("order-history");
+    const field2 = document.getElementById("payment-method");
+    const field3 = document.getElementById("my-address");
+    const field4 = document.getElementById("my-promocode");
+    const field5 = document.getElementById("signout");
     popup?.classList.remove("open-popup");
-}
+    img?.classList.remove("opened-popup");
+    field1?.classList.remove("opened-popup");
+    field2?.classList.remove("opened-popup");
+    field3?.classList.remove("opened-popup");
+    field4?.classList.remove("opened-popup");
+    field5?.classList.remove("opened-popup");
+  }
 
-  /*
     function confirmSignOut() {
         const userConfirmed = window.confirm("Are you sure you want to sign out?");
       
@@ -32,13 +57,12 @@ function closePopup () {
           console.log("User canceled sign out.");
         }
       }
-      */
 
   return (
     <>
     <div className='view-profile'>     
         <div className="vertical-line"></div>
-        <div className='photo-section'>
+        <div className='photo-section' id='photo-section'>
           <img src="https://www.wilsoncenter.org/sites/default/files/media/images/person/james-person-1.jpg" alt='Adam' />
           <a className='icon' href='/EditProfile'>
             <i className="fa-regular fa-pen-to-square"></i>
