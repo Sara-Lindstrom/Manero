@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { ChangeEvent, FormEvent } from 'react';
+import axios from 'axios';
 
 type Navigate = (path: string) => void;
 
@@ -12,6 +12,7 @@ export type FormData = {
 export type FormDataSignIn = {
     email: string;
     password: string;
+    rememberMe: boolean;
 };
 
 // Handling changes in the input fields
@@ -76,35 +77,63 @@ export const handleSigninSubmit = async (
     }
 };
 
-// Sign out form function (not finished)
-export const handleSignOut = async (navigate: Navigate): Promise<void> => {
+// Sign out form function
+export const handleSignOut = async (
+    navigate: Navigate,
+    onSuccess?: () => void,
+    onFail?: () => void
+): Promise<void> => {
     const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/User/SignOut';
+
     try {
-        const response = await axios.post(API_URL);
+        const response = await axios.post(API_URL, {}, {
+            headers: {
+
+            }
+        });
+
         if (response.status === 200) {
             navigate('/signin');
+
+            if (onSuccess) {
+                onSuccess();
+            }
         }
-    }
-    catch (error: unknown) {
+    } catch (error: unknown) {
         if (error instanceof Error) {
             console.error('Error:', error.message);
+
+            if (onFail) {
+                onFail();
+            }
         }
     }
-}
+};
 
 // Password reset function (not finished)
-export const handleResetPassword = async (email: string, newPassword: string): Promise<boolean> => {
+export const handleResetPassword = async (
+    email: string,
+    newPassword: string,
+    onSuccess?: () => void,
+    onFail?: () => void
+): Promise<void> => {
     const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/User/ResetPassword';
-    let success = false;
 
     try {
         const response = await axios.post(API_URL, { Email: email, NewPassword: newPassword, ConfirmPassword: newPassword });
         if (response.status === 200) {
-            success = true;
+            if (onSuccess) {
+                onSuccess();
+            }
+        } else {
+            if (onFail) {
+                onFail();
+            }
         }
     } catch (error: any) {
         console.error('Error:', error);
+        if (onFail) {
+            onFail();
+        }
     }
-
-    return success;
-}
+};

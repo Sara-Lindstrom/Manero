@@ -36,9 +36,18 @@ public class UserController : ControllerBase
         if (user != null)
         {
             // Sign in with password
-            var result = await _signInManager.PasswordSignInAsync(user, credentials.Password, false, false);
+            var result = await _signInManager.PasswordSignInAsync(user, credentials.Password, credentials.RememberMe, false);
             if (result.Succeeded)
             {
+                // Save RememberMe state to database
+                user.RememberMe = credentials.RememberMe;
+                var updateResult = await _userManager.UpdateAsync(user);
+
+                if (!updateResult.Succeeded)
+                {
+                    // Handle update failure
+                }
+
                 return Ok();
             }
         }
@@ -87,7 +96,6 @@ public class UserController : ControllerBase
     public async Task<IActionResult> SignOut()
     {
         await _signInManager.SignOutAsync();
-
         return Ok(new { Message = "Signed out successfully!" });
     }
 
