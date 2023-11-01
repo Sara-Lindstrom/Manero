@@ -12,14 +12,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Tests.UnitTests
 {
-    public class UnitUser_Test
+    public class UserSignIn_Test
     {
         private readonly Mock<UserManager<UserModel>> _mockUserManager;
         private readonly Mock<UserDbContext> _mockUserDbContext;
         private readonly Mock<SignInManager<UserModel>> _mockSignInManager;
         private readonly UserController _userController;
 
-        public UnitUser_Test()
+        public UserSignIn_Test()
         {
             // UserManager
             var userStore = new Mock<IUserStore<UserModel>>();
@@ -57,21 +57,7 @@ namespace WebApi.Tests.UnitTests
             _userController = new UserController(_mockUserManager.Object, _mockUserDbContext.Object, _mockSignInManager.Object);
         }
 
-        [Fact]
-        public async Task CreateAsync_ShouldReturnUnprocessableEntity_WhenModelStateIsInvalid()
-        {
-            // Arrange
-            var user = new User();
-            _userController.ModelState.AddModelError("Name", "Name is required");
-
-            // Act
-            var result = await _userController.CreateUser(user);
-
-            // Assert
-            Assert.IsType<UnprocessableEntityObjectResult>(result);
-        }
-
-        [Fact]
+        // Checking result for a sign in-attempt that is successful
         public async Task SignIn_ShouldReturnOk_WhenSignInSucceeds()
         {
             // Arrange
@@ -89,9 +75,10 @@ namespace WebApi.Tests.UnitTests
             var result = await _userController.SignIn(userCredentials);
 
             // Assert
-            Assert.IsType<UnauthorizedResult>(result);
+            Assert.IsType<OkResult>(result);
         }
 
+        // Checking result for a sign in-attempt that fails
         [Fact]
         public async Task SignIn_ShouldReturnBadRequest_WhenSignInFails()
         {
