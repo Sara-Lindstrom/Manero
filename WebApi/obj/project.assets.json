@@ -3610,5 +3610,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\SaraM\\Desktop\\repo\\Project\\Manero\\WebApi\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'success', line 5, position 0."
+    }
+  ]
 }

@@ -1,7 +1,12 @@
-import axios from 'axios';
 import { ChangeEvent, FormEvent } from 'react';
+import { AxiosResponse } from 'axios';
+import axios from 'axios';
 
 type Navigate = (path: string) => void;
+
+interface ResetPasswordResponse {
+    status: number;
+}
 
 export type FormData = {
     name: string;
@@ -12,6 +17,7 @@ export type FormData = {
 export type FormDataSignIn = {
     email: string;
     password: string;
+    rememberMe: boolean;
 };
 
 // Handling changes in the input fields
@@ -76,35 +82,76 @@ export const handleSigninSubmit = async (
     }
 };
 
-// Sign out form function (not finished)
-export const handleSignOut = async (navigate: Navigate): Promise<void> => {
+// Sign out form function
+export const handleSignOut = async (
+    navigate: Navigate,
+    onSuccess?: () => void,
+    onFail?: () => void
+): Promise<void> => {
     const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/User/SignOut';
+
     try {
-        const response = await axios.post(API_URL);
+        const response = await axios.post(API_URL, {}, {
+            headers: {
+
+            }
+        });
+
         if (response.status === 200) {
             navigate('/signin');
+
+            if (onSuccess) {
+                onSuccess();
+            }
         }
-    }
-    catch (error: unknown) {
+    } catch (error: unknown) {
         if (error instanceof Error) {
             console.error('Error:', error.message);
+
+            if (onFail) {
+                onFail();
+            }
         }
     }
-}
+};
 
-// Password reset function (not finished)
-export const handleResetPassword = async (email: string, newPassword: string): Promise<boolean> => {
+// Methods for check if email exists (used for forgot password, but can be reused in other sections)
+export const checkEmailExists = async (
+    email: string
+): Promise<boolean> => {
+    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/User/CheckEmail';
+    try {
+        const response = await axios.post(API_URL, JSON.stringify(email), {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        return response.status === 200;
+    } catch (error) {
+        console.error("An error occurred:", error);
+        return false;
+    }
+};
+
+
+// Password reset function
+export const handleResetPassword = async (
+    email: string,
+    newPassword: string,
+    confirmPassword: string // New parameter for confirmed password
+): Promise<boolean> => {
     const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/User/ResetPassword';
-    let success = false;
 
     try {
-        const response = await axios.post(API_URL, { Email: email, NewPassword: newPassword, ConfirmPassword: newPassword });
-        if (response.status === 200) {
-            success = true;
-        }
+        const response: AxiosResponse<ResetPasswordResponse> = await axios.post(API_URL, {
+            Email: email,
+            NewPassword: newPassword,
+            ConfirmPassword: confirmPassword // Use the new parameter
+        });
+
+        return response.status === 200;
     } catch (error: any) {
         console.error('Error:', error);
+        return false;
     }
-
-    return success;
-}
+};
