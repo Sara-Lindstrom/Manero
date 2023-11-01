@@ -3,10 +3,10 @@ import { render, screen } from '@testing-library/react';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
 
 test('Show specific page in breadcrumb', () => {
-  const currentPage = 'Payment Method'; // Specify the page
+    const currentPage = 'Payment Method'; // Specify the page
 
   // Render the page in breadcrumb section
-  render(<BreadcrumbSection currentPage={currentPage} />);
+    render(<BreadcrumbSection currentPage={currentPage} showCurrentPage={true} />);
 
   // Find the specific page by text
   const breadcrumbText = screen.getByText(currentPage);

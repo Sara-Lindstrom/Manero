@@ -17,8 +17,11 @@
 @import "./parts/AddCard";
 @import "./parts/signInFormSection";
 @import "./parts/iconsNavigationSection";
+@import "./parts/_scrollMenu.scss";
+@import "./parts/signoutPopup";
 
     //HomeView Start
+@import "./view/homeView";
 @import "./parts/SpecialOffersShowcase";
 @import "./parts/productList";
 

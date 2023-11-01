@@ -6,7 +6,7 @@ const BestSellersView: React.FC = () => {
     const [isSliderDropdownVisible, setSliderDropdownVisible] = useState(false);
     const [selectedSliderCategory, setSelectedSliderCategory] = useState('All');
     const [isDropdownVisible, setDropdownVisible] = useState(false);
-    const [selectedCategory, setSelectedCategory] = useState('All');
+    const [selectedCategories, setSelectedCategories] = useState<string | string[]>('All');
 
     const sliderCategories = ['All', 'Slider Category 1', 'Slider Category 2', 'Slider Category 3', 'Slider Category 4'];
     const categories = ['All', 'Category 1', 'Category 2', 'Category 3', 'Category 4'];
@@ -25,7 +25,7 @@ const BestSellersView: React.FC = () => {
     };
 
     const handleCategorySelect = (category: string) => {
-        setSelectedCategory(category);
+        setSelectedCategories(category === 'All' ? 'All' : [category]);
         setDropdownVisible(false);
     };
 
@@ -35,7 +35,7 @@ const BestSellersView: React.FC = () => {
 
     return (
         <>
-         <BreadcrumbSection currentPage="Best Sellers" showBackButton={true} onNavigateBack={handleNavigateBack}/>
+        <BreadcrumbSection currentPage="Best Sellers" showBackButton={true} onNavigateBack={handleNavigateBack}/>
 
         <div className='best-seller-filter'>
             <div className="slider" onClick={toggleSliderDropdown}>
@@ -74,7 +74,7 @@ const BestSellersView: React.FC = () => {
             </div>
         </div>
 
-        <ProductList  selectedCategory={selectedCategory} limit={4}  />
+        <ProductList  selectedCategories={selectedCategories} limit={4}  />
         </>
     )
 }

@@ -15,10 +15,10 @@ export interface Product {
 
 interface ProductListProps {
     limit: number;
-    selectedCategory: string;
+    selectedCategories: string | string[];
 }
 
-const ProductList: React.FC<ProductListProps> = ({ limit, selectedCategory }) => {
+const ProductList: React.FC<ProductListProps> = ({ limit, selectedCategories }) => {
         const [products, setProducts] = useState<Product[]>([]);
         const [wishlist, setWishlist] = useState<Product[]>([]);
         const [cart, setCart] = useState<{ [key: number]: number }>({});
@@ -31,14 +31,23 @@ const ProductList: React.FC<ProductListProps> = ({ limit, selectedCategory }) =>
         ];
 
         useEffect(() => {
-            // Filter products based on selectedCategory
-            const filteredProducts = hardcodedProducts.filter((product) => {
-                return selectedCategory === 'All' || product.category === selectedCategory;
-            });
-
+            let filteredProducts = [];
+          
+            if (Array.isArray(selectedCategories)) {
+              // Handle multiple categories (an array)
+              filteredProducts = hardcodedProducts.filter((product) =>
+                selectedCategories.includes('All') || selectedCategories.includes(product.category)
+              );
+            } else {
+              // Handle a single category (a string)
+              filteredProducts = hardcodedProducts.filter((product) =>
+                selectedCategories === 'All' || product.category === selectedCategories
+              );
+            }
+          
             // Slice the filtered products based on the limit
             setProducts(filteredProducts.slice(0, limit));
-        }, [selectedCategory, limit]);
+        }, [selectedCategories, limit]);
         
         const addToWishlist = (product: Product) => {
             if (!wishlist.find((item) => item.name === product.name && item.size === product.size && item.color === product.color)) {
