@@ -1,7 +1,12 @@
 import { ChangeEvent, FormEvent } from 'react';
+import { AxiosResponse } from 'axios';
 import axios from 'axios';
 
 type Navigate = (path: string) => void;
+
+interface ResetPasswordResponse {
+    status: number;
+}
 
 export type FormData = {
     name: string;
@@ -110,30 +115,43 @@ export const handleSignOut = async (
     }
 };
 
-// Password reset function (not finished)
+// Methods for check if email exists (used for forgot password, but can be reused in other sections)
+export const checkEmailExists = async (
+    email: string
+): Promise<boolean> => {
+    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/User/CheckEmail';
+    try {
+        const response = await axios.post(API_URL, JSON.stringify(email), {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        return response.status === 200;
+    } catch (error) {
+        console.error("An error occurred:", error);
+        return false;
+    }
+};
+
+
+// Password reset function
 export const handleResetPassword = async (
     email: string,
     newPassword: string,
-    onSuccess?: () => void,
-    onFail?: () => void
-): Promise<void> => {
+    confirmPassword: string // New parameter for confirmed password
+): Promise<boolean> => {
     const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/User/ResetPassword';
 
     try {
-        const response = await axios.post(API_URL, { Email: email, NewPassword: newPassword, ConfirmPassword: newPassword });
-        if (response.status === 200) {
-            if (onSuccess) {
-                onSuccess();
-            }
-        } else {
-            if (onFail) {
-                onFail();
-            }
-        }
+        const response: AxiosResponse<ResetPasswordResponse> = await axios.post(API_URL, {
+            Email: email,
+            NewPassword: newPassword,
+            ConfirmPassword: confirmPassword // Use the new parameter
+        });
+
+        return response.status === 200;
     } catch (error: any) {
         console.error('Error:', error);
-        if (onFail) {
-            onFail();
-        }
+        return false;
     }
 };
