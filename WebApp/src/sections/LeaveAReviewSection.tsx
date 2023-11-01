@@ -3,7 +3,9 @@ import chatBubbles from '../Images/chatBubbles.svg'
 import StarRating from '../components/StarRating'
 import { useNavigate } from 'react-router-dom'
 
-const LeaveAReviewSection: React.FC = () => {
+// implement productId for connecting the review to the product 
+
+const LeaveAReviewSection: React.FC  = () => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
 
@@ -11,7 +13,7 @@ const LeaveAReviewSection: React.FC = () => {
     setRating(newRating);
   };
 
-  const handleCommentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(event.target.value);
   };
 
@@ -19,6 +21,7 @@ const LeaveAReviewSection: React.FC = () => {
 
   const handleSubmit = () => {
     // implement method for saving to database
+
     console.log('Rating:', rating);
     console.log('Comment:', comment);
 
@@ -38,7 +41,7 @@ const LeaveAReviewSection: React.FC = () => {
             <div className='comment'>
                 <p>Your comments and suggestions help us improve the service quality better!</p>
                 <p className='inputBorder'>COMMENT</p>
-                <input value={comment} onChange={handleCommentChange} type='text' placeholder='Enter your comment'/>
+                <textarea rows={5} value={comment} onChange={handleCommentChange} placeholder='Enter your comment'></textarea>
             </div>
             <button onClick={handleSubmit} className='btn dark-btn'>SUBMIT</button>
         </div>

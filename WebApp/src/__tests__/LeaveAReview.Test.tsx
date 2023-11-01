@@ -18,7 +18,7 @@ test('handles rating change correctly', () => {
   const filledStars = container.querySelectorAll('.filled-star');
   expect(filledStars).toHaveLength(3);
 
-  // Kontrollera att betyget är rätt
+  // controlling if the number is correct
   expect(rating).toBe(3);
 
 });
