@@ -32,15 +32,16 @@
 
         .comment {
             margin-top: 20px;
-            margin-bottom: 40px;
             position: relative;
+            margin-bottom: 30px;
 
+ 
             .inputBorder {
                 position: absolute;
                 font-size: 12px;
                 background-color: white;
                 padding: 10px;
-                bottom: 65px;
+                bottom: 70px;
                 left: 20px;
             }
 
@@ -56,6 +57,10 @@
                 color: gray;
                 padding-left: 25px;
             }
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
 
         }
 
