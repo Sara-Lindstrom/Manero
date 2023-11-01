@@ -21,7 +21,6 @@ const SignInFormSection: React.FC<SignInProps> = ({ navigate }: SignInProps) => 
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
 
-
     //validates form when user clicks submit and sends inputs to hook for DB
     const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
