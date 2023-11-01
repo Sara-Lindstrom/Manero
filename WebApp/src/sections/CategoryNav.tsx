@@ -8,7 +8,7 @@ function CategoryNav() {
     };
 
   return (
-<section className='categorynav'>
+  <section className='categorynav'>
       <div className='container scrollsection'>
         <div className="scrollmenu">
           <a href="#men" className={activeLink === 'home' ? 'active' : ''} onClick={() => handleLinkClick('home')} >MEN</a>
