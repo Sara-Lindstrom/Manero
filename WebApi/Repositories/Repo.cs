@@ -9,8 +9,8 @@ interface IRepo<TEntity, TDbContext> where TEntity : class where TDbContext : Db
 {
     Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> expression);
     Task<TEntity> CreateAsync(TEntity entity);
-    Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> expression);
-    Task<IEnumerable<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> expression);
+    Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> expression);
+    Task<IEnumerable<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> expression, Expression<Func<TEntity, object>> include);
     Task<IEnumerable<TEntity>> GetAllAsync();
     Task<TEntity> UpdateAsync(TEntity entity);
     Task<bool> DeleteAsync(TEntity entity);
@@ -44,7 +44,7 @@ public abstract class Repo<TEntity,TDbContext> : IRepo<TEntity, TDbContext> wher
         throw new NotImplementedException();
     }
 
-    public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> expression)
+    public async Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> expression)
     {
         try
         {
@@ -57,11 +57,17 @@ public abstract class Repo<TEntity,TDbContext> : IRepo<TEntity, TDbContext> wher
         }
     }
 
-    public async Task<IEnumerable<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> expression)
+    public async Task<IEnumerable<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> expression, Expression<Func<TEntity, object>> include)
     {
         try
-        {
-            return await _dbContext.Set<TEntity>().Where(expression).ToListAsync();
+        {        
+            if(include is null)
+            {
+                return await _dbContext.Set<TEntity>().Where(expression).ToListAsync();
+            }
+            else{
+                return await _dbContext.Set<TEntity>().Where(expression).Include(include).ToListAsync();
+            }
         }
         catch (Exception ex)
         {
@@ -112,5 +118,10 @@ public abstract class Repo<TEntity,TDbContext> : IRepo<TEntity, TDbContext> wher
             Debug.WriteLine(ex.Message);
             return false;
         }
+    }
+
+    public Task<IEnumerable<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> expression, Expression<Func<TEntity, object>> include)
+    {
+        throw new NotImplementedException();
     }
 }
