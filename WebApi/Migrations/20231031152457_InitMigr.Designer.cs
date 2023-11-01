@@ -12,15 +12,15 @@ using WebApi.Context;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20231027072626_TEstDb")]
-    partial class TEstDb
+    [Migration("20231031152457_InitMigr")]
+    partial class InitMigr
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.12")
+                .HasAnnotation("ProductVersion", "7.0.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -198,6 +198,9 @@ namespace WebApi.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("RememberMe")
                         .HasColumnType("bit");
 
                     b.Property<string>("SecurityStamp")

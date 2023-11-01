@@ -88,7 +88,7 @@
                 position: relative;
                 width: 277px;
                                 
-                label{
+                .input-label{
                                       
                     background-color: #222529;
                     position: absolute;
@@ -115,6 +115,7 @@
                     text-align: center;
                     margin-top: 3px;
                     position: relative;
+                    cursor: pointer;
                     
 
                      i{

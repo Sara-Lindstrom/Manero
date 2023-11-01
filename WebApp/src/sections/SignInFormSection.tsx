@@ -7,7 +7,7 @@ type SignInProps = {
     navigate: NavigateFunction
 }
 
-const SignInFormSection: React.FC<SignInProps> = ({navigate} : SignInProps) => {
+const SignInFormSection: React.FC<SignInProps> = ({ navigate }: SignInProps) => {
 
     //useSTate for visibility of password input
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -33,7 +33,8 @@ const SignInFormSection: React.FC<SignInProps> = ({navigate} : SignInProps) => {
             if (validEmail && validPassword) {
                 const formDataSignIn: FormDataSignIn = {
                     email,
-                    password
+                    password,
+                    rememberMe
                 };
 
                 await handleSigninSubmit(e, formDataSignIn, navigate,
@@ -57,8 +58,8 @@ const SignInFormSection: React.FC<SignInProps> = ({navigate} : SignInProps) => {
 
                 <div className='input-container'>
                     <p className='input-label'>EMAIL</p>
-                        <input className='input'
-                            onChange={(event) => {
+                    <input className='input'
+                        onChange={(event) => {
                             setEmail(event.target.value);
                             const validationResult = FormValidation.ValidateEmail(event.target.value);
                             setEmailError(validationResult.error);
