@@ -1,0 +1,97 @@
+
+.categorysection {
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+
+        .categorygrid {
+            display: grid; 
+            grid-template-rows: 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 1px;
+            height: 565px;
+            width: 100%;
+
+            a {
+                position: relative;
+                font-weight: 700;
+                font-size: 1.2rem;
+                color: #fff;
+                
+                &:hover {
+                text-decoration: none;
+                }
+
+                p {
+                    position: absolute;    
+                    bottom: 0;  
+                    left: 0;     
+                    padding: 25px;   
+                    margin: 0;   
+                }
+            }
+        
+            #item_1 {
+         
+                background-color: #8D94A6; 
+                grid-row-start: 1;
+                grid-column-start: 1; 
+                grid-row-end: 2;
+                grid-column-end: 3;
+
+                
+             }
+             #item_2 {
+             
+                background-color: #8D94A6; 
+                grid-row-start: 1;
+                grid-column-start: 3;
+                grid-row-end: 2;
+                grid-column-end: 5;
+
+             }
+             #item_3 {
+             
+                background-color: #8D94A6; 
+                grid-row-start: 3;
+                grid-column-start: 3;
+                grid-row-end: 4;
+                grid-column-end: 5;
+
+             }
+             #item_4 {
+             
+                background-color: #8D94A6; 
+                grid-row-start: 3;
+                grid-column-start: 1;
+                grid-row-end: 4;
+                grid-column-end: 3;
+
+             }
+             #item_5 {
+             
+                background-color: #8D94A6; 
+                grid-row-start: 2;
+                grid-column-start: 1;
+                grid-row-end: 3;
+                grid-column-end: 5;  
+             }
+            #item_1, #item_2, #item_3, #item_4, #item_5 {
+
+                &:hover {
+                    background-color: #fff;
+                    color: #707070;
+                    transition: 0.3s;
+                    border: 1px solid #8D94A6;
+                }  
+            }
+         }
+    }
+}
+
+
+   
+ 

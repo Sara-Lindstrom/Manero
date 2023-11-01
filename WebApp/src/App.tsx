@@ -13,7 +13,7 @@ import SignInView from './views/SignInView';
 import EditProfileView from './views/EditProfileView';
 import HomeView from './views/HomeView';
 import BestSellersView from './views/BestSellersView';
-import Categoryview from './views/CategoryView';
+import CategoryView from './views/CategoryView';
 
 function App() {
 
@@ -35,7 +35,7 @@ function App() {
             <Route path='/viewProfile' element={<ViewProfile />} />
             <Route path='/bestSellersView' element={<BestSellersView />} />
             <Route path='/home' element={< HomeView />} />
-            <Route path='/category' element={<Categoryview />} />
+            <Route path='/category' element={<CategoryView />} />
         </Routes>
     </BrowserRouter>
 

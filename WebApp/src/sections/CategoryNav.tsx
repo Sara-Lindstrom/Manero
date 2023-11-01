@@ -11,13 +11,13 @@ function CategoryNav() {
 <section className='categorynav'>
       <div className='container scrollsection'>
         <div className="scrollmenu">
-          <a href="#men" className={activeLink === 'home' ? 'active' : ''} onClick={() => handleLinkClick('home')} >MEN</a>
+          <a href="#men" className={activeLink === 'men' ? 'active' : ''} onClick={() => handleLinkClick('men')} >MEN</a>
 
-          <a href="#women" className={activeLink === 'news' ? 'active' : ''} onClick={() => handleLinkClick('news')}>WOMEN</a>
+          <a href="#women" className={activeLink === 'women' ? 'active' : ''} onClick={() => handleLinkClick('women')}>WOMEN</a>
 
-          <a href="#kids" className={activeLink === 'contact' ? 'active' : ''} onClick={() => handleLinkClick('contact')}>KIDS</a>
+          <a href="#kids" className={activeLink === 'kids' ? 'active' : ''} onClick={() => handleLinkClick('kids')}>KIDS</a>
 
-          <a href="#accessories" className={activeLink === 'about' ? 'active' : ''} onClick={() => handleLinkClick('about')} >ACCESSORIES</a>
+          <a href="#accessories" className={activeLink === 'accessories' ? 'active' : ''} onClick={() => handleLinkClick('accessories')} >ACCESSORIES</a>
         </div>
       </div>
     </section>
