@@ -11,6 +11,7 @@ interface IRepo<TEntity, TDbContext> where TEntity : class where TDbContext : Db
     Task<TEntity> CreateAsync(TEntity entity);
     Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> expression);
     Task<IEnumerable<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> expression, Expression<Func<TEntity, object>> include);
+    Task<IEnumerable<TEntity>> GetNewestAsync(Expression<Func<TEntity, bool>> expression, int amount);
     Task<IEnumerable<TEntity>> GetAllAsync();
     Task<TEntity> UpdateAsync(TEntity entity);
     Task<bool> DeleteAsync(TEntity entity);
@@ -76,6 +77,21 @@ public abstract class Repo<TEntity,TDbContext> : IRepo<TEntity, TDbContext> wher
         }
     }
 
+    public async Task<IEnumerable<TEntity>> GetNewestAsync(Expression<Func<TEntity, bool>> expression, int amount)
+    {
+        try
+        {
+            return await _dbContext.Set<TEntity>().OrderByDescending(expression).Take(amount).ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            return null!;
+        }
+    }
+
+
+
     public async Task<IEnumerable<TEntity>> GetAllAsync()
     {
         try
@@ -118,10 +134,5 @@ public abstract class Repo<TEntity,TDbContext> : IRepo<TEntity, TDbContext> wher
             Debug.WriteLine(ex.Message);
             return false;
         }
-    }
-
-    public Task<IEnumerable<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> expression, Expression<Func<TEntity, object>> include)
-    {
-        throw new NotImplementedException();
     }
 }
