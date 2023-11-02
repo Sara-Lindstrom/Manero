@@ -1,7 +1,10 @@
-﻿namespace WebApi.Models.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WebApi.Models.Entities
 {
     public class ProductImageEntity
     {
+        [Key]
         public Guid ProductImageID { get; set; }
         public Guid ProductID { get; set; }
         public Guid ImageID { get; set; }

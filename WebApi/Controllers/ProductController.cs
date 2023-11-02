@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using WebApi.Context;
+using WebApi.Models;
+using WebApi.Models.Entities;
 using WebApi.Repositories;
 
 namespace WebApi.Controllers;
@@ -10,31 +13,38 @@ namespace WebApi.Controllers;
 [ApiController]
 public class ProductController : ControllerBase
 {
-    //private readonly Repo<ProductEntity, ProductDbContext> _productRepo;
-    //private readonly Repo<ProductCategorEntity, ProductDbContext> _productCategoryRepo;
-    //private readonly Repo<ProductTagEntity, ProductDbContext> _productTagRepo;
-    //private readonly Repo<ProductColorEntity, ProductDbContext> _productColorRepo;
-    //private readonly Repo<ProductSizeEntity, ProductDbContext> _productSizeRepo;
-    //private readonly Repo<ProductImageEntity, ProductDbContext> _productImageRepo;
-    //private readonly Repo<ProductReviewEntity, ProductDbContext> _productRewievRepo;
-    //private readonly Repo<TagEntity, ProductDbContext> _tagRepo;
-    //private readonly Repo<ColorEntity, ProductDbContext> _colorRepo;
-    //private readonly Repo<SizeEntity, ProductDbContext> _sizeRepo;
-    //private readonly Repo<ImageEntity, ProductDbContext> _imageRepo;
+    private readonly ProductRepo _productRepo;
 
-    //public ProductController()
-    //{
+    public ProductController(IRepo<ProductEntity, ProductDbContext> productRepo)
+    {
+        _productRepo = (ProductRepo)productRepo;
+    }
 
-    //}
+    [HttpGet]
+    public async Task<ActionResult> GetBestSelling()
+    {
+        try
+        {
+        var productsWithRatings = await _productRepo.GetAllAsync()
+            //.Select(p => new
+            //{
+            //    Product = p,
+            //    AverageRating = p.Reviews.Average(r => r.Rating)
+            //})
+            //.OrderByDescending(p => p.AverageRating)
+            //.Take(10) // Get the top 10 products with the highest average rating
+            //.ToList();
 
-    //[HttpGet]
-    //public async Task<ActionResult> GetBestSelling()
-    //{
-    //    var productList = new IEnumerable<ProductModel>();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+
+
 
         
-
-    //}
+    }
 
 }
 

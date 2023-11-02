@@ -1,7 +1,10 @@
-﻿namespace WebApi.Models.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace WebApi.Models.Entities
 {
     public class TagEntity
     {
+        [Key]
         public Guid TagID { get; set; }
         public string TagName { get; set; }
 

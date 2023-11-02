@@ -5,13 +5,12 @@ using System.Linq.Expressions;
 namespace WebApi.Repositories;
 
 //Generic interface for database operations.
-interface IRepo<TEntity, TDbContext> where TEntity : class where TDbContext : DbContext
+public interface IRepo<TEntity, TDbContext> where TEntity : class where TDbContext : DbContext
 {
     Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> expression);
     Task<TEntity> CreateAsync(TEntity entity);
     Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> expression);
     Task<IEnumerable<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> expression, Expression<Func<TEntity, object>> include);
-    Task<IEnumerable<TEntity>> GetNewestAsync(Expression<Func<TEntity, bool>> expression, int amount);
     Task<IEnumerable<TEntity>> GetAllAsync();
     Task<TEntity> UpdateAsync(TEntity entity);
     Task<bool> DeleteAsync(TEntity entity);
@@ -76,21 +75,6 @@ public abstract class Repo<TEntity,TDbContext> : IRepo<TEntity, TDbContext> wher
             return null!;
         }
     }
-
-    public async Task<IEnumerable<TEntity>> GetNewestAsync(Expression<Func<TEntity, bool>> expression, int amount)
-    {
-        try
-        {
-            return await _dbContext.Set<TEntity>().OrderByDescending(expression).Take(amount).ToListAsync();
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine(ex.Message);
-            return null!;
-        }
-    }
-
-
 
     public async Task<IEnumerable<TEntity>> GetAllAsync()
     {
