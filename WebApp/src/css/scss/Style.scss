@@ -7,8 +7,6 @@
 //PARTS
 @import "./parts/_btn.scss";
 @import "./parts/_breadcrumb.scss";
-@import "./parts/FlagComponent";
-
 @import "./parts/resetPasswordConfirmedSection.scss";
 @import "./parts/forgotPasswordSection";
 @import "./parts/_form";
@@ -20,15 +18,17 @@
 @import "./parts/iconsNavigationSection";
 @import "./parts/_scrollMenu.scss";
 @import "./parts/signoutPopup";
+@import "./parts/leaveAReviewSection";
 @import "./parts/burgerMenu";
 @import "./parts/verifyPhoneNumber";
 
-    //HomeView Start
+//HomeView Start
 @import "./view/homeView";
 @import "./parts/HomepageCategoryNav";
 @import "./parts/SpecialOffersShowcase";
 @import "./parts/BestSellerPreviewSection";
 @import "./parts/productList";
+
 
 //VIEWS
 @import "./view/onboardingView";
