@@ -47,7 +47,7 @@ const ChangePasswordSection = () => {
     return (
         <div className="container change-password-page">
             <p className="instruction-message">Enter new password and confirm.</p>
-            
+            {error && <p className='error-message'>{error}</p>}           
             <div className='input-container'>
                 <p className='input-label'>NEW PASSWORD</p>
                 <input 
