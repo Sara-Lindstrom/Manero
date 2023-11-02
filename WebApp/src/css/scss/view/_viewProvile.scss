@@ -1,4 +1,6 @@
-.view-profile{    
+.view-profile{
+    
+    
 
         .vertical-line{
             width: 50%;
@@ -6,6 +8,7 @@
             height: 30px;
             margin-top: 30px;
             margin-bottom: 30px;
+            z-index: -1;
         }
 
         .photo-section{
@@ -16,12 +19,16 @@
                 border-radius: 50%;
                 border: 10px solid $color-blue;
                 margin: 0 auto;
+                
+
+                
 
             img{
                 width: 180px;
                 height: 180px;
                 border-radius: 50%;
                 border: none;
+                
             }
 
             .icon{
@@ -36,6 +43,7 @@
                 right: 0;
                 bottom: 5px;
                 cursor: pointer;
+                
             }
     
             
@@ -47,6 +55,8 @@
             flex-direction: column;
             align-items: center;
             margin-top: 30px;
+            
+            
 
             h2{
                 font-weight: $font-weight-bold;
@@ -64,6 +74,8 @@
             margin-top: 60px;
             width: 100%;
             margin-bottom: 60px;
+            
+            
 
             @media (min-width: 768px) {
                 padding: 0 100px;
@@ -80,7 +92,7 @@
                 border-bottom: 1px solid $color-blue;
                 padding: 15px;
                 
-                
+                             
                 
 
                 .field-details{
@@ -88,6 +100,8 @@
                     flex-direction: row;
                     justify-content: space-between;
                     align-items: center;
+                    
+                    
 
                     .icon-name{
 
@@ -111,4 +125,8 @@
             }
         }
     
+}
+
+.opened-popup{
+    z-index: -1;
 }

@@ -15,6 +15,7 @@ import HomeView from './views/HomeView';
 import BestSellersView from './views/BestSellersView';
 import CategoryView from './views/CategoryView';
 
+
 function App() {
 
   

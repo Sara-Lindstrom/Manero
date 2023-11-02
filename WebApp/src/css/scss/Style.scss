@@ -18,11 +18,14 @@
 @import "./parts/signInFormSection";
 @import "./parts/iconsNavigationSection";
 @import "./parts/_scrollMenu.scss";
+@import "./parts/signoutPopup";
 @import "./parts/categorySection";
 
     //HomeView Start
 @import "./view/homeView";
+@import "./parts/HomepageCategoryNav";
 @import "./parts/SpecialOffersShowcase";
+@import "./parts/BestSellerPreviewSection";
 @import "./parts/productList";
 
 //VIEWS

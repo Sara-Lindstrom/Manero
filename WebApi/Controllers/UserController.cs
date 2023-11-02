@@ -36,9 +36,18 @@ public class UserController : ControllerBase
         if (user != null)
         {
             // Sign in with password
-            var result = await _signInManager.PasswordSignInAsync(user, credentials.Password, false, false);
+            var result = await _signInManager.PasswordSignInAsync(user, credentials.Password, credentials.RememberMe, false);
             if (result.Succeeded)
             {
+                // Save RememberMe state to database
+                user.RememberMe = credentials.RememberMe;
+                var updateResult = await _userManager.UpdateAsync(user);
+
+                if (!updateResult.Succeeded)
+                {
+                    // Handle update failure
+                }
+
                 return Ok();
             }
         }
@@ -87,7 +96,6 @@ public class UserController : ControllerBase
     public async Task<IActionResult> SignOut()
     {
         await _signInManager.SignOutAsync();
-
         return Ok(new { Message = "Signed out successfully!" });
     }
 
@@ -97,16 +105,22 @@ public class UserController : ControllerBase
     {
         if (!ModelState.IsValid)
         {
-            return UnprocessableEntity(ModelState); // Error 422 Unprocessable Entity for validation errors
+            return UnprocessableEntity(ModelState);
+        }
+
+        if (model.NewPassword != model.ConfirmPassword)
+        {
+            return BadRequest(new { Message = "Passwords do not match." });
         }
 
         var user = await _userManager.FindByEmailAsync(model.Email);
         if (user == null)
         {
-            return NotFound(new { Message = "User not found." }); // Error 404 Not Found for non-existing users
+            return NotFound(new { Message = "User not found." });
         }
 
         var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+        // Pass the new password to ASPNetUsers through usermanager
         var result = await _userManager.ResetPasswordAsync(user, resetToken, model.NewPassword);
 
         if (result.Succeeded)
@@ -115,5 +129,27 @@ public class UserController : ControllerBase
         }
 
         return BadRequest(new { Errors = result.Errors.Select(x => x.Description) });
+    }
+
+    // Method to check if email already exists
+    [HttpPost("CheckEmail")]
+    public async Task<IActionResult> CheckEmail([FromBody] string email)
+    {
+        // Validate email
+        if (string.IsNullOrEmpty(email))
+        {
+            return BadRequest("Email cannot be empty.");
+        }
+
+        // Find user by email
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user != null)
+        {
+            return Ok(new { Message = "User exists." });
+        }
+        else
+        {
+            return NotFound(new { Message = "User not found." });
+        }
     }
 }
