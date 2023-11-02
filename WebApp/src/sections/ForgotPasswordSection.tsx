@@ -1,6 +1,7 @@
 import React, { useState } from 'react'; // Glöm inte att importera useState
 import { ValidateEmail } from '../helpers/FormValidation';
 import { useNavigate } from 'react-router-dom';
+import { checkEmailExists } from '../helpers/FormHandlers';
 
 const ForgotPasswordSection = () => {
     const navigate = useNavigate();
@@ -13,14 +14,19 @@ const ForgotPasswordSection = () => {
         setEmailError(validationResult.error);
     };
 
-    const handleSendClick = () => {
+    const handleSendClick = async () => {
         const validationResult = ValidateEmail(email);
         if (!validationResult.isValid) {
             setEmailError(validationResult.error);
         } else {
             setEmailError('');
+            const emailExists = await checkEmailExists(email);
+            if (emailExists) {
+                navigate('/changePassword', { state: { email } }); // Redirect to /changePassword as a registered user
+            } else {
+                setEmailError('Email does not exist');
+            }
         }
-        navigate('/changePassword');
     };
 
     return (
