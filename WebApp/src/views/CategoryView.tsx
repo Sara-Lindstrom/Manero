@@ -10,7 +10,7 @@ const CategoryView: React.FC = () => {
     };
   return (
     <>
-        <BreadcrumbSection currentPage='Add a new card' showBackButton={true} onNavigateBack={handleNavigateBack}/>
+        <BreadcrumbSection currentPage='Add a new card' showBackButton={true} onNavigateBack={handleNavigateBack} showSearchField={true} showCartItem={true} />
         <CategoryNav />
         <CategorySection />
     </>
