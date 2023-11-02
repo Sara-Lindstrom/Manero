@@ -2,7 +2,7 @@
   "version": 2,
   "dgSpecHash": "XZTUhGuUwJixq4rp1o0MLGg8SxO5IYb9ohH3XVk2+s7G2IJ8xQ9cuOGx2PBqx1CXUV5wXrjUtF5L2GoSQeyvEQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\lirij\\Desktop\\backendtests\\Manero\\WebApi\\WebApi.csproj",
+  "projectFilePath": "C:\\Users\\ninja\\Desktop\\Project\\Manero\\WebApi\\WebApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ninja\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\ninja\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

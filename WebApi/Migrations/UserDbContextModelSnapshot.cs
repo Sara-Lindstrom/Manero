@@ -197,6 +197,9 @@ namespace WebApi.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("RememberMe")
+                        .HasColumnType("bit");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 

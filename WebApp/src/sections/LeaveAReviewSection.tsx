@@ -44,9 +44,9 @@ const LeaveAReviewSection: React.FC  = () => {
             <div className='rating'>
                 <h1>Please rate the quality of service for the order!</h1>
                 <StarRating onRatingChange={handleRatingChange} />
-            </div>
+            </div>    
             <div className='comment'>
-                <p>Your comments and suggestions help us improve the service quality better!</p>
+              <p>Your comments and suggestions help us improve the service quality better!</p>
                 {errorMessage && <p className='error-message'>{errorMessage}</p>}
                 <p className='inputBorder'>COMMENT</p>
                 <textarea rows={5} value={comment} onChange={handleCommentChange} placeholder='Enter your comment'></textarea>         
