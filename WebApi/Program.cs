@@ -29,6 +29,10 @@ builder.Services.AddDbContext<ProductDbContext>(options =>
 
 // Repos
 builder.Services.AddScoped<IRepo<ProductEntity, ProductDbContext>, ProductRepo>();
+builder.Services.AddScoped<IRepo<ProductReviewEntity, ProductDbContext>, ProductReviewRepo>();
+builder.Services.AddScoped<IRepo<CategoryEntity, ProductDbContext>, CategoryRepo>();
+builder.Services.AddScoped<IRepo<TagEntity, ProductDbContext>, TagRepo>();
+builder.Services.AddScoped<IRepo<CategoryTagEntity, ProductDbContext>, CategoryTagRepo>();
 
 // Enforce unique emails
 builder.Services.AddIdentity<UserModel, IdentityRole>(options =>

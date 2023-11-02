@@ -15,10 +15,11 @@ namespace WebApi.Models.Entities
         public decimal SalePrice { get; set; }
         public string Description { get; set; }
         public double? Rating { get; set; } // Nullable double for rating
+        public DateTime CreatedDate { get; set; }
 
         // Navigation properties
         public ICollection<ProductCategoryEntity> ProductCategories { get; set; }
-        public ICollection<ProductTagEntity> ProductTags { get; set; }
+        public ICollection<CategoryTagEntity> ProductTags { get; set; }
         public ICollection<ProductColorEntity> ProductColors { get; set; }
         public ICollection<ProductSizeEntity> ProductSizes { get; set; }
         public ICollection<ProductImageEntity> ProductImages { get; set; }

@@ -9,6 +9,6 @@ namespace WebApi.Models.Entities
         public string TagName { get; set; }
 
         // Navigation properties
-        public ICollection<ProductTagEntity> ProductTags { get; set; }
+        public ICollection<CategoryTagEntity> ProductTags { get; set; }
     }
 }

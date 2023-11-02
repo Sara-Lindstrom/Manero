@@ -10,5 +10,6 @@ namespace WebApi.Models.Entities
 
         // Navigation properties
         public ICollection<ProductCategoryEntity> ProductCategories { get; set; }
+        public ICollection<CategoryTagEntity> CategoryTags { get; set; }
     }
 }

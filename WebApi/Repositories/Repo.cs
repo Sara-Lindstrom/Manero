@@ -10,8 +10,8 @@ public interface IRepo<TEntity, TDbContext> where TEntity : class where TDbConte
     Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> expression);
     Task<TEntity> CreateAsync(TEntity entity);
     Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> expression);
-    Task<IEnumerable<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> expression, Expression<Func<TEntity, object>> include);
-    Task<IEnumerable<TEntity>> GetAllAsync();
+    Task<List<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> expression, Expression<Func<TEntity, object>> include);
+    Task<List<TEntity>> GetAllAsync();
     Task<TEntity> UpdateAsync(TEntity entity);
     Task<bool> DeleteAsync(TEntity entity);
 }
@@ -57,26 +57,18 @@ public abstract class Repo<TEntity,TDbContext> : IRepo<TEntity, TDbContext> wher
         }
     }
 
-    public async Task<IEnumerable<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> expression, Expression<Func<TEntity, object>> include)
+    public async Task<List<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> expression, Expression<Func<TEntity, object>>? include = null)
     {
-        try
-        {        
-            if(include is null)
-            {
-                return await _dbContext.Set<TEntity>().Where(expression).ToListAsync();
-            }
-            else{
-                return await _dbContext.Set<TEntity>().Where(expression).Include(include).ToListAsync();
-            }
-        }
-        catch (Exception ex)
+        if (include != null)
         {
-            Debug.WriteLine(ex.Message);
-            return null!;
+            return await _dbContext.Set<TEntity>().Where(expression).Include(include).ToListAsync();
         }
+
+        return await _dbContext.Set<TEntity>().Where(expression).ToListAsync();
     }
 
-    public async Task<IEnumerable<TEntity>> GetAllAsync()
+
+    public async Task<List<TEntity>> GetAllAsync()
     {
         try
         {
@@ -85,7 +77,7 @@ public abstract class Repo<TEntity,TDbContext> : IRepo<TEntity, TDbContext> wher
         catch (Exception ex)
         {
             Debug.WriteLine(ex.Message);
-            return null!;
+            throw;
         }
     }
 
