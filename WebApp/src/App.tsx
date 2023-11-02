@@ -14,6 +14,7 @@ import EditProfileView from './views/EditProfileView';
 import HomeView from './views/HomeView';
 import BestSellersView from './views/BestSellersView';
 import Categoryview from './views/CategoryView';
+import LeaveAReviewView from './views/LeaveAReviewView';
 
 
 function App() {
@@ -34,8 +35,8 @@ function App() {
             <Route path='/addCardView' element={<AddCardView />} />
             <Route path='/EditProfile' element={<EditProfileView /> }/>
             <Route path='/viewProfile' element={<ViewProfile />} />
+            <Route path='/leaveAReview' element={<LeaveAReviewView />} />
             <Route path='/bestSellersView' element={<BestSellersView />} />
-            <Route path='/home' element={< HomeView />} />
             <Route path='/category' element={<Categoryview />} />
         </Routes>
     </BrowserRouter>
