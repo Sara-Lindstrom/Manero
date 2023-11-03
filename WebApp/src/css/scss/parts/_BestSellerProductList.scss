@@ -1,0 +1,91 @@
+.best-seller-product-list {
+
+    .best-seller-product-list-info-below {
+        position: relative;
+
+        .best-seller-product-card {
+
+            .best-seller-product-card-info-below {
+                display: flex;
+                padding: 0.625rem 0rem;
+
+                &:hover {
+                    transition: all 0.25s ease-in-out;
+                    transform: scale(1.01);
+                }
+
+                .best-seller-product-sale-label {
+                    position: absolute;
+                    background-color: $color-green;
+                    font-size: 8px;
+                    padding: 3px 5px 3px 5px;
+                    font-weight: $font-weight-bold;
+                    color: $color-white;
+                }
+
+                .best-seller-product-card-info-below-img {
+                    height: 6.25rem;
+                }
+
+                .best-seller-product-text {
+                    margin-left: 0.938rem;
+
+                    .best-seller-product-card-rating {
+                        font-family: $font;
+                        font-size: 12px;
+                        margin: 1px;
+                        color: $color-orange;
+                    }
+
+                    .best-seller-product-card-name {
+                        font-family: $font;
+                        font-size: 14px;
+                        margin: 0.5px;
+                    }
+
+                    .best-seller-product-card-price-container {
+                        display: flex;
+
+
+                        .best-seller-product-card-price-strikethrough {
+                            font-family: $font;
+                            font-size: 14px;
+                            margin: 0.5px;
+                            text-decoration: line-through;
+                        }
+
+                        .best-seller-product-card-salesprice {
+                            font-family: $font;
+                            font-size: 14px;
+                            margin: 0.5px;
+                            color: $color-red;
+                            margin-left: 15px;
+                        }
+
+                        .best-seller-product-card-price {
+                            font-family: $font;
+                            font-size: 14px;
+                            margin: 0.5px;
+                        }
+                    }
+                }
+
+                .best-seller-product-card-info-below-buttons {
+                    position: absolute;
+                    top: 0;
+                    z-index: 1;
+                    right: 0px;
+                    top: 0px;
+                    display: flex;
+                    flex-direction: column;
+
+                    .best-seller-product-card-info-below-button {
+                        background-color: transparent;
+                        border: none;
+                    }
+                }
+            }
+
+        }
+    }
+}
