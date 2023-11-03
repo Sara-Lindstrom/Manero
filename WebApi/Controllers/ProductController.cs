@@ -53,14 +53,19 @@ public class ProductController : ControllerBase
     {
         try
         {
+            // Attempt to retrieve the category from the database based on the given category name.
             var dbCategory = await _categoryRepo.GetOneAsync(c => c.CategoryName == category);
+            // Retrieve all tags from the database.
             var dbTags = await _tagRepo.GetAllAsync();
+
             if (dbCategory is not null)
             {
+                // Retrieve category-tag relationships for the found category.
                 var dbCategoryTagResult = await _categoryTagRepo.GetManyAsync(ct => ct.CategoryID == dbCategory.CategoryID);
 
                 if (dbCategoryTagResult is not null)
                 {
+                    // Extract unique tag IDs from the relationships.
                     var tagIds = dbCategoryTagResult.Select(ct => ct.TagID).Distinct();
                     var result = dbTags.Where(tag => tagIds.Contains(tag.TagID)).ToList();
                     return Ok(result);

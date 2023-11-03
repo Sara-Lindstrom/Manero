@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Models.Entities
 {
@@ -7,14 +8,13 @@ namespace WebApi.Models.Entities
         [Key]
         public Guid ReviewID { get; set; }
         public Guid ProductID { get; set; }
-        //public Guid UserID { get; set; }
+        public string UserID { get; set; }
         public string Comment { get; set; }
         public int Rating { get; set; }
         public DateTime ReviewDate { get; set; }
 
         // Navigation properties
         public ProductEntity Product { get; set; }
-        // Assuming you have a User entity
-        //public User User { get; set; }
+        public IdentityUser User { get; set; }
     }
 }

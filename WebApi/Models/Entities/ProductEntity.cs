@@ -12,7 +12,7 @@ namespace WebApi.Models.Entities
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
         [Column(TypeName = "decimal(18,2)")]
-        public decimal SalePrice { get; set; }
+        public decimal? SalePrice { get; set; }
         public string Description { get; set; }
         public double? Rating { get; set; } // Nullable double for rating
         public DateTime CreatedDate { get; set; }
