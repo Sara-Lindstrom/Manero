@@ -6,5 +6,10 @@ namespace WebApi.Models
 {
     public class ProductModel
     {
+        public string id;
+        public string name;
+        public string description;
+
+
     }
 }
