@@ -398,4 +398,5 @@ FodyWeavers.xsd
 *.sln.iml
 
 # Windows folder view settings
+desktop.ini
 .vs/
