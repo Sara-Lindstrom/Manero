@@ -86,7 +86,7 @@ export const ValidateConfirmPassword = (password: string, confirmPassword: strin
 // Validate phone number and set errors
 export const ValidatePhoneNumber = (text: string): ValidationResult => {
     let error = '';
-    const regExText = /^[0-9]+$/;
+    const regExText = /^[0-9+ ]+$/;
 
     if (text === '') {
         error = "Please fill this field.";
