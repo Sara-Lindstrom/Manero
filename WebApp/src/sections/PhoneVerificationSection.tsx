@@ -20,7 +20,7 @@ const PhoneVerificationSection: React.FC<VerifyPhoneProps> = ({ navigate }: Veri
         }
     };
 
-    // Need to add validation on phone number
+    // Need to add validation on phone number (to only be numbers)
     return (
         <div className="verification-view">
 
