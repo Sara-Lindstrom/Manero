@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 
-import ProductList from '../sections/ProductList'
-
-import CategoryNav from '../sections/CategoryNav';
-import BestSellerPreviewSection from '../sections/BestSellerPreviewSection'
 import HomePageCategoryNav from '../sections/HomePageCategoryNav';
+import HomepageShoecaseOffer from '../sections/HomepageShoecaseOffer';
+import FeatuerdProductList from '../sections/FeatuerdProductList';
+import BestSellerProductList from '../sections/BestSellerProductList';
 
 const HomeView = () => {
   const [selectedCategories, setSelectedCategories] = useState(['Category 1', 'Category 2', 'Category 3', 'Category 4']);
@@ -14,19 +13,21 @@ const HomeView = () => {
 
     <>
       <HomePageCategoryNav />
-      <section className='home-page-showcase'>
-          <div className='container showcase-offers'>
-              <h2>Take 50% off!</h2>
-              <a href="#" className='btn white-btn'>SHOP NOW</a>
-          </div>
-          <div className='featured-products'>
-              <h2 className='homepage-section-header'>Featured Products</h2>
-              <Link to="/bestSellersView" className='homepage-section-viewall'>view all <i className="fa-solid fa-chevron-right"></i></Link>
-          </div>
-          <ProductList selectedCategories={selectedCategories} limit={4} />
+      <HomepageShoecaseOffer />
+      <section className='container'>
+        <div className='product-showcase-section-header'>
+          <h2 className='product-showcase-name'>Featured Products</h2>
+          <Link to="/bestSellersView" className='homepage-section-viewall'>view all <i className="fa-solid fa-chevron-right"></i></Link>
+        </div>
+        <FeatuerdProductList selectedCategories={selectedCategories} limit={4}/>
       </section>
-      
-      <BestSellerPreviewSection />
+      <section className='container'>
+        <div className='product-showcase-section-header'>
+          <h2 className='product-showcase-name'>Best Seller</h2>
+          <Link to="/bestSellersView" className='homepage-section-viewall'>view all <i className="fa-solid fa-chevron-right"></i></Link>
+        </div>
+        <BestSellerProductList selectedCategories={selectedCategories} limit={3}/>
+      </section>
     </>
     
   )

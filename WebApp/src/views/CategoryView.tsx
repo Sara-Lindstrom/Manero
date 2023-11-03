@@ -1,17 +1,22 @@
 import React from 'react'
 import BreadcrumbSection from '../sections/BreadcrumbSection'
+import CategorySection from '../sections/CategorySection';
+import IconsNavigationSection from '../sections/IconsNavigationSection';
 import CategoryNav from '../sections/CategoryNav';
 
-const Categoryview: React.FC = () => {
+
+const CategoryView: React.FC = () => {
     const handleNavigateBack = () => {
       window.history.back();
     };
   return (
     <>
-        <BreadcrumbSection currentPage='Add a new card' showBackButton={true} onNavigateBack={handleNavigateBack}/>
-        <CategoryNav/>
+        <BreadcrumbSection currentPage='Add a new card' showBackButton={true} onNavigateBack={handleNavigateBack} showSearchField={true} showCartItem={true} />
+        <CategoryNav />
+        <CategorySection />
+        <IconsNavigationSection />
     </>
   )
 }
 
-export default Categoryview;
+export default CategoryView;
