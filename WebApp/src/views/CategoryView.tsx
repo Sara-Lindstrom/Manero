@@ -1,8 +1,8 @@
 import React from 'react'
 import BreadcrumbSection from '../sections/BreadcrumbSection'
-import CategoryNav from '../sections/CategoryNav';
 import CategorySection from '../sections/CategorySection';
 import IconsNavigationSection from '../sections/IconsNavigationSection';
+import CategoryNav from '../sections/CategoryNav';
 
 
 const CategoryView: React.FC = () => {

@@ -17,7 +17,7 @@ function CategoryNav() {
 
           <a href="#kids" className={activeLink === 'kids' ? 'active' : ''} onClick={() => handleLinkClick('kids')}>KIDS</a>
 
-          <a href="/BestSellersView" className={activeLink === 'accessories' ? 'active' : ''} onClick={() => handleLinkClick('accessories')} >ACCESSORIES</a>
+          <a href="/accessories" className={activeLink === 'accessories' ? 'active' : ''} onClick={() => handleLinkClick('accessories')} >ACCESSORIES</a>
         </div>
       </div>
     </section>
