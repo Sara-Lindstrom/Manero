@@ -2,7 +2,6 @@
 @import "./core/variables";
 @import "./core/mixins";
 @import "./core/_utilities.scss";
-@import "./core/reuseables";
 
 //PARTS
 @import "./parts/_btn.scss";
@@ -21,6 +20,7 @@
 @import "./parts/leaveAReviewSection";
 @import "./parts/burgerMenu";
 @import "./parts/FlagComponent";
+@import "./parts/VerifyPhone";
 
 //HomeView Start
 @import "./view/homeView";
