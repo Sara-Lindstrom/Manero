@@ -18,7 +18,7 @@ interface ProductListProps {
     selectedCategories: string | string[];
 }
 
-const ProductList: React.FC<ProductListProps> = ({ limit, selectedCategories }) => {
+const BestSellerProductList: React.FC<ProductListProps> = ({ limit, selectedCategories }) => {
         const [products, setProducts] = useState<Product[]>([]);
         const [wishlist, setWishlist] = useState<Product[]>([]);
         const [cart, setCart] = useState<{ [key: number]: number }>({});
@@ -68,34 +68,33 @@ const ProductList: React.FC<ProductListProps> = ({ limit, selectedCategories }) 
         };
       
     return (
-        <div className="product-list">
-            <ul className='product-list-info-below-grid'>
+        <section>
+            <ul className='best-seller-product-list'>
                 {products.map((product) => (
-                    <li className='product-list-info-below' key={product.id}>
-                        <a className='product-card-info-below' href={`/product/${product.id}`}>
-                            <div className='product-card-info-below'>
+                    <li className='best-seller-product-list-info-below' key={product.id}>
+                        <a className='best-seller-product-card' href={`/product/${product.id}`}>
+                            <div className='best-seller-product-card-info-below'>
                                 {product.salesprice > 0 && (
-                                <div className='product-sale-label'>SALE</div>
+                                <div className='best-seller-product-sale-label'>SALE</div>
                                 )}
-                                <img className='product-card-info-below-img' src={product.image} alt={product.name} />
-                                <p className='product-card-rating'><i className="fa-regular fa-star"></i>({product.rating})</p>
-                                <h2 className='product-card-name'>{product.name}</h2>
-                                <div className='product-card-price-container'>
-                                    {product.salesprice > 0 ? (
-                                        <>
-                                        <p className='product-card-price-strikethrough'>${product.price.toFixed(2)}</p>
-                                        <p className='product-card-salesprice'>${product.salesprice.toFixed(2)}</p>
-                                        </>
-                                    ) : (
-                                        <p className='product-card-price'>${product.price.toFixed(2)}</p>
-                                    )}
+                                <img className='best-seller-product-card-info-below-img' src={product.image} alt={product.name} />
+                                <div className='best-seller-product-text'>
+                                    <h2 className='best-seller-product-card-name'>{product.name}</h2>
+                                    <div className='best-seller-product-card-price-container'>
+                                        {product.salesprice > 0 ? (
+                                            <>
+                                            <p className='best-seller-product-card-price-strikethrough'>${product.price.toFixed(2)}</p>
+                                            <p className='best-seller-product-card-salesprice'>${product.salesprice.toFixed(2)}</p>
+                                            </>
+                                        ) : (
+                                            <p className='best-seller-product-card-price'>${product.price.toFixed(2)}</p>
+                                        )}
+                                    </div>
+                                    <p className='best-seller-product-card-rating'><i className="fa-regular fa-star"></i>({product.rating})</p>
                                 </div>
-                                <div className='product-card-info-below-buttons'>
-                                    <button className='product-card-info-below-button' onClick={() => addToWishlist(product)}>
+                                <div className='best-seller-product-card-info-below-buttons'>
+                                    <button className='best-seller-product-card-info-below-button' onClick={() => addToWishlist(product)}>
                                         <i className="fa-regular fa-heart"></i>
-                                    </button>
-                                    <button className='product-card-info-below-button' onClick={() => addToCart(product)}>
-                                        <i className="fa-regular fa-shopping-cart"></i>
                                     </button>
                                 </div>
                             </div>
@@ -103,9 +102,9 @@ const ProductList: React.FC<ProductListProps> = ({ limit, selectedCategories }) 
                     </li>
                 ))}
             </ul>
-        </div>
+        </section>
     )
 }
 
 
-export default ProductList;
+export default BestSellerProductList;
