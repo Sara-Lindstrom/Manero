@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
-import ProductList from '../sections/ProductList';
+import ProductList from '../sections/FeatuerdProductList';
 
 const BestSellersView: React.FC = () => {
     const [isSliderDropdownVisible, setSliderDropdownVisible] = useState(false);

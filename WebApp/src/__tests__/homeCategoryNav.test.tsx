@@ -1,9 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom'; // Import the matcher
+import '@testing-library/jest-dom';
 
-// Import your React component
-import CategoryNav from '../sections/HomePageCategoryNav';
+
 import HomePageCategoryNav from '../sections/HomePageCategoryNav';
 
 test('MEN link works', () => {
