@@ -2,6 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom';
 import logo from '../Images/logo.svg'
 import SearchField from '../components/SearchField';
+import BurgerMenuSection from './BurgerMenuSection';
 
 interface IBreadcrumbProps {
  
@@ -24,9 +25,8 @@ const BreadcrumbSection: React.FC<IBreadcrumbProps> = ( {currentPage, showBackBu
 
             <div className='first-column'>
               {showHamburgerButton ? ( // Show hamburger if showHamburgerButton is true
-                <button className='hamburgerButton'>
-                  <i className="fa-regular fa-bars-staggered"></i>
-                </button>
+              <BurgerMenuSection />
+                
               ) : ( // Show backButton if showHamburgerButton is false or showBackButton is true
                 <li className='backButton'>
                   {showBackButton && onNavigateBack && (
