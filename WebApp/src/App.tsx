@@ -11,7 +11,7 @@ import ChangePasswordView from './views/ChangePasswordView';
 import SignInView from './views/SignInView';
 import HomeView from './views/HomeView';
 import BestSellersView from './views/BestSellersView';
-import Categoryview from './views/CategoryView';
+import CategoryView from './views/CategoryView';
 import LeaveAReviewView from './views/LeaveAReviewView';
 import EditProfileView from './views/EditProfileView';
 import VerifyPhoneNumberView from './views/VerifyPhoneNumberView';
@@ -36,7 +36,7 @@ function App() {
             <Route path='/viewProfile' element={<ViewProfile />} />
             <Route path='/leaveAReview' element={<LeaveAReviewView />} />
             <Route path='/bestSellersView' element={<BestSellersView />} />
-            <Route path='/category' element={<Categoryview />} />
+            <Route path='/category' element={<CategoryView />} />
             <Route path='/verifyPhone' element={<VerifyPhoneNumberView />} />
         </Routes>
     </BrowserRouter>
