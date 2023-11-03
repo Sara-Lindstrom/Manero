@@ -58,19 +58,20 @@ const VerifyPhoneNumberSection: React.FC<VerifyPhoneProps> = ({ navigate }:
                     <FlagComponent
                         phoneNumber={phoneNumber}
                         onPhoneNumberChange={handlePhoneNumberChange}
+                        data-testid="phoneNumberInput"
                     />
                     {/* Add validation message */}
                     {phoneNumberError === "" ?
-                        <div className='input-validation-icon'>
+                        <div className='input-validation-icon' data-testid="successIcon">
                             <i className="fa-solid fa-check"></i>
                         </div>
                         :
-                        <div className='input-validation-icon'>
+                        <div className='input-validation-icon' data-testid="errorIcon">
                             <i className="fa-regular fa-x"></i>
                         </div>
                     }
                 </div>
-                <p className='input-error'>{phoneNumberError}</p>
+                <p className='input-error' data-testid="phoneNumberError">{phoneNumberError}</p>
 
                 <button className='btn dark-btn form-btn' data-testid="submitButton" style={{ marginTop: '20px' }} type='submit'>CONFIRM</button>
             </form>
