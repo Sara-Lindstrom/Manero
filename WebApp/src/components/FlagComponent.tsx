@@ -15,15 +15,14 @@ const FlagComponent: React.FC<FlagComponentProps> = ({ phoneNumber, onPhoneNumbe
             '46': 'se', // Sweden
             '33': 'fr', // France
             '49': 'de', // Germany
-            // Add more mappings as needed
         };
 
-        return countryCodeMap[code] || 'us'; // Default to 'us' if the code is not found
+        return countryCodeMap[code] || 'us'; // Default 'us' if the code is not found to follow design template
     };
 
     const extractCountryCode = (phone: string) => {
         const match = phone.match(/^\+\s*(\d{1,3})/);
-        const numericCode = match ? match[1] : 'us'; // Default to 'us' or any other default
+        const numericCode = match ? match[1] : 'us'; // Default 'us'
         return convertToIsoAlpha2(numericCode);
     };
     const countryCode = extractCountryCode(phoneNumber);
@@ -31,7 +30,6 @@ const FlagComponent: React.FC<FlagComponentProps> = ({ phoneNumber, onPhoneNumbe
     return (
         <div className="flag-phone-number-input">
             <div className="flag-container">
-                {/* Use the country code to determine the flag with the 'flag-icons' package */}
                 <span className={`fi fi-${countryCode.toLowerCase()}`}></span>
             </div>
             <div className="divider"></div>

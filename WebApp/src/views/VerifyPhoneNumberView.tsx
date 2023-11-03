@@ -11,12 +11,7 @@ const VerifyPhoneNumberView = () => {
 
   return (
     <>
-    <BreadcrumbSection currentPage="" showBackButton={true} onNavigateBack={handleNavigateBack}/>
-    
-      <div className='page-container'>
-        <i className="fa-light fa-pipe"></i>
-        <h1 className='page-title'>Verify your phone number</h1> 
-      </div> 
+    <BreadcrumbSection currentPage="Verify your phone number" showBackButton={true} onNavigateBack={handleNavigateBack} showCurrentPage={true} showCartItem={false} showHamburgerButton={false} />
 
       <VerifyPhoneNumberSection navigate={navigate}/>
 
