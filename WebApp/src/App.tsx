@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './css/Style.min.css';
 import AddCardView from './views/AddCardView';
 import PaymentMethodView from './views/PaymentMethodView';
-import EditProfile from './views/EditProfileView';
 import ViewProfile from './views/ViewProfileView';
 import OnboardingView from './views/OnboardingView';
 import SignUpView from './views/SignUpView';
@@ -10,11 +9,12 @@ import ForgotPasswordView from './views/ForgotPasswordView';
 import ResetPasswordConfirmedView from './views/ResetPasswordConfirmedView';
 import ChangePasswordView from './views/ChangePasswordView';
 import SignInView from './views/SignInView';
-import EditProfileView from './views/EditProfileView';
 import HomeView from './views/HomeView';
 import BestSellersView from './views/BestSellersView';
 import CategoryView from './views/CategoryView';
-
+import LeaveAReviewView from './views/LeaveAReviewView';
+import EditProfileView from './views/EditProfileView';
+import VerifyPhoneNumberView from './views/VerifyPhoneNumberView';
 
 function App() {
 
@@ -34,9 +34,10 @@ function App() {
             <Route path='/addCardView' element={<AddCardView />} />
             <Route path='/EditProfile' element={<EditProfileView /> }/>
             <Route path='/viewProfile' element={<ViewProfile />} />
+            <Route path='/leaveAReview' element={<LeaveAReviewView />} />
             <Route path='/bestSellersView' element={<BestSellersView />} />
-            <Route path='/home' element={< HomeView />} />
             <Route path='/category' element={<CategoryView />} />
+            <Route path='/verifyPhone' element={<VerifyPhoneNumberView />} />
         </Routes>
     </BrowserRouter>
 

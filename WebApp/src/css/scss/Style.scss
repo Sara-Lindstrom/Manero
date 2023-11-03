@@ -2,12 +2,11 @@
 @import "./core/variables";
 @import "./core/mixins";
 @import "./core/_utilities.scss";
-
+@import "./core/reuseables";
 
 //PARTS
 @import "./parts/_btn.scss";
 @import "./parts/_breadcrumb.scss";
-
 @import "./parts/resetPasswordConfirmedSection.scss";
 @import "./parts/forgotPasswordSection";
 @import "./parts/_form";
@@ -19,14 +18,18 @@
 @import "./parts/iconsNavigationSection";
 @import "./parts/_scrollMenu.scss";
 @import "./parts/signoutPopup";
+@import "./parts/leaveAReviewSection";
+@import "./parts/burgerMenu";
+@import "./parts/FlagComponent";
 @import "./parts/categorySection";
 
-    //HomeView Start
+//HomeView Start
 @import "./view/homeView";
 @import "./parts/HomepageCategoryNav";
 @import "./parts/SpecialOffersShowcase";
 @import "./parts/BestSellerPreviewSection";
 @import "./parts/productList";
+
 
 //VIEWS
 @import "./view/onboardingView";
@@ -34,3 +37,4 @@
 @import "./view/editProfile";
 @import "./view/viewProvile";
 @import "./view/bestSellersView";
+@import "./view/verifyPhoneNumberView";
