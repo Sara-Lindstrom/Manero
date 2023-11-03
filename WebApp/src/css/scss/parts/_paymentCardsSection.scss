@@ -2,8 +2,9 @@
     margin-top: 60px;
 
     .container {
-        .cards {
-            
+
+        .cards {   
+
             .titles {
                 display: flex;
                 justify-content: space-between;
@@ -38,12 +39,16 @@
                 justify-content: space-between;
                 align-items: center;
                 overflow: hidden;
-                width: 279px;
+                width: 100%;
+
+                @include md {
+                    justify-content: center;
+                }
 
                 .card {
-                    width: 100%;
                     display: none;
                     padding: 20px;
+                    margin-bottom: 20px;
                     margin-right: 10px;
                     border-radius: 15px;
                     width: 279px;
