@@ -3,12 +3,11 @@
 .flag-phone-number-input {
     display: flex;
     align-items: center;
-    border: 1px solid #ccc;
-    padding: 5px;
+    border: none;
 
     .flag-container {
-        width: 30px;
-        height: 20px;
+        width: 1.5rem;
+        height: 1.5rem;
 
         img {
             width: 100%;
