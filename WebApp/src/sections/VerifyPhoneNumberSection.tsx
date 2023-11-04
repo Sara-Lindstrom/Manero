@@ -7,7 +7,8 @@ type VerifyPhoneProps = {
     navigate: NavigateFunction
 }
 
-const VerifyPhoneNumberSection: React.FC<VerifyPhoneProps> = ({ navigate }: VerifyPhoneProps) => {
+const VerifyPhoneNumberSection: React.FC<VerifyPhoneProps> = ({ navigate }:
+    VerifyPhoneProps) => {
 
     // useState for visibility of phone number input
     const [phoneNumberVisible, setPhoneNumberVisible] = useState(false);
@@ -16,18 +17,21 @@ const VerifyPhoneNumberSection: React.FC<VerifyPhoneProps> = ({ navigate }: Veri
     const [phoneNumberError, setPhoneNumberError] = useState('');
 
     // useStates for setting default value for phone number
-    const [phoneNumber, setPhoneNumber] = useState('+4671234567');
+    const [phoneNumber, setPhoneNumber] = useState('+');
 
     const ValidateConfirm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         let validPhonenumber = FormValidation.ValidatePhoneNumber(phoneNumber).isValid;
+        if (validPhonenumber) {
+            navigate('/activate');
+        }
     }
 
     // Handle formatting the phonnumber so the flag are shown correctly on input
     const handlePhoneNumberChange = (value: string) => {
         let formattedValue = value;
     
-        // Ensure the value starts with '+'
+        // Ensure the value starts with '+' (written out automatically)
         if (!formattedValue.startsWith('+')) {
             formattedValue = `+${formattedValue}`;
         }
@@ -54,19 +58,20 @@ const VerifyPhoneNumberSection: React.FC<VerifyPhoneProps> = ({ navigate }: Veri
                     <FlagComponent
                         phoneNumber={phoneNumber}
                         onPhoneNumberChange={handlePhoneNumberChange}
+                        data-testid="phoneNumberInput"
                     />
                     {/* Add validation message */}
                     {phoneNumberError === "" ?
-                        <div className='input-validation-icon'>
+                        <div className='input-validation-icon' data-testid="successIcon">
                             <i className="fa-solid fa-check"></i>
                         </div>
                         :
-                        <div className='input-validation-icon'>
+                        <div className='input-validation-icon' data-testid="errorIcon">
                             <i className="fa-regular fa-x"></i>
                         </div>
                     }
                 </div>
-                <p className='input-error'>{phoneNumberError}</p>
+                <p className='input-error' data-testid="phoneNumberError">{phoneNumberError}</p>
 
                 <button className='btn dark-btn form-btn' data-testid="submitButton" style={{ marginTop: '20px' }} type='submit'>CONFIRM</button>
             </form>
