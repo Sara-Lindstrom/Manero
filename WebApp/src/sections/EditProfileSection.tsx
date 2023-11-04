@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import * as FormValidation from '../helpers/FormValidation';
-import { NavigateFunction, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import { NavigateFunction } from 'react-router-dom';
 import { handleEditSubmit, FormDataEditProfile, checkEmailExists } from '../helpers/FormHandlers';
 
 type EditProfileProps = {
@@ -9,9 +8,6 @@ type EditProfileProps = {
 }
 
 const EditProfileSection: React.FC<EditProfileProps> = ({ navigate }: EditProfileProps) => {
-
-    const userlocation = useLocation();
-    const { email: loggedInUserEmail } = userlocation.state || {};
 
     //useStates for setting input values both for validation and populate new User
     const [name, setName] = useState('');
@@ -26,19 +22,6 @@ const EditProfileSection: React.FC<EditProfileProps> = ({ navigate }: EditProfil
     const [phoneNumberError, setPhoneNumberError] = useState('');
     const [locationError, setLocationError] = useState('');
     const [validPhoneNumber, setValidPhoneNumber] = useState(true);
-
-    const fetchUserInformation = async (email: string) => {
-        try {
-            const response = await axios.get(`https://localhost:7055/api/User?email=${email}`);
-            if (response.status === 200) {
-                const userData = response.data; // Assuming the response contains user data
-                return userData;
-            }
-        } catch (error) {
-            console.error("An error occurred while fetching user information:", error);
-            return null;
-        }
-    };
     
     function convertFile(files: FileList | null) {
         if (files) {
@@ -85,8 +68,6 @@ const EditProfileSection: React.FC<EditProfileProps> = ({ navigate }: EditProfil
             });
         }
     };
-
-
 
   return (
     <div className='container editprofile'>
