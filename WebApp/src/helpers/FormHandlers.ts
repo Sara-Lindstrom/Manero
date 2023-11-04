@@ -20,6 +20,13 @@ export type FormDataSignIn = {
     rememberMe: boolean;
 };
 
+export type FormDataEditProfile = {
+    email: string;
+    name: string;
+    phoneNumber: string;
+    location: string;
+};
+
 // Handling changes in the input fields
 export const handleChange = (
     e: ChangeEvent<HTMLInputElement>,
@@ -153,5 +160,32 @@ export const handleResetPassword = async (
     } catch (error: any) {
         console.error('Error:', error);
         return false;
+    }
+};
+
+//Handle update profile
+export const handleEditSubmit = async (
+    e: React.FormEvent<HTMLFormElement>,
+    formData: FormDataEditProfile,
+    navigate: Navigate,
+    onSuccess?: () => void,
+    onFail?: () => void
+): Promise<void> => {
+    e.preventDefault();
+    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/User/UpdateProfile';
+
+    try {
+        const response = await axios.put(API_URL, formData);
+        if (response.status === 200) {
+            navigate('/viewProfile');
+            if (onSuccess) {
+                onSuccess();
+            }
+        }
+    } catch (error) {
+        console.error("An error occurred:", error);
+        if (onFail) {
+            onFail();
+        }
     }
 };

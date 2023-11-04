@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using WebApi.Context;
 using WebApi.Models;
 using WebApi.DTO;
+using System.Security.Claims;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -151,5 +152,48 @@ public class UserController : ControllerBase
         {
             return NotFound(new { Message = "User not found." });
         }
+    }
+
+    [HttpPut("UpdateProfile")]
+    public async Task<IActionResult> UpdateProfile([FromBody] UserEditProfile model)
+    {
+        var user = await _userManager.FindByEmailAsync(model.Email);
+        if (user == null)
+        {
+            return NotFound(new { Message = "User not found." });
+        }
+
+        // Ensure that the email is the same as the one in the model
+        if (user.Email != model.Email)
+        {
+            return BadRequest(new { Message = "Email cannot be changed." });
+        }
+
+        user.UserName = model.Name;
+        user.Email = model.Email;
+        user.PhoneNumber = model.PhoneNumber;
+
+        var result = await _userManager.UpdateAsync(user);
+
+        if (result.Succeeded)
+        {
+            // Update user claims or other profile information as needed
+            var existingClaims = await _userManager.GetClaimsAsync(user);
+
+            // Remove the existing 'name' claim, if it exists
+            var existingNameClaim = existingClaims.FirstOrDefault(x => x.Type == "name");
+            if (existingNameClaim != null)
+            {
+                await _userManager.RemoveClaimAsync(user, existingNameClaim);
+            }
+
+            // Add the updated 'name' claim
+            var newClaim = new Claim("name", model.Name);
+            await _userManager.AddClaimAsync(user, newClaim);
+
+            return Ok(new { Message = "Profile updated successfully." });
+        }
+
+        return BadRequest(new { Errors = result.Errors.Select(x => x.Description) });
     }
 }

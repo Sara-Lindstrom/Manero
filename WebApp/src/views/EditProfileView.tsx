@@ -1,25 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
 import EditProfileSection from '../sections/EditProfileSection';
-
-// This interface does not work properly. It returns an error in App.tsx that user cant be found
-//interface EditProfileType {
-//  user: User;
-//}
+import { useNavigate } from 'react-router-dom'
 
 
 const EditProfileView: React.FC = () => {
 
-  const handleNavigateBack = () => {
-    window.history.back(); // Använder window.history för att gå tillbaka ett steg
-  };
+    const navigate = useNavigate();
+    const handleNavigateBack = () => {
+    window.history.back();
+    };
 
 
   return (
 
     <>
           <BreadcrumbSection currentPage='Edit Profile' showBackButton={true} onNavigateBack={handleNavigateBack} />
-          <EditProfileSection />
+          <EditProfileSection navigate={ navigate } />
     </>
 
   )
