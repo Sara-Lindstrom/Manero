@@ -1,8 +1,29 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { ProfileData, fetchProfileData } from '../helpers/FormHandlers';
 
 const ViewProfileSection = () => {
+    const [profile, setProfile] = useState<ProfileData>({
+        name: '',
+        email: '',
+        phoneNumber: '0331234567', 
+        location: 'Ankeborg',
+    });
 
-  
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            fetchProfileData(token).then(data => {
+                if (data) {
+                    setProfile({
+                        name: data.name,
+                        email: data.email,
+                        phoneNumber: data.phoneNumber, // Include phoneNumber
+                        location: data.location,       // Include location
+                    });
+                }
+            });
+        }
+    }, []);
 
   function signout () {
     //signout function
@@ -10,6 +31,7 @@ const ViewProfileSection = () => {
     popup?.classList.remove("open-popup");
   }
 
+    
 
 function showPopup () {
     const popup = document.getElementById("popup");
@@ -68,9 +90,11 @@ function closePopup () {
             <i className="fa-regular fa-pen-to-square"></i>
           </a>
         </div>
-        <div className='user-info'>
-          <h2>Adam</h2>
-          <h5>adam@domain.com</h5>
+              <div className='user-info'>
+                  <h2>{profile.name}</h2>
+                  <h5>{profile.email}</h5>
+          {/*<h2>Adam</h2>*/}
+          {/*<h5>adam@domain.com</h5>*/}
         </div>
         <div className='Fields-section'>
             <a className='field' href='/orderhistory' id='order-history'>

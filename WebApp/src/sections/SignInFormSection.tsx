@@ -25,24 +25,20 @@ const SignInFormSection: React.FC<SignInProps> = ({ navigate }: SignInProps) => 
     const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        try {
-            const validEmail = FormValidation.ValidateEmail(email).isValid;
-            const validPassword = FormValidation.ValidatePassword(password).isValid;
+        const validEmail = FormValidation.ValidateEmail(email).isValid;
+        const validPassword = FormValidation.ValidatePassword(password).isValid;
 
-            if (validEmail && validPassword) {
-                const formDataSignIn: FormDataSignIn = {
-                    email,
-                    password,
-                    rememberMe
-                };
+        if (validEmail && validPassword) {
+            const formDataSignIn: FormDataSignIn = {
+                email,
+                password,
+                rememberMe
+            };
 
-                await handleSigninSubmit(e, formDataSignIn, navigate,
-                    () => { console.log('SignIn successful') },
-                    () => { console.log('SignIn failed') }
-                );
-            }
-        } catch (error) {
-            console.error("An error occurred during the signup process:", error);
+            await handleSigninSubmit(e, formDataSignIn, navigate,
+                () => { console.log('SignIn successful') },
+                () => { console.log('SignIn failed') }
+            );
         }
     };
 
