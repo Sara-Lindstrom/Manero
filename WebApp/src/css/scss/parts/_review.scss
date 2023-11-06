@@ -1,0 +1,43 @@
+.review {
+    display: flex;
+    border-bottom: 1px solid $color-blue;
+    padding-bottom: 20px;
+    margin-top: 30px;
+
+    .profileImg {
+        width: 50px;
+        height: 50px;
+        background-color: $color-blue;
+        border-radius: 50%;
+        margin: 0 20px 0 20px;
+
+    }
+    .info {
+        flex: 4;
+        padding-right: 20px;
+        h1 {
+            font-size: 16px;
+            display: inline-block;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .stars {
+            display: inline-block;
+            text-align: right;
+            margin-bottom: 0;
+            padding-bottom: 0;
+            color: gold;
+            width: 50%;
+            
+        }
+        .date {
+            font-size: 10px;
+            color: gray;
+        }
+        .comment {
+            font-size: 14px;
+            width: 95%;
+            color: gray;
+        }
+    }
+}
