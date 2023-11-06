@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace WebApi.Models.Entities
 {
@@ -10,7 +11,10 @@ namespace WebApi.Models.Entities
         public Guid ColorID { get; set; }
 
         // Navigation properties
+        [JsonIgnore]
         public ProductEntity Product { get; set; }
+
+        [JsonIgnore]
         public ColorEntity Color { get; set; }
     }
 }

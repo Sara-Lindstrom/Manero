@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
-import ProductList from '../sections/FeatuerdProductList';
+import ProductList from '../sections/ProductList';
 
 const BestSellersView: React.FC = () => {
     const [isSliderDropdownVisible, setSliderDropdownVisible] = useState(false);
@@ -25,7 +25,7 @@ const BestSellersView: React.FC = () => {
     };
 
     const handleCategorySelect = (category: string) => {
-        setSelectedCategories(category === 'All' ? 'All' : [category]);
+        setSelectedCategories(category === 'Men' ? 'Men' : [category]);
         setDropdownVisible(false);
     };
 
@@ -74,7 +74,7 @@ const BestSellersView: React.FC = () => {
             </div>
         </div>
 
-        <ProductList  selectedCategories={selectedCategories} limit={4}  />
+        <ProductList selectedCategories='Men' limit={4}/>
         </>
     )
 }

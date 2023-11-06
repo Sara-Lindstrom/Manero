@@ -3,12 +3,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using System.Linq.Expressions;
 using WebApi.Context;
 using WebApi.Models;
 using WebApi.Models.Entities;
 using WebApi.Repositories;
 
 namespace WebApi.Controllers;
+
 
 [Route("api/[controller]")]
 [ApiController]
@@ -28,6 +30,16 @@ public class ProductController : ControllerBase
         _tagRepo = (TagRepo)tagRepo;
         _categoryTagRepo = (CategoryTagRepo)categoryTagRepo;
     }
+
+    private static readonly Expression<Func<ProductEntity, object>>[] IncludesForProductModel = new Expression<Func<ProductEntity, object>>[]
+    {
+        p => p.ProductCategories, 
+        p => p.ProductColors,
+        p => p.ProductTags,
+        p => p.ProductSizes, 
+        p => p.ProductImages, 
+        p => p.ProductReviews
+    };
 
     [HttpGet("GetAllCategories")]
     public async Task<ActionResult> GetAllCategories()
@@ -55,6 +67,7 @@ public class ProductController : ControllerBase
         {
             // Attempt to retrieve the category from the database based on the given category name.
             var dbCategory = await _categoryRepo.GetOneAsync(c => c.CategoryName == category);
+
             // Retrieve all tags from the database.
             var dbTags = await _tagRepo.GetAllAsync();
 
@@ -87,20 +100,19 @@ public class ProductController : ControllerBase
     {
         try
         {
-            var result = await _productRepo.GetAllAsync();
+            var dbResult = await _productRepo.GetAllAsync();
 
             if (amount is not null)
             {
                 // If an amount is specified, order the products by rating in descending order
-                result = result.OrderByDescending(p => p.Rating).Take(amount.Value).ToList();
+                dbResult = dbResult.OrderByDescending(p => p.Rating).Take(amount.Value).ToList();
             }
             else
             {
                 // If no amount is specified, simply order all products by rating in descending order.
-                result = result.OrderByDescending(p => p.Rating).ToList();
+                dbResult = dbResult.OrderByDescending(p => p.Rating).ToList();
             }
-
-            return Ok(result);
+            return Ok(dbResult);
         }
         catch (Exception ex)
         {
@@ -115,19 +127,19 @@ public class ProductController : ControllerBase
     {
         try
         {
-            var result = await _productRepo.GetAllAsync();
+            var dbResult = await _productRepo.GetAllAsync();
 
             if (amount is not null)
             {
                 // and take only the top 'amount' of products as specified by the 'amount' parameter.
-                result = result.OrderByDescending(p => p.CreatedDate).Take(amount.Value).ToList();
+                dbResult = dbResult.OrderByDescending(p => p.CreatedDate).Take(amount.Value).ToList();
             }
             else
             {
-                result = result.OrderByDescending(p => p.CreatedDate).ToList();
+                dbResult = dbResult.OrderByDescending(p => p.CreatedDate).ToList();
             }
 
-            return Ok(result);
+            return Ok(dbResult);
         }
         catch (Exception ex)
         {
@@ -137,35 +149,50 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet("GetByCategory")]
-    // Define an asynchronous action method to get products by category and optionally by tag.
-    public async Task<ActionResult> GetByCategory(string category, string? tag)
+    public async Task<ActionResult<List<ProductModel>>> GetByCategory(string category, string? tag)
     {
         try
         {
+
             // Retrieve the category from the repository based on the category name.
             var dbCategories = await _categoryRepo.GetOneAsync(c => c.CategoryName == category);
+            var result = new List<ProductModel>();
 
-            if (dbCategories != null)
+            if (dbCategories == null)
             {
-                // If the category exists, retrieve all products associated with this category.
-                var result = await _productRepo.GetManyAsync(product => product.ProductCategories.Any(c => c.CategoryID == dbCategories.CategoryID));
-
-                if (tag is not null)
-                {
-                    // Retrieve the tag from the repository based on the tag name.
-                    var dbTag = await _tagRepo.GetOneAsync(t => t.TagName == tag);
-
-                    if (dbTag is not null)
-                    {
-                        var tagresult = result.Where(p => p.ProductTags.Any(t => t.TagID == dbTag.TagID));
-                        return Ok(tagresult);
-                    }
-                }
-
-                return Ok(result);
+                Console.WriteLine($"Category '{category}' not found.");
+                return NotFound($"Category '{category}' not found.");
             }
 
-            return NotFound();
+
+            // If the category exists, retrieve all products associated with this category.
+            var dbresult = await _productRepo.GetManyAsync(product => product.ProductCategories.Any(c => c.CategoryID == dbCategories.CategoryID), IncludesForProductModel);
+            if (dbresult == null)
+            {
+                Console.WriteLine("No products found for the category.");
+                return NotFound("No products found for the category.");
+            }
+
+            if (tag is not null)
+            {
+                // Retrieve the tag from the repository based on the tag name.
+                var dbTag = await _tagRepo.GetOneAsync(t => t.TagName == tag);
+                if (dbTag == null)
+                {
+                    Console.WriteLine($"Tag '{tag}' not found.");
+                    return NotFound($"Tag '{tag}' not found.");
+                }
+
+                dbresult = dbresult.Where(p => p.ProductTags?.Any(t => t.TagID == dbTag.TagID) == true).ToList();
+            }
+
+            foreach (var item in dbresult)
+            {
+                result.Add(item);
+            }
+
+            return Ok(result);
+            //return Ok(dbresult);
         }
         catch (Exception ex)
         {
@@ -175,6 +202,7 @@ public class ProductController : ControllerBase
         }
     }
 
+
     [HttpGet("GetById")]
     // Define an asynchronous action method to get a product by its ID.
     public async Task<ActionResult> GetById( Guid id)
@@ -182,11 +210,11 @@ public class ProductController : ControllerBase
         try
         {
             // Retrieve the product from the repository based on the product ID.
-            var result = await _productRepo.GetOneAsync(p => p.ProductID == id);
+            var dbResult = await _productRepo.GetOneAsync(p => p.ProductID == id);
 
-            if (result is not null)
+            if (dbResult is not null)
             {
-                return Ok(result);
+                return Ok(dbResult);
             }
             return NotFound();
         }

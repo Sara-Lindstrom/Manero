@@ -1,27 +1,36 @@
-import { ChangeEvent, FormEvent } from 'react';
 import { AxiosResponse } from 'axios';
 import axios from 'axios';
+import { IProduct } from '../Interfaces/IProduct';
 
-type Navigate = (path: string) => void;
- 
-// Define the type for product data that will be used in the ProductHandler
-export type ProductFormData = {
-    id: number;
-    name: string;
-    image: string;
-    price: number;
-    salesprice: number;
-    rating: number;
-    category: string;
-    size: string;
-    color: string;
-};
+// type Navigate = (path: string) => void;
  
 // Function to fetch best-selling products
-export const fetchBestSellers = async (): Promise<ProductFormData[]> => {
-    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Products/BestSellers';
+export const fetchBestSellers = async (categories : string, tags? : string | string[]): Promise<IProduct[]> => {
+
+    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Product/GetByCategory';
+     // Prepare query parameters
+     const params = new URLSearchParams();
+    
+     // If categories is an array, add each category to the query parameters
+     if (Array.isArray(categories)) {
+         categories.forEach(category => params.append('category', category));
+     } else {
+         // If categories is a single string, just set it directly
+         params.append('category', categories);
+     }
+ 
+     // Do the same for tags if it's provided
+     if (tags) {
+         if (Array.isArray(tags)) {
+             tags.forEach(tag => params.append('tag', tag));
+         } else {
+             params.append('tag', tags);
+         }
+     }
+
+ 
     try {
-        const response: AxiosResponse<ProductFormData[]> = await axios.get(API_URL);
+        const response: AxiosResponse<IProduct[]> = await axios.get(API_URL,  { params });
         return response.data;
     } catch (error) {
         console.error("An error occurred while fetching best sellers:", error);

@@ -10,7 +10,7 @@ public interface IRepo<TEntity, TDbContext> where TEntity : class where TDbConte
     Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> expression);
     Task<TEntity> CreateAsync(TEntity entity);
     Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> expression);
-    Task<List<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> expression, Expression<Func<TEntity, object>> include);
+    Task<List<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> expression, params Expression<Func<TEntity, object>>[] includes);
     Task<List<TEntity>> GetAllAsync();
     Task<TEntity> UpdateAsync(TEntity entity);
     Task<bool> DeleteAsync(TEntity entity);
@@ -57,14 +57,16 @@ public abstract class Repo<TEntity,TDbContext> : IRepo<TEntity, TDbContext> wher
         }
     }
 
-    public async Task<List<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> expression, Expression<Func<TEntity, object>>? include = null)
+    public async Task<List<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> expression, params Expression<Func<TEntity, object>>[] includes)
     {
-        if (include != null)
+        var res = _dbContext.Set<TEntity>().Where(expression);
+
+        foreach(var include in includes)
         {
-            return await _dbContext.Set<TEntity>().Where(expression).Include(include).ToListAsync();
+            res = res.Include(include);
         }
 
-        return await _dbContext.Set<TEntity>().Where(expression).ToListAsync();
+        return await res.ToListAsync();
     }
 
 
