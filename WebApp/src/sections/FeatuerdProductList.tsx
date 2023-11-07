@@ -68,7 +68,7 @@ const FeaturedProductList: React.FC<ProductListProps> = ({ limit, selectedCatego
         };
       
     return (
-        <div className="product-list">
+        <div className="product-list container">
             <ul className='product-list-info-below-grid'>
                 {products.map((product) => (
                     <li className='product-list-info-below' key={product.id}>
