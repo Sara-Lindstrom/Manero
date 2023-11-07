@@ -6,12 +6,13 @@ export interface IProduct {
     name: string;
     description:string;
     price: number;
-    salesprice?: number;
+    salesPrice?: number;
     rating?: number;
+    createdDate: Date;
     
     reviews?: IReview[];
     category: string[];
     size?: string[];
     color: string[];
-    image?: IImage[];
+    images: IImage[];
 }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace WebApi.Models.Entities
 {
@@ -9,6 +10,7 @@ namespace WebApi.Models.Entities
         public string TagName { get; set; }
 
         // Navigation properties
-        public ICollection<CategoryTagEntity> ProductTags { get; set; }
+        [JsonIgnore]
+        public ICollection<CategoryTagEntity> CategoryTags { get; set; }
     }
 }

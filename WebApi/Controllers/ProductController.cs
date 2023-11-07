@@ -1,5 +1,6 @@
 ﻿using Azure;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
@@ -21,14 +22,16 @@ public class ProductController : ControllerBase
     private readonly CategoryRepo _categoryRepo;
     private readonly TagRepo _tagRepo;
     private readonly CategoryTagRepo _categoryTagRepo;
+    private readonly ImageRepo _imageRepo;
 
-    public ProductController(IRepo<ProductEntity, ProductDbContext> productRepo, IRepo<ProductReviewEntity, ProductDbContext> productReviewRepo, IRepo<CategoryEntity, ProductDbContext> categoryRepo, IRepo<TagEntity, ProductDbContext> tagRepo, IRepo<CategoryTagEntity, ProductDbContext> categoryTagRepo)
+    public ProductController(IRepo<ProductEntity, ProductDbContext> productRepo, IRepo<ProductReviewEntity, ProductDbContext> productReviewRepo, IRepo<CategoryEntity, ProductDbContext> categoryRepo, IRepo<TagEntity, ProductDbContext> tagRepo, IRepo<CategoryTagEntity, ProductDbContext> categoryTagRepo, IRepo<ImageEntity, ProductDbContext> imageRepo)
     {
         _productRepo = (ProductRepo)productRepo;
         _productReviewRepo = (ProductReviewRepo)productReviewRepo;
         _categoryRepo = (CategoryRepo)categoryRepo;
         _tagRepo = (TagRepo)tagRepo;
         _categoryTagRepo = (CategoryTagRepo)categoryTagRepo;
+        _imageRepo = (ImageRepo)imageRepo;
     }
 
     private static readonly Expression<Func<ProductEntity, object>>[] IncludesForProductModel = new Expression<Func<ProductEntity, object>>[]
@@ -37,12 +40,12 @@ public class ProductController : ControllerBase
         p => p.ProductColors,
         p => p.ProductTags,
         p => p.ProductSizes, 
-        p => p.ProductImages, 
+        p => p.ProductImages,
         p => p.ProductReviews
     };
 
     [HttpGet("GetAllCategories")]
-    public async Task<ActionResult> GetAllCategories()
+    public async Task<ActionResult<List<CategoryEntity>>> GetAllCategories()
     {
         try
         {
@@ -60,8 +63,8 @@ public class ProductController : ControllerBase
         }
     }
 
-    [HttpGet("GetAllTags")]
-    public async Task<ActionResult> GetTags(string category)
+    [HttpGet("GetCategoryTags")]
+    public async Task<ActionResult<List<TagEntity>>> GetCatgegoryTags(string category)
     {
         try
         {
@@ -96,11 +99,12 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet("GetBestSelling")]
-    public async Task<ActionResult> GetBestSelling(int? amount)
+    public async Task<ActionResult<List<ProductModel>>> GetBestSelling(int? amount)
     {
         try
         {
-            var dbResult = await _productRepo.GetAllAsync();
+            var dbResult = await _productRepo.GetAllAsync(IncludesForProductModel);
+            var result = new List<ProductModel>();
 
             if (amount is not null)
             {
@@ -112,7 +116,13 @@ public class ProductController : ControllerBase
                 // If no amount is specified, simply order all products by rating in descending order.
                 dbResult = dbResult.OrderByDescending(p => p.Rating).ToList();
             }
-            return Ok(dbResult);
+
+            foreach (var item in dbResult)
+            {
+                result.Add(item);
+            }
+
+            return Ok(result);
         }
         catch (Exception ex)
         {
@@ -123,11 +133,12 @@ public class ProductController : ControllerBase
 
     [HttpGet("GetNewest")]
     // Define an asynchronous action method to get the newest products.
-    public async Task<ActionResult> GetNewest(int? amount)
+    public async Task<ActionResult<List<ProductModel>>> GetNewest(int? amount)
     {
         try
         {
-            var dbResult = await _productRepo.GetAllAsync();
+            var dbResult = await _productRepo.GetAllAsync(IncludesForProductModel);
+            var result = new List<ProductModel>();
 
             if (amount is not null)
             {
@@ -139,7 +150,12 @@ public class ProductController : ControllerBase
                 dbResult = dbResult.OrderByDescending(p => p.CreatedDate).ToList();
             }
 
-            return Ok(dbResult);
+            foreach (var item in dbResult)
+            {
+                result.Add(item);
+            }
+
+            return Ok(result);
         }
         catch (Exception ex)
         {
@@ -167,6 +183,16 @@ public class ProductController : ControllerBase
 
             // If the category exists, retrieve all products associated with this category.
             var dbresult = await _productRepo.GetManyAsync(product => product.ProductCategories.Any(c => c.CategoryID == dbCategories.CategoryID), IncludesForProductModel);
+            foreach (var item in dbresult)
+            {
+                if (item.ProductImages.Any())
+                {
+                    foreach(ProductImageEntity productImage in item.ProductImages)
+                    {
+                        var images = await _imageRepo.GetManyAsync(i => i.ImageID == productImage.ImageID);
+                    }
+                }
+            }
             if (dbresult == null)
             {
                 Console.WriteLine("No products found for the category.");
@@ -190,7 +216,6 @@ public class ProductController : ControllerBase
             {
                 result.Add(item);
             }
-
             return Ok(result);
             //return Ok(dbresult);
         }
@@ -205,16 +230,17 @@ public class ProductController : ControllerBase
 
     [HttpGet("GetById")]
     // Define an asynchronous action method to get a product by its ID.
-    public async Task<ActionResult> GetById( Guid id)
+    public async Task<ActionResult<ProductModel>> GetById( Guid id)
     {
         try
         {
             // Retrieve the product from the repository based on the product ID.
-            var dbResult = await _productRepo.GetOneAsync(p => p.ProductID == id);
+            var dbResult = await _productRepo.GetOneAsync(p => p.ProductID == id, IncludesForProductModel);
 
             if (dbResult is not null)
             {
-                return Ok(dbResult);
+                ProductModel result = dbResult;
+                return Ok(result);
             }
             return NotFound();
         }

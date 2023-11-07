@@ -1,5 +1,5 @@
 export interface IImage {
-    id: string;
-    url: string;
-    altText?: string; 
+    ImageID: string;
+    imagePath: string;
+    ImageName?: string; 
 }

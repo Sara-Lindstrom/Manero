@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 import axios from 'axios';
 import { IProduct } from '../Interfaces/IProduct';
+import { ICategories } from '../Interfaces/ICategories';
 
 // type Navigate = (path: string) => void;
  
@@ -31,12 +32,25 @@ export const fetchBestSellers = async (categories : string, tags? : string | str
  
     try {
         const response: AxiosResponse<IProduct[]> = await axios.get(API_URL,  { params });
+
         return response.data;
     } catch (error) {
         console.error("An error occurred while fetching best sellers:", error);
         return [];
     }
 };
+
+export const fetchAllCategories = async (): Promise<ICategories[]> => {
+    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Product/GetAllCategories';
+
+    try {
+        const response: AxiosResponse<ICategories[]> = await axios.get(API_URL);
+        return response.data;
+    } catch (error) {
+        console.error("An error occurred while fetching best sellers:", error);
+        return [];
+    }
+}
  
 // // Function to add a product to the wishlist
 // export const addToWishlist = async (productId: string): Promise<boolean> => {

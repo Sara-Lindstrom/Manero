@@ -33,6 +33,7 @@ builder.Services.AddScoped<IRepo<ProductReviewEntity, ProductDbContext>, Product
 builder.Services.AddScoped<IRepo<CategoryEntity, ProductDbContext>, CategoryRepo>();
 builder.Services.AddScoped<IRepo<TagEntity, ProductDbContext>, TagRepo>();
 builder.Services.AddScoped<IRepo<CategoryTagEntity, ProductDbContext>, CategoryTagRepo>();
+builder.Services.AddScoped<IRepo<ImageEntity, ProductDbContext>, ImageRepo>();
 
 // Enforce unique emails
 builder.Services.AddIdentity<UserModel, IdentityRole>(options =>

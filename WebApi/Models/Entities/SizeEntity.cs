@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace WebApi.Models.Entities
 {
@@ -9,6 +10,7 @@ namespace WebApi.Models.Entities
         public string SizeName { get; set; }
 
         // Navigation properties
+        [JsonIgnore]
         public ICollection<ProductSizeEntity> ProductSizes { get; set; }
     }
 }

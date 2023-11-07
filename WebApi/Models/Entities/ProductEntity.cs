@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace WebApi.Models.Entities
 {
@@ -18,11 +19,22 @@ namespace WebApi.Models.Entities
         public DateTime CreatedDate { get; set; }
 
         // Navigation properties
+        [JsonIgnore]
         public ICollection<ProductCategoryEntity> ProductCategories { get; set; }
+
+        [JsonIgnore]
         public ICollection<CategoryTagEntity> ProductTags { get; set; }
+
+        [JsonIgnore]
         public ICollection<ProductColorEntity> ProductColors { get; set; }
+
+        [JsonIgnore]
         public ICollection<ProductSizeEntity> ProductSizes { get; set; }
+
+        [JsonIgnore]
         public ICollection<ProductImageEntity> ProductImages { get; set; }
+
+        [JsonIgnore]
         public ICollection<ProductReviewEntity> ProductReviews { get; set; }
     }
 }

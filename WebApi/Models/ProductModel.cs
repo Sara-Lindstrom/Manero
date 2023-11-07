@@ -13,6 +13,7 @@ namespace WebApi.Models
         public decimal price { get; set; }
         public decimal? salesPrice { get; set; }
         public double? rating { get; set; }
+        public DateTime createdDate { get; set; }
 
         public List<ProductReviewEntity>? reviews { get; set; }
         public List<string>? categories { get; set; }
@@ -30,6 +31,7 @@ namespace WebApi.Models
                 price = productEntity.Price,
                 salesPrice = productEntity.SalePrice,
                 rating = productEntity.Rating,
+                createdDate = productEntity.CreatedDate,
 
                 reviews = productEntity.ProductReviews.ToList(),
                 categories = productEntity.ProductCategories.Where(pc => pc.Category != null).Select(pc => pc.Category.CategoryName).ToList(),

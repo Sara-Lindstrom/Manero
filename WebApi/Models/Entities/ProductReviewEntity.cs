@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace WebApi.Models.Entities
 {
@@ -14,7 +15,10 @@ namespace WebApi.Models.Entities
         public DateTime ReviewDate { get; set; }
 
         // Navigation properties
+        [JsonIgnore]
         public ProductEntity Product { get; set; }
+
+        [JsonIgnore]
         public IdentityUser User { get; set; }
     }
 }

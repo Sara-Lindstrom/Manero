@@ -71,7 +71,7 @@ namespace WebApi.Migrations.ProductDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("IdentityUser");
+                    b.ToTable("IdentityUser", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.CategoryEntity", b =>
@@ -86,7 +86,7 @@ namespace WebApi.Migrations.ProductDb
 
                     b.HasKey("CategoryID");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.CategoryTagEntity", b =>
@@ -118,7 +118,7 @@ namespace WebApi.Migrations.ProductDb
 
                     b.HasIndex("TagEntityTagID");
 
-                    b.ToTable("CategoryTags");
+                    b.ToTable("CategoryTags", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.ColorEntity", b =>
@@ -133,7 +133,7 @@ namespace WebApi.Migrations.ProductDb
 
                     b.HasKey("ColorID");
 
-                    b.ToTable("Colors");
+                    b.ToTable("Colors", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.ImageEntity", b =>
@@ -151,7 +151,7 @@ namespace WebApi.Migrations.ProductDb
 
                     b.HasKey("ImageID");
 
-                    b.ToTable("Images");
+                    b.ToTable("Images", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.ProductCategoryEntity", b =>
@@ -172,7 +172,7 @@ namespace WebApi.Migrations.ProductDb
 
                     b.HasIndex("ProductID");
 
-                    b.ToTable("ProductCategories");
+                    b.ToTable("ProductCategories", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.ProductColorEntity", b =>
@@ -193,7 +193,7 @@ namespace WebApi.Migrations.ProductDb
 
                     b.HasIndex("ProductID");
 
-                    b.ToTable("ProductColors");
+                    b.ToTable("ProductColors", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.ProductEntity", b =>
@@ -224,7 +224,7 @@ namespace WebApi.Migrations.ProductDb
 
                     b.HasKey("ProductID");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.ProductImageEntity", b =>
@@ -245,7 +245,7 @@ namespace WebApi.Migrations.ProductDb
 
                     b.HasIndex("ProductID");
 
-                    b.ToTable("ProductImages");
+                    b.ToTable("ProductImages", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.ProductReviewEntity", b =>
@@ -277,7 +277,7 @@ namespace WebApi.Migrations.ProductDb
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("ProductReviews");
+                    b.ToTable("ProductReviews", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.ProductSizeEntity", b =>
@@ -298,7 +298,7 @@ namespace WebApi.Migrations.ProductDb
 
                     b.HasIndex("SizeID");
 
-                    b.ToTable("ProductSizes");
+                    b.ToTable("ProductSizes", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.SizeEntity", b =>
@@ -313,7 +313,7 @@ namespace WebApi.Migrations.ProductDb
 
                     b.HasKey("SizeID");
 
-                    b.ToTable("Sizes");
+                    b.ToTable("Sizes", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.TagEntity", b =>
@@ -328,7 +328,7 @@ namespace WebApi.Migrations.ProductDb
 
                     b.HasKey("TagID");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.CategoryTagEntity", b =>

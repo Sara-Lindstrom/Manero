@@ -9,9 +9,9 @@ public interface IRepo<TEntity, TDbContext> where TEntity : class where TDbConte
 {
     Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> expression);
     Task<TEntity> CreateAsync(TEntity entity);
-    Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> expression);
-    Task<List<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> expression, params Expression<Func<TEntity, object>>[] includes);
-    Task<List<TEntity>> GetAllAsync();
+    Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> expressionparams, Expression<Func<TEntity, object>>[]? includes);
+    Task<List<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> expression, params Expression<Func<TEntity, object>>[]? includes);
+    Task<List<TEntity>> GetAllAsync(params Expression<Func<TEntity, object>>[]? includes);
     Task<TEntity> UpdateAsync(TEntity entity);
     Task<bool> DeleteAsync(TEntity entity);
 }
@@ -44,11 +44,20 @@ public abstract class Repo<TEntity,TDbContext> : IRepo<TEntity, TDbContext> wher
         throw new NotImplementedException();
     }
 
-    public async Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> expression)
+    public async Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> expression, params Expression<Func<TEntity, object>>[]? includes)
     {
         try
         {
-            return await _dbContext.Set<TEntity>().FirstOrDefaultAsync(expression) ?? null!;
+            var res = _dbContext.Set<TEntity>().Where(expression);
+            if (includes is not null && res is not null)
+            {
+                foreach (var include in includes)
+                {
+                    res = res.Include(include);
+                }
+            }
+
+            return await res.FirstOrDefaultAsync();
         }
         catch (Exception ex)
         {
@@ -57,24 +66,39 @@ public abstract class Repo<TEntity,TDbContext> : IRepo<TEntity, TDbContext> wher
         }
     }
 
-    public async Task<List<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> expression, params Expression<Func<TEntity, object>>[] includes)
+    public async Task<List<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> expression, params Expression<Func<TEntity, object>>[]? includes)
     {
         var res = _dbContext.Set<TEntity>().Where(expression);
 
-        foreach(var include in includes)
+        if(includes is not null && res is not null)
         {
-            res = res.Include(include);
+            foreach (var include in includes)
+            {
+                res = res.Include(include);
+            }
         }
 
         return await res.ToListAsync();
     }
 
 
-    public async Task<List<TEntity>> GetAllAsync()
+    public async Task<List<TEntity>> GetAllAsync(params Expression<Func<TEntity, object>>[]? includes)
     {
         try
         {
-            return await _dbContext.Set<TEntity>().ToListAsync();
+            //var res = _dbContext.Set<TEntity>();
+            IQueryable<TEntity> res = _dbContext.Set<TEntity>();
+
+            if (includes is not null && res is not null)
+            {
+
+                foreach (var include in includes)
+                {
+
+                    res = res.Include(include);
+                }
+            }
+            return await res.ToListAsync();
         }
         catch (Exception ex)
         {
