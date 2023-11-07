@@ -54,12 +54,11 @@ public class UserController_Test
 
         var userModel = new User { Email = "test@example.com", Password = "Password123", Name = "Test" };
 
-            // Act: Send a POST request to the CreateUser endpoint
-            var result = await _controller.CreateUser(userModel);
+        // Act: Send a POST request to the CreateUser endpoint
+        var result = await _controller.CreateUser(userModel);
 
-            // Assert: Check the HTTP response status code
-            var conflictResult = Assert.IsType<BadRequestObjectResult>(result);
-            Assert.Equal((int)HttpStatusCode.BadRequest, conflictResult.StatusCode);
-        }
+        // Assert: Check the HTTP response status code
+        var conflictResult = Assert.IsType<ConflictObjectResult>(result);
+        Assert.Equal((int)HttpStatusCode.Conflict, conflictResult.StatusCode);
     }
 }
