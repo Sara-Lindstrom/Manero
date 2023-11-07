@@ -21,8 +21,8 @@ export type FormData = {
 export type ProfileData = {
     name: string;
     email: string;
-    phoneNumber: string;
-    location: string
+    phoneNumber: string | null; // phoneNumber can be a string or null
+    location: string;
 };
 
 // Used for Edit and View profile information
@@ -135,8 +135,13 @@ export const handleUpdateProfile = async (
 ): Promise<void> => {
     const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/User/UpdateProfile';
 
+    const payload = {
+        ...profileData,
+        phoneNumber: profileData.phoneNumber || null,
+    };
+
     try {
-        const response = await axios.put(API_URL, profileData, {
+        const response = await axios.put(API_URL, payload, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
