@@ -6,6 +6,7 @@ import HomepageShoecaseOffer from '../sections/HomepageShoecaseOffer';
 import FeatuerdProductList from '../sections/FeatuerdProductList';
 import BestSellerProductList from '../sections/BestSellerProductList';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
+import IconsNavigationSection from '../sections/IconsNavigationSection';
 
 const HomeView = () => {
   const [selectedCategories, setSelectedCategories] = useState(['Category 1', 'Category 2', 'Category 3', 'Category 4']);
@@ -33,6 +34,7 @@ const HomeView = () => {
         </section>
       </div>
       <HomepageShoecaseOffer />
+      <IconsNavigationSection />
     </>
     
   )
