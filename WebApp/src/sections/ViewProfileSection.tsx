@@ -8,7 +8,7 @@ const ViewProfileSection = () => {
     const [profile, setProfile] = useState<ProfileData>({
         name: '',
         email: '',
-        phoneNumber: '0331234567', 
+        phoneNumber: '', 
         location: 'Ankeborg',
     });
 
@@ -91,8 +91,7 @@ const ViewProfileSection = () => {
               <div className='user-info'>
                   <h2>{profile.name}</h2>
                   <h5>{profile.email}</h5>
-          {/*<h2>Adam</h2>*/}
-          {/*<h5>adam@domain.com</h5>*/}
+                  <h5>{profile.phoneNumber}</h5>
         </div>
         <div className='Fields-section'>
             <a className='field' href='/orderhistory' id='order-history'>
@@ -131,7 +130,7 @@ const ViewProfileSection = () => {
                 <i id='right-arrow' className="fa-solid fa-chevron-right"></i>
               </div>
             </a>
-            <a className='field' href='#' /*onClick={confirmSignOut}*/ onClick={e => {showPopup()}} id='signout'>
+            <a className='field' href='#' onClick={e => {showPopup()}} id='signout'>
               <div className='field-details'>
                 <div className='icon-name'>
                   <i className="fa-regular fa-arrow-right-from-bracket"></i>
