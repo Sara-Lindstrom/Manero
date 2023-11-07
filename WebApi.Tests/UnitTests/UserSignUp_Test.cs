@@ -31,7 +31,7 @@ namespace WebApi.Tests.UnitTests
             // UserDbContext
             _mockUserDbContext = new Mock<UserDbContext>(new DbContextOptions<UserDbContext>());
 
-            _userController = new UserController(_mockUserManager.Object, _mockUserDbContext.Object, null);
+            //_userController = new UserController(_mockUserManager.Object, _mockUserDbContext.Object, null);
         }
 
         // Validate how the API handles model states that is invalid, no user is created

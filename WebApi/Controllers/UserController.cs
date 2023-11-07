@@ -65,15 +65,24 @@ public class UserController : ControllerBase
         var user = new UserModel { UserName = model.Email, Email = model.Email };
         var result = await _userManager.CreateAsync(user, model.Password);
 
-        if (result.Succeeded)
+        if (result != null)
         {
-            // Add the name as a claim
-            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("name", model.Name));
-
-            return Ok(new { Message = "Registration was successful." });
+            if (result.Succeeded)
+            {
+                // User creation was successful, proceed with adding claims or other operations.
+                await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("name", model.Name));
+                return Ok(new { Message = "Registration was successful." });
+            }
+            else
+            {
+                // User creation failed. Return the error messages.
+                return BadRequest(new { Errors = result.Errors.Select(x => x.Description) });
+            }
         }
-
-        return BadRequest(new { Errors = result.Errors.Select(x => x.Description) });
+        else
+        {
+            return BadRequest(new { Errors = "User creation result is null." });
+        }
     }
 
     // Method for signing in
