@@ -177,25 +177,27 @@ export const handleSignOut = async (
     try {
         const response = await axios.post(API_URL, {}, {
             headers: {
-
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         });
 
         if (response.status === 200) {
             localStorage.removeItem('token');
-            navigate('/signin');
-
             if (onSuccess) {
                 onSuccess();
             }
-        }
-    } catch (error: unknown) {
-        if (error instanceof Error) {
-            console.error('Error:', error.message);
-
+            console.log('Sign-out successful.');
+            navigate('/signin');
+        } else {
             if (onFail) {
                 onFail();
             }
+            console.error('Sign-out failed.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        if (onFail) {
+            onFail();
         }
     }
 };

@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { ProfileData, fetchProfileData } from '../helpers/FormHandlers';
+import { ProfileData, fetchProfileData, handleSignOut } from '../helpers/FormHandlers';
+import { useNavigate } from 'react-router-dom'
 
 const ViewProfileSection = () => {
+    const navigate = useNavigate();
+
     const [profile, setProfile] = useState<ProfileData>({
         name: '',
         email: '',
@@ -25,59 +28,54 @@ const ViewProfileSection = () => {
         }
     }, []);
 
-  function signout () {
-    //signout function
-    const popup = document.getElementById("popup");
-    popup?.classList.remove("open-popup");
-  }
+    function signout() {
+        handleSignOut(
+            (path: string) => navigate(path),
+            () => {
+                localStorage.removeItem('token');
+                navigate('/signin');
+            },
+            () => {
+                console.error('Sign-out failed.');
+            }
+        );
+        closePopup();
+    }
 
     
 
-function showPopup () {
-    const popup = document.getElementById("popup");
-    const img = document.getElementById("photo-section");
-    const field1 = document.getElementById("order-history");
-    const field2 = document.getElementById("payment-method");
-    const field3 = document.getElementById("my-address");
-    const field4 = document.getElementById("my-promocode");
-    const field5 = document.getElementById("signout");
-    popup?.classList.add("open-popup");
-    img?.classList.add("opened-popup");
-    field1?.classList.add("opened-popup");
-    field2?.classList.add("opened-popup");
-    field3?.classList.add("opened-popup");
-    field4?.classList.add("opened-popup");
-    field5?.classList.add("opened-popup");
-}
+    function showPopup () {
+        const popup = document.getElementById("popup");
+        const img = document.getElementById("photo-section");
+        const field1 = document.getElementById("order-history");
+        const field2 = document.getElementById("payment-method");
+        const field3 = document.getElementById("my-address");
+        const field4 = document.getElementById("my-promocode");
+        const field5 = document.getElementById("signout");
+        popup?.classList.add("open-popup");
+        img?.classList.add("opened-popup");
+        field1?.classList.add("opened-popup");
+        field2?.classList.add("opened-popup");
+        field3?.classList.add("opened-popup");
+        field4?.classList.add("opened-popup");
+        field5?.classList.add("opened-popup");
+    }
 
-function closePopup () {
-    const popup = document.getElementById("popup");
-    const img = document.getElementById("photo-section");
-    const field1 = document.getElementById("order-history");
-    const field2 = document.getElementById("payment-method");
-    const field3 = document.getElementById("my-address");
-    const field4 = document.getElementById("my-promocode");
-    const field5 = document.getElementById("signout");
-    popup?.classList.remove("open-popup");
-    img?.classList.remove("opened-popup");
-    field1?.classList.remove("opened-popup");
-    field2?.classList.remove("opened-popup");
-    field3?.classList.remove("opened-popup");
-    field4?.classList.remove("opened-popup");
-    field5?.classList.remove("opened-popup");
-  }
-
-    function confirmSignOut() {
-        const userConfirmed = window.confirm("Are you sure you want to sign out?");
-      
-        if (userConfirmed) {
-          // Perform sign-out logic here
-          console.log("User confirmed sign out.");
-        } 
-        else {
-          // Handle the case where the user cancels the sign-out
-          console.log("User canceled sign out.");
-        }
+    function closePopup () {
+        const popup = document.getElementById("popup");
+        const img = document.getElementById("photo-section");
+        const field1 = document.getElementById("order-history");
+        const field2 = document.getElementById("payment-method");
+        const field3 = document.getElementById("my-address");
+        const field4 = document.getElementById("my-promocode");
+        const field5 = document.getElementById("signout");
+        popup?.classList.remove("open-popup");
+        img?.classList.remove("opened-popup");
+        field1?.classList.remove("opened-popup");
+        field2?.classList.remove("opened-popup");
+        field3?.classList.remove("opened-popup");
+        field4?.classList.remove("opened-popup");
+        field5?.classList.remove("opened-popup");
       }
 
   return (
