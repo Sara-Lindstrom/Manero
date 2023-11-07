@@ -207,9 +207,14 @@ namespace WebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("UserModelId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Location");
+                    b.HasIndex("UserModelId");
+
+                    b.ToTable("Locations");
                 });
 
             modelBuilder.Entity("WebApi.Models.UserModel", b =>
@@ -350,9 +355,18 @@ namespace WebApi.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("WebApi.Models.Address.Location", b =>
+                {
+                    b.HasOne("WebApi.Models.UserModel", null)
+                        .WithMany("Locations")
+                        .HasForeignKey("UserModelId");
+                });
+
             modelBuilder.Entity("WebApi.Models.UserModel", b =>
                 {
                     b.Navigation("Addresses");
+
+                    b.Navigation("Locations");
                 });
 #pragma warning restore 612, 618
         }

@@ -12,8 +12,8 @@ using WebApi.Context;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20231107121309_Address Title Added to AddressModel")]
-    partial class AddressTitleAddedtoAddressModel
+    [Migration("20231107175559_added location to IU")]
+    partial class addedlocationtoIU
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -166,9 +166,8 @@ namespace WebApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("LocationId")
+                        .HasColumnType("int");
 
                     b.Property<string>("PostalCode")
                         .IsRequired()
@@ -188,9 +187,37 @@ namespace WebApi.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("LocationId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Address.Location", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("UserModelId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserModelId");
+
+                    b.ToTable("Locations");
                 });
 
             modelBuilder.Entity("WebApi.Models.UserModel", b =>
@@ -314,18 +341,35 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("WebApi.Models.Address.Address", b =>
                 {
+                    b.HasOne("WebApi.Models.Address.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("WebApi.Models.UserModel", "User")
                         .WithMany("Addresses")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Location");
+
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Address.Location", b =>
+                {
+                    b.HasOne("WebApi.Models.UserModel", null)
+                        .WithMany("Locations")
+                        .HasForeignKey("UserModelId");
                 });
 
             modelBuilder.Entity("WebApi.Models.UserModel", b =>
                 {
                     b.Navigation("Addresses");
+
+                    b.Navigation("Locations");
                 });
 #pragma warning restore 612, 618
         }

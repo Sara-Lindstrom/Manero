@@ -12,8 +12,8 @@ using WebApi.Context;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20231107115144_Address Added")]
-    partial class AddressAdded
+    [Migration("20231107174837_FK UserId updated")]
+    partial class FKUserIdupdated
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -166,9 +166,8 @@ namespace WebApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("LocationId")
+                        .HasColumnType("int");
 
                     b.Property<string>("PostalCode")
                         .IsRequired()
@@ -178,15 +177,44 @@ namespace WebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("Title")
                         .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId1")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Address.Location", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Locations");
                 });
 
             modelBuilder.Entity("WebApi.Models.UserModel", b =>
@@ -310,11 +338,17 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("WebApi.Models.Address.Address", b =>
                 {
-                    b.HasOne("WebApi.Models.UserModel", "User")
-                        .WithMany("Addresses")
-                        .HasForeignKey("UserId")
+                    b.HasOne("WebApi.Models.Address.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("WebApi.Models.UserModel", "User")
+                        .WithMany("Addresses")
+                        .HasForeignKey("UserId1");
+
+                    b.Navigation("Location");
 
                     b.Navigation("User");
                 });

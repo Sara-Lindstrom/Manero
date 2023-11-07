@@ -114,6 +114,22 @@ public class UserController : ControllerBase
         return Unauthorized("Invalid login attempt.");
     }
 
+    //Method to get userId
+    [Authorize]
+    [HttpGet("GetUserId")]
+    public IActionResult GetUserId()
+    {
+        // Retrieve the userId from the claims
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (string.IsNullOrWhiteSpace(userId))
+        {
+            return BadRequest("User ID not found.");
+        }
+
+        return Ok(new { userId });
+    }
+
     // Method to get user profile for editing
     [Authorize]
     [HttpGet("EditProfile")]
@@ -280,6 +296,10 @@ public class UserController : ControllerBase
         }
     }
 
+
+
+    ////////////// USER ADDRESS ///////////////////
+    
     //Method to add a new address to a user
     [Authorize]
     [HttpPost("{userId}/Addresses")]
@@ -291,11 +311,21 @@ public class UserController : ControllerBase
             return NotFound("User not found.");
         }
 
-        // Associate the address with the user
-        address.UserId = userId;
+        // Create a new location
+        var location = new Location
+        {
+            City = address.Location.City,
+            Country = address.Location.Country
+        };
 
-        // Add the address to the context
+        // Associate the address with the user and the location
+        address.UserId = userId;
+        address.Location = location; // Associate the location with the address
+
+        // Add both the location and the address to the context
+        _context.Locations.Add(location);
         _context.Addresses.Add(address);
+
         await _context.SaveChangesAsync();
 
         return Ok(new { Message = "Address added successfully." });
@@ -303,7 +333,7 @@ public class UserController : ControllerBase
 
     // Method to get a single address for a user
     [Authorize]
-    [HttpGet("{userId}/Address/{addressId}")]
+    [HttpGet("{userId}/Addresses/{addressId}")]
     public async Task<IActionResult> GetSingleUserAddress([FromRoute] string userId, [FromRoute] int addressId)
     {
         var user = await _userManager.FindByIdAsync(userId);
@@ -312,10 +342,10 @@ public class UserController : ControllerBase
             return NotFound("User not found.");
         }
 
-        // Retrieve the specific address associated with the user
+        // Retrieve the specific address associated with the user, including the location
         var userAddress = await _context.Addresses
+            .Include(a => a.Location)
             .Where(a => a.UserId == userId && a.Id == addressId)
-            .Include(a => a.Location) // Include the associated location
             .FirstOrDefaultAsync();
 
         if (userAddress == null)
@@ -337,10 +367,10 @@ public class UserController : ControllerBase
             return NotFound("User not found.");
         }
 
-        // Retrieve all addresses associated with the user, including location information
+        // Retrieve all addresses associated with the user, including the location
         var userAddresses = await _context.Addresses
+            .Include(a => a.Location)
             .Where(a => a.UserId == userId)
-            .Include(a => a.Location) // Include the associated location
             .ToListAsync();
 
         return Ok(userAddresses);
@@ -357,8 +387,9 @@ public class UserController : ControllerBase
             return NotFound("User not found.");
         }
 
-        // Check if the address exists and belongs to the user
+        // Check if the address exists and belongs to the user, including the location
         var existingAddress = await _context.Addresses
+            .Include(a => a.Location)
             .Where(a => a.Id == addressId && a.UserId == userId)
             .FirstOrDefaultAsync();
 
@@ -371,7 +402,7 @@ public class UserController : ControllerBase
         existingAddress.StreetName = updatedAddress.StreetName;
         existingAddress.PostalCode = updatedAddress.PostalCode;
 
-        // Update the associated location (City and Country)
+        // Update the location properties
         existingAddress.Location.City = updatedAddress.Location.City;
         existingAddress.Location.Country = updatedAddress.Location.Country;
 
@@ -383,22 +414,22 @@ public class UserController : ControllerBase
 
     //Method that displays users location 
     [Authorize]
-    [HttpGet("{userId}/Locations")]
-    public async Task<IActionResult> GetUserLocationStrings([FromRoute] string userId)
+[HttpGet("{userId}/Locations")]
+public async Task<IActionResult> GetUserLocationStrings([FromRoute] string userId)
+{
+    var user = await _userManager.FindByIdAsync(userId);
+    if (user == null)
     {
-        var user = await _userManager.FindByIdAsync(userId);
-        if (user == null)
-        {
-            return NotFound("User not found.");
-        }
-
-        // Retrieve location strings (City and Country) associated with the user's addresses
-        var locationStrings = await _context.Addresses
-            .Where(a => a.UserId == userId)
-            .Select(a => new { a.Location.City, a.Location.Country }) // Select City and Country
-            .Distinct() // Retrieve distinct location strings
-            .ToListAsync();
-
-        return Ok(locationStrings);
+        return NotFound("User not found.");
     }
+
+    // Retrieve location strings (City and Country) associated with the user's locations
+    var locationStrings = await _context.Addresses
+        .Where(a => a.UserId == userId)
+        .Select(a => new { a.Location.City, a.Location.Country }) // Select City and Country
+        .Distinct() // Retrieve distinct location strings
+        .ToListAsync();
+
+    return Ok(locationStrings);
+}
 }

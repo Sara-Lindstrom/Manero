@@ -36,12 +36,10 @@ namespace WebApi.Models.Address
 
         [ForeignKey("UserId")]
         public string UserId { get; set; }
-
         public UserModel User { get; set; }
 
         [ForeignKey("LocationId")]
         public int LocationId { get; set; }
-
         public Location Location { get; set; }
     }
 }

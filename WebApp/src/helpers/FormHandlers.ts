@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent } from 'react';
 import { AxiosResponse } from 'axios';
 import axios from 'axios';
+import { AddressData } from '../components/AddressComponent';
 
 // To be able to navigate after success
 type Navigate = (path: string) => void;
@@ -30,6 +31,14 @@ export type FormDataSignIn = {
     email: string;
     password: string;
     rememberMe: boolean;
+};
+
+export type UserAddressData = {
+    name: string;
+    email: string;
+    phoneNumber: string;
+    location: string;
+    addresses: AddressData[];
 };
 
 // Handling changes in the input fields
@@ -106,8 +115,8 @@ export const handleSigninSubmit = async (
 };
 
 // Fetch profile data to display user information
-export const fetchProfileData = async (token: string): Promise<ProfileData | null> => {
-    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/User/EditProfile';
+export const fetchProfileData = async (token: string): Promise<UserAddressData | null> => {
+    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/User/GetUserId';
 
     try {
         const response = await axios.get(API_URL, {
@@ -117,12 +126,11 @@ export const fetchProfileData = async (token: string): Promise<ProfileData | nul
         });
 
         if (response.status === 200) {
-            return response.data;
+            return response.data as UserAddressData;
         }
     } catch (error) {
         console.error("An error occurred while fetching profile data:", error);
     }
-
     return null;
 };
 
