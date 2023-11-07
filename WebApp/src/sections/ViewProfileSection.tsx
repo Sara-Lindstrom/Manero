@@ -91,7 +91,6 @@ const ViewProfileSection = () => {
               <div className='user-info'>
                   <h2>{profile.name}</h2>
                   <h5>{profile.email}</h5>
-                  <h5>{profile.phoneNumber}</h5>
         </div>
         <div className='Fields-section'>
             <a className='field' href='/orderhistory' id='order-history'>

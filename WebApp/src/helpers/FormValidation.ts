@@ -84,16 +84,17 @@ export const ValidateConfirmPassword = (password: string, confirmPassword: strin
 }
 
 // Validate phone number and set errors
-export const ValidatePhoneNumber = (text: string): ValidationResult => {
+export const ValidatePhoneNumber = (text: string | null): ValidationResult => {
     let error = '';
     const regExText = /^[0-9+ ]+$/;
 
-    if (text === '') {
-        error = "Please fill this field.";
+    if (text === null || text === '') {
+        // If the field is empty or null, it's considered valid since its optional to add PhoneNumber
+        return { isValid: true, error: '' };
     } else if (text.length < 8) {
         error = "This field must be at least 8 characters long.";
     } else if (!regExText.test(text)) {
-        error = "This field can only contain numbers.";
+        error = "This field can only contain numbers and spaces.";
     }
 
     return {
