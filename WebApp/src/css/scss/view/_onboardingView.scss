@@ -26,6 +26,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            
             .welcome-logo-rectangular {
                 background-color: $color-dark;
                 opacity: 100%;
@@ -130,12 +131,12 @@
                         font-weight: $font-weight-regular;
                     }
                 }
-        
-                .btn-get-started {
-                    width: auto;
-                    padding-left: 50px;
-                    padding-right: 50px;
-                }
+            }
+
+            .btn-get-started {
+                width: auto;
+                padding-left: 50px;
+                padding-right: 50px;
             }
         }
     }
