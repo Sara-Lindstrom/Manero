@@ -1,78 +1,58 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
 using Moq;
 using System.Net;
-using WebApi.Context;
-using WebApi.Models;
-using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
-using Xunit;
+using WebApi.Models;
+using WebApi.Context;
 
-namespace WebApi.Tests.IntegrationTests
+namespace WebApi.Tests.IntegrationTests;
+public class UserController_Test
 {
-    public class UserController_Test
+    private readonly Mock<UserManager<UserModel>> _userManagerMock;
+    private readonly Mock<SignInManager<UserModel>> _signInManagerMock;
+    private readonly Mock<IConfiguration> _configurationMock;
+    private readonly UserController _controller;
+    private readonly UserDbContext _context;
+
+    public UserController_Test()
     {
-        private readonly UserDbContext _context;
-        private readonly UserController _controller;
+        var userStoreMock = new Mock<IUserStore<UserModel>>();
+        _userManagerMock = new Mock<UserManager<UserModel>>(
+            userStoreMock.Object, null, null, null, null, null, null, null, null);
 
-        public UserController_Test()
-        {
-            var userManager = new Mock<UserManager<UserModel>>(
-                new Mock<IUserStore<UserModel>>().Object,
-                new Mock<IOptions<IdentityOptions>>().Object,
-                new Mock<IPasswordHasher<UserModel>>().Object,
-                new IUserValidator<UserModel>[0],
-                new IPasswordValidator<UserModel>[0],
-                new Mock<ILookupNormalizer>().Object,
-                new Mock<IdentityErrorDescriber>().Object,
-                new Mock<IServiceProvider>().Object,
-                new Mock<ILogger<UserManager<UserModel>>>().Object);
+        var contextAccessorMock = new Mock<Microsoft.AspNetCore.Http.IHttpContextAccessor>();
+        var userPrincipalFactoryMock = new Mock<IUserClaimsPrincipalFactory<UserModel>>();
+        _signInManagerMock = new Mock<SignInManager<UserModel>>(
+            _userManagerMock.Object, contextAccessorMock.Object, userPrincipalFactoryMock.Object, null, null, null, null);
 
-            var contextOptions = new DbContextOptionsBuilder<UserDbContext>()
-                .UseInMemoryDatabase(databaseName: "InMemoryDatabase")
-                .Options;
-            _context = new UserDbContext(contextOptions);
+        _configurationMock = new Mock<IConfiguration>();
 
-            var signInManager = new Mock<SignInManager<UserModel>>(
-                userManager.Object,
-                new HttpContextAccessor(),
-                new Mock<IUserClaimsPrincipalFactory<UserModel>>().Object,
-                new Mock<IOptions<IdentityOptions>>().Object,
-                new Mock<ILogger<SignInManager<UserModel>>>().Object,
-                new Mock<IAuthenticationSchemeProvider>().Object,
-                new Mock<IUserConfirmation<UserModel>>().Object);
+        // Setup in-memory database
+        var options = new DbContextOptionsBuilder<UserDbContext>()
+            .UseInMemoryDatabase(databaseName: "TestDatabase")
+            .Options;
+        _context = new UserDbContext(options);
 
-            var configuration = new Mock<IConfiguration>();
+        // Instantiate the UserController with the mocked dependencies
+        _controller = new UserController(
+            _userManagerMock.Object,
+            _context,
+            _signInManagerMock.Object,
+            _configurationMock.Object
+        );
+    }
 
-            _controller = new UserController(userManager.Object, _context, signInManager.Object, configuration.Object);
-        }
+    [Fact]
+    public async Task CreateUser_Should_Return_Conflict_When_User_Exists()
+    {
+        // Arrange: Prepare a user model to create
+        var existingUser = new UserModel { UserName = "test@example.com", Email = "test@example.com" };
+        _userManagerMock.Setup(x => x.FindByEmailAsync("test@example.com")).ReturnsAsync(existingUser);
 
-        [Fact]
-        public async Task CreateUser_Should_Return_Conflict_When_User_Exists()
-        {
-            // Arrange: Prepare a user model to create
-            var existingUser = new UserModel
-            {
-                UserName = "test@example.com",
-                Email = "test@example.com"
-            };
-
-            // Add the existing user to the context
-            _context.Users.Add(existingUser);
-            _context.SaveChanges();
-
-            // Create a user model that conflicts with the existing user
-            var userModel = new User
-            {
-                Email = "test@example.com",
-                Password = "Password123",
-                Name = "Test",
-            };
+        var userModel = new User { Email = "test@example.com", Password = "Password123", Name = "Test" };
 
             // Act: Send a POST request to the CreateUser endpoint
             var result = await _controller.CreateUser(userModel);

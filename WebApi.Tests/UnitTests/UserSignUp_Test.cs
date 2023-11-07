@@ -4,14 +4,19 @@ using Microsoft.EntityFrameworkCore;
 using Moq;
 using WebApi.Context;
 using WebApi.Models;
+using Microsoft.Extensions.Configuration;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace WebApi.Tests.UnitTests
 {
     public class UserSignUp_Test
     {
         private readonly Mock<UserManager<UserModel>> _mockUserManager;
-        private readonly Mock<UserDbContext> _mockUserDbContext;
+        private readonly Mock<SignInManager<UserModel>> _mockSignInManager;
+        private readonly Mock<IConfiguration> _mockConfiguration;
         private readonly UserController _userController;
+        private readonly UserDbContext _context;
 
         public UserSignUp_Test()
         {
@@ -28,10 +33,33 @@ namespace WebApi.Tests.UnitTests
                 null,
                 null);
 
-            // UserDbContext
-            _mockUserDbContext = new Mock<UserDbContext>(new DbContextOptions<UserDbContext>());
+            // SignInManager
+            var contextAccessor = new Mock<Microsoft.AspNetCore.Http.IHttpContextAccessor>();
+            var userPrincipalFactory = new Mock<IUserClaimsPrincipalFactory<UserModel>>();
+            _mockSignInManager = new Mock<SignInManager<UserModel>>(
+                _mockUserManager.Object,
+                contextAccessor.Object,
+                userPrincipalFactory.Object,
+                null,
+                null,
+                null,
+                null);
 
-            //_userController = new UserController(_mockUserManager.Object, _mockUserDbContext.Object, null);
+            // IConfiguration
+            _mockConfiguration = new Mock<IConfiguration>();
+
+            // Setup in-memory database
+            var options = new DbContextOptionsBuilder<UserDbContext>()
+                .UseInMemoryDatabase(databaseName: "TestDatabase") // Use a unique name for the database
+                .Options;
+            _context = new UserDbContext(options);
+
+            // UserController
+            _userController = new UserController(
+                _mockUserManager.Object,
+                _context,
+                _mockSignInManager.Object,
+                _mockConfiguration.Object);
         }
 
         // Validate how the API handles model states that is invalid, no user is created
