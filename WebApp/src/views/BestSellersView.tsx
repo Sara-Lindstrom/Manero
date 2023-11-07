@@ -11,7 +11,7 @@ const BestSellersView: React.FC = () => {
     const [isDropdownVisible, setDropdownVisible] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState<string>("");
 
-    const sortinOptions = ['Newest', 'Best Seller', "Sale"];   
+    const sortinOptions = ['Newest', 'Popular', "Sale"];   
     
     const fetchCategories = async () => {
         try {

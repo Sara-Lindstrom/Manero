@@ -5,6 +5,7 @@ import HomePageCategoryNav from '../sections/HomePageCategoryNav';
 import HomepageShoecaseOffer from '../sections/HomepageShoecaseOffer';
 import FeatuerdProductList from '../sections/FeatuerdProductList';
 import BestSellerProductList from '../sections/BestSellerProductList';
+import BreadcrumbSection from '../sections/BreadcrumbSection';
 
 const HomeView = () => {
   const [selectedCategories, setSelectedCategories] = useState(['Category 1', 'Category 2', 'Category 3', 'Category 4']);
@@ -12,6 +13,7 @@ const HomeView = () => {
   return (
 
     <>
+      <BreadcrumbSection currentPage="Best Sellers" showHamburgerButton={true} showBackButton={true} showCartItem={true}/>
       <HomePageCategoryNav />
       <HomepageShoecaseOffer />
       <section className='container'>
@@ -28,6 +30,7 @@ const HomeView = () => {
         </div>
         <BestSellerProductList selectedCategories={selectedCategories} limit={3}/>
       </section>
+      <HomepageShoecaseOffer />
     </>
     
   )

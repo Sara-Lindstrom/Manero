@@ -9,6 +9,7 @@ using WebApi.DTO;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace WebApi.Tests.UnitTests
 {
@@ -17,10 +18,13 @@ namespace WebApi.Tests.UnitTests
         private readonly Mock<UserManager<UserModel>> _mockUserManager;
         private readonly Mock<UserDbContext> _mockUserDbContext;
         private readonly Mock<SignInManager<UserModel>> _mockSignInManager;
+        private readonly Mock<IConfiguration> _mockConfiguration;
         private readonly UserController _userController;
 
         public UserSignIn_Test()
         {
+            _mockConfiguration = new Mock<IConfiguration>();
+
             // UserManager
             var userStore = new Mock<IUserStore<UserModel>>();
             _mockUserManager = new Mock<UserManager<UserModel>>(
@@ -54,7 +58,11 @@ namespace WebApi.Tests.UnitTests
                 schemes.Object,
                 confirmation.Object);
 
-            _userController = new UserController(_mockUserManager.Object, _mockUserDbContext.Object, _mockSignInManager.Object);
+            _userController = new UserController(
+                _mockUserManager.Object,
+                _mockUserDbContext.Object,
+                _mockSignInManager.Object,
+                _mockConfiguration.Object);
         }
 
         // Checking result for a sign in-attempt that is successful
@@ -80,7 +88,7 @@ namespace WebApi.Tests.UnitTests
 
         // Checking result for a sign in-attempt that fails
         [Fact]
-        public async Task SignIn_ShouldReturnBadRequest_WhenSignInFails()
+        public async Task SignIn_ShouldReturnUnauthorized_WhenSignInFails()
         {
             // Arrange
             var userCredentials = new UserCredentials
@@ -97,7 +105,7 @@ namespace WebApi.Tests.UnitTests
             var result = await _userController.SignIn(userCredentials);
 
             // Assert
-            Assert.IsType<UnauthorizedResult>(result);
+            Assert.IsType<UnauthorizedObjectResult>(result);
         }
     }
 }
