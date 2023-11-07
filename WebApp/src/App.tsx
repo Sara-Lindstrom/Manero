@@ -16,6 +16,7 @@ import LeaveAReviewView from './views/LeaveAReviewView';
 import EditProfileView from './views/EditProfileView';
 import VerifyPhoneNumberView from './views/VerifyPhoneNumberView';
 import PhoneVerificationView from './views/PhoneVerificationView';
+import MyAddresses from './views/MyAddresses';
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
             <Route path='/addCardView' element={<AddCardView />} />
             <Route path='/EditProfile' element={<EditProfileView /> }/>
             <Route path='/viewProfile' element={<ViewProfile />} />
+            <Route path='/myAddresses' element={<MyAddresses />} />
             <Route path='/leaveAReview' element={<LeaveAReviewView />} />
             <Route path='/bestSellersView' element={<BestSellersView />} />
             <Route path='/category' element={<CategoryView />} />

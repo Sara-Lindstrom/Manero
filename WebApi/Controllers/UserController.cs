@@ -282,7 +282,7 @@ public class UserController : ControllerBase
 
     //Method to add a new address to a user
     [Authorize]
-    [HttpPost("{userId}/addresses")]
+    [HttpPost("{userId}/Addresses")]
     public async Task<IActionResult> AddAddressToUser([FromRoute] string userId, [FromBody] Address address)
     {
         var user = await _userManager.FindByIdAsync(userId);
@@ -301,9 +301,34 @@ public class UserController : ControllerBase
         return Ok(new { Message = "Address added successfully." });
     }
 
+    // Method to get a single address for a user
+    [Authorize]
+    [HttpGet("{userId}/Address/{addressId}")]
+    public async Task<IActionResult> GetSingleUserAddress([FromRoute] string userId, [FromRoute] int addressId)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user == null)
+        {
+            return NotFound("User not found.");
+        }
+
+        // Retrieve the specific address associated with the user
+        var userAddress = await _context.Addresses
+            .Where(a => a.UserId == userId && a.Id == addressId)
+            .Include(a => a.Location) // Include the associated location
+            .FirstOrDefaultAsync();
+
+        if (userAddress == null)
+        {
+            return NotFound("Address not found.");
+        }
+
+        return Ok(userAddress);
+    }
+
     //Method to display users addresses
     [Authorize]
-    [HttpGet("{userId}/addresses")]
+    [HttpGet("{userId}/Addresses")]
     public async Task<IActionResult> GetUserAddresses([FromRoute] string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);
@@ -323,7 +348,7 @@ public class UserController : ControllerBase
 
     //Method to edit a users address
     [Authorize]
-    [HttpPut("{userId}/addresses/{addressId}")]
+    [HttpPut("{userId}/Addresses/{addressId}")]
     public async Task<IActionResult> UpdateUserAddress([FromRoute] string userId, [FromRoute] int addressId, [FromBody] Address updatedAddress)
     {
         var user = await _userManager.FindByIdAsync(userId);
@@ -358,7 +383,7 @@ public class UserController : ControllerBase
 
     //Method that displays users location 
     [Authorize]
-    [HttpGet("{userId}/locations")]
+    [HttpGet("{userId}/Locations")]
     public async Task<IActionResult> GetUserLocationStrings([FromRoute] string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);

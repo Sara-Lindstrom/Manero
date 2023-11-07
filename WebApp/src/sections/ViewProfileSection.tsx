@@ -112,7 +112,7 @@ const ViewProfileSection = () => {
                 <i id='right-arrow' className="fa-solid fa-chevron-right"></i>
               </div>
             </a>
-            <a className='field' href='#' id='my-address'>
+            <a className='field' href='#' onClick={() => navigate('/myAddresses')} id='my-address'>
               <div className='field-details'>
                 <div className='icon-name'>
                   <i className="fa-regular fa-location-dot"></i>
