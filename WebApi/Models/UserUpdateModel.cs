@@ -12,5 +12,7 @@ namespace WebApi.Models
         [EmailAddress]
         public string Email { get; set; }
 
+        [Phone]
+        public string PhoneNumber { get; set; }
     }
 }

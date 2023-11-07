@@ -45,13 +45,6 @@ export const handleChange = (
     });
 };
 
-//export const handleChange = (
-//    e: ChangeEvent<HTMLInputElement>,
-//    formData: FormData,
-//    setFormData: (formData: FormData) => void,
-//): void => {
-//}
-
 // Sign up form function
 export const handleSignupSubmit = async (
     e: FormEvent<HTMLFormElement>,

@@ -18,7 +18,6 @@ public class UserController : ControllerBase
     private readonly UserDbContext _context;
     private readonly SignInManager<UserModel> _signInManager; // Need this to be able to sign in using Sign in Manager
     private readonly IConfiguration _configuration; // Need this to store the token
-    // Initialize
     public UserController(UserManager<UserModel> userManager, UserDbContext context, SignInManager<UserModel> signInManager, IConfiguration configuration)
     {
         _userManager = userManager;
@@ -132,7 +131,8 @@ public class UserController : ControllerBase
         var profileData = new UserUpdateModel
         {
             Email = user.Email,
-            Name = nameClaim
+            Name = nameClaim,
+            PhoneNumber = user.PhoneNumber,
             // Populate other fields as necessary
         };
 
@@ -186,6 +186,17 @@ public class UserController : ControllerBase
             if (!addClaimResult.Succeeded)
             {
                 return BadRequest(addClaimResult.Errors);
+            }
+            updateRequired = true;
+        }
+
+        // Update the phone number if it has changed and is not null
+        if (model.PhoneNumber != user.PhoneNumber && model.PhoneNumber != null)
+        {
+            var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, model.PhoneNumber);
+            if (!setPhoneResult.Succeeded)
+            {
+                return BadRequest(setPhoneResult.Errors);
             }
             updateRequired = true;
         }
