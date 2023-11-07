@@ -44,6 +44,7 @@ export const handleChange = (
         [name]: value,
     });
 };
+
 //export const handleChange = (
 //    e: ChangeEvent<HTMLInputElement>,
 //    formData: FormData,
