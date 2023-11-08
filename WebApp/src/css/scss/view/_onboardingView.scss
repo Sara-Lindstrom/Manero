@@ -8,7 +8,14 @@
     background-color: $color-blue;
     height: 100vh;
     width: 100vw;
-    display: none;
+    animation:signup-response 0.5s 1;
+    -webkit-animation:signup-response 0.5s 1;
+    animation-fill-mode: forwards;
+
+    animation-delay:2s;
+    -webkit-animation-delay:1s; /* Safari and Chrome */
+    -webkit-animation-fill-mode: forwards;
+
 
     .welcome-logo {
         display: flex;
@@ -44,6 +51,16 @@
             }
         }
     } 
+}
+
+@keyframes signup-response{
+    from {opacity :1;}
+    to {opacity :0;}
+}
+
+@-webkit-keyframes signup-response{
+    from {opacity :1;}
+    to {opacity :0;}
 }
 
 //This is for info slide page
