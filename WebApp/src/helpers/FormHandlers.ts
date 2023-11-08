@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent } from 'react';
-import { AxiosResponse } from 'axios';
+import { AxiosResponse, AxiosError } from 'axios';
 import axios from 'axios';
 
 // To be able to navigate after success
@@ -30,11 +30,6 @@ export type FormDataSignIn = {
     email: string;
     password: string;
     rememberMe: boolean;
-};
-
-// Phone verification
-export type CheckPhoneNumberResponse = {
-    exists: boolean;
 };
 
 // Handling changes in the input fields
@@ -228,37 +223,6 @@ export const handleResetPassword = async (
     }
 };
 
-// Phone number function to 
-export const handlePhoneNumberCheck = async (
-    phoneNumber: string,
-    token: string,
-    onExists?: () => void,
-    onDoesNotExist?: () => void,
-    onFail?: (error: any) => void
-): Promise<void> => {
-    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/User/CheckPhoneNumber';
-
-    try {
-        const response = await axios.post(API_URL, { phoneNumber }, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            }
-        });
-
-        if (response.status === 200) {
-            if (response.data.exists) {
-                onExists?.();
-            } else {
-                onDoesNotExist?.();
-            }
-        }
-    } catch (error) {
-        console.error("An error occurred while checking the phone number:", error);
-        onFail?.(error);
-    }
-};
-
 // Methods for check if email exists (used for forgot password, but can be reused in other sections)
 export const checkEmailExists = async (
     email: string
@@ -277,31 +241,18 @@ export const checkEmailExists = async (
     }
 };
 
-// Method to check if phone number exists (used for verification view)
-export const checkPhoneNumber = async (
-    phoneNumber: string,
-    token: string
-): Promise<boolean> => {
+// Methods for check if phonenumber exists in DB
+export const checkPhoneNumberExists = async (phoneNumber: string): Promise<boolean> => {
     const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/User/CheckPhoneNumber';
-
-    // Remove any non-numeric characters from the phone number
-    const formattedPhoneNumber = phoneNumber.replace(/[^\d]/g, '');
-
     try {
-        const response = await axios.post<CheckPhoneNumberResponse>(
-            API_URL,
-            JSON.stringify({ phoneNumber: formattedPhoneNumber }),
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
+        const response = await axios.post(API_URL, { phoneNumber }, {
+            headers: {
+                'Content-Type': 'application/json'
             }
-        );
-
+        });
         return response.data.exists;
     } catch (error) {
-        console.error("An error occurred while checking the phone number:", error);
-        throw error; // Rethrow the error to handle it in the calling function
+
+        return false;
     }
 };

@@ -1,35 +1,36 @@
 import React, { useState } from 'react';
-import { NavigateFunction } from 'react-router-dom';
-import * as FormValidation from '../helpers/FormValidation';
-import { checkPhoneNumber } from '../helpers/FormHandlers';
+import { checkPhoneNumberExists } from '../helpers/FormHandlers';
 import FlagComponent from '../components/FlagComponent';
+import { NavigateFunction } from 'react-router-dom';
+import * as FormValidation from '../helpers/FormValidation'
 
 type VerifyPhoneProps = {
-    navigate: NavigateFunction;
-};
+    navigate: NavigateFunction
+}
 
-const VerifyPhoneNumberSection: React.FC<VerifyPhoneProps> = ({ navigate }) => {
+const VerifyPhoneNumberSection: React.FC<VerifyPhoneProps> = ({ navigate }:
+    VerifyPhoneProps) => {
 
     // UseStates for error messages in frontend validation
     const [phoneNumberError, setPhoneNumberError] = useState('');
 
     // useStates for setting default value for phone number
-    const [phoneNumber, setPhoneNumber] = useState('+');
+    const [phoneNumber, setPhoneNumber] = useState('');
 
-    // Handle formatting the phonenumber so the flag are shown correctly on input
+    // Handle formatting the phonnumber so the flag are shown correctly on input
     const handlePhoneNumberChange = (value: string) => {
         let formattedValue = value;
-    
+
         // Ensure the value starts with '+' (written out automatically)
         if (!formattedValue.startsWith('+')) {
             formattedValue = `+${formattedValue}`;
         }
-    
+
         // Automatically add a space after the country code
         if (formattedValue.match(/^\+\d{2}$/)) {
             formattedValue += ' ';
         }
-    
+
         setPhoneNumber(formattedValue);
         const validationResult = FormValidation.ValidatePhoneNumber(formattedValue);
         setPhoneNumberError(validationResult.error);
@@ -37,26 +38,17 @@ const VerifyPhoneNumberSection: React.FC<VerifyPhoneProps> = ({ navigate }) => {
 
     const ValidateConfirm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const validPhoneNumber = FormValidation.ValidatePhoneNumber(phoneNumber).isValid;
+        // Remove '+' and spaces for backend validation
+        const formattedPhoneNumber = phoneNumber.replace(/\+|\s/g, '');
 
-        if (validPhoneNumber) {
-            const token = localStorage.getItem('token');
-            if (token) {
-                try {
-                    // Remove non-numeric characters before sending
-                    const formattedPhoneNumber = phoneNumber.replace(/[^\d]/g, '');
-                    const phoneNumberExists = await checkPhoneNumber(formattedPhoneNumber, token);
-                    if (phoneNumberExists) {
-                        console.log('Phone number exists. Proceed to verification.');
-                        navigate('/verifyPhone'); // Redirect to verification page
-                    } else {
-                        console.log('Phone number does not exist. No need for verification.');
-                        // Handle the case where the phone number does not exist
-                    }
-                } catch (error) {
-                    // Handle the error from the checkPhoneNumber function
-                    setPhoneNumberError('Failed to verify phone number. Please try again.');
-                }
+        const validationResult = FormValidation.ValidatePhoneNumber(formattedPhoneNumber);
+
+        if (validationResult.isValid) {
+            const doesExist = await checkPhoneNumberExists(formattedPhoneNumber);
+            if (doesExist) {
+                navigate('/activate');
+            } else {
+                setPhoneNumberError('Phone number does not exist.');
             }
         } else {
             setPhoneNumberError('Invalid phone number format.');
