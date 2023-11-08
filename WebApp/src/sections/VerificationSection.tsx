@@ -6,7 +6,7 @@ type VerifyPhoneProps = {
     navigate: NavigateFunction;
 }
 
-const PhoneVerificationSection: React.FC<VerifyPhoneProps> = ({ navigate }: VerifyPhoneProps) => {
+const VerificationSection: React.FC<VerifyPhoneProps> = ({ navigate }: VerifyPhoneProps) => {
     const [otp, setOtp] = useState(['', '', '', '', '']);
 
     const handleInputChange = (index: number, value: string) => {
@@ -64,4 +64,4 @@ const PhoneVerificationSection: React.FC<VerifyPhoneProps> = ({ navigate }: Veri
     );
 };
 
-export default PhoneVerificationSection;
+export default VerificationSection;

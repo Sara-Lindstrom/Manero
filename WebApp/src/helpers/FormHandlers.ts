@@ -32,6 +32,11 @@ export type FormDataSignIn = {
     rememberMe: boolean;
 };
 
+// Phone verification
+export type CheckPhoneNumberResponse = {
+    exists: boolean;
+};
+
 // Handling changes in the input fields
 export const handleChange = (
     e: ChangeEvent<HTMLInputElement>,
@@ -205,7 +210,7 @@ export const handleSignOut = async (
 export const handleResetPassword = async (
     email: string,
     newPassword: string,
-    confirmPassword: string // New parameter for confirmed password
+    confirmPassword: string
 ): Promise<boolean> => {
     const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/User/ResetPassword';
 
@@ -220,6 +225,37 @@ export const handleResetPassword = async (
     } catch (error: any) {
         console.error('Error:', error);
         return false;
+    }
+};
+
+// Phone number function to 
+export const handlePhoneNumberCheck = async (
+    phoneNumber: string,
+    token: string,
+    onExists?: () => void,
+    onDoesNotExist?: () => void,
+    onFail?: (error: any) => void
+): Promise<void> => {
+    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/User/CheckPhoneNumber';
+
+    try {
+        const response = await axios.post(API_URL, { phoneNumber }, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            }
+        });
+
+        if (response.status === 200) {
+            if (response.data.exists) {
+                onExists?.();
+            } else {
+                onDoesNotExist?.();
+            }
+        }
+    } catch (error) {
+        console.error("An error occurred while checking the phone number:", error);
+        onFail?.(error);
     }
 };
 
@@ -238,5 +274,34 @@ export const checkEmailExists = async (
     } catch (error) {
         console.error("An error occurred:", error);
         return false;
+    }
+};
+
+// Method to check if phone number exists (used for verification view)
+export const checkPhoneNumber = async (
+    phoneNumber: string,
+    token: string
+): Promise<boolean> => {
+    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/User/CheckPhoneNumber';
+
+    // Remove any non-numeric characters from the phone number
+    const formattedPhoneNumber = phoneNumber.replace(/[^\d]/g, '');
+
+    try {
+        const response = await axios.post<CheckPhoneNumberResponse>(
+            API_URL,
+            JSON.stringify({ phoneNumber: formattedPhoneNumber }),
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+
+        return response.data.exists;
+    } catch (error) {
+        console.error("An error occurred while checking the phone number:", error);
+        throw error; // Rethrow the error to handle it in the calling function
     }
 };

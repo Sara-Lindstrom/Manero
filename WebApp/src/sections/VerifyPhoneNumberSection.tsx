@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
-import * as FormValidation from '../helpers/FormValidation'
 import { NavigateFunction } from 'react-router-dom';
+import * as FormValidation from '../helpers/FormValidation';
+import { checkPhoneNumber } from '../helpers/FormHandlers';
 import FlagComponent from '../components/FlagComponent';
 
 type VerifyPhoneProps = {
-    navigate: NavigateFunction
-}
+    navigate: NavigateFunction;
+};
 
-const VerifyPhoneNumberSection: React.FC<VerifyPhoneProps> = ({ navigate }:
-    VerifyPhoneProps) => {
-
-    // useState for visibility of phone number input
-    const [phoneNumberVisible, setPhoneNumberVisible] = useState(false);
+const VerifyPhoneNumberSection: React.FC<VerifyPhoneProps> = ({ navigate }) => {
 
     // UseStates for error messages in frontend validation
     const [phoneNumberError, setPhoneNumberError] = useState('');
@@ -19,15 +16,7 @@ const VerifyPhoneNumberSection: React.FC<VerifyPhoneProps> = ({ navigate }:
     // useStates for setting default value for phone number
     const [phoneNumber, setPhoneNumber] = useState('+');
 
-    const ValidateConfirm = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        let validPhonenumber = FormValidation.ValidatePhoneNumber(phoneNumber).isValid;
-        if (validPhonenumber) {
-            navigate('/activate');
-        }
-    }
-
-    // Handle formatting the phonnumber so the flag are shown correctly on input
+    // Handle formatting the phonenumber so the flag are shown correctly on input
     const handlePhoneNumberChange = (value: string) => {
         let formattedValue = value;
     
@@ -46,7 +35,33 @@ const VerifyPhoneNumberSection: React.FC<VerifyPhoneProps> = ({ navigate }:
         setPhoneNumberError(validationResult.error);
     };
 
-    // Need to add validation on phone number
+    const ValidateConfirm = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const validPhoneNumber = FormValidation.ValidatePhoneNumber(phoneNumber).isValid;
+
+        if (validPhoneNumber) {
+            const token = localStorage.getItem('token');
+            if (token) {
+                try {
+                    // Remove non-numeric characters before sending
+                    const formattedPhoneNumber = phoneNumber.replace(/[^\d]/g, '');
+                    const phoneNumberExists = await checkPhoneNumber(formattedPhoneNumber, token);
+                    if (phoneNumberExists) {
+                        console.log('Phone number exists. Proceed to verification.');
+                        navigate('/verifyPhone'); // Redirect to verification page
+                    } else {
+                        console.log('Phone number does not exist. No need for verification.');
+                        // Handle the case where the phone number does not exist
+                    }
+                } catch (error) {
+                    // Handle the error from the checkPhoneNumber function
+                    setPhoneNumberError('Failed to verify phone number. Please try again.');
+                }
+            }
+        } else {
+            setPhoneNumberError('Invalid phone number format.');
+        }
+    };
 
     return (
         <div className="container">

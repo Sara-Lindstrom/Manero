@@ -141,7 +141,7 @@ public class UserController : ControllerBase
 
     // Edit and view profile
     [Authorize]
-    [HttpPut("UpdateProfile")] 
+    [HttpPut("UpdateProfile")]
     public async Task<IActionResult> UpdateProfile([FromBody] UserUpdateModel model)
     {
         if (!ModelState.IsValid)
@@ -279,4 +279,25 @@ public class UserController : ControllerBase
         }
     }
 
+    // Method to check if phone number already exists
+    [HttpPost("CheckPhoneNumber")]
+    public async Task<IActionResult> CheckPhoneNumber([FromBody] string phoneNumber)
+    {
+        // Validate phone number
+        if (string.IsNullOrEmpty(phoneNumber))
+        {
+            return BadRequest("Phone number cannot be empty.");
+        }
+
+        // Find user by phone number
+        var user = await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == phoneNumber);
+        if (user != null)
+        {
+            return Ok(new { Message = "Phone number exists." });
+        }
+        else
+        {
+            return NotFound(new { Message = "Phone number not found." });
+        }
+    }
 }
