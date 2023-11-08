@@ -8,7 +8,15 @@
     background-color: $color-blue;
     height: 100vh;
     width: 100vw;
-    display: none;
+    
+    animation:onboarding-response 1s 1;
+    -webkit-animation:onboarding-response 1s 1;
+    animation-fill-mode: forwards;
+
+    animation-delay:2s;
+    -webkit-animation-delay:1s; /* Safari and Chrome */
+    -webkit-animation-fill-mode: forwards;
+
 
     .welcome-logo {
         display: flex;
@@ -44,6 +52,26 @@
             }
         }
     } 
+}
+
+@keyframes onboarding-response{
+    from {opacity :1;}
+    to {
+        opacity: 0;
+        width: 0;
+        height: 1;
+        overflow: hidden;
+    }
+}
+
+@-webkit-keyframes onboarding-response{
+    from {opacity :1;}
+    to {
+        opacity: 0;
+        width: 0;
+        height: 1;
+        overflow: hidden;
+    }
 }
 
 //This is for info slide page
