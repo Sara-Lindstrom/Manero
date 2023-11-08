@@ -9,6 +9,7 @@
     height: 100vh;
     width: 100vw;
     display: none;
+
     .welcome-logo {
         display: flex;
         align-items: center;
@@ -25,6 +26,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            
             .welcome-logo-rectangular {
                 background-color: $color-dark;
                 opacity: 100%;
@@ -85,8 +87,7 @@
             bottom: 17%;
         
             @media (min-width: 420px) {
-                bottom: 30%;
-        
+                bottom: 32%;
             }
         }
 
@@ -129,12 +130,12 @@
                         font-weight: $font-weight-regular;
                     }
                 }
-        
-                .btn-get-started {
-                    width: auto;
-                    padding-left: 50px;
-                    padding-right: 50px;
-                }
+            }
+
+            .btn-get-started {
+                width: auto;
+                padding-left: 50px;
+                padding-right: 50px;
             }
         }
     }
