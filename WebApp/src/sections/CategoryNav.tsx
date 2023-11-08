@@ -1,28 +1,44 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react';
 
 function CategoryNav() {
-    const [activeLink, setActiveLink] = useState('home');
-  
-    const handleLinkClick = (link: string) => {
-      setActiveLink(link);
-    };
+  const [activeLink, setActiveLink] = useState('men');
+  const [categories, setCategories] = useState([]);
+
+  const handleLinkClick = (link) => {
+    setActiveLink(link);
+  };
+
+  useEffect(() => {
+    // Fetch categories from the API
+    fetch('/api/categories') 
+      .then((response) => response.json())
+      .then((data) => {
+        setCategories(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching categories:', error);
+      });
+  }, []);
+
+  const getCategoryContent = (category) => {
+    // Define the content for each category based on the selected category
+  };
 
   return (
-  <section className='categorynav'>
-      <div className='container scrollsection'>
+    <section className="categorynav">
+      <div className="container scrollsection">
         <div className="scrollmenu">
-          <a href="#men" className={activeLink === 'men' ? 'active' : ''} onClick={() => handleLinkClick('men')} >MEN</a>
-
-          <a href="#women" className={activeLink === 'women' ? 'active' : ''} onClick={() => handleLinkClick('women')}>WOMEN</a>
-
-          <a href="#kids" className={activeLink === 'kids' ? 'active' : ''} onClick={() => handleLinkClick('kids')}>KIDS</a>
-
-          <a href="#accessories" className={activeLink === 'accessories' ? 'active' : ''} onClick={() => handleLinkClick('accessories')} >ACCESSORIES</a>
+          {categories.map((category) => (
+            <a
+              key={category.id} href={`#${category.id}`} className={activeLink === category.id ? 'active' : ''} onClick={() => handleLinkClick(category.id)}> {category.title}
+            </a>
+          ))}
         </div>
       </div>
+
+      {getCategoryContent(activeLink)}
     </section>
-
-
-  )
+  );
 }
+
 export default CategoryNav;
