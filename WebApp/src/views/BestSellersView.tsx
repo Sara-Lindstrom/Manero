@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
 import ProductList from '../sections/ProductList';
-import { fetchAllCategories } from '../helpers/ProductHandler';
+import { fetchAllCategories, fetchBestSellers } from '../helpers/ProductHandler';
 import { ICategories } from '../Interfaces/ICategories';
+import { IProduct } from '../Interfaces/IProduct';
 
 const BestSellersView: React.FC = () => {
     const [isSliderDropdownVisible, setSliderDropdownVisible] = useState(false);
@@ -10,6 +11,8 @@ const BestSellersView: React.FC = () => {
     const [selectedSorting, setSelectedSorting] = useState<string>('');
     const [isDropdownVisible, setDropdownVisible] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState<string>("");
+    const [products, setProducts] = useState<IProduct[]>([]);
+
 
     const sortinOptions = ['Newest', 'Popular', "Sale"];   
     
@@ -20,6 +23,15 @@ const BestSellersView: React.FC = () => {
             console.error('Error fetching categories:', error);
         }
     }; 
+    
+    const fetchProducts = async () => {
+        let productsFromDb = await fetchBestSellers(selectedCategory);
+        setProducts(productsFromDb);
+    }      
+
+    useEffect(() => {
+        fetchProducts();
+    }, [selectedCategory]);
     
     useEffect(() => {   
         fetchCategories().then(data => setCategories(data));
@@ -45,7 +57,7 @@ const BestSellersView: React.FC = () => {
 
     const handleNavigateBack = () => {
         window.history.back(); 
-      };
+    };
 
     return (
         <>
@@ -91,7 +103,7 @@ const BestSellersView: React.FC = () => {
                 )}
             </div>
         </div>
-        <ProductList selectedCategories={selectedCategory} limit={4}/>
+        <ProductList products={products}/>
         </>
     )
 }
