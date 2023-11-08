@@ -7,7 +7,7 @@ const EditProfileSection: React.FC = () => {
     //useStates for setting input values both for validation and populate new User
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("0645123345");
+    const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
     const [location, setLocation] = useState("Ankeborg");
     const [fileSelected, setFileSelected] = useState<string>("https://www.wilsoncenter.org/sites/default/files/media/images/person/james-person-1.jpg");
 
@@ -24,6 +24,8 @@ const EditProfileSection: React.FC = () => {
                 if (data) {
                     setName(data.name);
                     setEmail(data.email);
+                    // This will not cause a TypeScript error anymore
+                    setPhoneNumber(data.phoneNumber || null);
                 }
             }).catch((error) => {
                 console.error('Error fetching profile data:', error);
@@ -44,7 +46,7 @@ const EditProfileSection: React.FC = () => {
             const profileData = {
                 name: name,
                 email: email,
-                phoneNumber: phoneNumber,
+                phoneNumber: phoneNumber || null,
                 location: location,
             };
 
@@ -53,15 +55,13 @@ const EditProfileSection: React.FC = () => {
                 try {
                     await handleUpdateProfile(profileData, token, () => {
                         console.log('Profile updated successfully');
-                        // Provide feedback to the user or redirect
                     });
                 } catch (error) {
                     console.error('Profile update failed', error);
-                    // Provide feedback to the user
                 }
             }
         } else {
-            // Provide feedback to the user about the validation errors
+
         }
     };
 
@@ -141,7 +141,7 @@ const EditProfileSection: React.FC = () => {
 
                 <div className='input-container'>
                     <p className='input-label'>Phone Number</p>
-                    <input className='input' id='Editphonenumber' value={phoneNumber} aria-label='NEW PHONENUMBER'
+                    <input className='input' id='Editphonenumber' value={phoneNumber ?? ""} aria-label='NEW PHONENUMBER'
                         onChange={(event) => {
                             setPhoneNumber(event.target.value);
                             const validationResult = FormValidation.ValidatePhoneNumber(event.target.value);

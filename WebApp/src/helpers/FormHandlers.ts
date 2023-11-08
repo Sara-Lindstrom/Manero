@@ -21,8 +21,8 @@ export type FormData = {
 export type ProfileData = {
     name: string;
     email: string;
-    phoneNumber: string;
-    location: string
+    phoneNumber: string | null; // phoneNumber can be a string or null
+    location: string;
 };
 
 // Used for Edit and View profile information
@@ -44,12 +44,6 @@ export const handleChange = (
         [name]: value,
     });
 };
-//export const handleChange = (
-//    e: ChangeEvent<HTMLInputElement>,
-//    formData: FormData,
-//    setFormData: (formData: FormData) => void,
-//): void => {
-//}
 
 // Sign up form function
 export const handleSignupSubmit = async (
@@ -141,8 +135,13 @@ export const handleUpdateProfile = async (
 ): Promise<void> => {
     const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/User/UpdateProfile';
 
+    const payload = {
+        ...profileData,
+        phoneNumber: profileData.phoneNumber || null,
+    };
+
     try {
-        const response = await axios.put(API_URL, profileData, {
+        const response = await axios.put(API_URL, payload, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -177,25 +176,27 @@ export const handleSignOut = async (
     try {
         const response = await axios.post(API_URL, {}, {
             headers: {
-
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         });
 
         if (response.status === 200) {
             localStorage.removeItem('token');
-            navigate('/signin');
-
             if (onSuccess) {
                 onSuccess();
             }
-        }
-    } catch (error: unknown) {
-        if (error instanceof Error) {
-            console.error('Error:', error.message);
-
+            console.log('Sign-out successful.');
+            navigate('/signin');
+        } else {
             if (onFail) {
                 onFail();
             }
+            console.error('Sign-out failed.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        if (onFail) {
+            onFail();
         }
     }
 };
