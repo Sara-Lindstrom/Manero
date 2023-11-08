@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent } from 'react';
-import { AxiosResponse } from 'axios';
+import { AxiosResponse, AxiosError } from 'axios';
 import axios from 'axios';
 
 // To be able to navigate after success
@@ -205,7 +205,7 @@ export const handleSignOut = async (
 export const handleResetPassword = async (
     email: string,
     newPassword: string,
-    confirmPassword: string // New parameter for confirmed password
+    confirmPassword: string
 ): Promise<boolean> => {
     const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/User/ResetPassword';
 
@@ -237,6 +237,22 @@ export const checkEmailExists = async (
         return response.status === 200;
     } catch (error) {
         console.error("An error occurred:", error);
+        return false;
+    }
+};
+
+// Methods for check if phonenumber exists in DB
+export const checkPhoneNumberExists = async (phoneNumber: string): Promise<boolean> => {
+    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/User/CheckPhoneNumber';
+    try {
+        const response = await axios.post(API_URL, { phoneNumber }, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        return response.data.exists;
+    } catch (error) {
+
         return false;
     }
 };
