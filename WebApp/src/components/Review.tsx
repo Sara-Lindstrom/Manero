@@ -3,7 +3,7 @@ import React from 'react'
 const Review = () => {
   return (
     <div className='review'>
-        <div className='profileImg'></div>
+        <img className='profileImg' src='' alt=''/>
         <div className='info'>
             <h1 className='userName'>Cameron Williams</h1>
             <p className='stars'>★★★★★</p>

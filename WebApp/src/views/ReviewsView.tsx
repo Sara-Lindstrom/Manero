@@ -11,9 +11,12 @@ const ReviewsView = () => {
   return (
     <>
     <BreadcrumbSection currentPage='Reviews' showBackButton={true} onNavigateBack={handleNavigateBack} showCurrentPage={true} />
-    <Review />
-    <Review />
-    <Review />
+    <div className='container'>
+      <Review />
+      <Review />
+      <Review />
+    </div>
+   
     </>
   )
 }
