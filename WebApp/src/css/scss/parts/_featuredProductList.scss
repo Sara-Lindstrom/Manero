@@ -1,15 +1,17 @@
 .product-list {
+    padding: 0;
+
     .product-list-info-below-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 20px;
-        margin: 20px;
+        margin: 0px;
 
         @include md {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 20px;
-            margin: 20px;
+            margin: 0px;
         }
         
         .product-list-info-below {

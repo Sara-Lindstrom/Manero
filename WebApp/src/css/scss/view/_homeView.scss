@@ -1,19 +1,38 @@
-.home-page-showcase {
-    .featured-products {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 60px 20px 0px 20px;
+.product-showcase-section-container {
+    width: auto;
 
-        .homepage-section-header {
-            font-size: 20px;
-            font-weight: $font-weight-bold;
-        }
-        .homepage-section-viewall {
-            font-size: 16px;
-            font-weight: $font-weight-regular;
-            background-color: transparent;
-            border: none;
+    .product-showcase-section {
+        margin-top: 40px;
+
+        .product-showcase-section-header {
+            display: flex;
+            justify-content: space-between;
+            
+            .product-showcase-name {
+                font-size: 1.25rem;
+                font-weight: $font-weight-bold;
+            }
         }
     }
 }
+
+@include md {
+    .product-showcase-section-container {
+        padding: 0;
+    
+        .product-showcase-section {
+            margin-top: 40px;
+    
+            .product-showcase-section-header {
+                display: flex;
+                justify-content: space-between;
+                
+                .product-showcase-name {
+                    font-size: 1.25rem;
+                    font-weight: $font-weight-bold;
+                }
+            }
+        }
+    }
+}
+

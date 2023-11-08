@@ -1,22 +1,36 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
 import ProductList from '../sections/ProductList';
+import { fetchAllCategories } from '../helpers/ProductHandler';
+import { ICategories } from '../Interfaces/ICategories';
 
 const BestSellersView: React.FC = () => {
     const [isSliderDropdownVisible, setSliderDropdownVisible] = useState(false);
-    const [selectedSliderCategory, setSelectedSliderCategory] = useState('All');
+    const [categories, setCategories] = useState<ICategories[] | undefined>([]);
+    const [selectedSorting, setSelectedSorting] = useState<string>('');
     const [isDropdownVisible, setDropdownVisible] = useState(false);
-    const [selectedCategories, setSelectedCategories] = useState<string | string[]>('All');
+    const [selectedCategory, setSelectedCategory] = useState<string>("");
 
-    const sliderCategories = ['All', 'Slider Category 1', 'Slider Category 2', 'Slider Category 3', 'Slider Category 4'];
-    const categories = ['All', 'Category 1', 'Category 2', 'Category 3', 'Category 4'];
+    const sortinOptions = ['Newest', 'Popular', "Sale"];   
+    
+    const fetchCategories = async () => {
+        try {
+            return await fetchAllCategories();
+        } catch (error) {
+            console.error('Error fetching categories:', error);
+        }
+    }; 
+    
+    useEffect(() => {   
+        fetchCategories().then(data => setCategories(data));
+    }, []);
 
     const toggleSliderDropdown = () => {
         setSliderDropdownVisible(!isSliderDropdownVisible);
     };
 
     const handleSliderCategorySelect = (category: string) => {
-        setSelectedSliderCategory(category);
+        setSelectedSorting(category);
         setSliderDropdownVisible(false);
     };
 
@@ -25,7 +39,7 @@ const BestSellersView: React.FC = () => {
     };
 
     const handleCategorySelect = (category: string) => {
-        setSelectedCategories(category === 'All' ? 'All' : [category]);
+        setSelectedCategory(category);
         setDropdownVisible(false);
     };
 
@@ -43,14 +57,16 @@ const BestSellersView: React.FC = () => {
                 {isSliderDropdownVisible && (
                     <div className="category-dropdown">
                         <ul>
-                            {sliderCategories.map((sliderCategory) => (
-                                <li className='category-dropdown-obejcts'
-                                    key={sliderCategory}
-                                    onClick={() => handleSliderCategorySelect(sliderCategory)}
+                            {categories!.length >= 1 && (
+                                categories!.map((category, index) => (
+                                    category != undefined && (
+                                    <li className='category-dropdown-objects'
+                                    key={category.categoryID || index}
+                                    onClick={() => handleCategorySelect(category.categoryName)}
                                 >
-                                    {sliderCategory}
+                                    {String(category.categoryName)}
                                 </li>
-                            ))}
+                            ))))}
                         </ul>
                     </div>
                 )}
@@ -60,21 +76,22 @@ const BestSellersView: React.FC = () => {
                 {isDropdownVisible && (
                     <div className="category-dropdown">
                         <ul>
-                            {categories.map((category) => (
-                                <li className='category-dropdown-obejcts'
-                                    key={category}
-                                    onClick={() => handleCategorySelect(category)}
+                            {sortinOptions!.length >= 1 && (
+                                sortinOptions!.map((option, index) => (
+                                    option != undefined && (
+                                    <li className='category-dropdown-objects'
+                                    key={index}
+                                    onClick={() => handleCategorySelect(option)}
                                 >
-                                    {category}
+                                    {String(option)}
                                 </li>
-                            ))}
+                            ))))}
                         </ul>
                     </div>
                 )}
             </div>
         </div>
-
-        <ProductList  selectedCategories={selectedCategories} limit={4}  />
+        <ProductList selectedCategories={selectedCategory} limit={4}/>
         </>
     )
 }

@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 
-import ProductList from '../sections/ProductList'
-
-import CategoryNav from '../sections/CategoryNav';
-import BestSellerPreviewSection from '../sections/BestSellerPreviewSection'
 import HomePageCategoryNav from '../sections/HomePageCategoryNav';
+import HomepageShoecaseOffer from '../sections/HomepageShoecaseOffer';
+import FeatuerdProductList from '../sections/FeatuerdProductList';
+import BestSellerProductList from '../sections/BestSellerProductList';
+import BreadcrumbSection from '../sections/BreadcrumbSection';
+import IconsNavigationSection from '../sections/IconsNavigationSection';
 
 const HomeView = () => {
   const [selectedCategories, setSelectedCategories] = useState(['Category 1', 'Category 2', 'Category 3', 'Category 4']);
@@ -13,20 +14,27 @@ const HomeView = () => {
   return (
 
     <>
+      <BreadcrumbSection currentPage="Best Sellers" showHamburgerButton={true} showBackButton={true} showCartItem={true}/>
       <HomePageCategoryNav />
-      <section className='home-page-showcase'>
-          <div className='container showcase-offers'>
-              <h2>Take 50% off!</h2>
-              <a href="#" className='btn white-btn'>SHOP NOW</a>
+      <HomepageShoecaseOffer />
+      <div className='product-showcase-section-container container'>
+        <section className='product-showcase-section'>
+          <div className='product-showcase-section-header'>
+            <h2 className='product-showcase-name'>Featured Products</h2>
+            <Link to="/bestSellersView" className='homepage-section-viewall'>view all <i className="fa-solid fa-chevron-right"></i></Link>
           </div>
-          <div className='featured-products'>
-              <h2 className='homepage-section-header'>Featured Products</h2>
-              <Link to="/bestSellersView" className='homepage-section-viewall'>view all <i className="fa-solid fa-chevron-right"></i></Link>
+          <FeatuerdProductList selectedCategories={selectedCategories} limit={4}/>
+        </section>
+        <section className='product-showcase-section'>
+          <div className='product-showcase-section-header'>
+            <h2 className='product-showcase-name'>Best Seller</h2>
+            <Link to="/bestSellersView" className='homepage-section-viewall'>view all <i className="fa-solid fa-chevron-right"></i></Link>
           </div>
-          <ProductList selectedCategories={selectedCategories} limit={4} />
-      </section>
-      
-      <BestSellerPreviewSection />
+          <BestSellerProductList selectedCategories={selectedCategories} limit={3}/>
+        </section>
+      </div>
+      <HomepageShoecaseOffer />
+      <IconsNavigationSection />
     </>
     
   )
