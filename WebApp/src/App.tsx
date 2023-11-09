@@ -16,7 +16,6 @@ import LeaveAReviewView from './views/LeaveAReviewView';
 import EditProfileView from './views/EditProfileView';
 import VerifyPhoneNumberView from './views/VerifyPhoneNumberView';
 import VerificationView from './views/VerificationView';
-import PhoneVerificationView from './views/PhoneVerificationView';
 import MyAddresses from './views/MyAddresses';
 
 function App() {

@@ -9,35 +9,35 @@ export type AddressData = {
     city: string;
     country: string;
     postalCode: string;
+    userId: string;
 };
 
 type AddressComponentProps = {
-    userId: string;
-    address: AddressData;
+    addressId: number;
     token: string;
+    userSignedIn: boolean;
 };
 
 
-const AddressComponent: React.FC<AddressComponentProps> = ({ userId, address, token }) => {
+const AddressComponent: React.FC<AddressComponentProps> = ({ addressId, token, userSignedIn }) => {
     const [localAddress, setLocalAddress] = useState<AddressData | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
 
-            if (!address || address?.id == null) {
+            if (!userSignedIn) {
                 setLoading(false);
                 return;
             }
 
-            const addressId = address.id;
             const apiUrl = `https://localhost:7055/api/addresses/GetAddress/${addressId}`;
 
             try {
                 const response = await Axios.get(apiUrl, {
                     headers: {
                         Authorization: `Bearer ${token}`,
-                    }
+                    },
                 });
 
                 if (response.status === 200) {
@@ -51,7 +51,12 @@ const AddressComponent: React.FC<AddressComponentProps> = ({ userId, address, to
         };
 
         fetchData();
-    }, [userId, address, token]);
+    }, [addressId, token, userSignedIn]);
+
+
+    if (!userSignedIn) {
+        return <div>User not signed in. Please sign in to view the address.</div>;
+    }
 
     if (loading) {
         return <div>Loading</div>;
@@ -66,12 +71,12 @@ const AddressComponent: React.FC<AddressComponentProps> = ({ userId, address, to
             <div className='container'>
             <i className="address-icon fa-solid fa-house"></i>
             <div className='address-info'>
-                <p className='address-title'>{address.title}</p>
+                <p className='address-title'>{localAddress.title}</p>
                 <div className='address-small-info'>
-                    <p className='small-info'>{address.streetName},</p>
-                    <p className='small-info'>{address.city},</p>
-                    <p className='small-info'>{address.country},</p>
-                    <p className='small-info'>{address.postalCode}</p>
+                        <p className='small-info'>{localAddress.streetName},</p>
+                        <p className='small-info'>{localAddress.city},</p>
+                        <p className='small-info'>{localAddress.country},</p>
+                        <p className='small-info'>{localAddress.postalCode}</p>
                 </div>
             </div>
             <Link to="/" className='edit-address'><i className="fa-solid fa-pen"></i></Link>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AddressComponent, { AddressData } from '../components/AddressComponent';
 import Axios from 'axios';
 
@@ -10,6 +10,7 @@ const MyAddresses = () => {
     const [addresses, setAddresses] = useState<AddressData[]>([]);
     const [error, setError] = useState<string | null>(null);
 
+    const navigate = useNavigate();
     const handleNavigateBack = () => {
         window.history.back();
     };
@@ -89,9 +90,10 @@ const MyAddresses = () => {
                 });
         } else {
             console.error('Token is missing or invalid');
-            setError('Token is missing or invalid');
+            setError('Please sign in to see your addresses');
+            navigate('/signin');
         }
-    }, [token]);
+    }, [token, navigate]);
 
     return (
         <>
@@ -100,7 +102,7 @@ const MyAddresses = () => {
             {!error && userId ? (
                 <div className="address-list">
                     {addresses.map((address) => (
-                        <AddressComponent key={address.id} userId={userId} address={address} token={token} />
+                        <AddressComponent key={address.id} addressId={address.id} token={token} userSignedIn={true} />
                     ))}
                 </div>
             ) : (
@@ -116,6 +118,3 @@ const MyAddresses = () => {
 };
 
 export default MyAddresses;
-//{ console.log('Addresses:', addresses) }
-//{ console.log('UserID:', userId) }
-//{ console.log('Token:', token) }
