@@ -39,7 +39,7 @@
     .link-verify {
 
         @include lg {
-            display: block; 
+            display: block;
             text-align: center;
         }
     }
@@ -48,10 +48,10 @@
 .link-outside {
     padding-left: 20px;
     margin: 0;
-        
+
     @include lg {
         padding-left: 0;
-        display: block; 
+        display: block;
         text-align: center;
     }
 }
