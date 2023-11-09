@@ -8,7 +8,16 @@
     background-color: $color-blue;
     height: 100vh;
     width: 100vw;
-    display: none;
+    
+    animation:onboarding-response 1s 1;
+    -webkit-animation:onboarding-response 1s 1;
+    animation-fill-mode: forwards;
+
+    animation-delay:2s;
+    -webkit-animation-delay:1s; /* Safari and Chrome */
+    -webkit-animation-fill-mode: forwards;
+
+
     .welcome-logo {
         display: flex;
         align-items: center;
@@ -25,6 +34,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            
             .welcome-logo-rectangular {
                 background-color: $color-dark;
                 opacity: 100%;
@@ -42,6 +52,26 @@
             }
         }
     } 
+}
+
+@keyframes onboarding-response{
+    from {opacity :1;}
+    to {
+        opacity: 0;
+        width: 0;
+        height: 1;
+        overflow: hidden;
+    }
+}
+
+@-webkit-keyframes onboarding-response{
+    from {opacity :1;}
+    to {
+        opacity: 0;
+        width: 0;
+        height: 1;
+        overflow: hidden;
+    }
 }
 
 //This is for info slide page
@@ -85,8 +115,7 @@
             bottom: 17%;
         
             @media (min-width: 420px) {
-                bottom: 30%;
-        
+                bottom: 32%;
             }
         }
 
@@ -129,12 +158,12 @@
                         font-weight: $font-weight-regular;
                     }
                 }
-        
-                .btn-get-started {
-                    width: auto;
-                    padding-left: 50px;
-                    padding-right: 50px;
-                }
+            }
+
+            .btn-get-started {
+                width: auto;
+                padding-left: 50px;
+                padding-right: 50px;
             }
         }
     }

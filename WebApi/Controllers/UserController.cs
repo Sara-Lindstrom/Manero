@@ -135,6 +135,95 @@ public class UserController : ControllerBase
         return Unauthorized("Invalid login attempt.");
     }
 
+    // Method to check if email already exists
+    [HttpPost("CheckEmail")]
+    public async Task<IActionResult> CheckEmail([FromBody] string email)
+    {
+        // Validate email
+        if (string.IsNullOrEmpty(email))
+        {
+            return BadRequest("Email cannot be empty.");
+        }
+
+        // Find user by email
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user != null)
+        {
+            return Ok(new { Message = "User exists." });
+        }
+        else
+        {
+            return NotFound(new { Message = "User not found." });
+        }
+    }
+
+    // Method to check if phone number already exists
+    [HttpPost("CheckPhoneNumber")]
+    public async Task<IActionResult> CheckPhoneNumber([FromBody] PhoneNumberDTO model)
+    {
+        // Validate phone number
+        if (string.IsNullOrEmpty(model.PhoneNumber))
+        {
+            return BadRequest("Phone number cannot be empty.");
+        }
+
+        // Log the phone number that is checked
+        Console.WriteLine($"Checking existence of phone number: {model.PhoneNumber}");
+
+        // Find user by phone number
+        var user = await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == model.PhoneNumber);
+        if (user != null)
+        {
+            Console.WriteLine("Phone number exists.");
+            return Ok(new { exists = true });
+        }
+        else
+        {
+            Console.WriteLine("Phone number does not exist.");
+            return NotFound(new { exists = false });
+        }
+    }
+
+    // Method for password reset
+    [HttpPost("ResetPassword")]
+    public async Task<IActionResult> ResetPassword([FromBody] UserResetPassword model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return UnprocessableEntity(ModelState);
+        }
+
+        if (model.NewPassword != model.ConfirmPassword)
+        {
+            return BadRequest(new { Message = "Passwords do not match." });
+        }
+
+        var user = await _userManager.FindByEmailAsync(model.Email);
+        if (user == null)
+        {
+            return NotFound(new { Message = "User not found." });
+        }
+
+        var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+        // Pass the new password to ASPNetUsers through usermanager
+        var result = await _userManager.ResetPasswordAsync(user, resetToken, model.NewPassword);
+
+        if (result.Succeeded)
+        {
+            return Ok(new { Message = "Password reset successfully." });
+        }
+
+        return BadRequest(new { Errors = result.Errors.Select(x => x.Description) });
+    }
+
+    // Method for signing out
+    [HttpPost("SignOut")]
+    public async Task<IActionResult> SignOut()
+    {
+        await _signInManager.SignOutAsync();
+        return Ok(new { Message = "Signed out successfully!" });
+    }
+
     // Method to get user profile for editing
     [Authorize]
     [HttpGet("EditProfile")]
@@ -159,6 +248,14 @@ public class UserController : ControllerBase
         };
 
         return Ok(profileData);
+    }
+
+    // Method for fetching all users and display them
+    [HttpGet]
+    public async Task<ActionResult> GetUsers()
+    {
+        var users = await _context.Users.ToListAsync();
+        return Ok(users);
     }
 
     // Edit and view profile
@@ -231,178 +328,4 @@ public class UserController : ControllerBase
         return Ok(new { Message = "Profile updated successfully." });
     }
 
-    // Method for password reset
-    [HttpPost("ResetPassword")]
-    public async Task<IActionResult> ResetPassword([FromBody] UserResetPassword model)
-    {
-        if (!ModelState.IsValid)
-        {
-            return UnprocessableEntity(ModelState);
-        }
-
-        if (model.NewPassword != model.ConfirmPassword)
-        {
-            return BadRequest(new { Message = "Passwords do not match." });
-        }
-
-        var user = await _userManager.FindByEmailAsync(model.Email);
-        if (user == null)
-        {
-            return NotFound(new { Message = "User not found." });
-        }
-
-        var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
-        // Pass the new password to ASPNetUsers through usermanager
-        var result = await _userManager.ResetPasswordAsync(user, resetToken, model.NewPassword);
-
-        if (result.Succeeded)
-        {
-            return Ok(new { Message = "Password reset successfully." });
-        }
-
-        return BadRequest(new { Errors = result.Errors.Select(x => x.Description) });
-    }
-
-    // Method for signing out
-    [HttpPost("SignOut")]
-    public async Task<IActionResult> SignOut()
-    {
-        await _signInManager.SignOutAsync();
-        return Ok(new { Message = "Signed out successfully!" });
-    }
-
-    // Method for fetching all users and display them
-    [HttpGet]
-    public async Task<ActionResult> GetUsers()
-    {
-        var users = await _context.Users.ToListAsync();
-        return Ok(users);
-    }
-
-    // Method to check if email already exists
-    [HttpPost("CheckEmail")]
-    public async Task<IActionResult> CheckEmail([FromBody] string email)
-    {
-        // Validate email
-        if (string.IsNullOrEmpty(email))
-        {
-            return BadRequest("Email cannot be empty.");
-        }
-
-        // Find user by email
-        var user = await _userManager.FindByEmailAsync(email);
-        if (user != null)
-        {
-            return Ok(new { Message = "User exists." });
-        }
-        else
-        {
-            return NotFound(new { Message = "User not found." });
-        }
-    }
-
-
-
-    ////////////// USER ADDRESS ///////////////////
-
-    ////Method to add a new address to a user
-    //[HttpPost("{userId}/Addresses")]
-    //public async Task<IActionResult> AddAddressToUser([FromRoute] string userId, [FromBody] Address address)
-    //{
-    //    if (!ModelState.IsValid)
-    //    {
-    //        return BadRequest(ModelState);
-    //    }
-
-    //    var user = await _userManager.FindByIdAsync(userId);
-    //    if (user == null)
-    //    {
-    //        return NotFound("User not found.");
-    //    }
-
-    //    // Associate the address with the user
-    //    address.UserId = userId;
-
-    //    // Add the address to the context
-    //    _context.Addresses.Add(address);
-    //    await _context.SaveChangesAsync();
-
-    //    return Ok(new { Message = "Address added successfully." });
-    //}
-
-    //// Method to get a single address for a user
-    //[Authorize]
-    //[HttpGet("{userId}/Addresses/{addressId}")]
-    //public async Task<IActionResult> GetSingleUserAddress([FromRoute] string userId, [FromRoute] int addressId)
-    //{
-    //    var user = await _userManager.FindByIdAsync(userId);
-    //    if (user == null)
-    //    {
-    //        return NotFound("User not found.");
-    //    }
-
-    //    // Retrieve the specific address associated with the user
-    //    var userAddress = await _context.Addresses
-    //        .Where(a => a.UserId == userId && a.Id == addressId)
-    //        .FirstOrDefaultAsync();
-
-    //    if (userAddress == null)
-    //    {
-    //        return NotFound("Address not found.");
-    //    }
-
-    //    return Ok(userAddress);
-    //}
-
-    ////Method to display users addresses
-    //[Authorize]
-    //[HttpGet("{userId}/Addresses")]
-    //public async Task<IActionResult> GetUserAddresses([FromRoute] string userId)
-    //{
-    //    var user = await _userManager.FindByIdAsync(userId);
-    //    if (user == null)
-    //    {
-    //        return NotFound("User not found.");
-    //    }
-
-    //    // Retrieve all addresses associated with the user
-    //    var userAddresses = await _context.Addresses
-    //        .Where(a => a.UserId == userId)
-    //        .ToListAsync();
-
-    //    return Ok(userAddresses);
-    //}
-
-    ////Method to edit a users address
-    //[Authorize]
-    //[HttpPut("{userId}/Addresses/{addressId}")]
-    //public async Task<IActionResult> UpdateUserAddress([FromRoute] string userId, [FromRoute] int addressId, [FromBody] Address updatedAddress)
-    //{
-    //    var user = await _userManager.FindByIdAsync(userId);
-    //    if (user == null)
-    //    {
-    //        return NotFound("User not found.");
-    //    }
-
-    //    // Check if the address exists and belongs to the user
-    //    var existingAddress = await _context.Addresses
-    //        .Where(a => a.Id == addressId && a.UserId == userId)
-    //        .FirstOrDefaultAsync();
-
-    //    if (existingAddress == null)
-    //    {
-    //        return NotFound("Address not found.");
-    //    }
-
-    //    // Update the address properties
-    //    existingAddress.StreetName = updatedAddress.StreetName;
-    //    existingAddress.PostalCode = updatedAddress.PostalCode;
-    //    existingAddress.City = updatedAddress.City;
-    //    existingAddress.Country = updatedAddress.Country;
-
-    //    // Save the changes to the database
-    //    await _context.SaveChangesAsync();
-
-    //    return Ok(new { Message = "Address updated successfully." });
-    //}
 }

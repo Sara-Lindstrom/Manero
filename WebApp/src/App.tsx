@@ -15,6 +15,7 @@ import CategoryView from './views/CategoryView';
 import LeaveAReviewView from './views/LeaveAReviewView';
 import EditProfileView from './views/EditProfileView';
 import VerifyPhoneNumberView from './views/VerifyPhoneNumberView';
+import VerificationView from './views/VerificationView';
 import PhoneVerificationView from './views/PhoneVerificationView';
 import MyAddresses from './views/MyAddresses';
 
@@ -41,7 +42,7 @@ function App() {
             <Route path='/bestSellersView' element={<BestSellersView />} />
             <Route path='/category' element={<CategoryView />} />
             <Route path='/verifyPhone' element={<VerifyPhoneNumberView />} />
-            <Route path='/activate' element={<PhoneVerificationView />} />
+            <Route path='/activate' element={<VerificationView />} />
         </Routes>
     </BrowserRouter>
 

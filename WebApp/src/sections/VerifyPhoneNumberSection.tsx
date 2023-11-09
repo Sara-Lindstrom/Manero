@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import * as FormValidation from '../helpers/FormValidation'
-import { NavigateFunction } from 'react-router-dom';
+import { checkPhoneNumberExists } from '../helpers/FormHandlers';
 import FlagComponent from '../components/FlagComponent';
+import { NavigateFunction } from 'react-router-dom';
+import * as FormValidation from '../helpers/FormValidation'
 
 type VerifyPhoneProps = {
     navigate: NavigateFunction
@@ -10,43 +11,49 @@ type VerifyPhoneProps = {
 const VerifyPhoneNumberSection: React.FC<VerifyPhoneProps> = ({ navigate }:
     VerifyPhoneProps) => {
 
-    // useState for visibility of phone number input
-    const [phoneNumberVisible, setPhoneNumberVisible] = useState(false);
-
     // UseStates for error messages in frontend validation
     const [phoneNumberError, setPhoneNumberError] = useState('');
 
     // useStates for setting default value for phone number
-    const [phoneNumber, setPhoneNumber] = useState('+');
-
-    const ValidateConfirm = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        let validPhonenumber = FormValidation.ValidatePhoneNumber(phoneNumber).isValid;
-        if (validPhonenumber) {
-            navigate('/activate');
-        }
-    }
+    const [phoneNumber, setPhoneNumber] = useState('');
 
     // Handle formatting the phonnumber so the flag are shown correctly on input
     const handlePhoneNumberChange = (value: string) => {
         let formattedValue = value;
-    
+
         // Ensure the value starts with '+' (written out automatically)
         if (!formattedValue.startsWith('+')) {
             formattedValue = `+${formattedValue}`;
         }
-    
+
         // Automatically add a space after the country code
         if (formattedValue.match(/^\+\d{2}$/)) {
             formattedValue += ' ';
         }
-    
+
         setPhoneNumber(formattedValue);
         const validationResult = FormValidation.ValidatePhoneNumber(formattedValue);
         setPhoneNumberError(validationResult.error);
     };
 
-    // Need to add validation on phone number
+    const ValidateConfirm = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        // Remove '+' and spaces for backend validation
+        const formattedPhoneNumber = phoneNumber.replace(/\+|\s/g, '');
+
+        const validationResult = FormValidation.ValidatePhoneNumber(formattedPhoneNumber);
+
+        if (validationResult.isValid) {
+            const doesExist = await checkPhoneNumberExists(formattedPhoneNumber);
+            if (doesExist) {
+                navigate('/activate');
+            } else {
+                setPhoneNumberError('Phone number does not exist.');
+            }
+        } else {
+            setPhoneNumberError('Invalid phone number format.');
+        }
+    };
 
     return (
         <div className="container">

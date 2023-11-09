@@ -1,8 +1,8 @@
 import BreadcrumbSection from '../sections/BreadcrumbSection';
 import { NavLink, useNavigate } from 'react-router-dom';
-import PhoneVerificationSection from '../sections/PhoneVerificationSection';
+import VerificationSection from '../sections/VerificationSection';
 
-const PhoneVerificationView = () => {
+const VerificationView = () => {
 
   const navigate = useNavigate();
   const handleNavigateBack = () => {
@@ -17,9 +17,9 @@ const PhoneVerificationView = () => {
         <NavLink className="link-outside" to="/">Enter your OTP code here.</NavLink>
       </div>
 
-      <PhoneVerificationSection navigate={navigate} />
+      <VerificationSection navigate={navigate} />
     </>
   )
 }
 
-export default PhoneVerificationView
+export default VerificationView

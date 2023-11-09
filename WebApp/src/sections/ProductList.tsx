@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { IProduct } from '../Interfaces/IProduct';
+import {fetchBestSellers} from '../helpers/ProductHandler';
+import { SortByNewest } from '../helpers/ProductSorting';
 
 interface ProductListProps {
     products: IProduct[];
 }
 
-const FeaturedProductList: React.FC<ProductListProps> = ({ products }) => {
-        const [wishlist, setWishlist] = useState<IProduct[]>([]);
-        const [cart, setCart] = useState<{ [key: string]: number }>({});
+const ProductList: React.FC<ProductListProps> = ({ products }) => {
 
-        const addToWishlist = (product: IProduct) => {
-            if (!wishlist.find((item) => item.name === product.name && item.size === product.size && item.color === product.color)) {
-                setWishlist([...wishlist, product]);
-            }
-        };
+    const [wishlist, setWishlist] = useState<IProduct[]>([]);
+    const [cart, setCart] = useState<{ [key: string]: number }>({});
+
     
-        const addToCart = (product: IProduct) => {
+    const addToWishlist = (product: IProduct) => {
+        if (!wishlist.find((item) => item.name === product.name && item.size === product.size && item.color === product.color)) {
+            setWishlist([...wishlist, product]);
+        }
+    };
+
+    const addToCart = (product: IProduct) => {
         setCart((prevCart) => {
             const updatedCart = { ...prevCart };
             if (updatedCart[product.id]) {
@@ -25,22 +29,23 @@ const FeaturedProductList: React.FC<ProductListProps> = ({ products }) => {
             }
             return updatedCart;
         });
-        };
+    };
       
     return (
-        <div className="product-list container">
+        <div className="product-list">
             <ul className='product-list-info-below-grid'>
-                {products.map((product) => (
+                {products.length >= 1 && (
+                products.map((product) => (            
                     <li className='product-list-info-below' key={product.id}>
                         <a className='product-card-info-below' href={`/product/${product.id}`}>
                             <div className='product-card-info-below'>
                                 {product.salesPrice !== null && (
                                 <div className='product-sale-label'>SALE</div>
                                 )}
-                                <img className='product-card-info-below-img' src={product.images[0].imagePath} alt={product.name} /> 
+                                <img className='product-card-info-below-img' src={product.images[0].imagePath} alt={product.name} />                                
                                 <p className='product-card-rating'><i className="fa-regular fa-star"></i>({product.rating})</p>
                                 <h2 className='product-card-name'>{product.name}</h2>
-                                <div className='product-card-price-container'>
+                                <div className='product-card-price-container'>                                    
                                     {product.salesPrice !== null ? (
                                         <>
                                         <p className='product-card-price-strikethrough'>${product.price}</p>                                        
@@ -48,7 +53,7 @@ const FeaturedProductList: React.FC<ProductListProps> = ({ products }) => {
                                         </>
                                     ) : (
                                         <p className='product-card-price'>${product.price}</p>
-                                    )} 
+                                    )}                                
                                 </div>
                                 <div className='product-card-info-below-buttons'>
                                     <button className='product-card-info-below-button' onClick={() => addToWishlist(product)}>
@@ -61,11 +66,11 @@ const FeaturedProductList: React.FC<ProductListProps> = ({ products }) => {
                             </div>
                         </a>
                     </li>
-                ))}
+                )))}
             </ul>
         </div>
     )
 }
 
 
-export default FeaturedProductList;
+export default ProductList;

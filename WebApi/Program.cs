@@ -6,6 +6,8 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using WebApi.Context;
 using WebApi.Models;
+using WebApi.Models.Entities;
+using WebApi.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,17 @@ builder.Services.AddCors(options =>
 // DbContext and Identity
 builder.Services.AddDbContext<UserDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConn")));
+
+builder.Services.AddDbContext<ProductDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConn")));
+
+// Repos
+builder.Services.AddScoped<IRepo<ProductEntity, ProductDbContext>, ProductRepo>();
+builder.Services.AddScoped<IRepo<ProductReviewEntity, ProductDbContext>, ProductReviewRepo>();
+builder.Services.AddScoped<IRepo<CategoryEntity, ProductDbContext>, CategoryRepo>();
+builder.Services.AddScoped<IRepo<TagEntity, ProductDbContext>, TagRepo>();
+builder.Services.AddScoped<IRepo<CategoryTagEntity, ProductDbContext>, CategoryTagRepo>();
+builder.Services.AddScoped<IRepo<ImageEntity, ProductDbContext>, ImageRepo>();
 
 // Enforce unique emails
 builder.Services.AddIdentity<UserModel, IdentityRole>(options =>

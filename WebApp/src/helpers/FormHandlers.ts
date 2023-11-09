@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent } from 'react';
-import { AxiosResponse } from 'axios';
+import { AxiosResponse, AxiosError } from 'axios';
 import axios from 'axios';
 
 // To be able to navigate after success
@@ -21,8 +21,8 @@ export type FormData = {
 export type ProfileData = {
     name: string;
     email: string;
-    phoneNumber: string;
-    location: string
+    phoneNumber: string | null; // phoneNumber can be a string or null
+    location: string;
 };
 
 // Used for Edit and View profile information
@@ -134,8 +134,13 @@ export const handleUpdateProfile = async (
 ): Promise<void> => {
     const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/User/UpdateProfile';
 
+    const payload = {
+        ...profileData,
+        phoneNumber: profileData.phoneNumber || null,
+    };
+
     try {
-        const response = await axios.put(API_URL, profileData, {
+        const response = await axios.put(API_URL, payload, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -199,7 +204,7 @@ export const handleSignOut = async (
 export const handleResetPassword = async (
     email: string,
     newPassword: string,
-    confirmPassword: string // New parameter for confirmed password
+    confirmPassword: string
 ): Promise<boolean> => {
     const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/User/ResetPassword';
 
@@ -231,6 +236,22 @@ export const checkEmailExists = async (
         return response.status === 200;
     } catch (error) {
         console.error("An error occurred:", error);
+        return false;
+    }
+};
+
+// Methods for check if phonenumber exists in DB
+export const checkPhoneNumberExists = async (phoneNumber: string): Promise<boolean> => {
+    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/User/CheckPhoneNumber';
+    try {
+        const response = await axios.post(API_URL, { phoneNumber }, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        return response.data.exists;
+    } catch (error) {
+
         return false;
     }
 };
