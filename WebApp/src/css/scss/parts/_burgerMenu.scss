@@ -1,16 +1,16 @@
 .burger-menu-button {
 
-    .burger-menu-btn{
+    .burger-menu-btn {
         border: none;
         background-color: transparent;
 
         i {
             font-size: 25px;
         }
-    } 
+    }
 }
 
-.burger-menu-screen{
+.burger-menu-screen {
 
     width: 350px !important;
 
@@ -18,68 +18,59 @@
         width: 400px !important;
     }
 
-    .offcanvas-body{
+    .offcanvas-body {
         position: relative;
 
-            h2{
+        .contact-info {
 
-            }
+            display: flex;
+            flex-direction: column;
+            margin-top: 30px;
 
-            .contact-info{
+            .contact-field {
 
                 display: flex;
-                flex-direction: column;
-                margin-top: 30px;
+                flex-direction: row;
+                gap: 20px;
+                //border-bottom: 1px solid $color-blue;
 
-                .contact-field{
+                hr {
+                    width: 100%;
+                }
 
-                    display: flex;
-                    flex-direction: row;
-                    gap: 20px;
-                    //border-bottom: 1px solid $color-blue;
+                .icon {
 
-                    hr{
-                        width: 100%;
+                    border-radius: 50%;
+                    width: 40px;
+                    height: 40px;
+                    border: 1px solid $color-blue;
+                    text-align: center;
+
+                    i {
+                        font-size: 18px;
+                        background-color: transparent;
+                        margin-top: 10px;
                     }
+                }
 
-                    .icon{
+                .info {
 
-                        border-radius: 50%;
-                        width: 40px;
-                        height: 40px;
-                        border: 1px solid $color-blue;
-                        text-align: center;
-
-                        i{
-                            font-size: 18px;
-                            background-color: transparent;
-                            margin-top: 10px;
-                        }
-                    }
-
-                    .info{
-                        
-                        #p2{
-                            margin-top: -15px;
-                        }
+                    #p2 {
+                        margin-top: -15px;
                     }
                 }
             }
+        }
 
-        .track-section{
+        .track-section {
 
             position: absolute;
             bottom: 25px;
             display: flex;
             flex-direction: column;
             gap: 10px;
-            
 
-            p{
-                
-            }
-
-            .track-field{
+            .track-field {
 
                 display: flex;
                 flex-direction: row;
@@ -87,18 +78,18 @@
                 border-radius: 50px;
                 position: relative;
                 width: 277px;
-                                
-                .input-label{
-                                      
+
+                .input-label {
+
                     background-color: #222529;
                     position: absolute;
-                    padding:0 10px;
-                    top:-23%;
+                    padding: 0 10px;
+                    top: -23%;
                     left: 20px;
                     font-size: 0.9rem;
                 }
 
-                input{
+                input {
                     outline: none;
                     background-color: transparent;
                     border: none;
@@ -106,7 +97,7 @@
                     padding: 15px;
                 }
 
-                .arrow{
+                .arrow {
 
                     border-radius: 50%;
                     width: 48px;
@@ -116,9 +107,9 @@
                     margin-top: 3px;
                     position: relative;
                     cursor: pointer;
-                    
 
-                     i{
+
+                    i {
                         font-size: 20px;
                         color: #222529;
                         position: absolute;
@@ -127,7 +118,7 @@
 
                     }
 
-                    &:hover{
+                    &:hover {
                         background-color: $color-blue;
                     }
                 }
@@ -135,4 +126,3 @@
         }
     }
 }
-
