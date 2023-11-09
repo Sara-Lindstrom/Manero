@@ -4,6 +4,7 @@ import ProductList from '../sections/ProductList';
 import { fetchAllCategories, fetchBestSellers } from '../helpers/ProductHandler';
 import { ICategories } from '../Interfaces/ICategories';
 import { IProduct } from '../Interfaces/IProduct';
+import { SortByBestSeller, SortByNewest, SortBySale } from '../helpers/ProductSorting';
 
 const BestSellersView: React.FC = () => {
     const [isSliderDropdownVisible, setSliderDropdownVisible] = useState(false);
@@ -26,6 +27,7 @@ const BestSellersView: React.FC = () => {
     
     const fetchProducts = async () => {
         let productsFromDb = await fetchBestSellers(selectedCategory);
+        console.log("here");
         setProducts(productsFromDb);
     }      
 
@@ -37,12 +39,34 @@ const BestSellersView: React.FC = () => {
         fetchCategories().then(data => setCategories(data));
     }, []);
 
+    useEffect(() => {
+        // Clone the products array to avoid mutating the original state
+        let sortedProducts = [...products];
+    
+        // Perform sorting based on the selectedSorting value
+        switch (selectedSorting) {
+            case 'Newest':
+                sortedProducts = SortByNewest(products);
+                break;
+            case 'Popular':
+                sortedProducts = SortByBestSeller(products);
+                break;
+            case 'Sale':
+                sortedProducts = SortBySale(products);
+                break;
+            default:
+                break;
+        }
+        setProducts(sortedProducts);
+    
+    }, [selectedSorting]);
+
     const toggleSliderDropdown = () => {
         setSliderDropdownVisible(!isSliderDropdownVisible);
     };
 
-    const handleSliderCategorySelect = (category: string) => {
-        setSelectedSorting(category);
+    const handleSorting = (option: string) => {
+        setSelectedSorting(option);
         setSliderDropdownVisible(false);
     };
 
@@ -93,7 +117,7 @@ const BestSellersView: React.FC = () => {
                                     option != undefined && (
                                     <li className='category-dropdown-objects'
                                     key={index}
-                                    onClick={() => handleCategorySelect(option)}
+                                    onClick={() => handleSorting(option)}
                                 >
                                     {String(option)}
                                 </li>
