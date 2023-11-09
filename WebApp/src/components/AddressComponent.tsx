@@ -3,65 +3,61 @@ import Axios from 'axios';
 import { Link } from 'react-router-dom';
 
 export type AddressData = {
-    Id: number;
-    Title: string;
-    StreetName: string;
-    City: string;
-    Country: string;
-    PostalCode: string;
+    id: number;
+    title: string;
+    streetName: string;
+    city: string;
+    country: string;
+    postalCode: string;
 };
 
 type AddressComponentProps = {
     userId: string;
-    addressId: number;
+    address: AddressData;
     token: string;
 };
 
 
-const AddressComponent: React.FC<AddressComponentProps> = ({ userId, addressId, token }) => {
-    const [address, setAddress] = useState<AddressData | null>(null);
+const AddressComponent: React.FC<AddressComponentProps> = ({ userId, address, token }) => {
+    const [localAddress, setLocalAddress] = useState<AddressData | null>(null);
     const [loading, setLoading] = useState(true);
 
-    const fetchUserAddress = async (userId: string, addressId: number, token: string): Promise<AddressData | null> => {
-        const apiUrl = `https://localhost:7055/api/User/${userId}/Addresses/${addressId}`;
-
-        try {
-            const response = await Axios.get(apiUrl, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                }
-            });
-
-            if (response.status === 200) {
-                return response.data;
-            }
-        } catch (error) {
-            console.error('Error fetching user address:', error);
-        }
-
-        return null;
-    };
-
     useEffect(() => {
-        fetchUserAddress(userId, addressId, token)
-            .then((data) => {
-                if (data) {
-                    setAddress(data);
-                }
-            })
-            .catch((error) => {
-                console.error('Error fetching user address:', error);
-            })
-            .finally(() => {
+        const fetchData = async () => {
+
+            if (!address || address?.id == null) {
                 setLoading(false);
-            });
-    }, [userId, addressId, token]);
+                return;
+            }
+
+            const addressId = address.id;
+            const apiUrl = `https://localhost:7055/api/addresses/GetAddress/${addressId}`;
+
+            try {
+                const response = await Axios.get(apiUrl, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                });
+
+                if (response.status === 200) {
+                    setLocalAddress(response.data);
+                }
+            } catch (error) {
+                console.error('Error fetching user address:', error);
+            }
+
+            setLoading(false);
+        };
+
+        fetchData();
+    }, [userId, address, token]);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <div>Loading</div>;
     }
 
-    if (!address) {
+    if (!localAddress) {
         return <div>Address not found.</div>;
     }
 
@@ -70,12 +66,12 @@ const AddressComponent: React.FC<AddressComponentProps> = ({ userId, addressId, 
             <div className='container'>
             <i className="address-icon fa-solid fa-house"></i>
             <div className='address-info'>
-                <p className='address-title'>{address.Title}</p>
+                <p className='address-title'>{address.title}</p>
                 <div className='address-small-info'>
-                    <p className='small-info'>{address.StreetName},</p>
-                    <p className='small-info'>{address.City},</p>
-                    <p className='small-info'>{address.Country},</p>
-                    <p className='small-info'>{address.PostalCode}</p>
+                    <p className='small-info'>{address.streetName},</p>
+                    <p className='small-info'>{address.city},</p>
+                    <p className='small-info'>{address.country},</p>
+                    <p className='small-info'>{address.postalCode}</p>
                 </div>
             </div>
             <Link to="/" className='edit-address'><i className="fa-solid fa-pen"></i></Link>

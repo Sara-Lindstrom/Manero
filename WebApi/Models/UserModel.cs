@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using WebApi.Models.Address;
 
 namespace WebApi.Models
 {
@@ -7,7 +6,6 @@ namespace WebApi.Models
     {
         public bool RememberMe { get; set; }
 
-        public ICollection<Address.Address> Addresses { get; set; }
-        public ICollection<Location> Locations { get; set; }
+        public ICollection<Address> Addresses { get; set; }
     }
 }

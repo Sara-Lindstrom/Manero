@@ -9,7 +9,6 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Configuration;
-using WebApi.Models.Address;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -76,6 +75,28 @@ public class UserController : ControllerBase
         return BadRequest(new { Errors = result.Errors.Select(x => x.Description) });
     }
 
+    //Method to fetch a user
+    [Authorize]
+    [HttpGet("GetUserData")]
+    public async Task<IActionResult> GetUserData()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        // Fetch user data from the database
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user == null)
+        {
+            return NotFound("User not found.");
+        }
+
+        var userData = new
+        {
+            UserId = user.Id
+        };
+
+        return Ok(userData);
+    }
+
     // Method for signing in
     [HttpPost("SignIn")]
     public async Task<IActionResult> SignIn([FromBody] UserCredentials credentials)
@@ -112,22 +133,6 @@ public class UserController : ControllerBase
             }
         }
         return Unauthorized("Invalid login attempt.");
-    }
-
-    //Method to get userId
-    [Authorize]
-    [HttpGet("GetUserId")]
-    public IActionResult GetUserId()
-    {
-        // Retrieve the userId from the claims
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        if (string.IsNullOrWhiteSpace(userId))
-        {
-            return BadRequest("User ID not found.");
-        }
-
-        return Ok(new { userId });
     }
 
     // Method to get user profile for editing
@@ -299,137 +304,105 @@ public class UserController : ControllerBase
 
 
     ////////////// USER ADDRESS ///////////////////
-    
-    //Method to add a new address to a user
-    [Authorize]
-    [HttpPost("{userId}/Addresses")]
-    public async Task<IActionResult> AddAddressToUser([FromRoute] string userId, [FromBody] Address address)
-    {
-        var user = await _userManager.FindByIdAsync(userId);
-        if (user == null)
-        {
-            return NotFound("User not found.");
-        }
 
-        // Create a new location
-        var location = new Location
-        {
-            City = address.Location.City,
-            Country = address.Location.Country
-        };
+    ////Method to add a new address to a user
+    //[HttpPost("{userId}/Addresses")]
+    //public async Task<IActionResult> AddAddressToUser([FromRoute] string userId, [FromBody] Address address)
+    //{
+    //    if (!ModelState.IsValid)
+    //    {
+    //        return BadRequest(ModelState);
+    //    }
 
-        // Associate the address with the user and the location
-        address.UserId = userId;
-        address.Location = location; // Associate the location with the address
+    //    var user = await _userManager.FindByIdAsync(userId);
+    //    if (user == null)
+    //    {
+    //        return NotFound("User not found.");
+    //    }
 
-        // Add both the location and the address to the context
-        _context.Locations.Add(location);
-        _context.Addresses.Add(address);
+    //    // Associate the address with the user
+    //    address.UserId = userId;
 
-        await _context.SaveChangesAsync();
+    //    // Add the address to the context
+    //    _context.Addresses.Add(address);
+    //    await _context.SaveChangesAsync();
 
-        return Ok(new { Message = "Address added successfully." });
-    }
+    //    return Ok(new { Message = "Address added successfully." });
+    //}
 
-    // Method to get a single address for a user
-    [Authorize]
-    [HttpGet("{userId}/Addresses/{addressId}")]
-    public async Task<IActionResult> GetSingleUserAddress([FromRoute] string userId, [FromRoute] int addressId)
-    {
-        var user = await _userManager.FindByIdAsync(userId);
-        if (user == null)
-        {
-            return NotFound("User not found.");
-        }
+    //// Method to get a single address for a user
+    //[Authorize]
+    //[HttpGet("{userId}/Addresses/{addressId}")]
+    //public async Task<IActionResult> GetSingleUserAddress([FromRoute] string userId, [FromRoute] int addressId)
+    //{
+    //    var user = await _userManager.FindByIdAsync(userId);
+    //    if (user == null)
+    //    {
+    //        return NotFound("User not found.");
+    //    }
 
-        // Retrieve the specific address associated with the user, including the location
-        var userAddress = await _context.Addresses
-            .Include(a => a.Location)
-            .Where(a => a.UserId == userId && a.Id == addressId)
-            .FirstOrDefaultAsync();
+    //    // Retrieve the specific address associated with the user
+    //    var userAddress = await _context.Addresses
+    //        .Where(a => a.UserId == userId && a.Id == addressId)
+    //        .FirstOrDefaultAsync();
 
-        if (userAddress == null)
-        {
-            return NotFound("Address not found.");
-        }
+    //    if (userAddress == null)
+    //    {
+    //        return NotFound("Address not found.");
+    //    }
 
-        return Ok(userAddress);
-    }
+    //    return Ok(userAddress);
+    //}
 
-    //Method to display users addresses
-    [Authorize]
-    [HttpGet("{userId}/Addresses")]
-    public async Task<IActionResult> GetUserAddresses([FromRoute] string userId)
-    {
-        var user = await _userManager.FindByIdAsync(userId);
-        if (user == null)
-        {
-            return NotFound("User not found.");
-        }
+    ////Method to display users addresses
+    //[Authorize]
+    //[HttpGet("{userId}/Addresses")]
+    //public async Task<IActionResult> GetUserAddresses([FromRoute] string userId)
+    //{
+    //    var user = await _userManager.FindByIdAsync(userId);
+    //    if (user == null)
+    //    {
+    //        return NotFound("User not found.");
+    //    }
 
-        // Retrieve all addresses associated with the user, including the location
-        var userAddresses = await _context.Addresses
-            .Include(a => a.Location)
-            .Where(a => a.UserId == userId)
-            .ToListAsync();
+    //    // Retrieve all addresses associated with the user
+    //    var userAddresses = await _context.Addresses
+    //        .Where(a => a.UserId == userId)
+    //        .ToListAsync();
 
-        return Ok(userAddresses);
-    }
+    //    return Ok(userAddresses);
+    //}
 
-    //Method to edit a users address
-    [Authorize]
-    [HttpPut("{userId}/Addresses/{addressId}")]
-    public async Task<IActionResult> UpdateUserAddress([FromRoute] string userId, [FromRoute] int addressId, [FromBody] Address updatedAddress)
-    {
-        var user = await _userManager.FindByIdAsync(userId);
-        if (user == null)
-        {
-            return NotFound("User not found.");
-        }
+    ////Method to edit a users address
+    //[Authorize]
+    //[HttpPut("{userId}/Addresses/{addressId}")]
+    //public async Task<IActionResult> UpdateUserAddress([FromRoute] string userId, [FromRoute] int addressId, [FromBody] Address updatedAddress)
+    //{
+    //    var user = await _userManager.FindByIdAsync(userId);
+    //    if (user == null)
+    //    {
+    //        return NotFound("User not found.");
+    //    }
 
-        // Check if the address exists and belongs to the user, including the location
-        var existingAddress = await _context.Addresses
-            .Include(a => a.Location)
-            .Where(a => a.Id == addressId && a.UserId == userId)
-            .FirstOrDefaultAsync();
+    //    // Check if the address exists and belongs to the user
+    //    var existingAddress = await _context.Addresses
+    //        .Where(a => a.Id == addressId && a.UserId == userId)
+    //        .FirstOrDefaultAsync();
 
-        if (existingAddress == null)
-        {
-            return NotFound("Address not found.");
-        }
+    //    if (existingAddress == null)
+    //    {
+    //        return NotFound("Address not found.");
+    //    }
 
-        // Update the address properties
-        existingAddress.StreetName = updatedAddress.StreetName;
-        existingAddress.PostalCode = updatedAddress.PostalCode;
+    //    // Update the address properties
+    //    existingAddress.StreetName = updatedAddress.StreetName;
+    //    existingAddress.PostalCode = updatedAddress.PostalCode;
+    //    existingAddress.City = updatedAddress.City;
+    //    existingAddress.Country = updatedAddress.Country;
 
-        // Update the location properties
-        existingAddress.Location.City = updatedAddress.Location.City;
-        existingAddress.Location.Country = updatedAddress.Location.Country;
+    //    // Save the changes to the database
+    //    await _context.SaveChangesAsync();
 
-        // Save the changes to the database
-        await _context.SaveChangesAsync();
-
-        return Ok(new { Message = "Address updated successfully." });
-    }
-
-    //Method that displays users location 
-    [Authorize]
-[HttpGet("{userId}/Locations")]
-public async Task<IActionResult> GetUserLocationStrings([FromRoute] string userId)
-{
-    var user = await _userManager.FindByIdAsync(userId);
-    if (user == null)
-    {
-        return NotFound("User not found.");
-    }
-
-    // Retrieve location strings (City and Country) associated with the user's locations
-    var locationStrings = await _context.Addresses
-        .Where(a => a.UserId == userId)
-        .Select(a => new { a.Location.City, a.Location.Country }) // Select City and Country
-        .Distinct() // Retrieve distinct location strings
-        .ToListAsync();
-
-    return Ok(locationStrings);
-}
+    //    return Ok(new { Message = "Address updated successfully." });
+    //}
 }

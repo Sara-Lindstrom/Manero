@@ -1,22 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace WebApi.Models.Address
+namespace WebApi.Models
 {
-    public class Location
-    {
-        [Key]
-        public int Id { get; set; }
-
-        [Required]
-        [Column(TypeName = "nvarchar(50)")]
-        public string City { get; set; } = string.Empty;
-
-        [Required]
-        [Column(TypeName = "nvarchar(50)")]
-        public string Country { get; set; } = string.Empty;
-    }
-
     public class Address
     {
         [Key]
@@ -32,14 +18,18 @@ namespace WebApi.Models.Address
 
         [Required]
         [Column(TypeName = "nvarchar(50)")]
-        public string Title { get; set; }
+        public string City { get; set; } = string.Empty;
 
-        [ForeignKey("UserId")]
+        [Required]
+        [Column(TypeName = "nvarchar(50)")]
+        public string Country { get; set; } = string.Empty;
+
+        [Required]
+        [Column(TypeName = "nvarchar(50)")]
+        public string Title { get; set; } = string.Empty;
+
+        [ForeignKey("UserModel")]
         public string UserId { get; set; }
         public UserModel User { get; set; }
-
-        [ForeignKey("LocationId")]
-        public int LocationId { get; set; }
-        public Location Location { get; set; }
     }
 }
