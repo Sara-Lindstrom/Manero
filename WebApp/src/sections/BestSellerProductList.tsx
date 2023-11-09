@@ -38,7 +38,10 @@ const BestSellerProductList: React.FC<ProductListProps> = ({ products }) => {
                                 {product.salesPrice !== null && (
                                     <div className='best-seller-product-sale-label'>SALE</div>
                                 )}
-                                <img className='product-card-info-below-img' src={product.images[0].imagePath} alt={product.name}/>
+                                {product.images.length >= 1 && (
+                                    product.images[0].imagePath !== undefined && (
+                                    <img className='product-card-info-below-img' src={product.images[0].imagePath} alt={product.name} />    
+                                ))}
                                 <div className='best-seller-product-text'>
                                     <h2 className='best-seller-product-card-name'>{product.name}</h2>
                                     <div className='best-seller-product-card-price-container'>
