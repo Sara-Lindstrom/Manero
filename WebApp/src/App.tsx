@@ -17,10 +17,9 @@ import EditProfileView from './views/EditProfileView';
 import VerifyPhoneNumberView from './views/VerifyPhoneNumberView';
 import VerificationView from './views/VerificationView';
 import MyAddresses from './views/MyAddresses';
+import ConfirmedPhoneVerificationView from './views/ConfirmedPhoneVerificationView';
 
 function App() {
-
-  
   
   return (
     <BrowserRouter>
@@ -42,6 +41,7 @@ function App() {
             <Route path='/category' element={<CategoryView />} />
             <Route path='/verifyPhone' element={<VerifyPhoneNumberView />} />
             <Route path='/activate' element={<VerificationView />} />
+            <Route path='/accountconfirmed' element={<ConfirmedPhoneVerificationView/> } />
         </Routes>
     </BrowserRouter>
 
