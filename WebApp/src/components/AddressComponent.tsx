@@ -81,8 +81,6 @@ const AddressComponent: React.FC<AddressComponentProps> = ({ addressId, token, u
             </div>
             <Link to="/" className='edit-address'><i className="fa-solid fa-pen"></i></Link>
             </div>
-            <div className='address-line'></div>
-            <i className="fa-solid fa-plus"></i>
         </div>
     );
 };

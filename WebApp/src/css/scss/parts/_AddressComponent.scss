@@ -2,17 +2,18 @@
 
     .container {
         margin-top: 20px;
-        position: relative;
-        display: flex;
+        display: grid;
+        grid-template-columns: 5px 270px 5px;
         align-items: center;
-        justify-content: center;
+        justify-content: space-between;
+        border-bottom: 0.5px solid rgb(222, 222, 222);
 
         .address-icon {
             font-size: 12px;
-            margin: 20px;
         }
 
         .address-info {
+            margin-left: 20px;
 
             .address-title {
                 font-weight: $font-weight-semibold;
@@ -21,6 +22,10 @@
             }
             .address-small-info {
                 display: flex;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 80%;
 
                 .small-info {
                     padding-right: 5px;
@@ -31,14 +36,6 @@
         }
         .edit-address {
             font-size: 12px;
-            margin: 20px;
         }
-    }
-    .address-line {
-        position: absolute;
-        left: 400px;
-        right: 400px;
-        padding: 0.5px;
-        background-color: rgb(222, 222, 222);
     }
 }
