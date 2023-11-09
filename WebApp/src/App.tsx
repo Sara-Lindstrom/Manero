@@ -16,15 +16,10 @@ import LeaveAReviewView from './views/LeaveAReviewView';
 import EditProfileView from './views/EditProfileView';
 import VerifyPhoneNumberView from './views/VerifyPhoneNumberView';
 import VerificationView from './views/VerificationView';
-<<<<<<< Updated upstream
 import MyAddresses from './views/MyAddresses';
-=======
 import ConfirmedPhoneVerificationView from './views/ConfirmedPhoneVerificationView';
->>>>>>> Stashed changes
 
 function App() {
-
-  
   
   return (
     <BrowserRouter>
