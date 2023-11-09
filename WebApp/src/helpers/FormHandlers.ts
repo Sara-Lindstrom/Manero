@@ -90,8 +90,8 @@ export const handleSigninSubmit = async (
             // Store the token in localStorage
             localStorage.setItem('token', response.data.token);
 
-            // Navigate to the profile view
-            navigate('/viewProfile');
+            // Navigate to the verify phone view
+            navigate('/verifyPhone');
 
             if (onSuccess) {
                 onSuccess();
@@ -222,7 +222,7 @@ export const handleResetPassword = async (
     }
 };
 
-// Methods for check if email exists (used for forgot password, but can be reused in other sections)
+// Method for check if email exists (used for forgot password, but can be reused in other sections)
 export const checkEmailExists = async (
     email: string
 ): Promise<boolean> => {
@@ -240,18 +240,18 @@ export const checkEmailExists = async (
     }
 };
 
-// Methods for check if phonenumber exists in DB
-export const checkPhoneNumberExists = async (phoneNumber: string): Promise<boolean> => {
-    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/User/CheckPhoneNumber';
-    try {
-        const response = await axios.post(API_URL, { phoneNumber }, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        return response.data.exists;
-    } catch (error) {
+// Method for check if phonenumber exists in DB. We are not using this since we changed the flow.
+//export const checkPhoneNumberExists = async (phoneNumber: string): Promise<boolean> => {
+//    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/User/CheckPhoneNumber';
+//    try {
+//        const response = await axios.post(API_URL, { phoneNumber }, {
+//            headers: {
+//                'Content-Type': 'application/json'
+//            }
+//        });
+//        return response.data.exists;
+//    } catch (error) {
 
-        return false;
-    }
-};
+//        return false;
+//    }
+//};

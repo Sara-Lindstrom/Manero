@@ -38,3 +38,11 @@
 .input-error + .form-btn{
     margin-top: 40px;
 }
+
+.verification-error {
+    text-align: center;
+    font-size: 0.8rem;
+    color: $color-red;
+    margin: 1rem 0 1rem 0;
+    padding: 0;
+}

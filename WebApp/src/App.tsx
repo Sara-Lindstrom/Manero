@@ -16,7 +16,11 @@ import LeaveAReviewView from './views/LeaveAReviewView';
 import EditProfileView from './views/EditProfileView';
 import VerifyPhoneNumberView from './views/VerifyPhoneNumberView';
 import VerificationView from './views/VerificationView';
+<<<<<<< Updated upstream
 import MyAddresses from './views/MyAddresses';
+=======
+import ConfirmedPhoneVerificationView from './views/ConfirmedPhoneVerificationView';
+>>>>>>> Stashed changes
 
 function App() {
 
@@ -42,6 +46,7 @@ function App() {
             <Route path='/category' element={<CategoryView />} />
             <Route path='/verifyPhone' element={<VerifyPhoneNumberView />} />
             <Route path='/activate' element={<VerificationView />} />
+            <Route path='/accountconfirmed' element={<ConfirmedPhoneVerificationView/> } />
         </Routes>
     </BrowserRouter>
 
