@@ -122,7 +122,6 @@ export const fetchProfileData = async (token: string): Promise<ProfileData | nul
     } catch (error) {
         console.error("An error occurred while fetching profile data:", error);
     }
-
     return null;
 };
 

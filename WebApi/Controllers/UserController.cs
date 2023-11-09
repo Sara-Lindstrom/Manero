@@ -75,6 +75,28 @@ public class UserController : ControllerBase
         return BadRequest(new { Errors = result.Errors.Select(x => x.Description) });
     }
 
+    //Method to fetch a user
+    [Authorize]
+    [HttpGet("GetUserData")]
+    public async Task<IActionResult> GetUserData()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        // Fetch user data from the database
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user == null)
+        {
+            return NotFound("User not found.");
+        }
+
+        var userData = new
+        {
+            UserId = user.Id
+        };
+
+        return Ok(userData);
+    }
+
     // Method for signing in
     [HttpPost("SignIn")]
     public async Task<IActionResult> SignIn([FromBody] UserCredentials credentials)

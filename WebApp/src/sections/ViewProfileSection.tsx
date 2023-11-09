@@ -76,7 +76,7 @@ const ViewProfileSection = () => {
         field3?.classList.remove("opened-popup");
         field4?.classList.remove("opened-popup");
         field5?.classList.remove("opened-popup");
-      }
+    }
 
   return (
     <>
@@ -111,7 +111,7 @@ const ViewProfileSection = () => {
                 <i id='right-arrow' className="fa-solid fa-chevron-right"></i>
               </div>
             </a>
-            <a className='field' href='#' id='my-address'>
+            <a className='field' href='/myAddresses' id='my-address'>
               <div className='field-details'>
                 <div className='icon-name'>
                   <i className="fa-regular fa-location-dot"></i>
