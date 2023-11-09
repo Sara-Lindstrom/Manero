@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
 import { Link, useNavigate } from 'react-router-dom';
-import AddressComponent, { AddressData } from '../components/AddressComponent';
-import Axios from 'axios';
+import AddressComponent from '../components/AddressComponent';
+import { fetchUserAddresses, fetchUserId, AddressData } from '../helpers/AddressHandler';
 
 const MyAddresses = () => {
     const [userId, setUserId] = useState<string>('');
@@ -13,48 +13,6 @@ const MyAddresses = () => {
     const navigate = useNavigate();
     const handleNavigateBack = () => {
         window.history.back();
-    };
-
-    const fetchUserAddresses = async (token: string): Promise<AddressData[] | null> => {
-        const apiUrl = `https://localhost:7055/api/Addresses/UserAddresses`;
-
-        try {
-            const response = await Axios.get(apiUrl, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-
-            if (response.status === 200) {
-                return response.data;
-            } 
-        } catch (error) {
-            console.error('Error fetching user addresses:', error);
-            setError('Error fetching user addresses. Please try again later.');
-        }
-
-        return null;
-    };
-
-    const fetchUserId = async (token: string): Promise<string | null> => {
-        const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/User/GetUserData';
-
-        try {
-            const response = await Axios.get(API_URL, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                }
-            });
-
-            if (response.status === 200) {
-                return response.data;
-            }
-        } catch (error) {
-            console.error("An error occurred while fetching user ID:", error);
-            setError('Error fetching user data from fetchUserId. Please try again later.');
-        }
-
-        return null;
     };
 
     useEffect(() => {
@@ -72,7 +30,7 @@ const MyAddresses = () => {
                                 .then((userAddressData) => {
                                     if (userAddressData) {
                                         setAddresses(userAddressData);
-                                    } 
+                                    }
                                 })
                                 .catch((error) => {
                                     console.error('Error fetching user addresses:', error);
