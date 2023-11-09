@@ -1,6 +1,6 @@
-.editprofile{
+.editprofile {
 
-    .heading{
+    .heading {
         .vertical-line {
             width: 50%;
             border-right: 2px solid $color-dark;
@@ -10,7 +10,6 @@
         }
 
         .profilePictureSection {
-
             position: relative;
             width: 200px;
             height: 200px;
@@ -24,8 +23,7 @@
                 border-radius: 50%;
             }
 
-            .icon{
-
+            .icon {
                 background-color: $color-blue;
                 border-radius: 50%;
                 width: 40px;
@@ -54,7 +52,6 @@
                     }
                 }
             }
-            
         }
     }
 }

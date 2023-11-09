@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent } from 'react';
-import { AxiosResponse, AxiosError } from 'axios';
+import { AxiosResponse } from 'axios';
 import axios from 'axios';
 
 // To be able to navigate after success
