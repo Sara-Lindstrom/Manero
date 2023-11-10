@@ -51,8 +51,6 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
                 }
             );
 
-            console.log(response);
-
             // Assuming your API returns the newly added address
             const newAddress = response.data;
 
