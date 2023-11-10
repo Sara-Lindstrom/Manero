@@ -51,7 +51,6 @@ export const fetchAllCategories = async (): Promise<ICategories[]> => {
         return [];
     }
 }
- 
 // // Function to add a product to the wishlist
 // export const addToWishlist = async (productId: string): Promise<boolean> => {
 //     const API_URL = `${process.env.REACT_APP_API_URL || 'https://localhost:7055'}/api/Wishlist/${productId}`;

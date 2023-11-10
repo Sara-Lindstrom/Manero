@@ -1,5 +1,6 @@
 import React from 'react'
 
+// Denna sida ska göras om 
 
 interface Category {
     id: string;

@@ -1,28 +1,34 @@
 import React, { useState, useEffect } from 'react';
+import { fetchAllCategories } from '../helpers/ProductHandler';
+import { ICategories } from '../Interfaces/ICategories';
 
 function CategoryNav() {
   const [activeLink, setActiveLink] = useState('men');
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<ICategories[]>([]);
 
-  const handleLinkClick = (link) => {
+  const handleLinkClick = (link: string) => {
     setActiveLink(link);
   };
 
   useEffect(() => {
-    // Fetch categories from the API
-    fetch('/api/categories') 
-      .then((response) => response.json())
+    fetchAllCategories()
       .then((data) => {
-        setCategories(data);
+        // Define a custom sorting order
+        const customSortOrder = ['MEN', 'WOMEN', 'KIDS', 'ACCESSORIES'];
+
+        // Sort the categories based on the custom order
+        const sortedCategories = data.slice().sort((a, b) => {
+          const aIndex = customSortOrder.indexOf(a.categoryName);
+          const bIndex = customSortOrder.indexOf(b.categoryName);
+          return aIndex - bIndex;
+        });
+
+        setCategories(sortedCategories);
       })
       .catch((error) => {
         console.error('Error fetching categories:', error);
       });
   }, []);
-
-  const getCategoryContent = (category) => {
-    // Define the content for each category based on the selected category
-  };
 
   return (
     <section className="categorynav">
@@ -30,13 +36,11 @@ function CategoryNav() {
         <div className="scrollmenu">
           {categories.map((category) => (
             <a
-              key={category.id} href={`#${category.id}`} className={activeLink === category.id ? 'active' : ''} onClick={() => handleLinkClick(category.id)}> {category.title}
+              key={category.categoryID} href={`#${category.categoryID}`} className={activeLink === category.categoryID ? 'active' : ''} onClick={() => handleLinkClick(category.categoryID)}> {category.categoryName}
             </a>
           ))}
         </div>
       </div>
-
-      {getCategoryContent(activeLink)}
     </section>
   );
 }
