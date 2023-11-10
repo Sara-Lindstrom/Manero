@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; // Gl�m inte att importera useState
+import React, { useState } from 'react';
 import { ValidateEmail } from '../helpers/FormValidation';
 import { useNavigate } from 'react-router-dom';
 import { checkEmailExists } from '../helpers/FormHandlers';
@@ -32,21 +32,21 @@ const ForgotPasswordSection = () => {
     return (
         <section className="forgot-password-section">
             <div className='container'>
-            <p className="instruction-message">
-                Please enter your email address. You will receive a link to create a new password via email.
-            </p>
-            <div className='input-container'>
-                <p className='input-label'>EMAIL</p>
-                <input
-                    className='input'
-                    id='email-input'
-                    aria-label='EMAIL'
-                    value={email}
-                    onChange={handleEmailChange}
-                />
-            </div>
-            {emailError && <p className="input-error">{emailError}</p>}
-            <button className='btn dark-btn form-btn' onClick={handleSendClick} style={{ marginTop: '20px' }}>SEND</button>
+                <p className="instruction-message">
+                    Please enter your email address. You will receive a link to create a new password via email.
+                </p>
+                <div className='input-container'>
+                    <p className='input-label'>EMAIL</p>
+                    <input
+                        className='input'
+                        id='email-input'
+                        aria-label='EMAIL'
+                        value={email}
+                        onChange={handleEmailChange}
+                    />
+                </div>
+                {emailError && <p className="input-error">{emailError}</p>}
+                <button className='btn dark-btn form-btn' onClick={handleSendClick} style={{ marginTop: '20px' }}>SEND</button>
             </div>
         </section>
     );
