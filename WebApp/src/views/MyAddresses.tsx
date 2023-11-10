@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
 import { Link, useNavigate } from 'react-router-dom';
 import AddressComponent from '../components/AddressComponent';
@@ -24,8 +24,8 @@ const MyAddresses = () => {
                     if (userId) {
                         setUserId(userId);
 
+                        // Both token and userId are available, so we can fetch user addresses
                         if (token) {
-                            // Both token and userId are available, so we can fetch user addresses
                             fetchUserAddresses(token)
                                 .then((userAddressData) => {
                                     if (userAddressData) {

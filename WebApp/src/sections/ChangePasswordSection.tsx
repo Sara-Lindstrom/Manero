@@ -47,10 +47,10 @@ const ChangePasswordSection = () => {
     return (
         <div className="container change-password-page">
             <p className="instruction-message">Enter new password and confirm.</p>
-            {error && <p className='error-message'>{error}</p>}           
+            {error && <p className='error-message'>{error}</p>}
             <div className='input-container'>
                 <p className='input-label'>NEW PASSWORD</p>
-                <input 
+                <input
                     id="newPassword"
                     name="newPassword"
                     type={newPasswordVisible ? 'text' : 'password'}
@@ -69,7 +69,7 @@ const ChangePasswordSection = () => {
 
             <div className='input-container'>
                 <p className='input-label'>CONFIRM PASSWORD</p>
-                <input 
+                <input
                     id="confirmPassword"
                     name="confirmPassword"
                     type={confirmPasswordVisible ? 'text' : 'password'}
@@ -86,7 +86,7 @@ const ChangePasswordSection = () => {
             </div>
             <p className='input-error'>{confirmPasswordError}</p>
 
-            <button className='btn dark-btn form-btn' onClick={handleResetPasswordComponent}  style={{ marginTop: '20px' }}>CHANGE PASSWORD</button>
+            <button className='btn dark-btn form-btn' onClick={handleResetPasswordComponent} style={{ marginTop: '20px' }}>CHANGE PASSWORD</button>
         </div>
     );
 }

@@ -2,7 +2,7 @@ import BreadcrumbSection from '../sections/BreadcrumbSection';
 import { NavLink, useNavigate } from 'react-router-dom';
 import VerificationSection from '../sections/VerificationSection';
 
-const VerificationView = () => {
+const VerificationView: React.FC = () => {
 
     const navigate = useNavigate();
     const handleNavigateBack = () => {

@@ -1,9 +1,7 @@
-
 type ValidationResult = {
     error: string;
     isValid: boolean;
 }
-
 
 // validate order number 
 export const ValidateOrederNumber = (number:string): ValidationResult => {
