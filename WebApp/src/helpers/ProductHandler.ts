@@ -74,7 +74,7 @@ export const fetchBestSellingProducts = async (): Promise<IProduct[]> => {
         return [];
     }
 }
-// // Function to add a product to the wis-hlist
+// // Function to add a product to the wish-list
 // export const addToWishlist = async (productId: string): Promise<boolean> => {
 //     const API_URL = `${process.env.REACT_APP_API_URL || 'https://localhost:7055'}/api/Wishlist/${productId}`;
 //     try {

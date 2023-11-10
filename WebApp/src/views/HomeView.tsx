@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import HomePageCategoryNav from '../sections/HomePageCategoryNav';
 import HomepageShoecaseOffer from '../sections/HomepageShoecaseOffer';
-import FeatuerdProductList from '../sections/FeatuerdProductList';
+import FeaturedProductList from '../sections/FeaturedProductList';
 import BestSellerProductList from '../sections/BestSellerProductList';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
 import { IProduct } from '../Interfaces/IProduct';
