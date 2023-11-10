@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import BreadcrumbSection from '../sections/BreadcrumbSection'
 import ViewProfileSection from '../sections/ViewProfileSection'
 import { useNavigate } from 'react-router-dom';
+import IconsNavigationSection from '../sections/IconsNavigationSection';
 
 const ViewProfile: React.FC = () => {
     const navigate = useNavigate();
@@ -23,6 +24,7 @@ const ViewProfile: React.FC = () => {
         <>
             <BreadcrumbSection currentPage='My Profile' showCurrentPage={true} showCartItem={true} showHamburgerButton={true} />
             {isAuthenticated && <ViewProfileSection />}
+            <IconsNavigationSection isAuthenticated={isAuthenticated} />
         </>
     )
 }

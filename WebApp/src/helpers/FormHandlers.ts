@@ -96,7 +96,7 @@ export const handleSigninSubmit = async (
             if (onSuccess) {
                 onSuccess();
             }
-        }
+        } 
     } catch (error) {
         console.error("An error occurred:", error);
         if (onFail) {

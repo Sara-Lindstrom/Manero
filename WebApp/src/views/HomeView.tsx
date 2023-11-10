@@ -9,9 +9,10 @@ import { IProduct } from '../Interfaces/IProduct';
 import { fetchBestSellingProducts, fetchNewestProducts } from '../helpers/ProductHandler';
 import IconsNavigationSection from '../sections/IconsNavigationSection';
 
-const HomeView = () => {
+const HomeView: React.FC = () => {
     const [newestProducts, setNewestProducts] = useState<IProduct[]>([]);
     const [bestSellerProducts, setBestSellerProducts] = useState<IProduct[]>([]);
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
     const fetchProducts = async () => {
         let newestProductsdb = await fetchNewestProducts();
@@ -24,6 +25,15 @@ const HomeView = () => {
     useEffect(() => {
         fetchProducts();
     }, []);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        setIsAuthenticated(!!token);
+    }, []);
+
+    useEffect(() => {
+        console.log('Authentication status in HomeView:', isAuthenticated);
+    }, [isAuthenticated]);
 
     return (
 
@@ -48,7 +58,7 @@ const HomeView = () => {
                 </section>
             </div>
             <HomepageShoecaseOffer />
-            <IconsNavigationSection />
+            <IconsNavigationSection isAuthenticated={isAuthenticated} />
         </>
 
     )
