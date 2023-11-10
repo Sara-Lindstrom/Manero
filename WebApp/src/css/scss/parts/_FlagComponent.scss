@@ -1,5 +1,5 @@
-
 // Flag component styling used to display country of phone number at /validatephone
+
 .flag-phone-number-input {
     display: flex;
     align-items: center;
@@ -18,13 +18,13 @@
     .divider {
         width: 1px;
         height: 24px;
-        background-color: #ccc; 
-        margin: 0 10px; 
+        background-color: #ccc;
+        margin: 0 10px;
     }
 
     input[type="tel"] {
         border: none;
         outline: none;
-        flex-grow: 1; 
+        flex-grow: 1;
     }
 }

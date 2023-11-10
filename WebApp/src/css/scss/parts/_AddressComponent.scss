@@ -1,0 +1,43 @@
+.address-component {
+
+    .container {
+        margin-top: 20px;
+        display: grid;
+        grid-template-columns: 5px 270px 5px;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 0.5px solid rgb(222, 222, 222);
+
+        .address-icon {
+            font-size: 12px;
+        }
+
+        .address-info {
+            margin-left: 20px;
+
+            .address-title {
+                font-weight: $font-weight-semibold;
+                font-size: 16px;
+                margin: 0;
+            }
+
+            .address-small-info {
+                display: flex;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 80%;
+
+                .small-info {
+                    padding-right: 5px;
+                    font-size: 14px;
+                    font-weight: $font-weight-regular;
+                }
+            }
+        }
+
+        .edit-address {
+            font-size: 12px;
+        }
+    }
+}

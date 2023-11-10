@@ -1,17 +1,11 @@
-.sign-in-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .signin-sub-titel {
     text-align: center;
 }
 
 .actions-container {
-    width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
     margin-top: 10px;
 
     .remember-me {
@@ -23,7 +17,11 @@
             font-size: 0.8em;
         }
     }
-    
+
+    .forgot-password {
+        font-size: 0.8em;
+    }
+
     a {
         font-size: 0.5em;
         text-decoration: none;

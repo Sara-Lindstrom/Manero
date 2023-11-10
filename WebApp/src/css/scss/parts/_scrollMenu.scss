@@ -4,7 +4,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-    
+
         .scrollmenu {
             display: flex;
             background-color: #fff;
@@ -29,6 +29,7 @@
                     transition: 0.3s;
                 }
             }
+
             .active {
                 background-color: black;
                 color: #fff;
@@ -38,12 +39,3 @@
         }
     }
 }
-
-
-
-
-
-
-
-
-  

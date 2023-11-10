@@ -1,102 +1,97 @@
 .breadcrumb {
-    .container {
-      margin-top: 30px;
-      padding: 10px;
-    
-      .breadcrumb-list {
-        margin: 0;
-        padding: 0;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
 
-        .first-column {
+  .container {
+    margin-top: 30px;
+    padding: 10px;
 
-          .hamburgerButton {
-            text-align: center;
-            font-size: 20px;
-            background-color: white;
+    .breadcrumb-list {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .first-column {
+
+        .hamburgerButton {
+          text-align: center;
+          font-size: 20px;
+          background-color: white;
+          border: none;
+        }
+
+        .backButton {
+          margin-right: auto;
+          list-style: none;
+
+          button {
             border: none;
-          }
-
-          .backButton {
-            margin-right: auto;   
-            list-style: none; 
-  
-            button {
-              border: none;
-              background-color: white;
-              font-size: 20px;
-            }
-          }
-      
-        }
-  
-        .second-column {
-          display: flex;
-          justify-content: center;
-          align-items: center; 
-
-          .currentPage {
-            flex: 1;
-            text-align: center;
-            list-style: none;
-            font-size: 18px;
-          }
-
-          .searchField {
-            list-style: none;
-
-            .search {
-              width: 230px;
-              align-items: center;
-
-              i {
-
-              }
-              
-              input {
-                border: none;
-                margin-left: 8px;
-                padding-left: 5px;
-
-                &:focus {
-                  outline: 1px solid lightgray;
-                  border-radius: 8px;
-                }
-              }                           
-            }
-          }
-
-          .logotype {
-            align-content: center;
-          }
-      
-        }
-    
-        .third-column {
-          margin-right: 5px;
-
-          .cart {
-            padding: 1px 6px;
-            list-style: none;
+            background-color: white;
             font-size: 20px;
-            position: relative;
+          }
+        }
 
-            i {
-              color: black;
-            }
-                   
-            span {
-              position: absolute;
-              top: 25px;
-              background-color: red;
-              font-size: 8px;
-            }
+      }
 
+      .second-column {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .currentPage {
+          flex: 1;
+          text-align: center;
+          list-style: none;
+          font-size: 18px;
+        }
+
+        .searchField {
+          list-style: none;
+
+          .search {
+            width: 230px;
+            align-items: center;
+
+            input {
+              border: none;
+              margin-left: 8px;
+              padding-left: 5px;
+
+              &:focus {
+                outline: 1px solid lightgray;
+                border-radius: 8px;
+              }
+            }
+          }
+        }
+
+        .logotype {
+          align-content: center;
+        }
+
+      }
+
+      .third-column {
+        margin-right: 5px;
+
+        .cart {
+          padding: 1px 6px;
+          list-style: none;
+          font-size: 20px;
+          position: relative;
+
+          i {
+            color: black;
+          }
+
+          span {
+            position: absolute;
+            top: 25px;
+            background-color: red;
+            font-size: 8px;
           }
         }
       }
     }
   }
-  
+}

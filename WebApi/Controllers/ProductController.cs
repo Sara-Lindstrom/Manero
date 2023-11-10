@@ -119,6 +119,13 @@ public class ProductController : ControllerBase
 
             foreach (var item in dbResult)
             {
+                if (item.ProductImages.Any())
+                {
+                    foreach (ProductImageEntity productImage in item.ProductImages)
+                    {
+                        var images = await _imageRepo.GetManyAsync(i => i.ImageID == productImage.ImageID);
+                    }
+                }
                 result.Add(item);
             }
 
@@ -152,6 +159,13 @@ public class ProductController : ControllerBase
 
             foreach (var item in dbResult)
             {
+                if (item.ProductImages.Any())
+                {
+                    foreach (ProductImageEntity productImage in item.ProductImages)
+                    {
+                        var images = await _imageRepo.GetManyAsync(i => i.ImageID == productImage.ImageID);
+                    }
+                }
                 result.Add(item);
             }
 

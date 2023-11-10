@@ -5,14 +5,17 @@ import { NavLink, useNavigate } from 'react-router-dom'
 const SignUpView = () => {
 
   const navigate = useNavigate();
+  const handleNavigateBack = () => {
+    window.history.back(); 
+  };
 
   return (
     <>
-      <BreadcrumbSection currentPage="Sign up"/>
-
-      <div className='container Sign-up-title-container'>
+    <BreadcrumbSection currentPage="Sign up" showBackButton={true} onNavigateBack={handleNavigateBack} showCurrentPage={true} showCartItem={false} showHamburgerButton={false} />
+      
+      <div className='container title-container'>
         <i className="fa-light fa-pipe"></i>
-        <h1 className='sign-up-title'>Sign Up</h1> 
+        <h1 className='sub-title'>Sign Up</h1> 
       </div> 
 
       <SignUpFormSection navigate={navigate}/>

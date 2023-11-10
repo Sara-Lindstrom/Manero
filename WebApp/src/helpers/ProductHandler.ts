@@ -47,11 +47,35 @@ export const fetchAllCategories = async (): Promise<ICategories[]> => {
         const response: AxiosResponse<ICategories[]> = await axios.get(API_URL);
         return response.data;
     } catch (error) {
+        console.error("An error occurred while fetching categories:", error);
+        return [];
+    }
+}
+
+export const fetchNewestProducts = async (): Promise<IProduct[]> => {
+    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Product/GetNewest';
+
+   try {
+       const response: AxiosResponse<IProduct[]> = await axios.get(API_URL);
+       return response.data;
+   } catch (error) {
+       console.error("An error occurred while fetching newest products:", error);
+       return [];
+   }
+} 
+
+export const fetchBestSellingProducts = async (): Promise<IProduct[]> => {
+    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Product/GetBestSelling';
+
+    try {
+        const response: AxiosResponse<IProduct[]> = await axios.get(API_URL);
+        return response.data;
+    } catch (error) {
         console.error("An error occurred while fetching best sellers:", error);
         return [];
     }
 }
-// // Function to add a product to the wishlist
+// // Function to add a product to the wis-hlist
 // export const addToWishlist = async (productId: string): Promise<boolean> => {
 //     const API_URL = `${process.env.REACT_APP_API_URL || 'https://localhost:7055'}/api/Wishlist/${productId}`;
 //     try {

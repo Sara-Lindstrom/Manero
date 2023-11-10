@@ -1,4 +1,3 @@
-
 .categorysection {
 
     .container {
@@ -8,7 +7,7 @@
 
 
         .categorygrid {
-            display: grid; 
+            display: grid;
             grid-template-rows: 1fr 1fr 1fr;
             grid-template-columns: 1fr 1fr 1fr 1fr;
             gap: 2px;
@@ -20,25 +19,25 @@
                 font-weight: 700;
                 font-size: 1.2rem;
                 color: #fff;
-                
+
                 &:hover {
-                text-decoration: none;
+                    text-decoration: none;
                 }
 
                 p {
-                    position: absolute;    
-                    bottom: 0;  
-                    left: 0;     
-                    padding: 25px;   
-                    margin: 0;   
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    padding: 25px;
+                    margin: 0;
                 }
             }
-        
+
             .category-item {
-         
-                background-color: #8D94A6; 
+
+                background-color: #8D94A6;
                 grid-row-start: 1;
-                grid-column-start: 1; 
+                grid-column-start: 1;
                 grid-row-end: 2;
                 grid-column-end: 3;
 
@@ -47,13 +46,8 @@
                     color: #707070;
                     transition: 0.3s;
                     border: 1px solid #8D94A6;
-                } 
+                }
             }
         }
     }
 }
-
-
-
-   
- 
