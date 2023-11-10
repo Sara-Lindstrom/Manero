@@ -1,5 +1,4 @@
 .address-component {
-
     .container {
         margin-top: 20px;
         display: grid;
@@ -23,21 +22,33 @@
 
             .address-small-info {
                 display: flex;
-                white-space: nowrap;
+                max-width: 88%;
                 overflow: hidden;
-                text-overflow: ellipsis;
-                max-width: 80%;
-
+                white-space: nowrap;
+                
                 .small-info {
                     padding-right: 5px;
                     font-size: 14px;
                     font-weight: $font-weight-regular;
+                }
+
+                @include sm {
+                    max-width: 100%;
+                    white-space: normal;
                 }
             }
         }
 
         .edit-address {
             font-size: 12px;
+        }
+
+        @include sm {
+            grid-template-columns: 5px 370px 5px;
+        }
+
+        @include md {
+            grid-template-columns: 5px 570px 5px;
         }
     }
 }

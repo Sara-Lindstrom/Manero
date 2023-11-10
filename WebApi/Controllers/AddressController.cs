@@ -37,7 +37,7 @@ namespace WebApi.Controllers
             var address = new Address
             {
                 Title = addressDTO.Title,
-                StreetName = addressDTO.Streetname,
+                StreetName = addressDTO.StreetName,
                 City = addressDTO.City,
                 Country = addressDTO.Country,
                 PostalCode = addressDTO.PostalCode,
@@ -63,7 +63,7 @@ namespace WebApi.Controllers
                 {
                     Id = address.Id,
                     Title = address.Title,
-                    Streetname = address.StreetName,
+                    StreetName = address.StreetName,
                     City = address.City,
                     Country = address.Country,
                     PostalCode = address.PostalCode
@@ -86,7 +86,7 @@ namespace WebApi.Controllers
                  {
                      Id = address.Id,
                      Title = address.Title,
-                     Streetname = address.StreetName,
+                     StreetName = address.StreetName,
                      City = address.City,
                      Country = address.Country,
                      PostalCode = address.PostalCode
@@ -122,9 +122,9 @@ namespace WebApi.Controllers
             {
                 existingAddress.Title = updatedAddressDTO.Title;
             }
-            if (!string.IsNullOrEmpty(updatedAddressDTO.Streetname))
+            if (!string.IsNullOrEmpty(updatedAddressDTO.StreetName))
             {
-                existingAddress.StreetName = updatedAddressDTO.Streetname;
+                existingAddress.StreetName = updatedAddressDTO.StreetName;
             }
             if (!string.IsNullOrEmpty(updatedAddressDTO.PostalCode))
             {
