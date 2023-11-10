@@ -22,14 +22,7 @@ import ViewProfile from './views/ViewProfileView';
 import AddNewAddressView from './views/AddNewAddressView';
 
 function App() {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        setIsAuthenticated(!!token);
-    }, []);
-
-  
   return (
     <BrowserRouter>
     <Routes>
@@ -42,7 +35,7 @@ function App() {
             <Route path='/changePassword' element={<ChangePasswordView />} />
             <Route path='/editProfile' element={<EditProfileView /> }/>
             <Route path='/forgotPassword' element={<ForgotPasswordView />} />
-            <Route path='/home' element={<HomeView isAuthenticated={isAuthenticated} />} />
+            <Route path='/home' element={<HomeView />} />
             <Route path='/leaveAReview' element={<LeaveAReviewView />} />
             <Route path='/myAddresses' element={<MyAddresses />} />
             <Route path='/paymentMethodView' element={<PaymentMethodView />} />

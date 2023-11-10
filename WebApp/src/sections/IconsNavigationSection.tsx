@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 interface IconsNavigationSectionProps {
@@ -5,9 +6,10 @@ interface IconsNavigationSectionProps {
 }
 
 const IconsNavigationSection: React.FC<IconsNavigationSectionProps> = ({ isAuthenticated }) => {
-    console.log('Is Authenticated:', isAuthenticated);
-
     const navigate = useNavigate();
+
+    useEffect(() => {
+    }, [isAuthenticated]);
 
     const handleProfileClick = () => {
         // Check if the user is authenticated
