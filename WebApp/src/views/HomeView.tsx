@@ -9,7 +9,11 @@ import { IProduct } from '../Interfaces/IProduct';
 import { fetchBestSellingProducts, fetchNewestProducts } from '../helpers/ProductHandler';
 import IconsNavigationSection from '../sections/IconsNavigationSection';
 
-const HomeView = () => {
+interface IconsNavigationSectionProps {
+    isAuthenticated: boolean;
+}
+
+const HomeView: React.FC<IconsNavigationSectionProps> = ({ isAuthenticated }) => {
     const [newestProducts, setNewestProducts] = useState<IProduct[]>([]);
     const [bestSellerProducts, setBestSellerProducts] = useState<IProduct[]>([]);
 
@@ -48,7 +52,7 @@ const HomeView = () => {
                 </section>
             </div>
             <HomepageShoecaseOffer />
-            <IconsNavigationSection />
+            <IconsNavigationSection isAuthenticated={isAuthenticated} />
         </>
 
     )

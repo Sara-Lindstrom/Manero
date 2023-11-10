@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './css/Style.min.css';
 import AddCardView from './views/AddCardView';
@@ -21,6 +22,13 @@ import ViewProfile from './views/ViewProfileView';
 import AddNewAddressView from './views/AddNewAddressView';
 
 function App() {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        setIsAuthenticated(!!token);
+    }, []);
+
   
   return (
     <BrowserRouter>
@@ -34,7 +42,7 @@ function App() {
             <Route path='/changePassword' element={<ChangePasswordView />} />
             <Route path='/editProfile' element={<EditProfileView /> }/>
             <Route path='/forgotPassword' element={<ForgotPasswordView />} />
-            <Route path='/home' element={<HomeView />} />
+            <Route path='/home' element={<HomeView isAuthenticated={isAuthenticated} />} />
             <Route path='/leaveAReview' element={<LeaveAReviewView />} />
             <Route path='/myAddresses' element={<MyAddresses />} />
             <Route path='/paymentMethodView' element={<PaymentMethodView />} />
