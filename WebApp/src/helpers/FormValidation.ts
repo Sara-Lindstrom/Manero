@@ -110,10 +110,10 @@ export const ValidateOTP = (otpArray: string[]): ValidationResult => {
     // Check if all the fields are containing data
     if (otpArray.includes('')) {
         error = "Please fill in all the fields.";
-    // Check if each input is a single digit
+        // Check if each input is a single digit
     } else if (!otpArray.every(otpDigit => /^\d$/.test(otpDigit))) {
         error = "The verification code can only contain numbers.";
-    // Check if verification code is exactly 5 digits long
+        // Check if verification code is exactly 5 digits long
     } else if (otp.length !== 5) {
         error = "The verification code must be 5 digits long.";
     }

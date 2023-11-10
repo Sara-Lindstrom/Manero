@@ -8,12 +8,12 @@ const LeaveAReviewView: React.FC = () => {
         window.history.back();
     };
 
-  return (
-    <>
-        <BreadcrumbSection currentPage='Leave a review' showBackButton={true} onNavigateBack={handleNavigateBack} showCurrentPage={true} />
-        <LeaveAReviewSection />
-    </>
-  )
+    return (
+        <>
+            <BreadcrumbSection currentPage='Leave a review' showBackButton={true} onNavigateBack={handleNavigateBack} showCurrentPage={true} />
+            <LeaveAReviewSection />
+        </>
+    )
 }
 
-export default LeaveAReviewView
+export default LeaveAReviewView;

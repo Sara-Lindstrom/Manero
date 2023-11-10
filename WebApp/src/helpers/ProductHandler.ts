@@ -28,7 +28,6 @@ export const fetchBestSellers = async (categories : string, tags? : string | str
              params.append('tag', tags);
          }
      }
-
  
     try {
         const response: AxiosResponse<IProduct[]> = await axios.get(API_URL,  { params });
