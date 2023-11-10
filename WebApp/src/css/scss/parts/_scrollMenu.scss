@@ -4,7 +4,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-    
+
         .scrollmenu {
             display: flex;
             background-color: #fff;
@@ -19,7 +19,7 @@
                 margin-right: 5px;
                 text-decoration: none;
                 margin-bottom: 15px;
-            
+
                 &:hover {
                     background-color: black;
                     color: #fff;
@@ -27,6 +27,7 @@
                     transition: 0.3s;
                 }
             }
+
             .active {
                 background-color: black;
                 color: #fff;
@@ -36,12 +37,3 @@
         }
     }
 }
-
-
-
-
-
-
-
-
-  

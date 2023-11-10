@@ -1,5 +1,3 @@
-import React from 'react'
-
 const SearchField = () => {
   return (
     <div className='search'>
@@ -9,4 +7,4 @@ const SearchField = () => {
   )
 }
 
-export default SearchField
+export default SearchField;

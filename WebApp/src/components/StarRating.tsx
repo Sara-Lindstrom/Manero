@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 interface StarRatingProps {
   onRatingChange: (newRating: number) => void;
 }
@@ -23,4 +22,4 @@ const StarRating: React.FC<StarRatingProps> = ({ onRatingChange }) => {
   )
 }
 
-export default StarRating
+export default StarRating;

@@ -1,6 +1,5 @@
 import { IReview } from "./IReview";
 import { IImage } from "./IImage";
-
 export interface IProduct {
     id: string;
     name: string;

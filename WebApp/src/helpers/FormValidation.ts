@@ -86,19 +86,40 @@ export const ValidateConfirmPassword = (password: string, confirmPassword: strin
 // Validate phone number and set errors
 export const ValidatePhoneNumber = (text: string | null): ValidationResult => {
     let error = '';
-    const regExText = /^[0-9+ ]+$/;
+    const regExPattern = /^\+\d{2}\s\d{9}$/;
 
     if (text === null || text === '') {
-        // If the field is empty or null, it's considered valid since its optional to add PhoneNumber
-        return { isValid: true, error: '' };
-    } else if (text.length < 8) {
-        error = "This field must be at least 8 characters long.";
-    } else if (!regExText.test(text)) {
-        error = "This field can only contain numbers and spaces.";
+        error = "Please enter a phone number.";
+    } else if (!regExPattern.test(text)) {
+        error = "Phone number must be in the format +XX XXXXXXXXX.";
     }
 
     return {
         error,
         isValid: error === '',
     };
-}
+};
+
+// Validate OTP (verification code) and set errors
+export const ValidateOTP = (otpArray: string[]): ValidationResult => {
+    let error = '';
+
+    // Join the array to get the OTP as a string
+    const otp = otpArray.join('');
+
+    // Check if all the fields are containing data
+    if (otpArray.includes('')) {
+        error = "Please fill in all the fields.";
+        // Check if each input is a single digit
+    } else if (!otpArray.every(otpDigit => /^\d$/.test(otpDigit))) {
+        error = "The verification code can only contain numbers.";
+        // Check if verification code is exactly 5 digits long
+    } else if (otp.length !== 5) {
+        error = "The verification code must be 5 digits long.";
+    }
+
+    return {
+        error,
+        isValid: error === '',
+    };
+};

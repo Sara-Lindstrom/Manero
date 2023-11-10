@@ -10,5 +10,7 @@ namespace WebApi.Context
       : base(options)
         {
         }
+
+        public DbSet<Address> Addresses { get; set; }
     }
 }

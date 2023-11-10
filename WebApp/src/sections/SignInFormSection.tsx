@@ -50,7 +50,6 @@ const SignInFormSection: React.FC<SignInProps> = ({ navigate }: SignInProps) => 
         <div className="container">
             <p className='signin-sub-titel'>Sign in to continue</p>
             <form onSubmit={handleSignIn}>
-
                 <div className='input-container'>
                     <p className='input-label'>EMAIL</p>
                     <input className='input'
@@ -100,7 +99,7 @@ const SignInFormSection: React.FC<SignInProps> = ({ navigate }: SignInProps) => 
                         </div>
                     </div>
                     <div>
-                        <a href="/forgotPassword" onClick={handleForgotPasswordClick}>Forgot Password?</a>
+                        <a href="/forgotPassword" className="forgot-password" onClick={handleForgotPasswordClick}>Forgot Password?</a>
                     </div>
                 </div>
                 <button className='btn dark-btn form-btn' data-testid="submitButton" style={{ marginTop: '20px' }} type='submit'>SIGN IN</button>
