@@ -11,17 +11,6 @@ const IconsNavigationSection: React.FC<IconsNavigationSectionProps> = ({ isAuthe
     useEffect(() => {
     }, [isAuthenticated]);
 
-    const handleProfileClick = () => {
-        // Check if the user is authenticated
-        if (isAuthenticated) {
-            // Navigate to the profile page
-            navigate('/viewProfile');
-        } else {
-            // Navigate to the sign-in page
-            navigate('/signin');
-        }
-    };
-
     return (
         <section className='iconsNav'>
             <div className='container'>
@@ -31,9 +20,9 @@ const IconsNavigationSection: React.FC<IconsNavigationSectionProps> = ({ isAuthe
                     <div className='icon'><NavLink to="/cart" data-testid="cartLink"><i className="fa-regular fa-bag-shopping"></i></NavLink></div>
                     <div className='icon'><NavLink to="/wishlist" data-testid="wishlistLink"><i className="fa-regular fa-heart"></i></NavLink></div>
                     <div className='icon'>
-                        <span onClick={handleProfileClick} data-testid="viewProfileLink">
+                        <NavLink to={isAuthenticated ? '/viewProfile' : '/signin'} data-testid="viewProfileLink">
                             <i className="fa-regular fa-user"></i>
-                        </span>
+                        </NavLink>
                     </div>
                 </div>
             </div>

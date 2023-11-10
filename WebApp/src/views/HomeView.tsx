@@ -35,17 +35,6 @@ const HomeView: React.FC = () => {
         console.log('Authentication status in HomeView:', isAuthenticated);
     }, [isAuthenticated]);
 
-    //useEffect(() => {
-    //    fetchProducts();
-
-    //    const token = localStorage.getItem('token');
-    //    setIsAuthenticated(!!token);
-    //}, []);
-
-    //useEffect(() => {
-    //    console.log('Authentication status in HomeView:', isAuthenticated);
-    //}, [isAuthenticated]);
-
     return (
 
         <>
