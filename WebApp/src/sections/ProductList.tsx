@@ -48,7 +48,6 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
                                 ))}
                                 <p className='product-card-rating'><i className="fa-regular fa-star"></i>({product.rating})</p>
                                 <h2 className='product-card-name'>{product.name}</h2>
-                                <p>{product.createdDate.toString()}</p>
                                 <div className='product-card-price-container'>                                    
                                     {product.salesPrice !== null ? (
                                         <>

@@ -9,7 +9,7 @@ public interface IRepo<TEntity, TDbContext> where TEntity : class where TDbConte
 {
     Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> expression);
     Task<TEntity> CreateAsync(TEntity entity);
-    Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> expressionparams, Expression<Func<TEntity, object>>[]? includes);
+    Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> expressionparams, Expression<Func<TEntity, object>>[]? includes = null);
     Task<List<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> expression, params Expression<Func<TEntity, object>>[]? includes);
     Task<List<TEntity>> GetAllAsync(params Expression<Func<TEntity, object>>[]? includes);
     Task<TEntity> UpdateAsync(TEntity entity);
@@ -86,7 +86,6 @@ public abstract class Repo<TEntity,TDbContext> : IRepo<TEntity, TDbContext> wher
     {
         try
         {
-            //var res = _dbContext.Set<TEntity>();
             IQueryable<TEntity> res = _dbContext.Set<TEntity>();
 
             if (includes is not null && res is not null)

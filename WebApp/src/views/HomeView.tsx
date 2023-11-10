@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import HomePageCategoryNav from '../sections/HomePageCategoryNav';
 import HomepageShoecaseOffer from '../sections/HomepageShoecaseOffer';
-import FeatuerdProductList from '../sections/FeatuerdProductList';
+import FeaturedProductList from '../sections/FeaturedProductList';
 import BestSellerProductList from '../sections/BestSellerProductList';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
 import { IProduct } from '../Interfaces/IProduct';
@@ -40,7 +40,7 @@ const HomeView = () => {
             <h2 className='product-showcase-name'>Featured Products</h2>
             <Link to="/bestSellersView" className='homepage-section-viewall'>view all <i className="fa-solid fa-chevron-right"></i></Link>
             </div>
-            <FeatuerdProductList products={newestProducts.slice(0, 4)} />
+            <FeaturedProductList products={newestProducts.slice(0, 4)} />
         </section>
         <section className='product-showcase-section'>
           <div className='product-showcase-section-header'>

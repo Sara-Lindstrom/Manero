@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
 import ProductList from '../sections/ProductList';
-import { fetchAllCategories, fetchBestSellers } from '../helpers/ProductHandler';
+import { fetchAllCategories, fetchBestSellers, fetchNewestProducts } from '../helpers/ProductHandler';
 import { ICategories } from '../Interfaces/ICategories';
 import { IProduct } from '../Interfaces/IProduct';
 import { SortByBestSeller, SortByNewest, SortBySale } from '../helpers/ProductSorting';
@@ -26,9 +26,14 @@ const BestSellersView: React.FC = () => {
     }; 
     
     const fetchProducts = async () => {
-        let productsFromDb = await fetchBestSellers(selectedCategory);
-        console.log("here");
-        setProducts(productsFromDb);
+        if(selectedCategory == ""){
+            let allProductsFromDb = await fetchNewestProducts();
+            setProducts(allProductsFromDb);
+        }
+        else{
+            let productsFromDb = await fetchBestSellers(selectedCategory);
+            setProducts(productsFromDb);
+        }
     }      
 
     useEffect(() => {
