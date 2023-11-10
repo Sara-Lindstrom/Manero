@@ -10,7 +10,10 @@ export interface AddAddressSectionProps {
 const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded }) => {
     const navigate = useNavigate();
     const [title, setTitle] = useState('');
-    const [address, setAddress] = useState('');
+    const [streetName, setStreetName] = useState('');
+    const [city, setCity] = useState('');
+    const [country, setCountry] = useState('');
+    const [postalCode, setPostalCode] = useState('');
     const [useCurrentLocation, setUseCurrentLocation] = useState(false);
     const [token, setToken] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -21,10 +24,17 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
             setToken(storedToken);
         } else {
             setError('User not signed in. Please sign in to add an address.');
+            navigate('/sign-in');
         }
-    }, []);
+    }, [navigate]);
 
     const handleSaveAddress = async () => {
+        console.log('Title:', title);
+        console.log('StreetName:', streetName);
+        console.log('City:', city);
+        console.log('Country:', country);
+        console.log('PostalCode:', postalCode);
+
         try {
             if (!token) {
                 setError('User not signed in. Please sign in to add an address.');
@@ -35,10 +45,10 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
                 'https://localhost:7055/api/Addresses/AddAddress',
                 {
                     title,
-                    streetName: address,
-                    city: address,
-                    country: address,
-                    postalCode: address,
+                    streetName,
+                    city,
+                    country,
+                    postalCode,
                 },
                 {
                     headers: {
@@ -46,6 +56,8 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
                     },
                 }
             );
+
+            console.log(response);
 
             // Assuming your API returns the newly added address
             const newAddress = response.data;
@@ -56,7 +68,10 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
 
             // Clear the form fields after successfully adding the address
             setTitle('');
-            setAddress('');
+            setStreetName('');
+            setCity('');
+            setCountry('');
+            setPostalCode('');
             setUseCurrentLocation(false);
         } catch (error) {
             console.error('Error saving address:', error);
@@ -64,44 +79,75 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
         }
     };
 
+
     return (
-        <div className="add-address-section">
-            <iframe
-                className="custom-map-iframe" 
-                title="OpenStreetMap"
-                frameBorder="0"
-                scrolling="no"
-                marginHeight={0}
-                marginWidth={0}
-                src="https://www.openstreetmap.org/export/embed.html?bbox=-180,-90,180,90&layer=mapnik"
-            ></iframe>
-            <div className="input-address-content">
-                <input
-                    className="title-input"
-                    placeholder="TITLE"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                />
-                <input
-                    className="address-input"
-                    placeholder="ENTER A NEW ADDRESS"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                />
+        <>
+            <div className='container'>
+                <iframe
+                    className="custom-map-iframe" 
+                    title="OpenStreetMap"
+                    frameBorder="0"
+                    scrolling="no"
+                    marginHeight={0}
+                    marginWidth={0}
+                    src="https://www.openstreetmap.org/export/embed.html?bbox=-180,-90,180,90&layer=mapnik"
+                ></iframe>
+
+                <form>
+                    <div className='input-container'>
+                        <p className='input-label'>TITLE</p>
+                        <input
+                            className="input"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                        />
+                    </div>
+                    <div className='input-container'>
+                        <p className='input-label'>STREET NAME</p>
+                        <input
+                            className="input"
+                            value={streetName}
+                            onChange={(e) => setStreetName(e.target.value)}
+                        />
+                    </div>
+                    <div className='input-container'>
+                        <p className='input-label'>CITY</p>
+                        <input
+                            className="input"
+                            value={city}
+                            onChange={(e) => setCity(e.target.value)}
+                        />
+                    </div>
+                    <div className='input-container'>
+                        <p className='input-label'>COUNTRY</p>
+                        <input
+                            className="input"
+                            value={country}
+                            onChange={(e) => setCountry(e.target.value)}
+                        />
+                    </div>
+                    <div className='input-container'>
+                        <p className='input-label'>POSTAL CODE</p>
+                        <input
+                            className="input"
+                            value={postalCode}
+                            onChange={(e) => setPostalCode(e.target.value)}
+                        />
+                    </div>
+                        <div className="actions-container">
+                        <div>
+                            <div className="remember-me">
+                                <input type="checkbox" />
+                                <label>Use my current location</label>
+                            </div>
+                        </div>
+                    </div>
+                        <button className="btn dark-btn form-btn" onClick={handleSaveAddress}>
+                        SAVE ADDRESS
+                    </button>
+                </form>
             </div>
-            <div className="current-location-checkbox">
-                <input
-                    className="current-location-check"
-                    type="checkbox"
-                    checked={useCurrentLocation}
-                    onChange={(e) => setUseCurrentLocation(e.target.checked)}
-                />
-                <label className="form-check-label">Use current location</label>
-            </div>
-            <button className="btn dark-btn form-btn save-address" onClick={handleSaveAddress}>
-                SAVE ADDRESS
-            </button>
-        </div>
+        </>
     );
 };
 
