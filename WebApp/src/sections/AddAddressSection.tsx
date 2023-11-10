@@ -29,12 +29,6 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
     }, [navigate]);
 
     const handleSaveAddress = async () => {
-        console.log('Title:', title);
-        console.log('StreetName:', streetName);
-        console.log('City:', city);
-        console.log('Country:', country);
-        console.log('PostalCode:', postalCode);
-
         try {
             if (!token) {
                 setError('User not signed in. Please sign in to add an address.');
@@ -62,8 +56,7 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
             // Assuming your API returns the newly added address
             const newAddress = response.data;
 
-            // Call the callback function passed from the parent component
-            // to update the list of addresses after adding a new one
+            // Call the callback function passed from the parent component to update the list of addresses after adding a new one
             onAddressAdded(newAddress);
 
             // Clear the form fields after successfully adding the address
@@ -74,11 +67,9 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
             setPostalCode('');
             setUseCurrentLocation(false);
         } catch (error) {
-            console.error('Error saving address:', error);
             setError('Error saving address. Please try again later.');
         }
     };
-
 
     return (
         <>
