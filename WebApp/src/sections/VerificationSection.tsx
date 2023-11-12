@@ -8,9 +8,35 @@ type VerifyPhoneProps = {
 }
 
 const VerificationSection: React.FC<VerifyPhoneProps> = ({ navigate }: VerifyPhoneProps) => {
-    const [verificationerror, setVerificationError] = useState('');
+    const [verificationError, setVerificationError] = useState('');
     const [otp, setOtp] = useState(['', '', '', '', '']);
     const [verificationCode, setVerificationCode] = useState('');
+
+    useEffect(() => {
+        // Retrieve the stored verification code on component mount
+        updateVerificationCodeFromStorage();
+
+        // Add an event listener for local storage changes
+        window.addEventListener('storage', handleStorageChange);
+
+        // Cleanup event listener
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+        };
+    }, []);
+
+    const handleStorageChange = (event: StorageEvent) => {
+        if (event.key === 'verificationCode') {
+            updateVerificationCodeFromStorage();
+        }
+    };
+
+    const updateVerificationCodeFromStorage = () => {
+        const code = VerificationHelper.getVerificationCode();
+        if (code) {
+            setVerificationCode(code);
+        }
+    };
 
     // Retrieve the stored verification code from previous view
     useEffect(() => {
@@ -20,7 +46,7 @@ const VerificationSection: React.FC<VerifyPhoneProps> = ({ navigate }: VerifyPho
         }
     }, []);
 
-    // Added directly into the section since this is not reused anywhere
+    // Add in the section since this is not reused anywhere
     const handleInputChange = (index: number, value: string) => {
         setVerificationError('');
 
@@ -55,10 +81,11 @@ const VerificationSection: React.FC<VerifyPhoneProps> = ({ navigate }: VerifyPho
     const resendOtp = () => {
         const newCode = VerificationHelper.generateVerificationCode();
         VerificationHelper.storeVerificationCode(newCode);
-        console.log(`New OTP (simulated SMS): ${newCode}`);
+        console.log(`New verification code (simulated SMS): ${newCode}`);
+        setVerificationCode(newCode); // Immediately update the state
 
         setOtp(['', '', '', '', '']);
-        setVerificationError('Something went wrong when trying to resend the code');
+        setVerificationError('');
     };
 
     const handleVerifyClick = () => {
@@ -81,7 +108,7 @@ const VerificationSection: React.FC<VerifyPhoneProps> = ({ navigate }: VerifyPho
                 ))}
             </div>
             <div className="verification-container">
-                <div className="verification-error">{verificationerror && <p className="verification-error">{verificationerror}</p>}</div>
+                <div className="verification-error">{verificationError && <p className="verification-error">{verificationError}</p>}</div>
                 <NavLink className="link-verify" to="#" onClick={resendOtp}>Didn't recieve the OTP? Resend.</NavLink>
                 <button
                     className='btn dark-btn form-btn'
