@@ -267,8 +267,49 @@ public class ProductController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+
+    // A version of get by category that doesn't return 404-error if the category is not found
+    [HttpGet("GetByCategoryName")]
+    public async Task<ActionResult<List<ProductModel>>> GetByCategoryName(string categoryName, string? tag)
+    {
+        try
+        {
+            // Retrieve the category from the repository based on the category name.
+            var dbCategory = await _categoryRepo.GetOneAsync(c => c.CategoryName == categoryName);
+
+            // If the category does not exist, return an empty list instead of a 404 error.
+            if (dbCategory == null)
+            {
+                Console.WriteLine($"Category '{categoryName}' not found. Returning empty list.");
+                return Ok(new List<ProductModel>());
+            }
+
+            // Retrieve all products associated with this category.
+            var dbProducts = await _productRepo.GetManyAsync(
+                product => product.ProductCategories.Any(pc => pc.CategoryID == dbCategory.CategoryID),
+                IncludesForProductModel);
+
+            if (tag is not null)
+            {
+                // Retrieve the tag from the repository based on the tag name.
+                var dbTag = await _tagRepo.GetOneAsync(t => t.TagName == tag);
+                if (dbTag == null)
+                {
+                    Console.WriteLine($"Tag '{tag}' not found.");
+                    return NotFound($"Tag '{tag}' not found.");
+                }
+
+                dbProducts = dbProducts.Where(p => p.ProductTags?.Any(t => t.TagID == dbTag.TagID) == true).ToList();
+            }
+
+            // Convert the result to ProductModel and return.
+            var result = dbProducts.Select(product => (ProductModel)product).ToList();
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return BadRequest(ex.Message);
+        }
+    }
 }
-
-
-
-
