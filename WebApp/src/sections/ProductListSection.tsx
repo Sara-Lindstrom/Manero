@@ -12,6 +12,8 @@ interface ProductListSectionProps {
 const ProductListSection: React.FC<ProductListSectionProps> = ({ category, cardType }) => {
     const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
     const [isProductsFound, setIsProductsFound] = useState(true);
+    const [cart, setCart] = useState<{ [key: string]: number }>({});
+    const [wishlist, setWishlist] = useState<IProduct[]>([]);
 
     // Load products based on filter in view
     useEffect(() => {
@@ -32,23 +34,32 @@ const ProductListSection: React.FC<ProductListSectionProps> = ({ category, cardT
         loadProducts();
     }, [category]);
 
-    const handleAddToCart = (product: IProduct) => {
-        // No functionality implemented
+    const addToCart = (product: IProduct) => {
+        setCart((prevCart) => {
+            const updatedCart = { ...prevCart };
+            if (updatedCart[product.id]) {
+                updatedCart[product.id]++;
+            } else {
+                updatedCart[product.id] = 1;
+            }
+            return updatedCart;
+        });
     };
 
-    const handleAddToWishlist = (product: IProduct) => {
-        // No functionality implemented
+    const addToWishlist = (product: IProduct) => {
+        if (!wishlist.find((item) => item.name === product.name && item.size === product.size && item.color === product.color)) {
+            setWishlist([...wishlist, product]);
+        }
     };
 
     return (
         <section>
-            <h2>Product list</h2>
             {isProductsFound ? (
                 <ProductListComponent
                     products={filteredProducts}
                     cardType={cardType || ICardType.NormalCard} // Used as a fallback if no CardType was chosen
-                    addToCart={handleAddToCart}
-                    addToWishlist={handleAddToWishlist}
+                    addToCart={addToCart}
+                    addToWishlist={addToWishlist}
                 />
             ) : (
                 <p>No products with that category were found.</p>
