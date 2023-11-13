@@ -54,7 +54,7 @@ const BreadcrumbSection: React.FC<IBreadcrumbProps> = ({ currentPage, showBackBu
                     <div className='third-column'>
                         <li className="cart">
                             {showCartItem ? (
-                                <NavLink to={'/cart'}>
+                                <NavLink to={'/pageNotFound'}>
                                     <span className="translate-middle badge rounded-pill">1</span>
                                     <i className="fa-regular fa-bag-shopping"></i>
                                 </NavLink>
