@@ -91,7 +91,7 @@ const ViewProfileSection = () => {
                     <h5>{profile.email}</h5>
                 </div>
                 <div className='Fields-section'>
-                    <a className='field' href='/orderhistory' id='order-history'>
+                    <a className='field' href='/pageNotFound' id='order-history'>
                         <div className='field-details'>
                             <div className='icon-name'>
                                 <i className="fa-light fa-calendar"></i>
@@ -100,7 +100,7 @@ const ViewProfileSection = () => {
                             <i id='right-arrow' className="fa-solid fa-chevron-right"></i>
                         </div>
                     </a>
-                    <a className='field' href='#' id='payment-method'>
+                    <a className='field' href='/paymentMethodView' id='payment-method'>
                         <div className='field-details'>
                             <div className='icon-name'>
                                 <i className="fa-light fa-credit-card"></i>
@@ -118,7 +118,7 @@ const ViewProfileSection = () => {
                             <i id='right-arrow' className="fa-solid fa-chevron-right"></i>
                         </div>
                     </a>
-                    <a className='field' href='#' id='my-promocode'>
+                    <a className='field' href='pageNotFound' id='my-promocode'>
                         <div className='field-details'>
                             <div className='icon-name'>
                                 <i className="fa-regular fa-gift"></i>

@@ -34,20 +34,18 @@ const MyAddresses = () => {
                                 })
                                 .catch((error) => {
                                     console.error('Error fetching user addresses:', error);
-                                    setError('Error fetching user addresses. Please try again later.');
+                                    setError('Error fetching user addresses.');
                                 })
                         }
                     } else {
-                        console.error('User ID is empty or null');
-                        setError('User ID is empty or null. Please try again later.');
+                        setError('User ID is empty or null.');
                     }
                 })
                 .catch((error) => {
-                    console.error('Error fetching user ID:', error);
-                    setError('Error fetching user data from useEffect. Please try again later.');
+                    setError('Error fetching user data.');
+                    navigate("/signin")
                 });
         } else {
-            console.error('Token is missing or invalid');
             setError('Please sign in to see your addresses');
             navigate('/signin');
         }
