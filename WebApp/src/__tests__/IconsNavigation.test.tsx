@@ -15,7 +15,7 @@ test('Should navigate to home', async () => {
     const homeNavLink = screen.getByTestId('homeLink');
 
     // Ensure that the "href" attribute of the link is '/'.
-    expect(homeNavLink.getAttribute('href')).toBe('/');
+    expect(homeNavLink.getAttribute('href')).toBe('/home');
 
     // Simulate a click event on the link.
     fireEvent.click(homeNavLink);

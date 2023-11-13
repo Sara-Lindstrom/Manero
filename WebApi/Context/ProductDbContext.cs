@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebApi.Models.Entities;
+using WebApi.Seeds;
 
 namespace WebApi.Context
 {
@@ -21,5 +22,12 @@ namespace WebApi.Context
         DbSet<CategoryTagEntity> CategoryTags  { get; set; }
         DbSet<SizeEntity> Sizes { get; set; }
         DbSet<TagEntity> Tags { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            ProductDbSeeds.SeedData(modelBuilder);
+        }
     }
 }
