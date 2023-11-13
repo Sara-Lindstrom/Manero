@@ -7,7 +7,7 @@ const EditProfileView: React.FC = () => {
     const navigate = useNavigate();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    //If user is not signed in they will redirect to login view
+    // If user is not signed in they will be redirected to login view
     useEffect(() => {
         const token = localStorage.getItem('token');
 
@@ -20,18 +20,17 @@ const EditProfileView: React.FC = () => {
     }, [navigate]);
 
     const handleNavigateBack = () => {
-    window.history.back(); // Använder window.history för att gå tillbaka ett steg
+        window.history.back();
     };
 
+    return (
 
-  return (
+        <>
+            <BreadcrumbSection currentPage='Edit Profile' showBackButton={true} onNavigateBack={handleNavigateBack} />
+            {isAuthenticated && <EditProfileSection />}
+        </>
 
-    <>
-          <BreadcrumbSection currentPage='Edit Profile' showBackButton={true} onNavigateBack={handleNavigateBack} />
-          {isAuthenticated && <EditProfileSection />}
-    </>
-
-  )
+    )
 }
 
-export default EditProfileView
+export default EditProfileView;

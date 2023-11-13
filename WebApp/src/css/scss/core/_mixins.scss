@@ -1,4 +1,10 @@
 // BREAKPOPINTS
+@mixin sm {
+    @media (min-width: #{$breakpoint-sm}){
+        @content;
+    }
+}
+
 @mixin md {
     @media (min-width: #{$breakpoint-md}){
         @content;

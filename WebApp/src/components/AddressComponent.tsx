@@ -57,7 +57,7 @@ const AddressComponent: React.FC<AddressComponentProps> = ({ addressId, token, u
                         <p className='small-info'>{localAddress.postalCode}</p>
                     </div>
                 </div>
-                <Link to="/" className='edit-address'><i className="fa-solid fa-pen"></i></Link>
+                <Link to="/pageNotFound" className='edit-address'><i className="fa-solid fa-pen"></i></Link>
             </div>
         </div>
     );

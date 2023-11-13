@@ -10,7 +10,6 @@ export const SortByNewest = (products: IProduct[]) => {
     return sortedProducts;
 };
 
-
 export const SortByBestSeller = (products: IProduct[]) => {
     // Assuming that a higher rating signifies a bestseller.
     // Products without ratings might be considered as unrated and sorted last.

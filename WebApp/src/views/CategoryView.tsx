@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import BreadcrumbSection from '../sections/BreadcrumbSection'
 import IconsNavigationSection from '../sections/IconsNavigationSection';
 import CategoryNav from '../sections/CategoryNav';
 
-
 const CategoryView: React.FC = () => {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
     const handleNavigateBack = () => {
-      window.history.back();
+        window.history.back();
     };
   return (
     <>

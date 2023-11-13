@@ -5,7 +5,7 @@ import ConfirmedPhoneVerificationSection from '../sections/ConfirmedPhoneVerific
 const ConfirmedPhoneVerificationView: React.FC = () => {
     const handleNavigateBack = () => {
         window.history.back();
-      };
+    };
 
     return (
         <>

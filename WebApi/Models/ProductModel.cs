@@ -33,11 +33,11 @@ namespace WebApi.Models
                 rating = productEntity.Rating,
                 createdDate = productEntity.CreatedDate,
 
-                reviews = productEntity.ProductReviews.ToList(),
-                categories = productEntity.ProductCategories.Where(pc => pc.Category != null).Select(pc => pc.Category.CategoryName).ToList(),
-                sizes = productEntity.ProductSizes.Where(pc => pc.Size!= null).Select(ps => ps.Size.SizeName).ToList(),
-                colors = productEntity.ProductColors.Where(pc => pc.Color != null).Select(pc => pc.Color.ColorName).ToList(),
-                images = productEntity.ProductImages.Where(pc => pc.Image != null).Select(pi => pi.Image).ToList()              
+                reviews = productEntity.ProductReviews?.ToList() ?? null,
+                categories = productEntity.ProductCategories?.Where(pc => pc.Category != null).Select(pc => pc.Category.CategoryName).ToList() ?? null,
+                sizes = productEntity.ProductSizes?.Where(pc => pc.Size != null).Select(ps => ps.Size.SizeName).ToList() ?? null,
+                colors = productEntity.ProductColors?.Where(pc => pc.Color != null).Select(pc => pc.Color.ColorName).ToList() ?? null,
+                images = productEntity.ProductImages?.Where(pc => pc.Image != null).Select(pi => pi.Image).ToList() ?? null
             };
             return _productModel;
         }

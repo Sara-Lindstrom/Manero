@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react'
 import BreadcrumbSection from '../sections/BreadcrumbSection'
 import ViewProfileSection from '../sections/ViewProfileSection'
 import { useNavigate } from 'react-router-dom';
+import IconsNavigationSection from '../sections/IconsNavigationSection';
 
-const ViewProfile: React.FC = () => { 
+const ViewProfile: React.FC = () => {
     const navigate = useNavigate();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    //If user is not signed in they will redirect to login view
+    // If user is not signed in they will be redirected to the login view
     useEffect(() => {
         const token = localStorage.getItem('token');
 
@@ -18,13 +19,14 @@ const ViewProfile: React.FC = () => {
             navigate('/signin');
         }
     }, [navigate]);
-   
-  return (
-    <>
-        <BreadcrumbSection currentPage='My Profile' showCurrentPage={true} showCartItem={true} showHamburgerButton={true} />
-        {isAuthenticated && <ViewProfileSection />}
-    </>
-  )
+
+    return (
+        <>
+            <BreadcrumbSection currentPage='My Profile' showCurrentPage={true} showCartItem={true} showHamburgerButton={true} />
+            {isAuthenticated && <ViewProfileSection />}
+            <IconsNavigationSection isAuthenticated={isAuthenticated} />
+        </>
+    )
 }
 
-export default ViewProfile
+export default ViewProfile;
