@@ -1,22 +1,76 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
-import ProductList from '../sections/FeatuerdProductList';
+import ProductList from '../sections/ProductList';
+import { fetchAllCategories, fetchBestSellers, fetchNewestProducts } from '../helpers/ProductHandler';
+import { ICategories } from '../Interfaces/ICategories';
+import { IProduct } from '../Interfaces/IProduct';
+import { SortByBestSeller, SortByNewest, SortBySale } from '../helpers/ProductSorting';
 
 const BestSellersView: React.FC = () => {
     const [isSliderDropdownVisible, setSliderDropdownVisible] = useState(false);
-    const [selectedSliderCategory, setSelectedSliderCategory] = useState('All');
+    const [categories, setCategories] = useState<ICategories[] | undefined>([]);
+    const [selectedSorting, setSelectedSorting] = useState<string>('');
     const [isDropdownVisible, setDropdownVisible] = useState(false);
-    const [selectedCategories, setSelectedCategories] = useState<string | string[]>('All');
+    const [selectedCategory, setSelectedCategory] = useState<string>("");
+    const [products, setProducts] = useState<IProduct[]>([]);
 
-    const sliderCategories = ['All', 'Slider Category 1', 'Slider Category 2', 'Slider Category 3', 'Slider Category 4'];
-    const categories = ['All', 'Category 1', 'Category 2', 'Category 3', 'Category 4'];
+    const sortinOptions = ['Newest', 'Popular', "Sale"];
+
+    const fetchCategories = async () => {
+        try {
+            return await fetchAllCategories();
+        } catch (error) {
+            console.error('Error fetching categories:', error);
+        }
+    };
+
+    const fetchProducts = async () => {
+        if(selectedCategory == ""){
+            let allProductsFromDb = await fetchNewestProducts();
+            setProducts(allProductsFromDb);
+        }
+        else{
+            let productsFromDb = await fetchBestSellers(selectedCategory);
+            setProducts(productsFromDb);
+        }
+    }      
+
+    useEffect(() => {
+        fetchProducts();
+    }, [selectedCategory]);
+
+    useEffect(() => {
+        fetchCategories().then(data => setCategories(data));
+    }, []);
+
+    useEffect(() => {
+        // Clone the products array to avoid mutating the original state
+        let sortedProducts = [...products];
+
+        // Perform sorting based on the selectedSorting value
+        switch (selectedSorting) {
+            case 'Newest':
+                sortedProducts = SortByNewest(products);
+                break;
+            case 'Popular':
+                sortedProducts = SortByBestSeller(products);
+                break;
+            case 'Sale':
+                sortedProducts = SortBySale(products);
+                break;
+            default:
+                break;
+        }
+        setProducts(sortedProducts);
+
+    }, [selectedSorting]);
 
     const toggleSliderDropdown = () => {
         setSliderDropdownVisible(!isSliderDropdownVisible);
     };
 
-    const handleSliderCategorySelect = (category: string) => {
-        setSelectedSliderCategory(category);
+    const handleSorting = (option: string) => {
+        setSelectedSorting(option);
         setSliderDropdownVisible(false);
     };
 
@@ -25,56 +79,59 @@ const BestSellersView: React.FC = () => {
     };
 
     const handleCategorySelect = (category: string) => {
-        setSelectedCategories(category === 'All' ? 'All' : [category]);
+        setSelectedCategory(category);
         setDropdownVisible(false);
     };
 
     const handleNavigateBack = () => {
-        window.history.back(); 
-      };
+        window.history.back();
+    };
 
     return (
         <>
-        <BreadcrumbSection currentPage="Best Sellers" showBackButton={true} onNavigateBack={handleNavigateBack}/>
+            <BreadcrumbSection currentPage="Best Sellers" showBackButton={true} onNavigateBack={handleNavigateBack} />
 
-        <div className='best-seller-filter'>
-            <div className="slider" onClick={toggleSliderDropdown}>
-                <i className="fa-solid fa-sliders"></i>
-                {isSliderDropdownVisible && (
-                    <div className="category-dropdown">
-                        <ul>
-                            {sliderCategories.map((sliderCategory) => (
-                                <li className='category-dropdown-obejcts'
-                                    key={sliderCategory}
-                                    onClick={() => handleSliderCategorySelect(sliderCategory)}
-                                >
-                                    {sliderCategory}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                )}
+            <div className='best-seller-filter'>
+                <div className="slider" onClick={toggleSliderDropdown}>
+                    <i className="fa-solid fa-sliders"></i>
+                    {isSliderDropdownVisible && (
+                        <div className="category-dropdown">
+                            <ul>
+                                {categories!.length >= 1 && (
+                                    categories!.map((category, index) => (
+                                        category != undefined && (
+                                            <li className='category-dropdown-objects'
+                                                key={category.categoryID || index}
+                                                onClick={() => handleCategorySelect(category.categoryName)}
+                                            >
+                                                {String(category.categoryName)}
+                                            </li>
+                                        ))))}
+                            </ul>
+                        </div>
+                    )}
+                </div>
+                <div className="sorting-by" onClick={toggleDropdown}>
+                    Sorting By <i className={`fa-solid ${isDropdownVisible ? 'fa-arrow-up' : 'fa-arrow-down'}`}></i>
+                    {isDropdownVisible && (
+                        <div className="category-dropdown">
+                            <ul>
+                                {sortinOptions!.length >= 1 && (
+                                    sortinOptions!.map((option, index) => (
+                                        option != undefined && (
+                                            <li className='category-dropdown-objects'
+                                                key={index}
+                                                onClick={() => handleSorting(option)}
+                                            >
+                                                {String(option)}
+                                            </li>
+                                        ))))}
+                            </ul>
+                        </div>
+                    )}
+                </div>
             </div>
-            <div className="sorting-by" onClick={toggleDropdown}>
-                Sorting By <i className={`fa-solid ${isDropdownVisible ? 'fa-arrow-up' : 'fa-arrow-down'}`}></i>
-                {isDropdownVisible && (
-                    <div className="category-dropdown">
-                        <ul>
-                            {categories.map((category) => (
-                                <li className='category-dropdown-obejcts'
-                                    key={category}
-                                    onClick={() => handleCategorySelect(category)}
-                                >
-                                    {category}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                )}
-            </div>
-        </div>
-
-        <ProductList  selectedCategories={selectedCategories} limit={4}  />
+            <ProductList products={products} />
         </>
     )
 }

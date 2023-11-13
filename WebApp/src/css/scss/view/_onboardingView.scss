@@ -8,7 +8,16 @@
     background-color: $color-blue;
     height: 100vh;
     width: 100vw;
-    display: none;
+
+    animation: onboarding-response 1s 1;
+    -webkit-animation: onboarding-response 1s 1;
+    animation-fill-mode: forwards;
+
+    animation-delay: 2s;
+    -webkit-animation-delay: 1s;
+    /* Safari and Chrome */
+    -webkit-animation-fill-mode: forwards;
+
     .welcome-logo {
         display: flex;
         align-items: center;
@@ -19,12 +28,13 @@
         border-radius: 100%;
         box-shadow: inset 0px 0px 0px 20px $color-blue;
         border: 4px solid $color-white;
-        
+
         .welcome-logo-content {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+
             .welcome-logo-rectangular {
                 background-color: $color-dark;
                 opacity: 100%;
@@ -34,14 +44,41 @@
                 border-radius: 50%;
                 border-radius: 50px;
                 background-color: $color-white;
-    
-            }   
+
+            }
+
             .welcome-logotype {
                 font-size: 32px;
                 font-weight: 900;
             }
         }
-    } 
+    }
+}
+
+@keyframes onboarding-response {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        width: 0;
+        height: 1;
+        overflow: hidden;
+    }
+}
+
+@-webkit-keyframes onboarding-response {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        width: 0;
+        height: 1;
+        overflow: hidden;
+    }
 }
 
 //This is for info slide page
@@ -52,11 +89,11 @@
     height: 100vh;
     overflow: hidden;
 
-        @media (min-width: 420px) {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    @media (min-width: 420px) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
     .welcome-information-circle {
         top: 100%;
@@ -83,10 +120,9 @@
 
         .carousel-indicators {
             bottom: 17%;
-        
+
             @media (min-width: 420px) {
-                bottom: 30%;
-        
+                bottom: 32%;
             }
         }
 
@@ -99,47 +135,45 @@
             justify-content: space-evenly;
             align-items: center;
             padding: 50px 40px 0px 40px;
-        
-        
+
+
             @media (min-width: 420px) {
                 height: auto;
                 width: auto;
                 padding: 20px 40px 0px 40px;
             }
-        
+
             .welcome-carousel-slide {
                 display: flex;
                 flex: 0 0 100%;
                 text-align: center;
                 padding: 20px 20px 0px 20px;
                 overflow: hidden;
-        
+
                 .carousel-item {
-        
+
                     i {
                         font-size: 48px;
                     }
-        
+
                     h1 {
                         font-weight: $font-weight-bold;
                         font-size: 2rem;
                     }
-        
+
                     p {
                         font-weight: $font-weight-regular;
                     }
                 }
-        
-                .btn-get-started {
-                    width: auto;
-                    padding-left: 50px;
-                    padding-right: 50px;
-                }
+            }
+
+            .btn-get-started {
+                width: auto;
+                padding-left: 50px;
+                padding-right: 50px;
             }
         }
     }
-
-    
 }
 
 .dot {

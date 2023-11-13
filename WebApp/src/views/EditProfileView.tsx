@@ -1,28 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
 import EditProfileSection from '../sections/EditProfileSection';
-
-// This interface does not work properly. It returns an error in App.tsx that user cant be found
-//interface EditProfileType {
-//  user: User;
-//}
-
+import { useNavigate } from 'react-router-dom';
 
 const EditProfileView: React.FC = () => {
+    const navigate = useNavigate();
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const handleNavigateBack = () => {
-    window.history.back(); // Använder window.history för att gå tillbaka ett steg
-  };
+    // If user is not signed in they will be redirected to login view
+    useEffect(() => {
+        const token = localStorage.getItem('token');
 
+        if (token) {
+            setIsAuthenticated(true);
+        } else {
+            setIsAuthenticated(false);
+            navigate('/signin');
+        }
+    }, [navigate]);
 
-  return (
+    const handleNavigateBack = () => {
+        window.history.back();
+    };
 
-    <>
-          <BreadcrumbSection currentPage='Edit Profile' showBackButton={true} onNavigateBack={handleNavigateBack} />
-          <EditProfileSection />
-    </>
+    return (
 
-  )
+        <>
+            <BreadcrumbSection currentPage='Edit Profile' showBackButton={true} onNavigateBack={handleNavigateBack} />
+            {isAuthenticated && <EditProfileSection />}
+        </>
+
+    )
 }
 
-export default EditProfileView
+export default EditProfileView;

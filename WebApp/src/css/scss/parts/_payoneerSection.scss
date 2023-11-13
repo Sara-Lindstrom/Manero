@@ -1,12 +1,11 @@
 .payoneerSection {
+    
     .container {
-
-        .drop-down-list {            
+        .drop-down-list {
             list-style: none;
             margin-top: 20px;
             padding: 0;
 
-            
             .selected-item {
                 font-size: 16px;
                 margin-bottom: 15px;
@@ -20,6 +19,7 @@
                     color: green;
                     margin-left: 10px;
                 }
+
                 .editBtn {
                     border: none;
                     background-color: white;
@@ -28,7 +28,6 @@
         }
 
         .dropdown {
-
             .btn {
                 margin: 0;
                 padding: 0;
