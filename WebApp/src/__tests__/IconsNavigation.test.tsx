@@ -15,15 +15,15 @@ test('Should navigate to home', async () => {
     const homeNavLink = getByTestId('homeLink');
 
     // Ensure that the "href" attribute of the link is '/'.
-    expect(homeNavLink.getAttribute('href')).toBe('/');
+    expect(homeNavLink.getAttribute('href')).toBe('/home');
 
     // Simulate a click event on the link.
     fireEvent.click(homeNavLink);
 
-    // Wait for navigation to occur, then check if the URL matches '/'.
+    // Wait for navigation to occur, then check if the URL matches '/home'.
     await waitFor(() => {
     // Compare with window.location.pathname
-    expect(window.location.pathname).toBe('/');
+    expect(window.location.pathname).toBe('/home');
     });
 })
 
@@ -116,15 +116,15 @@ test('Should navigate to profile', async () => {
     // Find the "searchLink" element using the test ID.
     const profileNavLink = getByTestId('profileLink');
 
-    // Ensure that the "href" attribute of the link is '/profile'.
-    expect(profileNavLink.getAttribute('href')).toBe('/profile');
+    // Ensure that the "href" attribute of the link is '/viewProfile'.
+    expect(profileNavLink.getAttribute('href')).toBe('/viewProfile');
 
     // Simulate a click event on the link.
     fireEvent.click(profileNavLink);
 
-    // Wait for navigation to occur, then check if the URL matches '/profile'.
+    // Wait for navigation to occur, then check if the URL matches '/viewProfile'.
     await waitFor(() => {
     // Compare with window.location.pathname
-    expect(window.location.pathname).toBe('/profile');
+    expect(window.location.pathname).toBe('/viewProfile');
     });
 })

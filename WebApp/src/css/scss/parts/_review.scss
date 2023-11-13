@@ -42,6 +42,10 @@
             padding-bottom: 0;
             color: gold;
             width: 40%;
+
+            .empty {
+                color: $color-blue;
+            }
             
         }
         .date {

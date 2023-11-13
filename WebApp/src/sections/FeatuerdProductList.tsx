@@ -21,7 +21,7 @@ interface ProductListProps {
 const FeaturedProductList: React.FC<ProductListProps> = ({ limit, selectedCategories }) => {
         const [products, setProducts] = useState<Product[]>([]);
         const [wishlist, setWishlist] = useState<Product[]>([]);
-        const [cart, setCart] = useState<{ [key: number]: number }>({});
+        const [cart, setCart] = useState<{ [key: string]: number }>({});
 
         const hardcodedProducts: Product[] = [
             { id: 1, name: 'Product 1', image: img, price: 19.99, salesprice: 0, rating: 3, category: 'Category 1', size: 'S', color: 'red' },
@@ -68,7 +68,7 @@ const FeaturedProductList: React.FC<ProductListProps> = ({ limit, selectedCatego
         };
       
     return (
-        <div className="product-list">
+        <div className="product-list container">
             <ul className='product-list-info-below-grid'>
                 {products.map((product) => (
                     <li className='product-list-info-below' key={product.id}>

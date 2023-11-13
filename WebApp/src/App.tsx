@@ -41,7 +41,7 @@ function App() {
             <Route path='/category' element={<CategoryView />} />
             <Route path='/verifyPhone' element={<VerifyPhoneNumberView />} />
             <Route path='/activate' element={<PhoneVerificationView />} />
-            <Route path='/reviews' element={<ReviewsView />} />
+            <Route path='/reviews/:productId' element={<ReviewsView />} />
         </Routes>
     </BrowserRouter>
 
