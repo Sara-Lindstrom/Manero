@@ -2,6 +2,8 @@ import { AxiosResponse } from 'axios';
 import axios from 'axios';
 import { IProduct } from '../Interfaces/IProduct';
 import { ICategories } from '../Interfaces/ICategories';
+import { ITags } from '../Interfaces/ITags';
+
 
 // type Navigate = (path: string) => void;
  
@@ -51,6 +53,20 @@ export const fetchAllCategories = async (): Promise<ICategories[]> => {
         return [];
     }
 }
+
+
+export const fetchAllTags = async (): Promise<ITags[]> => {
+  const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Product/GetCategoryTags';
+
+  try {
+    const response: AxiosResponse<ITags[]> = await axios.get(API_URL);
+    return response.data;
+  } catch (error) {
+    console.error("An error occurred while fetching tags:", error);
+    return [];
+  }
+};
+
 
 export const fetchNewestProducts = async (): Promise<IProduct[]> => {
     const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Product/GetNewest';
