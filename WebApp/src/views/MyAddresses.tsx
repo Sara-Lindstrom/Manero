@@ -34,15 +34,15 @@ const MyAddresses = () => {
                                 })
                                 .catch((error) => {
                                     console.error('Error fetching user addresses:', error);
-                                    setError('Error fetching user addresses. Please try again later.');
+                                    setError('Error fetching user addresses.');
                                 })
                         }
                     } else {
-                        setError('User ID is empty or null. Please try again later.');
+                        setError('User ID is empty or null.');
                     }
                 })
                 .catch((error) => {
-                    setError('Error fetching user data. Please try again later.');
+                    setError('Error fetching user data.');
                     navigate("/signin")
                 });
         } else {
