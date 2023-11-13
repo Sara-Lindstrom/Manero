@@ -22,7 +22,7 @@ import ViewProfile from './views/ViewProfileView';
 import AddNewAddressView from './views/AddNewAddressView';
 import TestView from './views/TestView';
 import PageNotFound from './views/PageNotFound';
-
+import ProductDetailsView from './views/ProductDetailsView';
 function App() {
 
   return (
@@ -46,6 +46,12 @@ function App() {
             <Route path='/signup' element={<SignUpView />} />
             <Route path='/verifyPhone' element={<VerifyPhoneNumberView />} />
             <Route path='/viewProfile' element={<ViewProfile />} />
+            <Route path='/leaveAReview' element={<LeaveAReviewView />} />
+            <Route path='/bestSellersView' element={<BestSellersView />} />
+            <Route path='/category' element={<CategoryView />} />
+            <Route path='/verifyPhone' element={<VerifyPhoneNumberView />} />
+            <Route path='/activate' element={<PhoneVerificationView />} />
+            <Route path='/productDetails' element= {<ProductDetailsView />} />
             <Route path='/addNewAddress' element={<AddNewAddressView />} />
             <Route path='/test' element={<TestView /> } />
             <Route path='/pageNotFound' element={<PageNotFound /> } />
