@@ -75,8 +75,6 @@ namespace WebApi.Tests.UnitTests
                 Assert.Equal("City", addedAddress.City);
                 Assert.Equal("Country", addedAddress.Country);
                 Assert.Equal("12345", addedAddress.PostalCode);
-
-                // You may add more assertions based on your data model
             }
         }
     }
