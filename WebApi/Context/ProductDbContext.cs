@@ -20,7 +20,7 @@ namespace WebApi.Context
         DbSet<ProductReviewEntity> ProductReviews { get; set; }
         DbSet<ProductSizeEntity> ProductSizes { get; set; }
         DbSet<CategoryTagEntity> CategoryTags  { get; set; }
-        DbSet<ProductCategoryEntity> productCategories { get; set; }
+        DbSet<ProductTagEntity> ProductTags { get; set; }
         DbSet<SizeEntity> Sizes { get; set; }
         DbSet<TagEntity> Tags { get; set; }
 
