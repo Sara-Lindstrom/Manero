@@ -36,10 +36,11 @@
             .category-item {
 
                 background-color: #8D94A6;
-                grid-row-start: 1;
-                grid-column-start: 1;
-                grid-row-end: 2;
-                grid-column-end: 3;
+                grid-column: span 2;
+                // grid-row-start: 1;
+                // grid-column-start: 1;
+                // grid-row-end: 2;
+                // grid-column-end: 3;
 
                 &:hover {
                     background-color: #fff;

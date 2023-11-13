@@ -54,16 +54,19 @@ export const fetchAllCategories = async (): Promise<ICategories[]> => {
 }
 
 
-export const fetchAllTags = async (): Promise<ITags[]> => {
-  const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Product/GetCategoryTags';
+export const fetchAllTags = async (category : string,) => {
+    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Product/GetCategoryTags';
+    const params = new URLSearchParams();
 
-  try {
-    const response: AxiosResponse<ITags[]> = await axios.get(API_URL);
-    return response.data;
-  } catch (error) {
-    console.error("An error occurred while fetching tags:", error);
-    return [];
-  }
+    params.append('category', category);
+
+    try {
+        const response: AxiosResponse<ITags[]> = await axios.get(API_URL, { params });
+        return response.data;
+    } catch (error) {
+        console.error("An error occurred while fetching tags:", error);
+        return [];
+    }
 };
 
 

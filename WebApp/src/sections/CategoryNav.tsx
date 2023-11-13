@@ -14,7 +14,7 @@ function CategoryNav() {
   useEffect(() => {
     fetchAllCategories()
       .then((data) => {
-        const customSortOrder = ['MEN', 'WOMEN', 'KIDS', 'ACCESSORIES'];
+        const customSortOrder = ['men', 'woman', 'kids', 'accessories'];
         const sortedCategories = data.slice().sort((a, b) => {
           const aIndex = customSortOrder.indexOf(a.categoryName);
           const bIndex = customSortOrder.indexOf(b.categoryName);
@@ -34,7 +34,7 @@ function CategoryNav() {
           <div className="scrollmenu">
             {categories.map((category) => (
               <a
-                key={category.categoryID} href={`#${category.categoryID}`} className={activeLink === category.categoryID ? 'active' : ''} onClick={() => handleLinkClick(category.categoryID)}>
+                key={category.categoryID} href={`#${category.categoryName}`} className={activeLink === category.categoryName ? 'active' : ''} onClick={() => handleLinkClick(category.categoryName)}>
                 {category.categoryName}
               </a>
             ))}

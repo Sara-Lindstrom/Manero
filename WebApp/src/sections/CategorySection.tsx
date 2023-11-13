@@ -5,16 +5,16 @@ import { ITags } from '../Interfaces/ITags';
 const CategorySection = ({ activeCategory }: { activeCategory: string }) => {
   const [tags, setTags] = useState<ITags[]>([]);
 
+  const getTags = async () => {
+    try {
+    setTags(await fetchAllTags(activeCategory));
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+    }
+  };
+
   useEffect(() => {
-    // Fetch tags based on the active category
-    fetchAllTags()
-      .then((allTags) => {
-        const activeCategoryTags = allTags.filter((tag) => tag.category === activeCategory);
-        setTags(activeCategoryTags);
-      })
-      .catch((error) => {
-        console.error('Error fetching tags:', error);
-      });
+    getTags();
   }, [activeCategory]);
 
   return (

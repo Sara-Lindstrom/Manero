@@ -9,11 +9,12 @@ const CategoryView: React.FC = () => {
     const handleNavigateBack = () => {
         window.history.back();
     };
+    
   return (
     <>
         <BreadcrumbSection currentPage='Category' showBackButton={true} onNavigateBack={handleNavigateBack} showSearchField={true} showCartItem={true} />
         <CategoryNav />
-        <IconsNavigationSection />
+        <IconsNavigationSection isAuthenticated={isAuthenticated}/>
     </>
   )
 }
