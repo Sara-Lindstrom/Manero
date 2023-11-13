@@ -38,16 +38,14 @@ const MyAddresses = () => {
                                 })
                         }
                     } else {
-                        console.error('User ID is empty or null');
                         setError('User ID is empty or null. Please try again later.');
                     }
                 })
                 .catch((error) => {
-                    console.error('Error fetching user ID:', error);
-                    setError('Error fetching user data from useEffect. Please try again later.');
+                    setError('Error fetching user data. Please try again later.');
+                    navigate("/signin")
                 });
         } else {
-            console.error('Token is missing or invalid');
             setError('Please sign in to see your addresses');
             navigate('/signin');
         }
