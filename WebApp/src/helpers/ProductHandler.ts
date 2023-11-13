@@ -74,6 +74,20 @@ export const fetchBestSellingProducts = async (): Promise<IProduct[]> => {
         return [];
     }
 }
+
+// Method to fetch all products by category and then filter them out
+export const fetchProductsByCategory = async (category: string): Promise<IProduct[]> => {
+    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Product/GetByCategoryName';
+    const params = { categoryName: category }; 
+
+    try {
+        const response = await axios.get<IProduct[]>(API_URL, { params });
+        return response.data;
+    } catch (error) {
+        return [];
+    }
+};
+
 // // Function to add a product to the wish-list
 // export const addToWishlist = async (productId: string): Promise<boolean> => {
 //     const API_URL = `${process.env.REACT_APP_API_URL || 'https://localhost:7055'}/api/Wishlist/${productId}`;
