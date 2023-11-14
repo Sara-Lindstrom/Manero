@@ -19,6 +19,8 @@ public class ProductController_Test
     private readonly Mock<IRepo<TagEntity, ProductDbContext>> _tagRepoMock;
     private readonly Mock<IRepo<CategoryTagEntity, ProductDbContext>> _categoryTagRepoMock;
     private readonly Mock<IRepo<ImageEntity, ProductDbContext>> _imageRepoMock;
+    private readonly Mock<IRepo<ColorEntity, ProductDbContext>> _colorRepoMock;
+    private readonly Mock<IRepo<SizeEntity, ProductDbContext>> _sizeRepoMock;
 
     public ProductController_Test()
     {
@@ -28,6 +30,8 @@ public class ProductController_Test
         _tagRepoMock = new Mock<IRepo<TagEntity, ProductDbContext>>();
         _categoryTagRepoMock = new Mock<IRepo<CategoryTagEntity, ProductDbContext>>();
         _imageRepoMock = new Mock<IRepo<ImageEntity, ProductDbContext>>();
+        _colorRepoMock = new Mock<IRepo<ColorEntity, ProductDbContext>>();
+        _sizeRepoMock = new Mock<IRepo<SizeEntity, ProductDbContext>>();
 
         // Setup in-memory database
         var options = new DbContextOptionsBuilder<ProductDbContext>()
@@ -40,7 +44,9 @@ public class ProductController_Test
             _categoryRepoMock.Object,
             _tagRepoMock.Object,
             _categoryTagRepoMock.Object,
-            _imageRepoMock.Object
+            _imageRepoMock.Object,
+            _colorRepoMock.Object,
+            _sizeRepoMock.Object
         );
     }
 

@@ -8,6 +8,16 @@ import { IImage } from '../Interfaces/IImage';
 
 const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Product';
 
+// Utility function to shuffle an array
+export const shuffleArray = <T>(array: T[]): T[] => {
+    const shuffledArray = [...array];
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+    }
+    return shuffledArray;
+};
+
 // Function to fetch a product by its ID
 export const fetchProductById = async (productId: string): Promise<IProduct | null> => {
     const API_URL = `${process.env.REACT_APP_API_URL || 'https://localhost:7055'}/api/Product/GetById/${productId}`;

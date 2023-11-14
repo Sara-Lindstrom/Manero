@@ -52,7 +52,6 @@ function App() {
                 <Route path='/test' element={<TestView />} />
                 <Route path='/verifyPhone' element={<VerifyPhoneNumberView />} />
                 <Route path='/viewProfile' element={<ViewProfile />} />
-
                 <Route path='/testleaveAReview' element={<TestLeaveAReviewView />} />
             </Routes>
         </BrowserRouter>

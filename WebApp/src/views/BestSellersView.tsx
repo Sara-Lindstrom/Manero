@@ -5,14 +5,18 @@ import { fetchAllCategories, fetchBestSellers, fetchNewestProducts } from '../he
 import { ICategories } from '../Interfaces/ICategories';
 import { IProduct } from '../Interfaces/IProduct';
 import { SortByBestSeller, SortByNewest, SortBySale } from '../helpers/ProductSorting';
+import ProductsDetailsSection from '../sections/ProductsDetailsSection';
+import { useNavigate } from 'react-router-dom';
 
 const BestSellersView: React.FC = () => {
+    const navigate = useNavigate();
     const [isSliderDropdownVisible, setSliderDropdownVisible] = useState(false);
     const [categories, setCategories] = useState<ICategories[] | undefined>([]);
     const [selectedSorting, setSelectedSorting] = useState<string>('');
     const [isDropdownVisible, setDropdownVisible] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState<string>("");
     const [products, setProducts] = useState<IProduct[]>([]);
+    const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
 
     const sortinOptions = ['Newest', 'Popular', "Sale"];
 
@@ -83,6 +87,10 @@ const BestSellersView: React.FC = () => {
         setDropdownVisible(false);
     };
 
+    const handleProductClick = (productId: string) => {
+        setSelectedProductId(productId);
+    };
+
     const handleNavigateBack = () => {
         window.history.back();
     };
@@ -131,7 +139,8 @@ const BestSellersView: React.FC = () => {
                     )}
                 </div>
             </div>
-            <ProductList products={products} />
+            <ProductList products={products} onProductClick={handleProductClick} />
+            {selectedProductId && <ProductsDetailsSection productId={selectedProductId} />}
         </>
     )
 }
