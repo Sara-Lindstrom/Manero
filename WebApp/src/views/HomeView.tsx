@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import HomePageCategoryNav from '../sections/HomePageCategoryNav';
+import ProductListSection from '../sections/ProductListSection';
 import HomepageShoecaseOffer from '../sections/HomepageShoecaseOffer';
-import FeaturedProductList from '../sections/FeaturedProductList';
-import BestSellerProductList from '../sections/BestSellerProductList';
+import { CardType, IProduct } from '../Interfaces/IProduct';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
-import { IProduct } from '../Interfaces/IProduct';
-import { fetchBestSellingProducts, fetchNewestProducts } from '../helpers/ProductHandler';
+import HomePageCategoryNav from '../sections/HomePageCategoryNav';
 import IconsNavigationSection from '../sections/IconsNavigationSection';
+import React from 'react';
+import { fetchBestSellingProducts, fetchNewestProducts } from '../helpers/ProductHandler';
 
 const HomeView: React.FC = () => {
     const [newestProducts, setNewestProducts] = useState<IProduct[]>([]);
@@ -32,36 +32,42 @@ const HomeView: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        console.log('Authentication status in HomeView:', isAuthenticated);
-    }, [isAuthenticated]);
-
+    }, [isAuthenticated]);    
+    
     return (
-
         <>
-            <BreadcrumbSection currentPage="Best Sellers" showHamburgerButton={true} showBackButton={true} showCartItem={true} />
+            <BreadcrumbSection currentPage="Test" showHamburgerButton={true} showBackButton={true} showCartItem={true} />
             <HomePageCategoryNav />
             <HomepageShoecaseOffer />
             <div className='product-showcase-section-container container'>
                 <section className='product-showcase-section'>
                     <div className='product-showcase-section-header'>
                         <h2 className='product-showcase-name'>Featured Products</h2>
-                        <Link to="/bestSellersView" className='homepage-section-viewall'>view all <i className="fa-solid fa-chevron-right"></i></Link>
+                        <Link to={`/products/${"newest"}`} className='homepage-section-viewall'>view all <i className="fa-solid fa-chevron-right"></i></Link>
                     </div>
-                    <FeaturedProductList products={newestProducts.slice(0, 4)} />
+                    <section className='categorynav'>
+                        <div className='scrollsection'>
+                            <div className="scrollmenu">
+                                <li>
+                                    <ProductListSection products={newestProducts.slice(0, 4)} cardType={CardType.SmallCard}/>
+                                </li>
+                            </div>
+                        </div>
+                    </section>
                 </section>
                 <section className='product-showcase-section'>
                     <div className='product-showcase-section-header'>
                         <h2 className='product-showcase-name'>Best Seller</h2>
-                        <Link to="/bestSellersView" className='homepage-section-viewall'>view all <i className="fa-solid fa-chevron-right"></i></Link>
+                        <Link to={`/products/${"bestseller"}`} className='homepage-section-viewall'>view all <i className="fa-solid fa-chevron-right"></i></Link>
                     </div>
-                    <BestSellerProductList products={bestSellerProducts.slice(0, 3)} />
+                    <ProductListSection products={bestSellerProducts.slice(0, 3)} cardType={CardType.NormalCard} flexed={false} />
                 </section>
             </div>
             <HomepageShoecaseOffer />
             <IconsNavigationSection isAuthenticated={isAuthenticated} />
         </>
 
-    )
-}
+    );
+};
 
 export default HomeView;
