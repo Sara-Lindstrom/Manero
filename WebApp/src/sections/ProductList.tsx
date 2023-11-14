@@ -3,10 +3,9 @@ import { IProduct } from '../Interfaces/IProduct';
 
 interface ProductListProps {
     products: IProduct[];
-    onProductClick: (productId: string) => void;
 }
 
-const ProductList: React.FC<ProductListProps> = ({ products, onProductClick }) => {
+const ProductList: React.FC<ProductListProps> = ({ products }) => {
 
     const [wishlist, setWishlist] = useState<IProduct[]>([]);
     const [cart, setCart] = useState<{ [key: string]: number }>({});
@@ -35,7 +34,7 @@ const ProductList: React.FC<ProductListProps> = ({ products, onProductClick }) =
                 {products.length >= 1 && (
                     products.map((product) => (
                         <li className='product-list-info-below' key={product.id}>
-                            <a className='product-card-info-below' href={`/product/${product.id}`} onClick={() => onProductClick(product.id)}>
+                            <a className='product-card-info-below' href={`/product/${product.id}`}>
                                 <div className='product-card-info-below'>
                                     {product.salesPrice !== null && (
                                         <div className='product-sale-label'>SALE</div>
