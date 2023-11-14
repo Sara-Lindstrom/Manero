@@ -13,14 +13,14 @@ using System.Security.Claims;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ReviewsController : ControllerBase
+public class TestReviewsController : ControllerBase
 {
     private readonly ProductDbContext _productDbContext;
     private readonly UserManager<UserModel> _userManager;
     private readonly IRepo<ProductEntity, ProductDbContext> _productRepo;
     private readonly IRepo<ProductReviewEntity, ProductDbContext> _productReviewRepo;
 
-    public ReviewsController(ProductDbContext productDbContext, UserManager<UserModel> userManager, IRepo<ProductEntity, ProductDbContext> productRepo, IRepo<ProductReviewEntity, ProductDbContext> productReviewRepo)
+    public TestReviewsController(ProductDbContext productDbContext, UserManager<UserModel> userManager, IRepo<ProductEntity, ProductDbContext> productRepo, IRepo<ProductReviewEntity, ProductDbContext> productReviewRepo)
     {
         _productDbContext = productDbContext;
         _userManager = userManager;

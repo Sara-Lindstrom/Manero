@@ -3,8 +3,6 @@ import chatBubbles from '../Images/chatBubbles.svg'
 import StarRating from '../components/StarRating'
 import { useNavigate } from 'react-router-dom'
 import { createReview, getUserInfo } from '../helpers/ReviewHandler';
-import { ReviewData, submitReview } from '../helpers/ReviewHandler';
-
 
 const LeaveAReviewSection: React.FC<{ productId: string }> = ({ productId }) => {
   const [rating, setRating] = useState(0);
@@ -107,28 +105,3 @@ const LeaveAReviewSection: React.FC<{ productId: string }> = ({ productId }) => 
 }
 
 export default LeaveAReviewSection
-
-
-
-/* kod inkommande från develop
-
-    // Works fine to post comments, but make sure the ProductID is correct (hardcoded for now)
-    const handleSubmit = async () => {
-        if (comment.length < 2) {
-            setErrorMessage('Comment must be at least 2 characters long.');
-        } else {
-            const productId = "3e608840-6a94-476e-a147-50e3da35f379"; // Change this to a new productID
-
-            try {
-                await submitReview({ comment, rating, productId }, 
-                    () => navigate('/home'),
-                    () => setErrorMessage('There was a problem submitting your review.')
-                );
-            } catch (error) {
-                console.error("Error submitting review:", error);
-                setErrorMessage('There was a problem submitting your review.');
-            }
-        }
-    };
-
-*/
