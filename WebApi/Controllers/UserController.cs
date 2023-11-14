@@ -205,6 +205,7 @@ public class UserController : ControllerBase
         }
 
         var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+
         // Pass the new password to ASPNetUsers through usermanager
         var result = await _userManager.ResetPasswordAsync(user, resetToken, model.NewPassword);
 

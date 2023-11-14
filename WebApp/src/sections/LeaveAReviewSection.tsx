@@ -2,12 +2,16 @@ import React, { useState } from 'react'
 import chatBubbles from '../Images/chatBubbles.svg'
 import StarRating from '../components/StarRating'
 import { useNavigate } from 'react-router-dom'
+import { ReviewData, submitReview } from '../helpers/ReviewHandler';
 
 // implement productId for connecting the review to the product
 const LeaveAReviewSection: React.FC = () => {
+
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+
+    const navigate = useNavigate();
 
     const handleRatingChange = (newRating: number) => {
         setRating(newRating);
@@ -19,20 +23,37 @@ const LeaveAReviewSection: React.FC = () => {
         setErrorMessage('');
     };
 
-    const navigate = useNavigate();
-
-    const handleSubmit = () => {
+    // Works fine to post comments, but make sure the ProductID is correct (hardcoded for now)
+    const handleSubmit = async () => {
         if (comment.length < 2) {
-            // validation for atleast 2 characters
             setErrorMessage('Comment must be at least 2 characters long.');
         } else {
-            // implement method for database
+            const productId = "93F010C1-EB79-44D4-8EA8-9A021D8BAD61"; // Change this to a new productID
 
-            console.log('Rating:', rating);
-            console.log('Comment:', comment);
-            navigate('/reviews');
+            try {
+                await submitReview({ comment, rating, productId }, 
+                    () => navigate('/home'),
+                    () => setErrorMessage('There was a problem submitting your review.')
+                );
+            } catch (error) {
+                console.error("Error submitting review:", error);
+                setErrorMessage('There was a problem submitting your review.');
+            }
         }
     };
+
+    //const handleSubmit = () => {
+    //    if (comment.length < 2) {
+    //        // validation for atleast 2 characters
+    //        setErrorMessage('Comment must be at least 2 characters long.');
+    //    } else {
+    //        // implement method for database
+
+    //        console.log('Rating:', rating);
+    //        console.log('Comment:', comment);
+    //        navigate('/reviews');
+    //    }
+    //};
 
     return (
         <section className='leaveAReview'>

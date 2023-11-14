@@ -22,37 +22,39 @@ import ViewProfile from './views/ViewProfileView';
 import AddNewAddressView from './views/AddNewAddressView';
 import TestView from './views/TestView';
 import PageNotFound from './views/PageNotFound';
+import ProductDetailsView from './views/ProductDetailsView';
 
 function App() {
 
-  return (
-    <BrowserRouter>
-    <Routes>
-            <Route path="/" element={<OnboardingView />} /> {/*Changed start to be /welcome when starting up the app*/}
-            <Route path='/accountconfirmed' element={<ConfirmedPhoneVerificationView/> } />
-            <Route path='/activate' element={<VerificationView />} />
-            <Route path='/addCardView' element={<AddCardView />} />
-            <Route path='/bestSellersView' element={<BestSellersView />} />
-            <Route path='/category' element={<CategoryView />} />
-            <Route path='/changePassword' element={<ChangePasswordView />} />
-            <Route path='/editProfile' element={<EditProfileView /> }/>
-            <Route path='/forgotPassword' element={<ForgotPasswordView />} />
-            <Route path='/home' element={<HomeView />} />
-            <Route path='/leaveAReview' element={<LeaveAReviewView />} />
-            <Route path='/myAddresses' element={<MyAddresses />} />
-            <Route path='/paymentMethodView' element={<PaymentMethodView />} />
-            <Route path='/resetPasswordConfirmed' element={<ResetPasswordConfirmedView />} />
-            <Route path='/signin' element={<SignInView />} />
-            <Route path='/signup' element={<SignUpView />} />
-            <Route path='/verifyPhone' element={<VerifyPhoneNumberView />} />
-            <Route path='/viewProfile' element={<ViewProfile />} />
-            <Route path='/addNewAddress' element={<AddNewAddressView />} />
-            <Route path='/test' element={<TestView /> } />
-            <Route path='/pageNotFound' element={<PageNotFound /> } />
-        </Routes>
-    </BrowserRouter>
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path='/' element={<OnboardingView />} />
+                <Route path='/accountconfirmed' element={<ConfirmedPhoneVerificationView />} />
+                <Route path='/activate' element={<VerificationView />} />
+                <Route path='/addCardView' element={<AddCardView />} />
+                <Route path='/addNewAddress' element={<AddNewAddressView />} />
+                <Route path='/bestSellersView' element={<BestSellersView />} />
+                <Route path='/category' element={<CategoryView />} />
+                <Route path='/changePassword' element={<ChangePasswordView />} />
+                <Route path='/editProfile' element={<EditProfileView />} />
+                <Route path='/forgotPassword' element={<ForgotPasswordView />} />
+                <Route path='/home' element={<HomeView />} />
+                <Route path='/leaveAReview' element={<LeaveAReviewView />} />
+                <Route path='/myAddresses' element={<MyAddresses />} />
+                <Route path='/pageNotFound' element={<PageNotFound />} />
+                <Route path='/paymentMethodView' element={<PaymentMethodView />} />
+                <Route path='/productDetails' element={<ProductDetailsView />} />
+                <Route path='/resetPasswordConfirmed' element={<ResetPasswordConfirmedView />} />
+                <Route path='/signin' element={<SignInView />} />
+                <Route path='/signup' element={<SignUpView />} />
+                <Route path='/test' element={<TestView />} />
+                <Route path='/verifyPhone' element={<VerifyPhoneNumberView />} />
+                <Route path='/viewProfile' element={<ViewProfile />} />
+            </Routes>
+        </BrowserRouter>
 
-  );
+    );
 };
 
 export default App;
