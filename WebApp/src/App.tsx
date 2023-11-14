@@ -23,6 +23,7 @@ import AddNewAddressView from './views/AddNewAddressView';
 import TestView from './views/TestView';
 import PageNotFound from './views/PageNotFound';
 import ProductDetailsView from './views/ProductDetailsView';
+import TestLeaveAReviewView from './views/TestLeaveAReviewView';
 
 function App() {
 
@@ -51,6 +52,8 @@ function App() {
                 <Route path='/test' element={<TestView />} />
                 <Route path='/verifyPhone' element={<VerifyPhoneNumberView />} />
                 <Route path='/viewProfile' element={<ViewProfile />} />
+
+                <Route path='/testleaveAReview' element={<TestLeaveAReviewView />} />
             </Routes>
         </BrowserRouter>
 
