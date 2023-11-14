@@ -14,7 +14,7 @@ function CategoryNav() {
   useEffect(() => {
     fetchAllCategories()
       .then((data) => {
-        const customSortOrder = ['men', 'woman', 'kids', 'accessories'];
+        const customSortOrder = ['men', 'women', 'kids', 'accessories'];
         const sortedCategories = data.slice().sort((a, b) => {
           const aIndex = customSortOrder.indexOf(a.categoryName);
           const bIndex = customSortOrder.indexOf(b.categoryName);
@@ -35,7 +35,7 @@ function CategoryNav() {
             {categories.map((category) => (
               <a
                 key={category.categoryID} href={`#${category.categoryName}`} className={activeLink === category.categoryName ? 'active' : ''} onClick={() => handleLinkClick(category.categoryName)}>
-                {category.categoryName}
+                {category.categoryName.toUpperCase()}
               </a>
             ))}
           </div>

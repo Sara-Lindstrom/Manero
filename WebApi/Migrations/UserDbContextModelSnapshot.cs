@@ -155,6 +155,264 @@ namespace WebApi.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("WebApi.Models.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasColumnType("char(6)");
+
+                    b.Property<string>("StreetName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Entities.CategoryEntity", b =>
+                {
+                    b.Property<Guid>("CategoryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CategoryID");
+
+                    b.ToTable("CategoryEntity");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Entities.CategoryTagEntity", b =>
+                {
+                    b.Property<Guid>("CategoryTagID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CategoryID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ProductEntityProductID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TagID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CategoryTagID");
+
+                    b.HasIndex("CategoryID");
+
+                    b.HasIndex("ProductEntityProductID");
+
+                    b.HasIndex("TagID");
+
+                    b.ToTable("CategoryTagEntity");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Entities.ColorEntity", b =>
+                {
+                    b.Property<Guid>("ColorID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ColorName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ColorID");
+
+                    b.ToTable("ColorEntity");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Entities.ImageEntity", b =>
+                {
+                    b.Property<Guid>("ImageID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ImageName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ImageID");
+
+                    b.ToTable("ImageEntity");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Entities.ProductCategoryEntity", b =>
+                {
+                    b.Property<Guid>("ProductCategoryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CategoryID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ProductCategoryID");
+
+                    b.HasIndex("CategoryID");
+
+                    b.HasIndex("ProductID");
+
+                    b.ToTable("ProductCategoryEntity");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Entities.ProductColorEntity", b =>
+                {
+                    b.Property<Guid>("ProductColorID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ColorID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ProductColorID");
+
+                    b.HasIndex("ColorID");
+
+                    b.HasIndex("ProductID");
+
+                    b.ToTable("ProductColorEntity");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Entities.ProductEntity", b =>
+                {
+                    b.Property<Guid>("ProductID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("Rating")
+                        .HasColumnType("float");
+
+                    b.Property<decimal?>("SalePrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("ProductID");
+
+                    b.ToTable("ProductEntity");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Entities.ProductImageEntity", b =>
+                {
+                    b.Property<Guid>("ProductImageID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ImageID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ProductImageID");
+
+                    b.HasIndex("ImageID");
+
+                    b.HasIndex("ProductID");
+
+                    b.ToTable("ProductImageEntity");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Entities.ProductSizeEntity", b =>
+                {
+                    b.Property<Guid>("ProductSizeID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SizeID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ProductSizeID");
+
+                    b.HasIndex("ProductID");
+
+                    b.HasIndex("SizeID");
+
+                    b.ToTable("ProductSizeEntity");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Entities.SizeEntity", b =>
+                {
+                    b.Property<Guid>("SizeID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("SizeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SizeID");
+
+                    b.ToTable("SizeEntity");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Entities.TagEntity", b =>
+                {
+                    b.Property<Guid>("TagID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("TagName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TagID");
+
+                    b.ToTable("TagEntity");
+                });
+
             modelBuilder.Entity("WebApi.Models.UserModel", b =>
                 {
                     b.Property<string>("Id")
@@ -272,6 +530,161 @@ namespace WebApi.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("WebApi.Models.Address", b =>
+                {
+                    b.HasOne("WebApi.Models.UserModel", "User")
+                        .WithMany("Addresses")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Entities.CategoryTagEntity", b =>
+                {
+                    b.HasOne("WebApi.Models.Entities.CategoryEntity", "Category")
+                        .WithMany("CategoryTags")
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebApi.Models.Entities.ProductEntity", null)
+                        .WithMany("ProductTags")
+                        .HasForeignKey("ProductEntityProductID");
+
+                    b.HasOne("WebApi.Models.Entities.TagEntity", "Tag")
+                        .WithMany("CategoryTags")
+                        .HasForeignKey("TagID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Tag");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Entities.ProductCategoryEntity", b =>
+                {
+                    b.HasOne("WebApi.Models.Entities.CategoryEntity", "Category")
+                        .WithMany("ProductCategories")
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebApi.Models.Entities.ProductEntity", "Product")
+                        .WithMany("ProductCategories")
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Entities.ProductColorEntity", b =>
+                {
+                    b.HasOne("WebApi.Models.Entities.ColorEntity", "Color")
+                        .WithMany("ProductColors")
+                        .HasForeignKey("ColorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebApi.Models.Entities.ProductEntity", "Product")
+                        .WithMany("ProductColors")
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Color");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Entities.ProductImageEntity", b =>
+                {
+                    b.HasOne("WebApi.Models.Entities.ImageEntity", "Image")
+                        .WithMany("ProductImages")
+                        .HasForeignKey("ImageID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebApi.Models.Entities.ProductEntity", "Product")
+                        .WithMany("ProductImages")
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Image");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Entities.ProductSizeEntity", b =>
+                {
+                    b.HasOne("WebApi.Models.Entities.ProductEntity", "Product")
+                        .WithMany("ProductSizes")
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebApi.Models.Entities.SizeEntity", "Size")
+                        .WithMany("ProductSizes")
+                        .HasForeignKey("SizeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Size");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Entities.CategoryEntity", b =>
+                {
+                    b.Navigation("CategoryTags");
+
+                    b.Navigation("ProductCategories");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Entities.ColorEntity", b =>
+                {
+                    b.Navigation("ProductColors");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Entities.ImageEntity", b =>
+                {
+                    b.Navigation("ProductImages");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Entities.ProductEntity", b =>
+                {
+                    b.Navigation("ProductCategories");
+
+                    b.Navigation("ProductColors");
+
+                    b.Navigation("ProductImages");
+
+                    b.Navigation("ProductSizes");
+
+                    b.Navigation("ProductTags");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Entities.SizeEntity", b =>
+                {
+                    b.Navigation("ProductSizes");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Entities.TagEntity", b =>
+                {
+                    b.Navigation("CategoryTags");
+                });
+
+            modelBuilder.Entity("WebApi.Models.UserModel", b =>
+                {
+                    b.Navigation("Addresses");
                 });
 #pragma warning restore 612, 618
         }
