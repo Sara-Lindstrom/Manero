@@ -34,4 +34,4 @@ const LeaveAReviewView: React.FC = () => {
   )
 }
 
-export default LeaveAReviewView
+export default LeaveAReviewView;

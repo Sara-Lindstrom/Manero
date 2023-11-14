@@ -1,9 +1,5 @@
-﻿using Azure;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System.Linq.Expressions;
 using WebApi.Context;
 using WebApi.Models;
@@ -17,21 +13,27 @@ namespace WebApi.Controllers;
 [ApiController]
 public class ProductController : ControllerBase
 {
-    private readonly ProductRepo _productRepo;
-    private readonly ProductReviewRepo _productReviewRepo;
-    private readonly CategoryRepo _categoryRepo;
-    private readonly TagRepo _tagRepo;
-    private readonly CategoryTagRepo _categoryTagRepo;
-    private readonly ImageRepo _imageRepo;
+    private readonly IRepo<ProductEntity, ProductDbContext> _productRepo;
+    private readonly IRepo<ProductReviewEntity, ProductDbContext> _productReviewRepo;
+    private readonly IRepo<CategoryEntity, ProductDbContext> _categoryRepo;
+    private readonly IRepo<TagEntity, ProductDbContext> _tagRepo;
+    private readonly IRepo<CategoryTagEntity, ProductDbContext> _categoryTagRepo;
+    private readonly IRepo<ImageEntity, ProductDbContext> _imageRepo;
 
-    public ProductController(IRepo<ProductEntity, ProductDbContext> productRepo, IRepo<ProductReviewEntity, ProductDbContext> productReviewRepo, IRepo<CategoryEntity, ProductDbContext> categoryRepo, IRepo<TagEntity, ProductDbContext> tagRepo, IRepo<CategoryTagEntity, ProductDbContext> categoryTagRepo, IRepo<ImageEntity, ProductDbContext> imageRepo)
+    public ProductController(
+        IRepo<ProductEntity, ProductDbContext> productRepo, 
+        IRepo<ProductReviewEntity, ProductDbContext> productReviewRepo, 
+        IRepo<CategoryEntity, ProductDbContext> categoryRepo, 
+        IRepo<TagEntity, ProductDbContext> tagRepo, 
+        IRepo<CategoryTagEntity, ProductDbContext> categoryTagRepo, 
+        IRepo<ImageEntity, ProductDbContext> imageRepo)
     {
-        _productRepo = (ProductRepo)productRepo;
-        _productReviewRepo = (ProductReviewRepo)productReviewRepo;
-        _categoryRepo = (CategoryRepo)categoryRepo;
-        _tagRepo = (TagRepo)tagRepo;
-        _categoryTagRepo = (CategoryTagRepo)categoryTagRepo;
-        _imageRepo = (ImageRepo)imageRepo;
+        _productRepo = productRepo;
+        _productReviewRepo = productReviewRepo;
+        _categoryRepo = categoryRepo;
+        _tagRepo = tagRepo;
+        _categoryTagRepo = categoryTagRepo;
+        _imageRepo = imageRepo;
     }
 
     private static readonly Expression<Func<ProductEntity, object>>[] IncludesForProductModel = new Expression<Func<ProductEntity, object>>[]
@@ -119,6 +121,13 @@ public class ProductController : ControllerBase
 
             foreach (var item in dbResult)
             {
+                if (item.ProductImages.Any())
+                {
+                    foreach (ProductImageEntity productImage in item.ProductImages)
+                    {
+                        var images = await _imageRepo.GetManyAsync(i => i.ImageID == productImage.ImageID);
+                    }
+                }
                 result.Add(item);
             }
 
@@ -152,6 +161,13 @@ public class ProductController : ControllerBase
 
             foreach (var item in dbResult)
             {
+                if (item.ProductImages.Any())
+                {
+                    foreach (ProductImageEntity productImage in item.ProductImages)
+                    {
+                        var images = await _imageRepo.GetManyAsync(i => i.ImageID == productImage.ImageID);
+                    }
+                }
                 result.Add(item);
             }
 
@@ -230,7 +246,7 @@ public class ProductController : ControllerBase
 
     [HttpGet("GetById")]
     // Define an asynchronous action method to get a product by its ID.
-    public async Task<ActionResult<ProductModel>> GetById( Guid id)
+    public async Task<ActionResult<ProductModel>> GetById(Guid id)
     {
         try
         {
@@ -242,6 +258,7 @@ public class ProductController : ControllerBase
                 ProductModel result = dbResult;
                 return Ok(result);
             }
+
             return NotFound();
         }
         catch (Exception ex)
@@ -250,8 +267,49 @@ public class ProductController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+
+    // A version of get by category that doesn't return 404-error if the category is not found
+    [HttpGet("GetByCategoryName")]
+    public async Task<ActionResult<List<ProductModel>>> GetByCategoryName(string categoryName, string? tag)
+    {
+        try
+        {
+            // Retrieve the category from the repository based on the category name.
+            var dbCategory = await _categoryRepo.GetOneAsync(c => c.CategoryName == categoryName);
+
+            // If the category does not exist, return an empty list instead of a 404 error.
+            if (dbCategory == null)
+            {
+                Console.WriteLine($"Category '{categoryName}' not found. Returning empty list.");
+                return Ok(new List<ProductModel>());
+            }
+
+            // Retrieve all products associated with this category.
+            var dbProducts = await _productRepo.GetManyAsync(
+                product => product.ProductCategories.Any(pc => pc.CategoryID == dbCategory.CategoryID),
+                IncludesForProductModel);
+
+            if (tag is not null)
+            {
+                // Retrieve the tag from the repository based on the tag name.
+                var dbTag = await _tagRepo.GetOneAsync(t => t.TagName == tag);
+                if (dbTag == null)
+                {
+                    Console.WriteLine($"Tag '{tag}' not found.");
+                    return NotFound($"Tag '{tag}' not found.");
+                }
+
+                dbProducts = dbProducts.Where(p => p.ProductTags?.Any(t => t.TagID == dbTag.TagID) == true).ToList();
+            }
+
+            // Convert the result to ProductModel and return.
+            var result = dbProducts.Select(product => (ProductModel)product).ToList();
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return BadRequest(ex.Message);
+        }
+    }
 }
-
-
-
-

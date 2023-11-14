@@ -1,22 +1,28 @@
 // CORE
 @import "./core/variables";
 @import "./core/mixins";
-@import "./core/_utilities.scss";
+@import "./core/utilities";
+@import "./core/reusables";
 
 //PARTS
-@import "./parts/_btn.scss";
-@import "./parts/_breadcrumb.scss";
-@import "./parts/resetPasswordConfirmedSection.scss";
+@import "./parts/addCard";
+@import "./parts/addressComponent";
+@import "./parts/breadcrumb";
+@import "./parts/burgerMenu";
+@import "./parts/categorySection";
+@import "./parts/changePasswordSection";
+@import "./parts/flagComponent";
 @import "./parts/forgotPasswordSection";
-@import "./parts/_form";
+@import "./parts/iconsNavigationSection";
+@import "./parts/leaveAReviewSection";
 @import "./parts/payoneerSection";
 @import "./parts/paymentCardsSection";
-@import "./parts/changePasswordSection.scss";
-@import "./parts/AddCard";
+@import "./parts/resetPasswordConfirmedSection";
+@import "./parts/scrollMenu";
 @import "./parts/signInFormSection";
-@import "./parts/iconsNavigationSection";
-@import "./parts/_scrollMenu.scss";
 @import "./parts/signoutPopup";
+@import "./parts/verifyPhonenumber";
+@import "./parts/AddAddressSection";
 @import "./parts/leaveAReviewSection";
 @import "./parts/burgerMenu";
 @import "./parts/FlagComponent";
@@ -24,18 +30,17 @@
 @import "./parts/VerifyPhone";
 @import "./parts/review";
 
-//HomeView Start
+//HOMEVIEW
 @import "./view/homeView";
-@import "./parts/HomepageCategoryNav";
-@import "./parts/SpecialOffersShowcase";
+@import "./parts/homepageCategoryNav";
+@import "./parts/bestSellerProductList";
 @import "./parts/featuredProductList";
-@import "./parts/BestSellerProductList";
-
+@import "./parts/specialOffersShowcase";
 
 //VIEWS
-@import "./view/onboardingView";
-@import "./view/_signUpView";
-@import "./view/editProfile";
-@import "./view/viewProvile";
 @import "./view/bestSellersView";
-@import "./view/verifyPhoneNumberView";
+@import "./view/editProfileView";
+@import "./view/myAddressesView";
+@import "./view/onboardingView";
+@import "./view/viewProfileView";
+@import "./view/pageNotFound";

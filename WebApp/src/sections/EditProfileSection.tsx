@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import * as FormValidation from '../helpers/FormValidation';
-import { fetchProfileData, handleUpdateProfile, ProfileData } from '../helpers/FormHandlers';
+import { fetchProfileData, handleUpdateProfile } from '../helpers/FormHandlers';
 
 const EditProfileSection: React.FC = () => {
 
@@ -189,4 +189,4 @@ const EditProfileSection: React.FC = () => {
     )
 }
 
-export default EditProfileSection
+export default EditProfileSection;

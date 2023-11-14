@@ -1,18 +1,18 @@
 import React from 'react';
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { screen, render, fireEvent, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import IconsNavigationSection from '../sections/IconsNavigationSection';
 
 test('Should navigate to home', async () => {
     // Render the IconsNavigation component wrapped in a BrowserRouter.
-    const { getByTestId } = render(
+    render(
     <BrowserRouter>
-        <IconsNavigationSection />
+        <IconsNavigationSection isAuthenticated={false} />
     </BrowserRouter>
 );
 
     // Find the "homeLink" element using the test ID.
-    const homeNavLink = getByTestId('homeLink');
+    const homeNavLink = screen.getByTestId('homeLink');
 
     // Ensure that the "href" attribute of the link is '/'.
     expect(homeNavLink.getAttribute('href')).toBe('/home');
@@ -31,14 +31,14 @@ test('Should navigate to home', async () => {
 
 test('Should navigate to search', async () => {
     // Render the IconsNavigation component wrapped in a BrowserRouter.
-    const { getByTestId } = render(
+    render(
     <BrowserRouter>
-        <IconsNavigationSection />
+        <IconsNavigationSection isAuthenticated={false} />
     </BrowserRouter>
 );
 
     // Find the "searchLink" element using the test ID.
-    const searchNavLink = getByTestId('searchLink');
+    const searchNavLink = screen.getByTestId('searchLink');
 
     // Ensure that the "href" attribute of the link is '/search'.
     expect(searchNavLink.getAttribute('href')).toBe('/search');
@@ -57,14 +57,14 @@ test('Should navigate to search', async () => {
 
 test('Should navigate to cart', async () => {
     // Render the IconsNavigation component wrapped in a BrowserRouter.
-    const { getByTestId } = render(
+    render(
     <BrowserRouter>
-        <IconsNavigationSection />
+        <IconsNavigationSection isAuthenticated={false} />
     </BrowserRouter>
 );
 
     // Find the "searchLink" element using the test ID.
-    const cartNavLink = getByTestId('cartLink');
+    const cartNavLink = screen.getByTestId('cartLink');
 
     // Ensure that the "href" attribute of the link is '/cart'.
     expect(cartNavLink.getAttribute('href')).toBe('/cart');
@@ -82,14 +82,14 @@ test('Should navigate to cart', async () => {
 
 test('Should navigate to wishlist', async () => {
     // Render the IconsNavigation component wrapped in a BrowserRouter.
-    const { getByTestId } = render(
+    render(
     <BrowserRouter>
-        <IconsNavigationSection />
+        <IconsNavigationSection isAuthenticated={false} />
     </BrowserRouter>
 );
 
     // Find the "searchLink" element using the test ID.
-    const wishlistNavLink = getByTestId('wishlistLink');
+    const wishlistNavLink = screen.getByTestId('wishlistLink');
 
     // Ensure that the "href" attribute of the link is '/wishlist'.
     expect(wishlistNavLink.getAttribute('href')).toBe('/wishlist');
@@ -107,14 +107,14 @@ test('Should navigate to wishlist', async () => {
 
 test('Should navigate to profile', async () => {
     // Render the IconsNavigation component wrapped in a BrowserRouter.
-    const { getByTestId } = render(
+    render(
     <BrowserRouter>
-        <IconsNavigationSection />
+        <IconsNavigationSection isAuthenticated={false} />
     </BrowserRouter>
 );
 
     // Find the "searchLink" element using the test ID.
-    const profileNavLink = getByTestId('profileLink');
+    const profileNavLink = screen.getByTestId('profileLink');
 
     // Ensure that the "href" attribute of the link is '/viewProfile'.
     expect(profileNavLink.getAttribute('href')).toBe('/viewProfile');
