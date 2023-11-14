@@ -21,15 +21,15 @@ const renderStars = (product : IProduct) => {
     const stars = [];
   
     for (let i = 0; i < filledStars; i++) {
-      stars.push(<i className="fa-solid fa-star"></i>);
+      stars.push(<i className="fa-solid fa-star" key={"star_"+i}></i>);
     }
   
     if (hasHalfStar) {
-      stars.push(<i className="fa-solid fa-star-half-stroke"></i>);
+      stars.push(<i className="fa-solid fa-star-half-stroke" key={"half_star"}></i>);
     }
   
     for (let i = 0; i < remainder; i++) {
-      stars.push(<i className="fa-regular fa-star"></i>);
+      stars.push(<i className="fa-regular fa-star" key={"empty_star_"+i}></i>);
     }
     return stars
 }
@@ -74,8 +74,8 @@ const ProductCardComponent: React.FC<ProductCardComponentProps> = ({ product, ad
 
     // Need to change name to a more generic (this is Best seller list)
     const renderNormalCardLayout = () => (
-        <section>
-            <a className="flexed-product-card" key={product.id} href={`/product/${product.id}`}>
+        <section key={product.id}>
+            <a className="flexed-product-card"  href={`/product/${product.id}`}>
                 {product.salesPrice !== null && (
                     <div className='product-sale-label'>SALE</div>
                 )}

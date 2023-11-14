@@ -76,6 +76,21 @@ export const fetchBestSellingProducts = async (): Promise<IProduct[]> => {
     }
 }
 
+export const fetchProductById = async ( productId: string ): Promise<IProduct> => {
+    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Product/GetById';
+    const params = { id: productId };  
+
+
+    try {
+        const response: AxiosResponse<IProduct> = await axios.get(API_URL, { params });
+
+        return response.data;
+    } catch (error) {
+        console.error("An error occurred while fetching best sellers:", error);
+        throw error;
+    }
+}
+
 // Method to fetch all products by category and then filter them out
 export const fetchProductsByCategory = async (category: string): Promise<IProduct[]> => {
     const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Product/GetByCategoryName';
@@ -89,26 +104,3 @@ export const fetchProductsByCategory = async (category: string): Promise<IProduc
     }
 };
 
-// // Function to add a product to the wish-list
-// export const addToWishlist = async (productId: string): Promise<boolean> => {
-//     const API_URL = `${process.env.REACT_APP_API_URL || 'https://localhost:7055'}/api/Wishlist/${productId}`;
-//     try {
-//         const response: AxiosResponse = await axios.post(API_URL);
-//         return response.status === 200;
-//     } catch (error) {
-//         console.error("An error occurred while adding to wishlist:", error);
-//         return false;
-//     }
-// };
- 
-// // Function to add a product to the cart
-// export const addToCart = async (productId: string): Promise<boolean> => {
-//     const API_URL = `${process.env.REACT_APP_API_URL || 'https://localhost:7055'}/api/Cart/${productId}`;
-//     try {
-//         const response: AxiosResponse = await axios.post(API_URL);
-//         return response.status === 200;
-//     } catch (error) {
-//         console.error("An error occurred while adding to cart:", error);
-//         return false;
-//     }
-// };

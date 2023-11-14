@@ -183,10 +183,10 @@ const EditProfileSection: React.FC = () => {
                 </div>
                 <p className='input-error'>{locationError}</p>
 
-                <button className='btn dark-btn form-btn' type='submit'>SAVE CHANGES</button>
-            </form>
-        </div>
-    )
+      <button className='btn dark-btn form-btn' data-testid='save-btn' type='submit'>SAVE CHANGES</button>
+    </form>
+</div>
+  )
 }
 
 export default EditProfileSection;
