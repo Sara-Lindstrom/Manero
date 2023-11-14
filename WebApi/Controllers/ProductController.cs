@@ -423,5 +423,4 @@ public class ProductController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
-
 }

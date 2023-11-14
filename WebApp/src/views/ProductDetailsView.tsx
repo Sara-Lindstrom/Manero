@@ -6,29 +6,29 @@ import { IProduct } from '../Interfaces/IProduct';
 import { fetchProductById } from '../helpers/ProductHandler';
 
 const ProductDetailsView = () => {  
-  const { productId } = useParams<{ productId: string }>();
-  const [product, setProduct] = useState<IProduct>();
+    const { productId } = useParams<{ productId: string }>();
+    const [product, setProduct] = useState<IProduct>();
 
 
-  const getProduct = async () => {
+    const getProduct = async () => {
     if(productId !== undefined){
-      const dbResult = await fetchProductById(productId);
-      setProduct(dbResult);
+        const dbResult = await fetchProductById(productId);
+        setProduct(dbResult);
     }
-  }
+    }
 
-  useEffect(() => {
+    useEffect(() => {
     getProduct()
-  }, [productId]);
+    }, [productId]);
 
-  return (
-    <>
-    <BreadcrumbSection currentPage='Product Details' showBackButton={true} showCartItem={true} />
-    {product !== undefined && (
-      <ProductsDetailsSection product={product}/>
-    )}
-    </>
-  )
+    return (
+        <>
+            <BreadcrumbSection currentPage='Product Details' showCurrentPage={true} showBackButton={true} showCartItem={true} />
+            {product !== undefined && (
+                <ProductsDetailsSection product={product}/>
+            )}
+        </>
+    )
 }
 
 export default ProductDetailsView

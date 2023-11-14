@@ -18,19 +18,6 @@ export const shuffleArray = <T>(array: T[]): T[] => {
     return shuffledArray;
 };
 
-// Function to fetch a product by its ID
-export const fetchProductById = async (productId: string): Promise<IProduct | null> => {
-    const API_URL = `${process.env.REACT_APP_API_URL || 'https://localhost:7055'}/api/Product/GetById/${productId}`;
-
-    try {
-        const response = await axios.get(API_URL);
-        return response.data;
-    } catch (error) {
-        console.error("An error occurred while fetching the product:", error);
-        return null;
-    }
-};
- 
 // Function to fetch best-selling products
 export const fetchByCategoryTag = async (categories : string, tags? : string | string[]): Promise<IProduct[]> => {
 
@@ -162,27 +149,3 @@ export const fetchImagesForProduct = async (productId: string): Promise<IImage[]
         return [];
     }
 };
-
-// // Function to add a product to the wish-list
-// export const addToWishlist = async (productId: string): Promise<boolean> => {
-//     const API_URL = `${process.env.REACT_APP_API_URL || 'https://localhost:7055'}/api/Wishlist/${productId}`;
-//     try {
-//         const response: AxiosResponse = await axios.post(API_URL);
-//         return response.status === 200;
-//     } catch (error) {
-//         console.error("An error occurred while adding to wishlist:", error);
-//         return false;
-//     }
-// };
- 
-// // Function to add a product to the cart
-// export const addToCart = async (productId: string): Promise<boolean> => {
-//     const API_URL = `${process.env.REACT_APP_API_URL || 'https://localhost:7055'}/api/Cart/${productId}`;
-//     try {
-//         const response: AxiosResponse = await axios.post(API_URL);
-//         return response.status === 200;
-//     } catch (error) {
-//         console.error("An error occurred while adding to cart:", error);
-//         return false;
-//     }
-// };
