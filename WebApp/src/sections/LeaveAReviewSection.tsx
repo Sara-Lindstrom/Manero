@@ -28,7 +28,7 @@ const LeaveAReviewSection: React.FC = () => {
         if (comment.length < 2) {
             setErrorMessage('Comment must be at least 2 characters long.');
         } else {
-            const productId = "93F010C1-EB79-44D4-8EA8-9A021D8BAD61"; // Change this to a new productID
+            const productId = "3e608840-6a94-476e-a147-50e3da35f379"; // Change this to a new productID
 
             try {
                 await submitReview({ comment, rating, productId }, 
