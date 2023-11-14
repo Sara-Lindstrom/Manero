@@ -10,6 +10,7 @@ namespace WebApi.Context
         public UserDbContext(DbContextOptions<UserDbContext> options) : base(options) { }
 
         public DbSet<Address> Addresses { get; set; }
+        public DbSet<CartItemEntity> CartItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

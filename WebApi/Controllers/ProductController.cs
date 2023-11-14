@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using System.Security.Claims;
 using WebApi.Context;
 using WebApi.Models;
 using WebApi.Models.Entities;
@@ -13,6 +14,7 @@ namespace WebApi.Controllers;
 [ApiController]
 public class ProductController : ControllerBase
 {
+    private readonly IRepo<CartItemEntity, ProductDbContext> _cartItemRepo;
     private readonly IRepo<ProductEntity, ProductDbContext> _productRepo;
     private readonly IRepo<ProductReviewEntity, ProductDbContext> _productReviewRepo;
     private readonly IRepo<CategoryEntity, ProductDbContext> _categoryRepo;
@@ -21,6 +23,7 @@ public class ProductController : ControllerBase
     private readonly IRepo<ImageEntity, ProductDbContext> _imageRepo;
 
     public ProductController(
+        IRepo<CartItemEntity, ProductDbContext> cartItemRepo,
         IRepo<ProductEntity, ProductDbContext> productRepo, 
         IRepo<ProductReviewEntity, ProductDbContext> productReviewRepo, 
         IRepo<CategoryEntity, ProductDbContext> categoryRepo, 
@@ -28,6 +31,7 @@ public class ProductController : ControllerBase
         IRepo<CategoryTagEntity, ProductDbContext> categoryTagRepo, 
         IRepo<ImageEntity, ProductDbContext> imageRepo)
     {
+        _cartItemRepo = cartItemRepo;
         _productRepo = productRepo;
         _productReviewRepo = productReviewRepo;
         _categoryRepo = categoryRepo;
@@ -305,6 +309,93 @@ public class ProductController : ControllerBase
             // Convert the result to ProductModel and return.
             var result = dbProducts.Select(product => (ProductModel)product).ToList();
             return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return BadRequest(ex.Message);
+        }
+    }
+
+    // Method to get cart items
+    [HttpGet("GetCartItems")]
+    public async Task<ActionResult<List<CartItemEntity>>> GetCartItems()
+    {
+        try
+        {
+            var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var result = await _cartItemRepo.GetManyAsync(ci => ci.UserId == userId);
+            if (result != null && result.Any())
+            {
+                return Ok(result);
+            }
+            return NotFound("No cart items found for the current user.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return BadRequest(ex.Message);
+        }
+    }
+
+    // Method to add items to cart
+    [HttpPost("AddToCart")]
+    public async Task<ActionResult> AddToCart(Guid productId, int quantity)
+    {
+        try
+        {
+            var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var product = await _productRepo.GetOneAsync(p => p.ProductID == productId);
+            if (product == null)
+            {
+                return NotFound($"Product with ID {productId} not found.");
+            }
+
+            var existingCartItem = await _cartItemRepo.GetOneAsync(ci => ci.UserId == userId && ci.ProductId == productId);
+
+            if (existingCartItem != null)
+            {
+                existingCartItem.Quantity += quantity;
+            }
+            else
+            {
+                var cartItem = new CartItemEntity
+                {
+                    UserId = userId,
+                    ProductId = productId,
+                    Quantity = quantity
+                };
+
+                await _cartItemRepo.AddAsync(cartItem);
+            }
+
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return BadRequest(ex.Message);
+        }
+    }
+
+    // Method to remove items from cart
+    [HttpDelete("RemoveFromCart")]
+    public async Task<ActionResult> RemoveFromCart(int id)
+    {
+        try
+        {
+            var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var cartItem = await _cartItemRepo.GetOneAsync(ci => ci.Id == id && ci.UserId == userId);
+            if (cartItem == null)
+            {
+                return NotFound($"Cart item with ID {id} not found for the current user.");
+            }
+
+            await _cartItemRepo.DeleteAsync(cartItem);
+            return Ok();
         }
         catch (Exception ex)
         {

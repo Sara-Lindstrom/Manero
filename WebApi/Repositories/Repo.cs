@@ -14,6 +14,7 @@ public interface IRepo<TEntity, TDbContext> where TEntity : class where TDbConte
     Task<List<TEntity>> GetAllAsync(params Expression<Func<TEntity, object>>[]? includes);
     Task<TEntity> UpdateAsync(TEntity entity);
     Task<bool> DeleteAsync(TEntity entity);
+    Task<TEntity> AddAsync(TEntity entity);
 }
 
 public abstract class Repo<TEntity,TDbContext> : IRepo<TEntity, TDbContext> where TEntity : class where TDbContext : DbContext
@@ -134,6 +135,22 @@ public abstract class Repo<TEntity,TDbContext> : IRepo<TEntity, TDbContext> wher
         {
             Debug.WriteLine(ex.Message);
             return false;
+        }
+    }
+
+    public async Task<TEntity> AddAsync(TEntity entity)
+    {
+        try
+        {
+            await _dbContext.Set<TEntity>().AddAsync(entity);
+            await _dbContext.SaveChangesAsync();
+
+            return entity;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            return null!;
         }
     }
 }
