@@ -2,8 +2,24 @@ import { AxiosResponse } from 'axios';
 import axios from 'axios';
 import { IProduct } from '../Interfaces/IProduct';
 import { ICategories } from '../Interfaces/ICategories';
+import { IColor } from '../Interfaces/IColor';
+import { ISize } from '../Interfaces/ISize';
+import { IImage } from '../Interfaces/IImage';
 
-// type Navigate = (path: string) => void;
+const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Product';
+
+// Function to fetch a product by its ID
+export const fetchProductById = async (productId: string): Promise<IProduct | null> => {
+    const API_URL = `${process.env.REACT_APP_API_URL || 'https://localhost:7055'}/api/Product/GetById/${productId}`;
+
+    try {
+        const response = await axios.get(API_URL);
+        return response.data;
+    } catch (error) {
+        console.error("An error occurred while fetching the product:", error);
+        return null;
+    }
+};
  
 // Function to fetch best-selling products
 export const fetchBestSellers = async (categories : string, tags? : string | string[]): Promise<IProduct[]> => {
@@ -84,6 +100,39 @@ export const fetchProductsByCategory = async (category: string): Promise<IProduc
         const response = await axios.get<IProduct[]>(API_URL, { params });
         return response.data;
     } catch (error) {
+        return [];
+    }
+};
+
+//Function to fetch colors for a product
+export const fetchColorsForProduct = async (productId: string): Promise<IColor[]> => {
+    try {
+        const response: AxiosResponse<IColor[]> = await axios.get(`${API_URL}/GetColorsForProduct`, { params: { productId } });
+        return response.data;
+    } catch (error) {
+        console.error("An error occurred while fetching colors for the product:", error);
+        return [];
+    }
+};
+
+//Function to fetch sizes for a product
+export const fetchSizesForProduct = async (productId: string): Promise<ISize[]> => {
+    try {
+        const response: AxiosResponse<ISize[]> = await axios.get(`${API_URL}/GetSizesForProduct`, { params: { productId } });
+        return response.data;
+    } catch (error) {
+        console.error("An error occurred while fetching sizes for the product:", error);
+        return [];
+    }
+};
+
+// Function to fetch all images for a product
+export const fetchImagesForProduct = async (productId: string): Promise<IImage[]> => {
+    try {
+        const response: AxiosResponse<IImage[]> = await axios.get(`${API_URL}/GetImagesForProduct`, { params: { productId } });
+        return response.data;
+    } catch (error) {
+        console.error("An error occurred while fetching images for the product:", error);
         return [];
     }
 };
