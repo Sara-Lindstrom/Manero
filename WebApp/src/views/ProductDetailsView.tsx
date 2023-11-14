@@ -1,34 +1,34 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import BreadcrumbSection from '../sections/BreadcrumbSection'
 import ProductsDetailsSection from '../sections/ProductsDetailsSection'
-import { fetchProductById } from '../helpers/ProductHandler';
+import { useParams } from 'react-router-dom';
 import { IProduct } from '../Interfaces/IProduct';
+import { fetchProductById } from '../helpers/ProductHandler';
 
-const ProductDetailsView = () => {
-    const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
-    const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(null);
+const ProductDetailsView = () => {  
+  const { productId } = useParams<{ productId: string }>();
+  const [product, setProduct] = useState<IProduct>();
 
-    useEffect(() => {
-        const fetchProductDetails = async () => {
-            if (selectedProductId) {
-                const productDetails = await fetchProductById(selectedProductId);
-                if (productDetails) {
-                    setSelectedProduct(productDetails);
-                } else {
-                    console.error('Error fetching product details.');
-                }
-            }
-        };
 
-        fetchProductDetails();
-    }, [selectedProductId]);
+  const getProduct = async () => {
+    if(productId !== undefined){
+      const dbResult = await fetchProductById(productId);
+      setProduct(dbResult);
+    }
+  }
 
-    return (
-        <>
-            <BreadcrumbSection currentPage='Product Details' showBackButton={true} showCartItem={true} />
-            {selectedProductId && <ProductsDetailsSection productId={selectedProductId} />}
-        </>
-    )
+  useEffect(() => {
+    getProduct()
+  }, [productId]);
+
+  return (
+    <>
+    <BreadcrumbSection currentPage='Product Details' showBackButton={true} showCartItem={true} />
+    {product !== undefined && (
+      <ProductsDetailsSection product={product}/>
+    )}
+    </>
+  )
 }
 
 export default ProductDetailsView

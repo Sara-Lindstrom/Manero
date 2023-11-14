@@ -5,6 +5,7 @@ export enum CardType {
     SmallCard = "SmallCard",
     NormalCard = "NormalCard",
 }
+
 export interface IProduct {
     id: string;
     name: string;
@@ -13,9 +14,6 @@ export interface IProduct {
     salesPrice?: number;
     rating?: number;
     createdDate: Date;
-    cardType?: CardType;
-    // Needed to add this one in order for it to work, not sure why? / NC
-    categories?: string[];
     reviews?: IReview[];
     category: string[];
     size?: string[];

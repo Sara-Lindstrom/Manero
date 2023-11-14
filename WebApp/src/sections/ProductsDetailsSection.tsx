@@ -123,44 +123,44 @@ const ProductsDetailsSection: React.FC<{ productId: string }> = ({ productId }) 
             number_of_reviews++;
         }
            
-    }
-    total_review = sum/number_of_reviews;
+//     }
+//     total_review = sum/number_of_reviews;
 
-    const fullStars = Math.floor(total_review);
-    const halfStar = Math.ceil(total_review - fullStars);
-    const emptyStars = 5 - fullStars - halfStar;
+//     const fullStars = Math.floor(total_review);
+//     const halfStar = Math.ceil(total_review - fullStars);
+//     const emptyStars = 5 - fullStars - halfStar;
 
-    let stars=0;
-        for(let i=0; i< fullStars; i++){
-            review_array[stars] = <i className="fa-solid fa-star"></i>
-            stars++;
-        }
+//     let stars=0;
+//         for(let i=0; i< fullStars; i++){
+//             review_array[stars] = <i className="fa-solid fa-star"></i>
+//             stars++;
+//         }
         
-        for(let i=0; i < halfStar; i++){
-            review_array[stars] = <i className="fa-regular fa-star-half-stroke"></i>
-            stars++;
-        }
+//         for(let i=0; i < halfStar; i++){
+//             review_array[stars] = <i className="fa-regular fa-star-half-stroke"></i>
+//             stars++;
+//         }
 
-        for(let i=0; i < emptyStars; i++){
-            review_array[stars] = <i className="fa-regular fa-star"></i>
-            stars++;
-        }
+//         for(let i=0; i < emptyStars; i++){
+//             review_array[stars] = <i className="fa-regular fa-star"></i>
+//             stars++;
+//         }
 
     //Increment and decrement counter
     const [counter, setCounter] = useState(0)
 
-    function incrementCounter(){
-        setCounter (current => current + 1);
-    }
+//     function incrementCounter(){
+//         setCounter (current => current + 1);
+//     }
 
-    function  decrementCounter(){
-        if (counter > 0){
-            setCounter (current => current - 1);
-        }
-        else{
-            setCounter(0);
-        }
-    }
+//     function  decrementCounter(){
+//         if (counter > 0){
+//             setCounter (current => current - 1);
+//         }
+//         else{
+//             setCounter(0);
+//         }
+//     }
 
     //Generate buttons 
     let size_button_array: JSX.Element[] = [];

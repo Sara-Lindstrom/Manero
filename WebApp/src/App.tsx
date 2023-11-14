@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './css/Style.min.css';
 import AddCardView from './views/AddCardView';
@@ -20,7 +19,6 @@ import VerificationView from './views/VerificationView';
 import VerifyPhoneNumberView from './views/VerifyPhoneNumberView';
 import ViewProfile from './views/ViewProfileView';
 import AddNewAddressView from './views/AddNewAddressView';
-import TestView from './views/TestView';
 import PageNotFound from './views/PageNotFound';
 import ProductDetailsView from './views/ProductDetailsView';
 import TestLeaveAReviewView from './views/TestLeaveAReviewView';
@@ -35,7 +33,7 @@ function App() {
                 <Route path='/activate' element={<VerificationView />} />
                 <Route path='/addCardView' element={<AddCardView />} />
                 <Route path='/addNewAddress' element={<AddNewAddressView />} />
-                <Route path='/bestSellersView' element={<BestSellersView />} />
+                <Route path='/products/:sorting' element={<BestSellersView />} />
                 <Route path='/category' element={<CategoryView />} />
                 <Route path='/changePassword' element={<ChangePasswordView />} />
                 <Route path='/editProfile' element={<EditProfileView />} />
@@ -45,11 +43,10 @@ function App() {
                 <Route path='/myAddresses' element={<MyAddresses />} />
                 <Route path='/pageNotFound' element={<PageNotFound />} />
                 <Route path='/paymentMethodView' element={<PaymentMethodView />} />
-                <Route path='/productDetails' element={<ProductDetailsView />} />
+                <Route path='/product/:productId' element={<ProductDetailsView />} />
                 <Route path='/resetPasswordConfirmed' element={<ResetPasswordConfirmedView />} />
                 <Route path='/signin' element={<SignInView />} />
                 <Route path='/signup' element={<SignUpView />} />
-                <Route path='/test' element={<TestView />} />
                 <Route path='/verifyPhone' element={<VerifyPhoneNumberView />} />
                 <Route path='/viewProfile' element={<ViewProfile />} />
                 <Route path='/testleaveAReview' element={<TestLeaveAReviewView />} />
