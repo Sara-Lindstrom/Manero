@@ -9,11 +9,24 @@ interface ProductCardComponentProps {
     addToWishlist?: (product: IProduct) => void;
     addToCart?: (productId: number, quantity: number) => void;
     showQuantityAdjustment?: boolean;
-    handleQuantityAdjustment: (productId: number, newQuantity: number) => void;
+    handleQuantityAdjustment?: (productId: number, newQuantity: number) => void;
 }
 
 const ProductCardComponent: React.FC<ProductCardComponentProps> = ({ product, addToCart, cardType, addToWishlist, showQuantityAdjustment }) => {
     const [quantity, setQuantity] = useState(1);
+
+    const handleAddToCart = async () => {
+        if (addToCartHandler) {
+            const productId = Number(product.id);
+            const addedToCart = await addToCartHandler(productId, quantity);
+
+            if (addedToCart) {
+                console.log("Product added to cart successfully!");
+            } else {
+                console.log("Failed to add product to cart.");
+            }
+        }
+    };
 
     const handleQuantityAdjustment = (increment: boolean) => {
         // Increment or decrement the quantity based on the value of 'increment'
@@ -53,23 +66,6 @@ const ProductCardComponent: React.FC<ProductCardComponentProps> = ({ product, ad
             );
         }
         return null;
-    };
-
-    const handleAddToCart = async () => {
-        if (addToCartHandler) {
-            // Assuming product has a property 'id' that represents the productId
-            const productId = Number(product.id);
-
-            // Use the current quantity value
-            const addedToCart = await addToCartHandler(productId, quantity);
-
-            // You can handle the result as needed, e.g., show a notification
-            if (addedToCart) {
-                console.log("Product added to cart successfully!");
-            } else {
-                console.log("Failed to add product to cart.");
-            }
-        }
     };
 
     // Need to change name to a more generic (this is Featured products list)

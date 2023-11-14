@@ -7,10 +7,12 @@ interface ProductListComponentProps {
     products: IProduct[];
     cardType: CardType;
     addToWishlist: (product: IProduct) => void;
-    addToCart: (product: IProduct) => void;
+    addToCart: (productId: number, quantity: number) => void;
 }
 
 const ProductListComponent: React.FC<ProductListComponentProps> = ({ products, cardType, addToCart, addToWishlist }) => {
+
+
     return (
         <div className="product-list">
             {products.map(product => (
@@ -18,7 +20,7 @@ const ProductListComponent: React.FC<ProductListComponentProps> = ({ products, c
                     key={product.id}
                     product={product}
                     cardType={cardType}
-                    addToCart={addToCart}
+                    addToCart={(productId, quantity) => addToCart(productId, quantity)}
                     addToWishlist={addToWishlist}
                 />
             ))}

@@ -34,13 +34,13 @@ const ProductListSection: React.FC<ProductListSectionProps> = ({ category, cardT
         loadProducts();
     }, [category]);
 
-    const addToCart = (product: IProduct) => {
+    const addToCart = (productId: number, quantity: number) => {
         setCart((prevCart) => {
             const updatedCart = { ...prevCart };
-            if (updatedCart[product.id]) {
-                updatedCart[product.id]++;
+            if (updatedCart[productId]) {
+                updatedCart[productId]++;
             } else {
-                updatedCart[product.id] = 1;
+                updatedCart[productId] = 1;
             }
             return updatedCart;
         });
