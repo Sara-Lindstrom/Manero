@@ -23,7 +23,7 @@ export const createReview = async (
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-      }
+}
     );
 
     // Check if the network response is successful (status code 200)
@@ -91,28 +91,78 @@ interface ReviewType {
   rating: number;
   reviewDate: string;
   
-}
+    }
 
 
 // Fetch reviews for a specific product
 export const fetchProductReviews = async (productId: string): Promise<ReviewType[] | null> => {
   const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Review/Reviews';
 
-  try {
+    try {
     const response = await axios.get(API_URL, {
       params: {
         productId: productId
-      }
-    });
-  
+            }
+        });
+
     if (response.status === 200) {
       return response.data;
-    }
-  } catch (error) {
+        }
+    } catch (error) {
     console.error("An error occurred while fetching product reviews:", error);
-  }
+    }
   
 
   return null;
 };
 
+
+
+
+
+/* kod inkommande från develop
+
+export interface ReviewData {
+    comment: string;
+    rating: number;
+    productId: string;
+}
+
+export const submitReview = async (
+    reviewData: ReviewData,
+    onSuccess?: () => void,
+    onFail?: () => void
+): Promise<void> => {
+    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Reviews';
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        console.error('No token found');
+        onFail?.();
+        return;
+    }
+
+    try {
+        const response = await axios.post(API_URL, reviewData, {
+            headers: {
+                'Authorization': `Bearer ${token}`, // Include token in the Authorization header
+                'Content-Type': 'application/json',
+            }
+        });
+
+        if (response.status === 200 || response.status === 201) {
+            console.log('Review submitted successfully');
+            onSuccess?.();
+        } else {
+            console.error('Unexpected response status:', response.status);
+            onFail?.();
+        }
+    } catch (error) {
+        console.error("Error submitting review:", error);
+        onFail?.();
+    }
+};
+
+export default submitReview;
+
+*/

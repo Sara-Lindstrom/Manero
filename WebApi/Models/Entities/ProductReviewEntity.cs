@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace WebApi.Models.Entities
@@ -8,17 +9,18 @@ namespace WebApi.Models.Entities
     {
         [Key]
         public Guid ReviewID { get; set; }
-        public Guid ProductID { get; set; }
-        public string UserID { get; set; }
         public string Comment { get; set; }
         public int Rating { get; set; }
         public DateTime ReviewDate { get; set; }
 
-        // Navigation properties
         [JsonIgnore]
+        [ForeignKey("ProductID")]
+        public Guid ProductID { get; set; }
         public ProductEntity Product { get; set; }
 
         [JsonIgnore]
-        public IdentityUser User { get; set; }
+        [ForeignKey("UserID")]
+        public string UserID { get; set; }
+        public UserModel User { get; set; }
     }
 }
