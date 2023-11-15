@@ -6,7 +6,6 @@ interface ProductListProps {
 }
 
 const ProductList: React.FC<ProductListProps> = ({ products }) => {
-
     const [wishlist, setWishlist] = useState<IProduct[]>([]);
     const [cart, setCart] = useState<{ [key: string]: number }>({});
 
@@ -26,6 +25,10 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
             }
             return updatedCart;
         });
+    };
+
+    const getTotalCartItems = () => {
+        return Object.values(cart).reduce((total, quantity) => total + quantity, 0);
     };
 
     return (

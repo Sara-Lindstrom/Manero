@@ -150,7 +150,7 @@ const BestSellersView: React.FC = () => {
                     )}
                 </div>
             </div>
-            <ProductListSection products={products} cardType={CardType.SmallCard}/>
+            <ProductListSection products={products} cardType={CardType.SmallCard} />
         </>
     )
 }
