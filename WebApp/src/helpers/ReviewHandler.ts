@@ -90,8 +90,7 @@ interface ReviewType {
   comment: string;
   rating: number;
   reviewDate: string;
-  
-    }
+}
 
 
 // Fetch reviews for a specific product
@@ -112,6 +111,5 @@ export const fetchProductReviews = async (productId: string): Promise<ReviewType
     console.error("An error occurred while fetching product reviews:", error);
     }
   
-
   return null;
 };
