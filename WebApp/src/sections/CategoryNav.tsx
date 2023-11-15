@@ -1,26 +1,50 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { fetchAllCategories } from '../helpers/ProductHandler';
+import { ICategories } from '../Interfaces/ICategories';
+import CategorySection from './CategorySection';
+
 function CategoryNav() {
-    const [activeLink, setActiveLink] = useState('home');
+  const [activeLink, setActiveLink] = useState('men');
+  const [categories, setCategories] = useState<ICategories[]>([]);
 
-    const handleLinkClick = (link: string) => {
-        setActiveLink(link);
-    };
+  const handleLinkClick = (link: string) => {
+    setActiveLink(link);
+  };
 
-    return (
-        <section className='categorynav'>
-            <div className='container scrollsection'>
-                <div className="scrollmenu">
-                    <a href="#men" className={activeLink === 'men' ? 'active' : ''} onClick={() => handleLinkClick('men')} >MEN</a>
+  useEffect(() => {
+    fetchAllCategories()
+      .then((data) => {
+        const customSortOrder = ['men', 'women', 'kids', 'accessories'];
+        const sortedCategories = data.slice().sort((a, b) => {
+          const aIndex = customSortOrder.indexOf(a.categoryName);
+          const bIndex = customSortOrder.indexOf(b.categoryName);
+          return aIndex - bIndex;
+        });
+        setCategories(sortedCategories);
+      })
+      .catch((error) => {
+        console.error('Error fetching categories:', error);
+      });
+  }, []);
 
-                    <a href="#women" className={activeLink === 'women' ? 'active' : ''} onClick={() => handleLinkClick('women')}>WOMEN</a>
-
-                    <a href="#kids" className={activeLink === 'kids' ? 'active' : ''} onClick={() => handleLinkClick('kids')}>KIDS</a>
-
-                    <a href="/accessories" className={activeLink === 'accessories' ? 'active' : ''} onClick={() => handleLinkClick('accessories')} >ACCESSORIES</a>
-                </div>
-            </div>
-        </section>
-
-    )
+  return (
+    <>
+      <section className="categorynav">
+        <div className="container scrollsection">
+          <div className="scrollmenu">
+            {categories.map((category) => (
+              <a
+                key={category.categoryID} href={`#${category.categoryName}`} className={activeLink === category.categoryName ? 'active' : ''} onClick={() => handleLinkClick(category.categoryName)}>
+                {category.categoryName.toUpperCase()}
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      <CategorySection activeCategory={activeLink} />
+    </>
+  );
 }
+
 export default CategoryNav;
