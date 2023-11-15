@@ -13,17 +13,17 @@ const ProductListSection: React.FC<ProductListSectionProps> = ({ products, cardT
     const [cart, setCart] = useState<{ [key: string]: number }>({});
     const [wishlist, setWishlist] = useState<IProduct[]>([]);
 
-    //const addToCart = (product: IProduct) => {
-    //    setCart((prevCart) => {
-    //        const updatedCart = { ...prevCart };
-    //        if (updatedCart[productId]) {
-    //            updatedCart[productId]++;
-    //        } else {
-    //            updatedCart[productId] = 1;
-    //        }
-    //        return updatedCart;
-    //    });
-    //};
+    const addToCart = (product: IProduct) => {
+        setCart((prevCart) => {
+            const updatedCart = { ...prevCart };
+            if (updatedCart[product.id]) {
+                updatedCart[product.id]++;
+            } else {
+                updatedCart[product.id] = 1;
+            }
+            return updatedCart;
+        });
+    };
 
     const addToWishlist = (product: IProduct) => {
         if (!wishlist.find((item) => item.name === product.name && item.size === product.size && item.color === product.color)) {
@@ -33,18 +33,18 @@ const ProductListSection: React.FC<ProductListSectionProps> = ({ products, cardT
 
     return (
         <section className={flexed ? "product-display-grid" : ""}>
-            {/*{products ? (*/}
-            {/*    products.map((product) => (*/}
-            {/*        <ProductCardComponent*/}
-            {/*        key={product.id}*/}
-            {/*        product={product}*/}
-            {/*        cardType={cardType}*/}
-            {/*        addToCart={addToCart}*/}
-            {/*        addToWishlist={addToWishlist}*/}
-            {/*    />*/}
-            {/*))) : (*/}
-            {/*    <p>No products were found.</p>*/}
-            {/*)}*/}
+            {products ? (
+                products.map((product) => (
+                    <ProductCardComponent
+                    key={product.id}
+                    product={product}
+                    cardType={cardType}
+                    addToCart={addToCart}
+                    addToWishlist={addToWishlist}
+                />
+            ))) : (
+                <p>No products were found.</p>
+            )}
         </section>
     );
 };

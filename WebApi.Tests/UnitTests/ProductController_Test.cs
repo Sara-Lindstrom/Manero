@@ -38,16 +38,16 @@ public class ProductController_Test
             .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
             .Options;
 
-        _productController = new ProductController(
-            _productRepoMock.Object,
-            _productReviewRepoMock.Object,
-            _categoryRepoMock.Object,
-            _tagRepoMock.Object,
-            _categoryTagRepoMock.Object,
-            _imageRepoMock.Object,
-            _colorRepoMock.Object,
-            _sizeRepoMock.Object
-        );
+        //_productController = new ProductController(
+        //    _productRepoMock.Object,
+        //    _productReviewRepoMock.Object,
+        //    _categoryRepoMock.Object,
+        //    _tagRepoMock.Object,
+        //    _categoryTagRepoMock.Object,
+        //    _imageRepoMock.Object,
+        //    _colorRepoMock.Object,
+        //    _sizeRepoMock.Object
+        //);
     }
 
 

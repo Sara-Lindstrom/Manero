@@ -8,14 +8,17 @@ import { fetchUserId } from '../helpers/AddressHandler';
 interface CartWithItemsProps {
     cartItems: ICartItem[];
     userToken: string;
+    products: IProduct[];
 }
 
-const CartWithItems: React.FC<CartWithItemsProps> = ({ cartItems, userToken }) => {
+const CartWithItems: React.FC<CartWithItemsProps> = ({ products, cartItems, userToken }) => {
     const [internalCartItems, setInternalCartItems] = useState<ICartItem[]>([]);
     const [subtotal, setSubtotal] = useState(0);
     const [discount, setDiscount] = useState(0);
     const [deliveryFee, setDeliveryFee] = useState(5);
     const [total, setTotal] = useState(0);
+    const [cart, setCart] = useState<{ [key: string]: number }>({});
+    const [wishlist, setWishlist] = useState<IProduct[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -70,6 +73,25 @@ const CartWithItems: React.FC<CartWithItemsProps> = ({ cartItems, userToken }) =
         setInternalCartItems(updatedCartItems);
     };
 
+
+    const addToCart = (product: IProduct) => {
+        setCart((prevCart) => {
+            const updatedCart = { ...prevCart };
+            if (updatedCart[product.id]) {
+                updatedCart[product.id]++;
+            } else {
+                updatedCart[product.id] = 1;
+            }
+            return updatedCart;
+        });
+    };
+
+    const addToWishlist = (product: IProduct) => {
+        if (!wishlist.find((item) => item.name === product.name && item.size === product.size && item.color === product.color)) {
+            setWishlist([...wishlist, product]);
+        }
+    };
+
     return (
         <section className="cart-section">
             <div className="container">
@@ -77,12 +99,13 @@ const CartWithItems: React.FC<CartWithItemsProps> = ({ cartItems, userToken }) =
                 <div className="cart-product-cards">
                     {/*{internalCartItems.map((item) => (*/}
                     {/*    <ProductCardComponent*/}
-                    {/*        key={item.id}*/}
-                    {/*        product={item}*/}
-                    {/*        cardType={CardType.SmallCard}*/}
-                    {/*        showQuantityAdjustment={true}*/}
+                    {/*        key={products.id}*/}
+                    {/*        product={product}*/}
+                    {/*        cardType={cardType}*/}
                     {/*        addToCart={addToCart}*/}
-                    {/*        handleQuantityAdjustment={(productId, newQuantity) => handleQuantityAdjustment(productId, newQuantity)}*/}
+                    {/*        addToWishlist={addToWishlist}*/}
+                    {/*        /*showQuantityAdjustment={true}*/}
+                    {/*        /*handleQuantityAdjustment={(productId, newQuantity) => handleQuantityAdjustment(productId, newQuantity)}*/}
                     {/*    />*/}
                     {/*))}*/}
                 </div>

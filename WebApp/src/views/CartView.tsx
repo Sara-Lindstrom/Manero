@@ -79,7 +79,7 @@ const CartView: React.FC = () => {
                 <EmptyCartSection />
             ) : (
                 // View for cart with items or unauthenticated user
-                <CartWithItems cartItems={internalCartItems} userToken={userToken || ''} />
+                <CartWithItems cartItems={internalCartItems} userToken={userToken || ''} products={[]} />
             )}
 
             <IconsNavigationSection isAuthenticated={isAuthenticated} />
