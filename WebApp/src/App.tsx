@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './css/Style.min.css';
 import AddCardView from './views/AddCardView';
-import BestSellersView from './views/BestSellersView';
+import ProductsView from './views/ProductsView';
 import CategoryView from './views/CategoryView';
 import ChangePasswordView from './views/ChangePasswordView';
 import ConfirmedPhoneVerificationView from './views/ConfirmedPhoneVerificationView';
@@ -33,7 +33,7 @@ function App() {
                 <Route path='/activate' element={<VerificationView />} />
                 <Route path='/addCardView' element={<AddCardView />} />
                 <Route path='/addNewAddress' element={<AddNewAddressView />} />
-                <Route path='/products/:sorting' element={<BestSellersView />} />
+                <Route path='/products/:sorting' element={<ProductsView />} />
                 <Route path='/category' element={<CategoryView />} />
                 <Route path='/changePassword' element={<ChangePasswordView />} />
                 <Route path='/editProfile' element={<EditProfileView />} />

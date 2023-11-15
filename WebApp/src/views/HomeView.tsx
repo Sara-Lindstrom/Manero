@@ -45,15 +45,9 @@ const HomeView: React.FC = () => {
                         <h2 className='product-showcase-name'>Featured Products</h2>
                         <Link to={`/products/${"newest"}`} className='homepage-section-viewall'>view all <i className="fa-solid fa-chevron-right"></i></Link>
                     </div>
-                    <section className='categorynav'>
-                        <div className='scrollsection'>
-                            <div className="scrollmenu">
-                                <li>
-                                    <ProductListSection products={newestProducts.slice(0, 4)} cardType={CardType.SmallCard}/>
-                                </li>
-                            </div>
-                        </div>
-                    </section>
+
+                    <ProductListSection products={newestProducts.slice(0, 4)} cardType={CardType.SmallCard}/>
+                               
                 </section>
                 <section className='product-showcase-section'>
                     <div className='product-showcase-section-header'>

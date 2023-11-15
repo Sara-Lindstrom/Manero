@@ -21,11 +21,12 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
 
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
+        console.log("UE: Section");
         if (storedToken) {
             setToken(storedToken);
         } else {
             setError('User not signed in. Please sign in to add an address.');
-            navigate('/sign-in');
+            // navigate('/sign-in');
         }
     }, [navigate]);
 
@@ -67,6 +68,7 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
             setUseCurrentLocation(false);
     
             // Navigate to '/MyAddresses' after successful addition
+            console.log("Save: Section");
             navigate('/myAddresses');
     
         } catch (error) {
@@ -146,8 +148,12 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
                         <div className="actions-container">
                         <div>
                             <div className="remember-me">
-                                <input type="checkbox" />
-                                <label>Use my current location</label>
+                            <input
+                                type="checkbox"
+                                checked={useCurrentLocation}
+                                onChange={(e) => setUseCurrentLocation(e.target.checked)}
+                            />
+                            <label>Use my current location</label>
                             </div>
                         </div>
                     </div>

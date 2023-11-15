@@ -23,7 +23,7 @@ const ProductDetailsView = () => {
 
     return (
         <>
-            <BreadcrumbSection currentPage='Product Details' showCurrentPage={true} showBackButton={true} showCartItem={true} />
+            <BreadcrumbSection currentPage='Product Details' showHamburgerButton={true} showCartItem={true} />
             {product !== undefined && (
                 <ProductsDetailsSection product={product}/>
             )}
