@@ -13,14 +13,14 @@ using System.Security.Claims;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ReviewsController : ControllerBase
+public class TestReviewsController : ControllerBase
 {
     private readonly ProductDbContext _productDbContext;
     private readonly UserManager<UserModel> _userManager;
     private readonly IRepo<ProductEntity, ProductDbContext> _productRepo;
     private readonly IRepo<ProductReviewEntity, ProductDbContext> _productReviewRepo;
 
-    public ReviewsController(ProductDbContext productDbContext, UserManager<UserModel> userManager, IRepo<ProductEntity, ProductDbContext> productRepo, IRepo<ProductReviewEntity, ProductDbContext> productReviewRepo)
+    public TestReviewsController(ProductDbContext productDbContext, UserManager<UserModel> userManager, IRepo<ProductEntity, ProductDbContext> productRepo, IRepo<ProductReviewEntity, ProductDbContext> productReviewRepo)
     {
         _productDbContext = productDbContext;
         _userManager = userManager;
@@ -95,6 +95,28 @@ public class ReviewsController : ControllerBase
         if (!reviews.Any())
         {
             return NotFound("No reviews found for this user.");
+        }
+
+        return Ok(reviews);
+    }
+
+    //Method to get a review for a product
+    [HttpGet("GetProductReviews/{productId}")]
+    public async Task<IActionResult> GetReviewsByProduct(Guid productId)
+    {
+        var reviews = await _productDbContext.ProductReviews
+            .Where(review => review.ProductID == productId)
+            .Select(r => new ReviewDTO
+            {
+                Comment = r.Comment,
+                Rating = r.Rating,
+                ProductId = r.ProductID,
+            })
+            .ToListAsync();
+
+        if (!reviews.Any())
+        {
+            return NotFound($"No reviews found for product with ID {productId}.");
         }
 
         return Ok(reviews);

@@ -21,6 +21,8 @@ public class ProductController : ControllerBase
     private readonly IRepo<TagEntity, ProductDbContext> _tagRepo;
     private readonly IRepo<CategoryTagEntity, ProductDbContext> _categoryTagRepo;
     private readonly IRepo<ImageEntity, ProductDbContext> _imageRepo;
+    private readonly IRepo<ColorEntity, ProductDbContext> _colorRepo;
+    private readonly IRepo<SizeEntity, ProductDbContext> _sizeRepo;
 
     public ProductController(
         IRepo<CartItemEntity, ProductDbContext> cartItemRepo,
@@ -29,7 +31,9 @@ public class ProductController : ControllerBase
         IRepo<CategoryEntity, ProductDbContext> categoryRepo, 
         IRepo<TagEntity, ProductDbContext> tagRepo, 
         IRepo<CategoryTagEntity, ProductDbContext> categoryTagRepo, 
-        IRepo<ImageEntity, ProductDbContext> imageRepo)
+        IRepo<ImageEntity, ProductDbContext> imageRepo,
+        IRepo<ColorEntity, ProductDbContext> colorRepo,
+        IRepo<SizeEntity, ProductDbContext> sizeRepo)
     {
         _cartItemRepo = cartItemRepo;
         _productRepo = productRepo;
@@ -38,6 +42,8 @@ public class ProductController : ControllerBase
         _tagRepo = tagRepo;
         _categoryTagRepo = categoryTagRepo;
         _imageRepo = imageRepo;
+        _colorRepo = colorRepo;
+        _sizeRepo = sizeRepo;
     }
 
     private static readonly Expression<Func<ProductEntity, object>>[] IncludesForProductModel = new Expression<Func<ProductEntity, object>>[]
@@ -309,6 +315,111 @@ public class ProductController : ControllerBase
             // Convert the result to ProductModel and return.
             var result = dbProducts.Select(product => (ProductModel)product).ToList();
             return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return BadRequest(ex.Message);
+        }
+    }
+
+    //Method to get colors for a product
+    [HttpGet("GetColorsForProduct")]
+    public async Task<ActionResult<List<ColorEntity>>> GetColorsForProduct(Guid productId)
+    {
+        try
+        {
+            // Retrieve the product from the repository based on the product ID.
+            var product = await _productRepo.GetOneAsync(p => p.ProductID == productId, IncludesForProductModel);
+
+            if (product == null)
+            {
+                Console.WriteLine($"Product with ID '{productId}' not found.");
+                return NotFound($"Product with ID '{productId}' not found.");
+            }
+
+            // Extract unique color IDs from the product's color relationships.
+            var colorIds = product.ProductColors?.Select(pc => pc.ColorID).Distinct();
+
+            if (colorIds is not null)
+            {
+                // Retrieve the colors from the repository based on the extracted color IDs.
+                var colors = await _colorRepo.GetManyAsync(c => colorIds.Contains(c.ColorID));
+
+                return Ok(colors);
+            }
+
+            return NotFound("No colors found for the product.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return BadRequest(ex.Message);
+        }
+    }
+
+    //Method to get product sizes
+    [HttpGet("GetSizesForProduct")]
+    public async Task<ActionResult<List<SizeEntity>>> GetSizesForProduct(Guid productId)
+    {
+        try
+        {
+            // Retrieve the product from the repository based on the product ID.
+            var product = await _productRepo.GetOneAsync(p => p.ProductID == productId, IncludesForProductModel);
+
+            if (product == null)
+            {
+                Console.WriteLine($"Product with ID '{productId}' not found.");
+                return NotFound($"Product with ID '{productId}' not found.");
+            }
+
+            // Extract unique size IDs from the product's size relationships.
+            var sizeIds = product.ProductSizes?.Select(ps => ps.SizeID).Distinct();
+
+            if (sizeIds is not null)
+            {
+                // Retrieve the sizes from the repository based on the extracted size IDs.
+                var sizes = await _sizeRepo.GetManyAsync(s => sizeIds.Contains(s.SizeID));
+
+                return Ok(sizes);
+            }
+
+            return NotFound("No sizes found for the product.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return BadRequest(ex.Message);
+        }
+    }
+
+    //Method to get product images
+    [HttpGet("GetImagesForProduct")]
+    public async Task<ActionResult<List<ImageEntity>>> GetImagesForProduct(Guid productId)
+    {
+        try
+        {
+            // Retrieve the product from the repository based on the product ID.
+            var product = await _productRepo.GetOneAsync(p => p.ProductID == productId, IncludesForProductModel);
+
+            if (product == null)
+            {
+                Console.WriteLine($"Product with ID '{productId}' not found.");
+                return NotFound($"Product with ID '{productId}' not found.");
+            }
+
+            // Extract unique image IDs from the product's image relationships.
+            var imageIds = product.ProductImages?.Select(pi => pi.ImageID).Distinct();
+
+            if (imageIds is not null)
+            {
+                // Retrieve the images from the repository based on the extracted image IDs.
+                var images = await _imageRepo.GetManyAsync(i => imageIds.Contains(i.ImageID));
+
+                return Ok(images);
+            }
+
+            return NotFound("No images found for the product.");
         }
         catch (Exception ex)
         {

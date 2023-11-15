@@ -38,6 +38,8 @@ builder.Services.AddScoped<IRepo<CategoryEntity, ProductDbContext>, CategoryRepo
 builder.Services.AddScoped<IRepo<TagEntity, ProductDbContext>, TagRepo>();
 builder.Services.AddScoped<IRepo<CategoryTagEntity, ProductDbContext>, CategoryTagRepo>();
 builder.Services.AddScoped<IRepo<ImageEntity, ProductDbContext>, ImageRepo>();
+builder.Services.AddScoped<IRepo<ColorEntity, ProductDbContext>, ColorRepo>();
+builder.Services.AddScoped<IRepo<SizeEntity, ProductDbContext>, SizeRepo>();
 
 // Enforce unique emails
 builder.Services.AddIdentity<UserModel, IdentityRole>(options =>

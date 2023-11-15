@@ -1,6 +1,6 @@
 .categorynav {
     
-    .container {
+    .scrollsection {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -10,7 +10,6 @@
             display: flex;
             background-color: #fff;
             overflow: auto;
-            white-space: nowrap;
     
             .home-nav-text {
                 display: flex;
