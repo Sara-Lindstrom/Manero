@@ -17,6 +17,7 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
     const [useCurrentLocation, setUseCurrentLocation] = useState(false);
     const [token, setToken] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
+    const [postalCodeError, setPostalCodeError] = useState<string | null>(null);
 
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
@@ -34,7 +35,7 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
                 setError('User not signed in. Please sign in to add an address.');
                 return;
             }
-
+    
             const response = await axios.post(
                 'https://localhost:7055/api/Addresses/AddAddress',
                 {
@@ -50,13 +51,13 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
                     },
                 }
             );
-
+    
             // Assuming your API returns the newly added address
             const newAddress = response.data;
-
+    
             // Call the callback function passed from the parent component to update the list of addresses after adding a new one
             onAddressAdded(newAddress);
-
+    
             // Clear the form fields after successfully adding the address
             setTitle('');
             setStreetName('');
@@ -64,8 +65,23 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
             setCountry('');
             setPostalCode('');
             setUseCurrentLocation(false);
+    
+            // Navigate to '/MyAddresses' after successful addition
+            navigate('/myAddresses');
+    
         } catch (error) {
             setError('Error saving address. Please try again later.');
+        }
+    };
+
+    const validatePostalCode = (value: string) => {
+        // Regular expression for postal code validation (you might need to adjust this based on the format of postal codes)
+        const postalCodeRegex = /^\d{3}\s\d{2}$/; // Example regex for US postal codes
+
+        if (!value.match(postalCodeRegex)) {
+            setPostalCodeError('Invalid postal code format');
+        } else {
+            setPostalCodeError(null);
         }
     };
 
@@ -115,14 +131,18 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
                             onChange={(e) => setCountry(e.target.value)}
                         />
                     </div>
-                    <div className='input-container'>
-                        <p className='input-label'>POSTAL CODE</p>
-                        <input
-                            className="input"
-                            value={postalCode}
-                            onChange={(e) => setPostalCode(e.target.value)}
-                        />
-                    </div>
+                            <div className='input-container'>
+                                <p className='input-label'>POSTAL CODE</p>
+                                <input
+                                className="input"
+                                value={postalCode}
+                                onChange={(e) => {
+                                    setPostalCode(e.target.value);
+                                    validatePostalCode(e.target.value); // Validate postal code on change
+                                }}
+                                />
+                                {postalCodeError && <p className='error-message'>{postalCodeError}</p>}
+                            </div>
                         <div className="actions-container">
                         <div>
                             <div className="remember-me">
