@@ -49,9 +49,6 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
 
                 const productReviews = await fetchReviewsForProduct(product.id);
                 setReviews(productReviews);
-
-                // Display 2 random reviews of the product
-                fetchAndDisplayReviews();
             } catch (error) {
                 console.error('Error fetching product details:', error);
             }

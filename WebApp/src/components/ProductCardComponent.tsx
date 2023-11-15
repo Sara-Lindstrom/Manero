@@ -1,41 +1,89 @@
-﻿import React from 'react';
+﻿import React, { useState } from 'react';
 import { IProduct, CardType } from '../Interfaces/IProduct';
+import { addToCart as addToCartHandler } from '../helpers/ProductHandler';
+import ProductCardActions from '../helpers/ProductCardActions';
 
 // Rendering a product card with either SmallCard or NormalCard as CardType
 interface ProductCardComponentProps {
     product: IProduct;
     cardType?: CardType;
-    addToWishlist: (product: IProduct) => void;
-    addToCart: (product: IProduct) => void;
+    addToWishlist?: (product: IProduct) => void;
+    showQuantityAdjustment?: boolean;
 }
 
-const renderStars = (product : IProduct) => {
-    if(product.rating == undefined){
-        product.rating = 0;
-    }
-    
-    const filledStars = Math.floor(product.rating);
-    const hasHalfStar = product.rating % 1 !== 0;
-    const remainder = 5 - filledStars - (hasHalfStar ? 1 : 0);
-  
-    const stars = [];
-  
-    for (let i = 0; i < filledStars; i++) {
-      stars.push(<i className="fa-solid fa-star" key={"star_"+i}></i>);
-    }
-  
-    if (hasHalfStar) {
-      stars.push(<i className="fa-solid fa-star-half-stroke" key={"half_star"}></i>);
-    }
-  
-    for (let i = 0; i < remainder; i++) {
-      stars.push(<i className="fa-regular fa-star" key={"empty_star_"+i}></i>);
-    }
-    return stars
-}
-  
+const ProductCardComponent: React.FC<ProductCardComponentProps> = ({ product, cardType, addToWishlist, showQuantityAdjustment }) => {
+    const { addToCart, handleQuantityAdjustment, quantity } = ProductCardActions(product);
 
-const ProductCardComponent: React.FC<ProductCardComponentProps> = ({ product, addToCart, cardType, addToWishlist }) => {
+    const handleAddToCart = async () => {
+        const productId = Number(product.id);
+        try {
+            const addedToCart = await addToCart(productId, quantity);
+
+            if (addedToCart) {
+                console.log("Product added to cart successfully!");
+            } else {
+                console.log("Failed to add product to cart.");
+            }
+        } catch (error) {
+            console.error("Error adding product to cart:", error);
+        }
+    };
+
+    const renderStars = (product: IProduct) => {
+        if (product.rating == undefined) {
+            product.rating = 0;
+        }
+
+        const filledStars = Math.floor(product.rating);
+        const hasHalfStar = product.rating % 1 !== 0;
+        const remainder = 5 - filledStars - (hasHalfStar ? 1 : 0);
+
+        const stars = [];
+
+        for (let i = 0; i < filledStars; i++) {
+            stars.push(<i className="fa-solid fa-star" key={"star_" + i}></i>);
+        }
+
+        if (hasHalfStar) {
+            stars.push(<i className="fa-solid fa-star-half-stroke" key={"half_star"}></i>);
+        }
+
+        for (let i = 0; i < remainder; i++) {
+            stars.push(<i className="fa-regular fa-star" key={"empty_star_" + i}></i>);
+        }
+        return stars
+    }
+
+    const renderButtons = () => {
+        if (showQuantityAdjustment) {
+            // If showQuantityAdjustment is true, render only quantity adjustment buttons
+            return (
+                <div className='product-card-info-below-buttons'>
+                    <button className='product-card-info-below-button' onClick={() => handleQuantityAdjustment(true)}>
+                        <i className="fa-regular fa-plus"></i>
+                    </button>
+                    <span className='product-quantity'>{quantity}</span>
+                    <button className='product-card-info-below-button' onClick={() => handleQuantityAdjustment(false)}>
+                        <i className="fa-regular fa-minus"></i>
+                    </button>
+                </div>
+            );
+        }
+
+        // If showQuantityAdjustment is false, render cart and wishlist buttons
+        return (
+            <>
+                <button className='product-card-button' onClick={() => addToWishlist && addToWishlist(product)}>
+                    <i className="fa-regular fa-heart"></i>
+                </button>
+                <button className='product-card-button' onClick={handleAddToCart}>
+                    <i className="fa-regular fa-shopping-cart"></i>
+                </button>
+            </>
+        );
+    };
+
+
 
     // Need to change name to a more generic (this is Featured products list)
     const renderSmallCardLayout = () => (
@@ -62,12 +110,7 @@ const ProductCardComponent: React.FC<ProductCardComponentProps> = ({ product, ad
                 </div>
             </div>
             <div className='product-card-buttons'>
-                <button className='product-card-button' onClick={() => addToWishlist(product)}>
-                    <i className="fa-regular fa-heart"></i>
-                </button>
-                <button className='product-card-button' onClick={() => addToCart(product)}>
-                    <i className="fa-regular fa-shopping-cart"></i>
-                </button>
+                {renderButtons()}
             </div>
         </a>
     ); 
@@ -99,16 +142,14 @@ const ProductCardComponent: React.FC<ProductCardComponentProps> = ({ product, ad
                     </div>
                     <p className='product-card-rating'>{renderStars(product)} ({product.reviews?.length})</p>
                 </div>
-                
                 <div className='product-card-buttons'>
-                    <button className='product-card-button' onClick={() => addToWishlist(product)}>
+                    <button className='product-card-button' onClick={() => addToWishlist && addToWishlist(product)}>
                         <i className="fa-regular fa-heart"></i>
                     </button>
-                    <button className='product-card-button' onClick={() => addToCart(product)}>
+                    <button className='product-card-button' onClick={handleAddToCart}>
                         <i className="fa-regular fa-shopping-cart"></i>
                     </button>
                 </div>
-
             </a>
         </section>
 

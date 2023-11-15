@@ -10,39 +10,18 @@ interface ProductListSectionProps {
 }
 
 const ProductListSection: React.FC<ProductListSectionProps> = ({ products, cardType, flexed = true }) => {
-    const [cart, setCart] = useState<{ [key: string]: number }>({});
-    const [wishlist, setWishlist] = useState<IProduct[]>([]);
-
-    const addToCart = (product: IProduct) => {
-        setCart((prevCart) => {
-            const updatedCart = { ...prevCart };
-            if (updatedCart[product.id]) {
-                updatedCart[product.id]++;
-            } else {
-                updatedCart[product.id] = 1;
-            }
-            return updatedCart;
-        });
-    };
-
-    const addToWishlist = (product: IProduct) => {
-        if (!wishlist.find((item) => item.name === product.name && item.size === product.size && item.color === product.color)) {
-            setWishlist([...wishlist, product]);
-        }
-    };
-
     return (
         <section className={flexed ? "product-display-grid" : ""}>
             {products ? (
                 products.map((product) => (
                     <ProductCardComponent
-                    key={product.id}
-                    product={product}
-                    cardType={cardType}
-                    addToCart={addToCart}
-                    addToWishlist={addToWishlist}
-                />
-            ))) : (
+                        key={product.id}
+                        product={product}
+                        cardType={cardType}
+                        showQuantityAdjustment={false}
+                    />
+                ))
+            ) : (
                 <p>No products were found.</p>
             )}
         </section>

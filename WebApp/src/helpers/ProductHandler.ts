@@ -5,6 +5,15 @@ import { ICategories } from '../Interfaces/ICategories';
 import { IColor } from '../Interfaces/IColor';
 import { ISize } from '../Interfaces/ISize';
 import { IImage } from '../Interfaces/IImage';
+import { ITags } from '../Interfaces/ITags';
+
+export interface CartItems {
+    id: number;
+    productId: string;
+    product: IProduct;
+    quantity: number;
+    userId: string;
+}
 
 const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Product';
 
@@ -17,11 +26,6 @@ export const shuffleArray = <T>(array: T[]): T[] => {
     }
     return shuffledArray;
 };
-
-import { ITags } from '../Interfaces/ITags';
-
-
-// type Navigate = (path: string) => void;
  
 // Function to fetch best-selling products
 export const fetchByCategoryTag = async (categories : string, tags? : string | string[]): Promise<IProduct[]> => {
@@ -169,5 +173,48 @@ export const fetchImagesForProduct = async (productId: string): Promise<IImage[]
     } catch (error) {
         console.error("An error occurred while fetching images for the product:", error);
         return [];
+    }
+};
+
+// Function to fetch cart items for a user
+export const fetchCartItems = async (userId: string): Promise<IProduct[]> => {
+    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Cart/GetItems';
+
+    try {
+        const response: AxiosResponse<IProduct[]> = await axios.get(API_URL, {
+            headers: {
+                Authorization: `Bearer ${userId}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("An error occurred while fetching cart items:", error);
+        return [];
+    }
+};
+
+// Function to add a product to the cart
+export const addToCart = async (productId: number, quantity: number): Promise<boolean> => {
+    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Cart/AddToCart';
+
+    try {
+        const response: AxiosResponse = await axios.post(API_URL, { productId, quantity });
+        return response.status === 200;
+    } catch (error) {
+        console.error("An error occurred while adding to cart:", error);
+        return false;
+    }
+};
+
+// Function to remove a product from the cart
+export const removeFromCart = async (productId: number): Promise<boolean> => {
+    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Cart/RemoveFromCart';
+
+    try {
+        const response: AxiosResponse = await axios.delete(`${API_URL}/${productId}`);
+        return response.status === 200;
+    } catch (error) {
+        console.error("An error occurred while removing from cart:", error);
+        return false;
     }
 };

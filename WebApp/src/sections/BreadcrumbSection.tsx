@@ -14,9 +14,10 @@ interface IBreadcrumbProps {
     showSearchField?: boolean; // show search field
 
     showCartItem?: boolean; // show cart
+    cartItemCount?: number; // number of items in the cart
 }
 
-const BreadcrumbSection: React.FC<IBreadcrumbProps> = ({ currentPage, showBackButton, onNavigateBack, showCartItem, showCurrentPage, showSearchField, showHamburgerButton }) => {
+const BreadcrumbSection: React.FC<IBreadcrumbProps> = ({ currentPage, showBackButton, onNavigateBack, showCartItem, showCurrentPage, showSearchField, showHamburgerButton, cartItemCount }) => {
     return (
         <section className='breadcrumb'>
             <div className='container'>
@@ -54,8 +55,10 @@ const BreadcrumbSection: React.FC<IBreadcrumbProps> = ({ currentPage, showBackBu
                     <div className='third-column'>
                         <li className="cart">
                             {showCartItem ? (
-                                <NavLink to={'/pageNotFound'}>
-                                    <span className="translate-middle badge rounded-pill">1</span>
+                                <NavLink to={'/cart'}>
+                                    <span className="translate-middle badge rounded-pill">
+                                        {cartItemCount}
+                                    </span>
                                     <i className="fa-regular fa-bag-shopping"></i>
                                 </NavLink>
                             ) : null}
