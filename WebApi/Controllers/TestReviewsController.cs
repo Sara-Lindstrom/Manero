@@ -99,4 +99,26 @@ public class TestReviewsController : ControllerBase
 
         return Ok(reviews);
     }
+
+    //Method to get a review for a product
+    [HttpGet("GetProductReviews/{productId}")]
+    public async Task<IActionResult> GetReviewsByProduct(Guid productId)
+    {
+        var reviews = await _productDbContext.ProductReviews
+            .Where(review => review.ProductID == productId)
+            .Select(r => new ReviewDTO
+            {
+                Comment = r.Comment,
+                Rating = r.Rating,
+                ProductId = r.ProductID,
+            })
+            .ToListAsync();
+
+        if (!reviews.Any())
+        {
+            return NotFound($"No reviews found for product with ID {productId}.");
+        }
+
+        return Ok(reviews);
+    }
 }

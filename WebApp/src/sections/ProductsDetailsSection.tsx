@@ -17,34 +17,41 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
     const [sizes, setSizes] = useState<ISize[]>([]);
     const [images, setImages] = useState<IImage[]>([]);
     const [reviews, setReviews] = useState<Review[]>([]);
-    const [fetchedSizes, setFetchedSizes] = useState<ISize[]>([]);
-    const [sizesForProduct, setSizesForProduct] = useState<ISize[]>([]);
     const [displayedReviews, setDisplayedReviews] = useState<JSX.Element[]>([]);
     const [sizeArray, setSizeArray] = useState<string[]>([]);
     const [activeSize, setActiveSize] = useState<ISize | null>(null);
     const [activeColor, setActiveColor] = useState<IColor | null>(null);
+    const [counter, setCounter] = useState(0);
 
+    let review_array: JSX.Element[] = [];
 
+    // Get product's total review
+    let sum = 0;
+    let number_of_reviews = 0;
+    let total_review = 0;
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [fetchedProduct, sizesForProductResponse, fetchedColors, fetchedSizes, fetchedImages] = await Promise.all([
+                const [fetchedProduct, fetchedColors, fetchedSizes, fetchedImages] = await Promise.all([
                     fetchProductById(product.id),
-                    fetchSizesForProduct(product.id),
                     fetchColorsForProduct(product.id),
                     fetchSizesForProduct(product.id),
                     fetchImagesForProduct(product.id),
                 ]);
 
                 setLocalProduct(fetchedProduct);
-                setSizesForProduct(sizesForProductResponse);
-                setSizes(fetchedSizes);
-                setFetchedSizes(fetchedSizes);
+                setSizes(fetchedSizes); 
                 setColors(fetchedColors);
                 setImages(fetchedImages);
 
                 processSizes(fetchedSizes);
+
+                const productReviews = await fetchReviewsForProduct(product.id);
+                setReviews(productReviews);
+
+                // Display 2 random reviews of the product
+                fetchAndDisplayReviews();
             } catch (error) {
                 console.error('Error fetching product details:', error);
             }
@@ -52,8 +59,6 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
 
         fetchData();
     }, [product.id]);
-
-    console.log('Fetched Colors:', colors);
 
     const processSizes = (sizesForProduct: ISize[]) => {
         // Create an array to store size names based on their IDs
@@ -113,43 +118,7 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
         ></button>
     ));
 
-    // Get product's total review
-    let sum = 0;
-    let number_of_reviews = 0
-    let total_review = 0;
-    let review_array = [];
-    for (let i = 0; i < reviews.length; i++) {
-        if (product?.id == reviews[i].productId) {
-            sum = sum + reviews[i].rating;
-            number_of_reviews++;
-        }
-
-    }
-    total_review = sum / number_of_reviews;
-
-    const fullStars = Math.floor(total_review);
-    const halfStar = Math.ceil(total_review - fullStars);
-    const emptyStars = 5 - fullStars - halfStar;
-
-    let stars = 0;
-    for (let i = 0; i < fullStars; i++) {
-        review_array[stars] = <i className="fa-solid fa-star"></i>
-        stars++;
-    }
-
-    for (let i = 0; i < halfStar; i++) {
-        review_array[stars] = <i className="fa-regular fa-star-half-stroke"></i>
-        stars++;
-    }
-
-    for (let i = 0; i < emptyStars; i++) {
-        review_array[stars] = <i className="fa-regular fa-star"></i>
-        stars++;
-    }
-
     //Increment and decrement counter
-    const [counter, setCounter] = useState(0)
-
     function incrementCounter() {
         setCounter(current => current + 1);
     }
@@ -171,12 +140,10 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
         setActiveColor((prevColor) => (prevColor?.colorId === clickedColor.colorId ? null : clickedColor));
     }
 
-    // Display 2 random reviews of the product
     const fetchAndDisplayReviews = async () => {
         try {
             const allReviews = await fetchReviewsForProduct(product.id);
 
-            // Shuffle the array of reviews
             const shuffledReviews = shuffleArray(allReviews);
 
             const reviewsToDisplay = await Promise.all(
@@ -215,7 +182,6 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
                                 </div>
                             );
                         } else {
-                            // Handle the case where user data couldn't be fetched
                             return (
                                 <div className='review' key={index}>
                                     <div className='user-img'>
@@ -253,11 +219,10 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
             setDisplayedReviews(reviewsToDisplay.filter(review => review !== null) as JSX.Element[]);
         } catch (error) {
             console.error('Error fetching reviews:', error);
-
-            // Handle the error gracefully, e.g., set an empty array for reviews
             setDisplayedReviews([]);
         }
     };
+
 
     //Find if the price is discounted
     let current_price;
@@ -337,7 +302,7 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
                         <div className='size-section'>
                             <p>Size</p>
                             <div className='sizes' id='sizes'>
-                                {sizesForProduct.map(size => (
+                                {sizes.map(size => (
                                     <button
                                         key={size.sizeId}
                                         title="display-size"

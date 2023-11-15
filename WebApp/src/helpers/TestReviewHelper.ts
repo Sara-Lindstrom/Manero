@@ -14,12 +14,12 @@ export interface ReviewData {
     productId: string;
 }
 
-//Function for fetching reviews for a product
+// Function for fetching reviews for a product
 export const fetchReviewsForProduct = async (productId: string): Promise<Review[]> => {
-    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Reviews';
+    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/TestReviews';
 
     try {
-        const response = await axios.get(`${API_URL}?productId=${productId}`);
+        const response = await axios.get(`${API_URL}/GetProductReviews/${productId}`);
 
         if (response.status === 200) {
             return response.data;
