@@ -24,7 +24,7 @@ const LeaveAReviewView: React.FC = () => {
     };
 
 
-    const productId = "3e608840-6a94-476e-a147-50e3da35f379";
+    const productId = "633328ef-6a33-44dc-88b2-934dc60a91ac";
 
   return (
     <>
