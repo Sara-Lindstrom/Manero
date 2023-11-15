@@ -1,56 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import BreadcrumbSection from '../sections/BreadcrumbSection'
-import Review from '../components/Review';
+import ReviewListComponent from '../components/ReviewListComponent';
 import { useParams } from 'react-router-dom';
-import { fetchProductReviews } from '../helpers/ReviewHandler';
 
+const ReviewView: React.FC = () => {
+    const { productId } = useParams<{ productId: string }>();
 
-interface ReviewType {
-  reviewID: string;
-  username: string;
-  comment: string;
-  rating: number;
-  reviewDate: string;
-}
+    const hardcodedProductId = "DDB9E337-B2E4-41FA-A97E-33BB39CBE80F";
 
-const ReviewsView = () => {
-  const { productId } = useParams();
-  const [reviews, setReviews] = useState<ReviewType[]>([]);
-
-  const handleNavigateBack = () => {
-      window.history.back();
+    const handleNavigateBack = () => {
+        window.history.back();
     };
 
-    useEffect(() => {
-      const fetchReviews = async () => {
-        if (productId) {
-          try {
-            const data = await fetchProductReviews(productId);
-            console.log('API response:', data);
-            if (data) {
-              setReviews(data);
-            }
-          } catch (error) {
-            console.error('Error fetching reviews:', error);
-          }
-        }
-      };      
-  
-      fetchReviews();
-  }, [productId]);
-  
+    return (
+        <>
+            <BreadcrumbSection currentPage='Leave a review' showBackButton={true} onNavigateBack={handleNavigateBack} showCurrentPage={true} />
+            <ReviewListComponent productId={hardcodedProductId} />
+        </>
+    );
+};
 
-  return (
-    <>
-    <BreadcrumbSection currentPage='Reviews' showBackButton={true} onNavigateBack={handleNavigateBack} showCurrentPage={true} />
-    <div className='container'>
-    {reviews.map((review) => (
-          <Review key={review.reviewID} reviewData={review} />
-        ))}
-    </div>
-   
-    </>
-  )
-}
-
-export default ReviewsView
+export default ReviewView;
