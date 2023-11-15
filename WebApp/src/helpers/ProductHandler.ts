@@ -5,6 +5,7 @@ import { ICategories } from '../Interfaces/ICategories';
 import { IColor } from '../Interfaces/IColor';
 import { ISize } from '../Interfaces/ISize';
 import { IImage } from '../Interfaces/IImage';
+import { ITags } from '../Interfaces/ITags';
 
 const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Product';
 
@@ -17,11 +18,6 @@ export const shuffleArray = <T>(array: T[]): T[] => {
     }
     return shuffledArray;
 };
-
-import { ITags } from '../Interfaces/ITags';
-
-
-// type Navigate = (path: string) => void;
  
 // Function to fetch best-selling products
 export const fetchByCategoryTag = async (categories : string, tags? : string | string[]): Promise<IProduct[]> => {
@@ -69,7 +65,6 @@ export const fetchAllCategories = async (): Promise<ICategories[]> => {
     }
 }
 
-
 export const fetchAllTags = async (category : string,) => {
     const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Product/GetCategoryTags';
     const params = new URLSearchParams();
@@ -84,7 +79,6 @@ export const fetchAllTags = async (category : string,) => {
         return [];
     }
 };
-
 
 export const fetchNewestProducts = async (): Promise<IProduct[]> => {
     const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Product/GetNewest';

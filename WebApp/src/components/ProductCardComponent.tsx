@@ -5,8 +5,8 @@ import { IProduct, CardType } from '../Interfaces/IProduct';
 interface ProductCardComponentProps {
     product: IProduct;
     cardType?: CardType;
-    addToWishlist: (product: IProduct) => void;
-    addToCart: (product: IProduct) => void;
+    addToWishlist?: (product: IProduct) => void;
+    addToCart?: (product: IProduct) => void;
 }
 
 const renderStars = (product : IProduct) => {
@@ -32,10 +32,14 @@ const renderStars = (product : IProduct) => {
       stars.push(<i className="fa-regular fa-star" key={"empty_star_"+i}></i>);
     }
     return stars
-}
-  
+}  
 
-const ProductCardComponent: React.FC<ProductCardComponentProps> = ({ product, addToCart, cardType, addToWishlist }) => {
+const ProductCardComponent: React.FC<ProductCardComponentProps> = ({ product, cardType, addToWishlist, addToCart }) => {
+
+    const onAddToCartClicked = (e: React.MouseEvent) => {
+        e.preventDefault(); // Prevent the link from navigating from the view
+        addToCart?.(product); // Call addToCart if it exists
+    };
 
     // Need to change name to a more generic (this is Featured products list)
     const renderSmallCardLayout = () => (
@@ -45,7 +49,7 @@ const ProductCardComponent: React.FC<ProductCardComponentProps> = ({ product, ad
             )}
             {product.images.length >= 1 && (
                 product.images[0].imagePath !== undefined && (
-                    <img className='product-card-img' src={product.images[0].imagePath} alt={product.name} />
+                    <img className='product-card-img' src={product.images[0].imagePath} alt={product.name}/>
             ))}
             <div className='product-card-info'>
                 <p className='product-card-rating'>{renderStars(product)} ({product.reviews?.length})</p>
@@ -62,10 +66,11 @@ const ProductCardComponent: React.FC<ProductCardComponentProps> = ({ product, ad
                 </div>
             </div>
             <div className='product-card-buttons'>
-                <button className='product-card-button' onClick={() => addToWishlist(product)}>
+                <button className='product-card-button' onClick={() => addToWishlist?.(product)}>
                     <i className="fa-regular fa-heart"></i>
                 </button>
-                <button className='product-card-button' onClick={() => addToCart(product)}>
+
+                <button className='product-card-button' onClick={onAddToCartClicked}>
                     <i className="fa-regular fa-shopping-cart"></i>
                 </button>
             </div>
@@ -101,14 +106,13 @@ const ProductCardComponent: React.FC<ProductCardComponentProps> = ({ product, ad
                 </div>
                 
                 <div className='product-card-buttons'>
-                    <button className='product-card-button' onClick={() => addToWishlist(product)}>
+                    <button className='product-card-button' onClick={() => addToWishlist?.(product)}>
                         <i className="fa-regular fa-heart"></i>
                     </button>
-                    <button className='product-card-button' onClick={() => addToCart(product)}>
+                    <button className='product-card-button' onClick={onAddToCartClicked}>
                         <i className="fa-regular fa-shopping-cart"></i>
                     </button>
                 </div>
-
             </a>
         </section>
 
