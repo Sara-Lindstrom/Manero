@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
-import ProductList from '../sections/ProductList';
-import { fetchAllCategories, fetchBestSellers, fetchNewestProducts } from '../helpers/ProductHandler';
+import { fetchAllCategories, fetchBestSellingProducts, fetchByCategoryTag, fetchNewestProducts } from '../helpers/ProductHandler';
 import { ICategories } from '../Interfaces/ICategories';
-import { IProduct } from '../Interfaces/IProduct';
+import { CardType, IProduct } from '../Interfaces/IProduct';
 import { SortByBestSeller, SortByNewest, SortBySale } from '../helpers/ProductSorting';
+import ProductListSection from '../sections/ProductListSection';
+import { useParams } from 'react-router-dom';
 
 const BestSellersView: React.FC = () => {
+    const { sorting } = useParams<{ sorting: string }>();
     const [isSliderDropdownVisible, setSliderDropdownVisible] = useState(false);
     const [categories, setCategories] = useState<ICategories[] | undefined>([]);
     const [selectedSorting, setSelectedSorting] = useState<string>('');
@@ -24,19 +26,36 @@ const BestSellersView: React.FC = () => {
         }
     };
 
-    const fetchProducts = async () => {
+    const fetchNewestProductList = async () => {
+        let allProductsFromDb = await fetchNewestProducts();
+        setProducts(allProductsFromDb);
+    }  
+    
+    const fetchByCategory = async () => {
         if(selectedCategory == ""){
             let allProductsFromDb = await fetchNewestProducts();
             setProducts(allProductsFromDb);
         }
         else{
-            let productsFromDb = await fetchBestSellers(selectedCategory);
+            let productsFromDb = await fetchByCategoryTag(selectedCategory);
             setProducts(productsFromDb);
         }
-    }      
+    }
+    const fetchBestSelling = async () =>{
+        let productsFromDb = await fetchBestSellingProducts();
+        setProducts(productsFromDb);
+    } 
 
     useEffect(() => {
-        fetchProducts();
+        if(sorting === "newest"){
+            fetchNewestProductList();
+        }
+        else if (sorting === "bestseller"){
+            fetchBestSelling()
+        }
+        else{
+            fetchByCategory();
+        }
     }, [selectedCategory]);
 
     useEffect(() => {
@@ -106,7 +125,7 @@ const BestSellersView: React.FC = () => {
                                             >
                                                 {String(category.categoryName)}
                                             </li>
-                                        ))))}
+                                    ))))}
                             </ul>
                         </div>
                     )}
@@ -125,13 +144,13 @@ const BestSellersView: React.FC = () => {
                                             >
                                                 {String(option)}
                                             </li>
-                                        ))))}
+                                    ))))}
                             </ul>
                         </div>
                     )}
                 </div>
             </div>
-            <ProductList products={products} />
+            <ProductListSection products={products} cardType={CardType.SmallCard}/>
         </>
     )
 }

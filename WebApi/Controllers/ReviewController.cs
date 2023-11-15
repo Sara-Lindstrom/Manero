@@ -1,14 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using System.Security.Claims;
 using WebApi.Context;
 using WebApi.Models;
 using WebApi.Models.Entities;
 using WebApi.Repositories;
-using Formatting = Newtonsoft.Json.Formatting;
 
 namespace WebApi.Controllers;
 
@@ -108,8 +105,4 @@ public class ReviewController : ControllerBase
             return StatusCode(500, "Internal Server Error");
         }
     }
-
-
-
-
 }

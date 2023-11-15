@@ -1,38 +1,17 @@
-﻿import { useState, useEffect } from 'react';
-import { fetchProductsByCategory } from '../helpers/ProductHandler';
-import ProductListComponent from '../components/ProductListComponent';
+﻿import { useState } from 'react';
 import { IProduct, CardType as ICardType } from '../Interfaces/IProduct';
+import ProductCardComponent from '../components/ProductCardComponent';
 
 // A section that renders out product cards, can be reused in different views
 interface ProductListSectionProps {
-    category?: string;
+    products: IProduct[];
     cardType?: ICardType; 
+    flexed?: boolean;
 }
 
-const ProductListSection: React.FC<ProductListSectionProps> = ({ category, cardType }) => {
-    const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
-    const [isProductsFound, setIsProductsFound] = useState(true);
+const ProductListSection: React.FC<ProductListSectionProps> = ({ products, cardType, flexed = true }) => {
     const [cart, setCart] = useState<{ [key: string]: number }>({});
     const [wishlist, setWishlist] = useState<IProduct[]>([]);
-
-    // Load products based on filter in view
-    useEffect(() => {
-        const loadProducts = async () => {
-            if (category) {
-                const fetchedProducts = await fetchProductsByCategory(category);
-                if (fetchedProducts.length === 0) {
-                    setIsProductsFound(false);
-                } else {
-                    setIsProductsFound(true);
-                    setFilteredProducts(fetchedProducts);
-                }
-            } else {
-
-            }
-        };
-
-        loadProducts();
-    }, [category]);
 
     const addToCart = (product: IProduct) => {
         setCart((prevCart) => {
@@ -53,16 +32,18 @@ const ProductListSection: React.FC<ProductListSectionProps> = ({ category, cardT
     };
 
     return (
-        <section>
-            {isProductsFound ? (
-                <ProductListComponent
-                    products={filteredProducts}
-                    cardType={cardType || ICardType.NormalCard} // Used as a fallback if no CardType was chosen
+        <section className={flexed ? "product-display-grid" : ""}>
+            {products ? (
+                products.map((product) => (
+                    <ProductCardComponent
+                    key={product.id}
+                    product={product}
+                    cardType={cardType}
                     addToCart={addToCart}
                     addToWishlist={addToWishlist}
                 />
-            ) : (
-                <p>No products with that category were found.</p>
+            ))) : (
+                <p>No products were found.</p>
             )}
         </section>
     );
