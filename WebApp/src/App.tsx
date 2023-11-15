@@ -21,6 +21,7 @@ import ViewProfile from './views/ViewProfileView';
 import AddNewAddressView from './views/AddNewAddressView';
 import PageNotFound from './views/PageNotFound';
 import ProductDetailsView from './views/ProductDetailsView';
+import ReviewsView from './views/ReviewsView';
 
 function App() {
 
@@ -48,6 +49,7 @@ function App() {
                 <Route path='/signup' element={<SignUpView />} />
                 <Route path='/verifyPhone' element={<VerifyPhoneNumberView />} />
                 <Route path='/viewProfile' element={<ViewProfile />} />
+                <Route path='/reviews' element={<ReviewsView />} />
             </Routes>
         </BrowserRouter>
 

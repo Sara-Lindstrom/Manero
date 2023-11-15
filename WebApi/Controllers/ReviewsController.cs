@@ -105,12 +105,14 @@ public class ReviewsController : ControllerBase
         var reviews = await _productDbContext.ProductReviews
             .Where(review => review.ProductID == productId)
             .Select(r => new ReviewDTO
-            {
+                {
                 Comment = r.Comment,
                 Rating = r.Rating,
                 ProductId = r.ProductID,
+                ReviewDate = r.ReviewDate,
+                UserID = r.UserID
             })
-            .ToListAsync();
+                .ToListAsync();
 
         if (!reviews.Any())
         {

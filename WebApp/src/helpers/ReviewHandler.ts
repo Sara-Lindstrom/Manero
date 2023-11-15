@@ -1,13 +1,12 @@
 ﻿import axios from 'axios';
 
-//export interface Review {
-//    userId: string;
-//    productId: string;
-//    date: string;
-//    comment: string;
-//    rating: number;
-//}
-
+export interface Review {
+    userId: string;
+    productId: string;
+    date: string;
+    comment: string;
+    rating: number;
+}
 export interface ReviewData {
     comment: string;
     rating: number;
@@ -19,7 +18,7 @@ export const submitReview = async (
     onSuccess?: () => void,
     onFail?: () => void
 ): Promise<void> => {
-    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/TestReviews';
+    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Reviews';
     const token = localStorage.getItem('token');
 
     if (!token) {
@@ -51,10 +50,10 @@ export const submitReview = async (
 
 // Fetch reviews by productId
 export const fetchReviewsByProduct = async (productId: string): Promise<any[]> => {
-    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/GetReviewsByProductId';
-
+    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Reviews/GetProductReviews';
+    const uppercaseProductId = productId.toUpperCase();
     try {
-        const response = await axios.get(`${API_URL}/${productId}`);
+        const response = await axios.get(`${API_URL}/${uppercaseProductId}`);
 
         if (response.status === 200) {
             return response.data;
