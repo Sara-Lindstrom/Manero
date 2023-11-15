@@ -21,12 +21,11 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
 
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
-        console.log("UE: Section");
         if (storedToken) {
             setToken(storedToken);
         } else {
             setError('User not signed in. Please sign in to add an address.');
-            // navigate('/sign-in');
+            navigate('/sign-in');
         }
     }, [navigate]);
 
@@ -68,7 +67,6 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
             setUseCurrentLocation(false);
     
             // Navigate to '/MyAddresses' after successful addition
-            console.log("Save: Section");
             navigate('/myAddresses');
     
         } catch (error) {
@@ -157,7 +155,7 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
                             </div>
                         </div>
                     </div>
-                        <button className="btn dark-btn form-btn" onClick={handleSaveAddress}>
+                    <button className="btn dark-btn form-btn" onClick={(e) => { e.preventDefault(); handleSaveAddress(); }}>
                         SAVE ADDRESS
                     </button>
                 </form>

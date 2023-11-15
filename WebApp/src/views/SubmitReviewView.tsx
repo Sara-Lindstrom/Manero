@@ -1,8 +1,10 @@
 ﻿import React from 'react'
 import BreadcrumbSection from '../sections/BreadcrumbSection'
-import TestLeaveAReviewSection from '../sections/TestLeaveAReviewSection';
+import SubmitReviewSection from '../sections/SubmitReviewSection';
+import { useParams } from 'react-router-dom';
 
-const TestLeaveAReviewView: React.FC = () => {
+const SubmitReviewView: React.FC = () => {
+    const { productId } = useParams<{ productId: string }>();
 
     const handleNavigateBack = () => {
         window.history.back();
@@ -11,9 +13,9 @@ const TestLeaveAReviewView: React.FC = () => {
     return (
         <>
             <BreadcrumbSection currentPage='Leave a review' showBackButton={true} onNavigateBack={handleNavigateBack} showCurrentPage={true} />
-            <TestLeaveAReviewSection />
+            {productId && <SubmitReviewSection productId={productId} />}
         </>
-    )
-}
+    );
+};
 
-export default TestLeaveAReviewView;
+export default SubmitReviewView;

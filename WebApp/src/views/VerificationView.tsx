@@ -1,5 +1,5 @@
 import BreadcrumbSection from '../sections/BreadcrumbSection';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import VerificationSection from '../sections/VerificationSection';
 
 const VerificationView: React.FC = () => {
