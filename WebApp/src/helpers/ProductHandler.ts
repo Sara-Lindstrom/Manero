@@ -18,6 +18,11 @@ export const shuffleArray = <T>(array: T[]): T[] => {
     return shuffledArray;
 };
 
+import { ITags } from '../Interfaces/ITags';
+
+
+// type Navigate = (path: string) => void;
+ 
 // Function to fetch best-selling products
 export const fetchByCategoryTag = async (categories : string, tags? : string | string[]): Promise<IProduct[]> => {
 
@@ -63,6 +68,23 @@ export const fetchAllCategories = async (): Promise<ICategories[]> => {
         return [];
     }
 }
+
+
+export const fetchAllTags = async (category : string,) => {
+    const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Product/GetCategoryTags';
+    const params = new URLSearchParams();
+
+    params.append('category', category);
+
+    try {
+        const response: AxiosResponse<ITags[]> = await axios.get(API_URL, { params });
+        return response.data;
+    } catch (error) {
+        console.error("An error occurred while fetching tags:", error);
+        return [];
+    }
+};
+
 
 export const fetchNewestProducts = async (): Promise<IProduct[]> => {
     const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Product/GetNewest';
