@@ -9,11 +9,11 @@ interface ReviewData {
     reviewDate: string;
 }
 
-interface ProductReviewListComponentProps {
+interface ReviewListComponentProps {
     productId: string;
 }
 
-const ReviewListComponent: React.FC<ProductReviewListComponentProps> = ({ productId }) => {
+const ReviewListComponent: React.FC<ReviewListComponentProps> = ({ productId }) => {
     const [reviews, setReviews] = useState<ReviewData[]>([]);
 
     useEffect(() => {
@@ -26,15 +26,15 @@ const ReviewListComponent: React.FC<ProductReviewListComponentProps> = ({ produc
     }, [productId]);
 
     return (
-        <div className="product-reviews-list">
+        <>
             {reviews.length > 0 ? (
                 reviews.map(review => (
                     <ViewReviewsComponent key={review.reviewDate + review.username} viewReviewData={review} />
                 ))
             ) : (
-                <p>No reviews available.</p>
+                <span className="noReviews">This product have no reviews yet</span>
             )}
-        </div>
+        </>
     );
 };
 

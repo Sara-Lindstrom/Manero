@@ -159,8 +159,6 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
         setActiveColor((prevColor) => (prevColor === selectedColor ? null : selectedColor));
     }
 
-
-
     //Find if the price is discounted
     let current_price;
 
@@ -179,7 +177,6 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
         <>
             <section className='product-details-section'>
                 <div className='container'>
-
                     <section className='details-section-widescreen'>
                         <div className='details'>
                             <div className='product-name'>
@@ -191,6 +188,7 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
                             </div>
                         </div>
                     </section>
+
                     <section className="image-section">
                         <div className='icons'>
                             {img}
@@ -212,6 +210,7 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
                             {dotButtons}
                         </div>
                     </section>
+
                     <div className='description-section-widescreen'>
                         <h2>Decription</h2>
                         <p>{product?.description}</p>
@@ -265,22 +264,13 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
                                 {colors.map(color => (
                                     <span
                                         key={color.colorId}
-                                        title="display-color"
-                                        className={`color ${activeColor === color ? 'active-btn' : ''}`}
-                                        id={color.colorId}
-                                        onClick={() => { activeClickColor(color) }}
-                                    >
-                                        {color.colorName}
-                                    </span>
-                                ))}
-                            </div>
-                            <div className='avilable-colors' id='avilable-colors'>
-                                {colors.map(color => (
-                                    <span key={color.colorId}></span>
+                                        className={`color-span ${activeColor?.colorName === color.colorName ? 'active-btn' : ''}`}
+                                        style={{ backgroundColor: color.colorName, border: '1px solid black' }}
+                                        onClick={() => { activeClickColor(color); }}
+                                    ></span>
                                 ))}
                             </div>
                         </div>
-
 
                         <div className='description-section'>
                             <h2>Decription</h2>
@@ -290,15 +280,6 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
                             <button className='dark-btn add-cart-btn'>+ ADD TO CART</button>
                         </div>
                     </section>
-                    {/*<section className='review-section'>*/}
-                    {/*    <div className='view-all-reviews'>*/}
-                    {/*        <h2>Reviews ({reviews.length})</h2>*/}
-                    {/*        <a href='allproductreview'>view all <i className="fa-solid fa-chevron-right"></i></a>*/}
-                    {/*    </div>*/}
-                    {/*    <div className='reviews'>*/}
-                    {/*        {displayedReviews}*/}
-                    {/*    </div>*/}
-                    {/*</section>*/}
 
                     <div className='counter-widescreen'>
                         <div className='price'>{current_price}</div>
@@ -311,16 +292,6 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
                             <button className='dark-btn add-cart-btn'>+ ADD TO CART</button>
                         </div>
                     </div>
-
-                    {/*<section className='review-section-widescreen'>*/}
-                    {/*    <div className='view-all-reviews'>*/}
-                    {/*        <h2>Reviews ({reviews.length})</h2>*/}
-                    {/*        <a href='allproductreview'>view all <i className="fa-solid fa-chevron-right"></i></a>*/}
-                    {/*    </div>*/}
-                    {/*    <div className='reviews'>*/}
-                    {/*        {displayedReviews}*/}
-                    {/*    </div>*/}
-                    {/*</section>*/}
 
                 </div>
             </section>
