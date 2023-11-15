@@ -2,10 +2,10 @@
 import chatBubbles from '../Images/chatBubbles.svg'
 import StarRating from '../components/StarRating'
 import { useNavigate } from 'react-router-dom'
-import { ReviewData, submitReview } from '../helpers/TestReviewHelper';
+import { submitReview } from '../helpers/ReviewHandler';
 
 // implement productId for connecting the review to the product
-const TestLeaveAReviewSection: React.FC = () => {
+const ViewReviewsSection: React.FC = () => {
 
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState('');
@@ -28,7 +28,7 @@ const TestLeaveAReviewSection: React.FC = () => {
         if (comment.length < 2) {
             setErrorMessage('Comment must be at least 2 characters long.');
         } else {
-            const productId = "93F010C1-EB79-44D4-8EA8-9A021D8BAD61"; // Change this to a new productID
+            const productId = "DDB9E337-B2E4-41FA-A97E-33BB39CBE80F"; // Change this to a new productID
 
             try {
                 await submitReview({ comment, rating, productId },
@@ -51,16 +51,9 @@ const TestLeaveAReviewSection: React.FC = () => {
                     <h1>Please rate the quality of service for the order!</h1>
                     <StarRating onRatingChange={handleRatingChange} />
                 </div>
-                <div className='comment'>
-                    <p>Your comments and suggestions help us improve the service quality better!</p>
-                    {errorMessage && <p className='error-message'>{errorMessage}</p>}
-                    <p className='inputBorder'>COMMENT</p>
-                    <textarea rows={5} value={comment} onChange={handleCommentChange} placeholder='Enter your comment'></textarea>
-                </div>
-                <button onClick={handleSubmit} className='btn dark-btn'>SUBMIT</button>
             </div>
         </section>
     )
 }
 
-export default TestLeaveAReviewSection;
+export default ViewReviewsSection;

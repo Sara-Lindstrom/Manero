@@ -59,7 +59,7 @@ public static class ProductDbSeeds
             new ProductEntity
             {
                 ProductID = Guid.Parse("ddb9e337-b2e4-41fa-a97e-33bb39cbe80f"),
-                ProductName = "UrbanChic Denim Jeans",
+                ProductName = "UrbanChic Jeans",
                 Price = 13.45M,
                 SalePrice = null,
                 Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed etiam, in codice quem attulisti, apparet confusio in syntaxi. Videtur quod coneris instaurare novam instantiationem classis CategoryEntity. Verum modus quo scriptum est flibbertigibbet, potest esse causa difficultatis. Flibbertigibbet requirit parametrum stringae, quod debet repraesentare formatum mumbo jumbo idoneum.",
@@ -89,7 +89,7 @@ public static class ProductDbSeeds
             new ProductEntity
             {
                 ProductID = Guid.Parse("e120bec8-c592-47be-98a8-9569bac3b254"),
-                ProductName = "AzureGlow Summer Dress",
+                ProductName = "AzureGlow Dress",
                 Price = 16.12M,
                 SalePrice = 11.98M,
                 Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed etiam, in codice quem attulisti, apparet confusio in syntaxi. Videtur quod coneris instaurare novam instantiationem classis CategoryEntity. Verum modus quo scriptum est flibbertigibbet, potest esse causa difficultatis. Flibbertigibbet requirit parametrum stringae, quod debet repraesentare formatum mumbo jumbo idoneum.",
@@ -99,7 +99,7 @@ public static class ProductDbSeeds
             new ProductEntity
             {
                 ProductID = Guid.Parse("209f2710-32b9-4fe7-9d04-470c931184a1"),
-                ProductName = "GentleBreeze Linen Shirt",
+                ProductName = "GentleBreeze Shirt",
                 Price = 16.89M,
                 SalePrice = 13.78M,
                 Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed etiam, in codice quem attulisti, apparet confusio in syntaxi. Videtur quod coneris instaurare novam instantiationem classis CategoryEntity. Verum modus quo scriptum est flibbertigibbet, potest esse causa difficultatis. Flibbertigibbet requirit parametrum stringae, quod debet repraesentare formatum mumbo jumbo idoneum.",
@@ -109,7 +109,7 @@ public static class ProductDbSeeds
             new ProductEntity
             {
                 ProductID = Guid.Parse("8c335be4-5cd9-4df0-8bc7-b6322ea41ec2"),
-                ProductName = "TwilightGlam Evening Gown",
+                ProductName = "TwilightGlam Gown",
                 Price = 19.50M,
                 SalePrice = null,
                 Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed etiam, in codice quem attulisti, apparet confusio in syntaxi. Videtur quod coneris instaurare novam instantiationem classis CategoryEntity. Verum modus quo scriptum est flibbertigibbet, potest esse causa difficultatis. Flibbertigibbet requirit parametrum stringae, quod debet repraesentare formatum mumbo jumbo idoneum.",
@@ -129,7 +129,7 @@ public static class ProductDbSeeds
             new ProductEntity
             {
                 ProductID = Guid.Parse("394fed41-77aa-4100-88a4-af5ba7ce87ad"),
-                ProductName = "CottonCloud Lounge Pants",
+                ProductName = "CottonCloud Pants",
                 Price = 17.78M,
                 SalePrice = null,
                 Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed etiam, in codice quem attulisti, apparet confusio in syntaxi. Videtur quod coneris instaurare novam instantiationem classis CategoryEntity. Verum modus quo scriptum est flibbertigibbet, potest esse causa difficultatis. Flibbertigibbet requirit parametrum stringae, quod debet repraesentare formatum mumbo jumbo idoneum.",
@@ -139,7 +139,7 @@ public static class ProductDbSeeds
             new ProductEntity
             {
                 ProductID = Guid.Parse("ec3981b0-c39f-4dfd-ad42-8ca675f8076c"),
-                ProductName = "PeakPerformance Activewear",
+                ProductName = "PeakPerforme Activewear",
                 Price = 12.50M,
                 SalePrice = null,
                 Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed etiam, in codice quem attulisti, apparet confusio in syntaxi. Videtur quod coneris instaurare novam instantiationem classis CategoryEntity. Verum modus quo scriptum est flibbertigibbet, potest esse causa difficultatis. Flibbertigibbet requirit parametrum stringae, quod debet repraesentare formatum mumbo jumbo idoneum.",
@@ -149,7 +149,7 @@ public static class ProductDbSeeds
             new ProductEntity
             {
                 ProductID = Guid.Parse("4592ed37-1361-4761-a3dd-3654670006ce"),
-                ProductName = "UrbanBlend Aviator Sunglasses",
+                ProductName = "UrbanBlend Sunglasses",
                 Price = 17.78M,
                 SalePrice = null,
                 Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed etiam, in codice quem attulisti, apparet confusio in syntaxi. Videtur quod coneris instaurare novam instantiationem classis CategoryEntity. Verum modus quo scriptum est flibbertigibbet, potest esse causa difficultatis. Flibbertigibbet requirit parametrum stringae, quod debet repraesentare formatum mumbo jumbo idoneum.",
@@ -159,7 +159,7 @@ public static class ProductDbSeeds
             new ProductEntity
             {
                 ProductID = Guid.Parse("6724d1cf-0d30-4723-8f61-ddf0174df9f7"),
-                ProductName = "StrideFlex Leather Belt",
+                ProductName = "StrideFlex Belt",
                 Price = 12.50M,
                 SalePrice = null,
                 Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed etiam, in codice quem attulisti, apparet confusio in syntaxi. Videtur quod coneris instaurare novam instantiationem classis CategoryEntity. Verum modus quo scriptum est flibbertigibbet, potest esse causa difficultatis. Flibbertigibbet requirit parametrum stringae, quod debet repraesentare formatum mumbo jumbo idoneum.",
@@ -270,21 +270,6 @@ public static class ProductDbSeeds
             new ProductImageEntity { ProductImageID = Guid.NewGuid(), ImageID = Guid.Parse("8cf79865-6503-425c-a82e-282269b19189"), ProductID = Guid.Parse("4592ed37-1361-4761-a3dd-3654670006ce") },
             new ProductImageEntity { ProductImageID = Guid.NewGuid(), ImageID = Guid.Parse("8cf79865-6503-425c-a82e-282269b19189"), ProductID = Guid.Parse("6724d1cf-0d30-4723-8f61-ddf0174df9f7") }
         );
-
-        //modelBuilder.Entity<ProductReviewEntity>().HasData(
-        //    new ProductReviewEntity { ReviewID = Guid.NewGuid(), ProductID = Guid.Parse("3e608840-6a94-476e-a147-50e3da35f379") },
-        //    new ProductReviewEntity { ReviewID = Guid.NewGuid(), ProductID = Guid.Parse("ddb9e337-b2e4-41fa-a97e-33bb39cbe80f") },
-        //    new ProductReviewEntity { ReviewID = Guid.NewGuid(), ProductID = Guid.Parse("633328ef-6a33-44dc-88b2-934dc60a91ac") },
-        //    new ProductReviewEntity { ReviewID = Guid.NewGuid(), ProductID = Guid.Parse("3e70c707-aee2-404b-a2fc-95a2d2c8c1b5") },
-        //    new ProductReviewEntity { ReviewID = Guid.NewGuid(), ProductID = Guid.Parse("e120bec8-c592-47be-98a8-9569bac3b254") },
-        //    new ProductReviewEntity { ReviewID = Guid.NewGuid(), ProductID = Guid.Parse("209f2710-32b9-4fe7-9d04-470c931184a1") },
-        //    new ProductReviewEntity { ReviewID = Guid.NewGuid(), ProductID = Guid.Parse("8c335be4-5cd9-4df0-8bc7-b6322ea41ec2") },
-        //    new ProductReviewEntity { ReviewID = Guid.NewGuid(), ProductID = Guid.Parse("1f8ba608-64b7-46f5-9501-fe5d5c91dcc8") },
-        //    new ProductReviewEntity { ReviewID = Guid.NewGuid(), ProductID = Guid.Parse("394fed41-77aa-4100-88a4-af5ba7ce87ad") },
-        //    new ProductReviewEntity { ReviewID = Guid.NewGuid(), ProductID = Guid.Parse("ec3981b0-c39f-4dfd-ad42-8ca675f8076c") },
-        //    new ProductReviewEntity { ReviewID = Guid.NewGuid(), ProductID = Guid.Parse("4592ed37-1361-4761-a3dd-3654670006ce") },
-        //    new ProductReviewEntity { ReviewID = Guid.NewGuid(), ProductID = Guid.Parse("6724d1cf-0d30-4723-8f61-ddf0174df9f7") },
-        //);
 
         modelBuilder.Entity<ProductSizeEntity>().HasData(
             new ProductSizeEntity { ProductSizeID = Guid.NewGuid(), SizeID = Guid.Parse("462e8f20-0c38-4c39-b39e-b2d5d651b24e"), ProductID = Guid.Parse("3e608840-6a94-476e-a147-50e3da35f379") },
