@@ -2,10 +2,12 @@
 import chatBubbles from '../Images/chatBubbles.svg'
 import StarRating from '../components/StarRating'
 import { useNavigate } from 'react-router-dom'
-import { ReviewData, submitReview } from '../helpers/TestReviewHelper';
+import { submitReview } from '../helpers/ReviewHandler';
+interface SubmitReviewSectionProps {
+    productId: string;
+}
 
-// implement productId for connecting the review to the product
-const TestLeaveAReviewSection: React.FC = () => {
+const SubmitReviewSection: React.FC<SubmitReviewSectionProps> = ({ productId }) => {
 
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState('');
@@ -28,8 +30,6 @@ const TestLeaveAReviewSection: React.FC = () => {
         if (comment.length < 2) {
             setErrorMessage('Comment must be at least 2 characters long.');
         } else {
-            const productId = "93F010C1-EB79-44D4-8EA8-9A021D8BAD61"; // Change this to a new productID
-
             try {
                 await submitReview({ comment, rating, productId },
                     () => navigate('/home'),
@@ -63,4 +63,4 @@ const TestLeaveAReviewSection: React.FC = () => {
     )
 }
 
-export default TestLeaveAReviewSection;
+export default SubmitReviewSection;

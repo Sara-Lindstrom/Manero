@@ -20,7 +20,6 @@ export const shuffleArray = <T>(array: T[]): T[] => {
 
 import { ITags } from '../Interfaces/ITags';
 
-
 // type Navigate = (path: string) => void;
  
 // Function to fetch best-selling products
@@ -69,7 +68,6 @@ export const fetchAllCategories = async (): Promise<ICategories[]> => {
     }
 }
 
-
 export const fetchAllTags = async (category : string,) => {
     const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Product/GetCategoryTags';
     const params = new URLSearchParams();
@@ -84,7 +82,6 @@ export const fetchAllTags = async (category : string,) => {
         return [];
     }
 };
-
 
 export const fetchNewestProducts = async (): Promise<IProduct[]> => {
     const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Product/GetNewest';

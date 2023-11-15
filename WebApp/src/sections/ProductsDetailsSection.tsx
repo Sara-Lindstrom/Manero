@@ -5,7 +5,7 @@ import { IColor } from '../Interfaces/IColor';
 import { ISize } from '../Interfaces/ISize';
 import { IImage } from '../Interfaces/IImage';
 import { fetchUserId } from '../helpers/AddressHandler';
-import { Review, fetchReviewsForProduct } from '../helpers/TestReviewHelper';
+import { Review, fetchReviewsForProduct } from '../helpers/ReviewHandler';
 
 interface IProductsDetailsSectionProps {
     product: IProduct;
