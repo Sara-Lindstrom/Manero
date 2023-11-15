@@ -34,7 +34,7 @@
                     }
 
                     &.filled-star {
-                        color: yellow;
+                        color: $color-orange;
                         cursor: pointer;
                     }
                 }
@@ -72,14 +72,6 @@
             .error-message {
                 color: red;
                 font-size: 14px;
-            }
-        }
-
-        button {
-
-            @include lg {
-                display: inline;
-                width: auto;
             }
         }
     }

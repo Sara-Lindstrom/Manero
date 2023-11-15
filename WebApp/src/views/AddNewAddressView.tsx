@@ -26,7 +26,7 @@ const AddNewAddressView: React.FC = () => {
         } else {
             // Do other setup logic if needed
         }
-    }, [navigate]);
+    }, []);
 
     const addAddressSectionProps: AddAddressSectionProps = {
         onAddressAdded: handleAddressAdded,

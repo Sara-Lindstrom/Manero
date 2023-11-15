@@ -18,8 +18,6 @@ export const shuffleArray = <T>(array: T[]): T[] => {
     }
     return shuffledArray;
 };
-
-// type Navigate = (path: string) => void;
  
 // Function to fetch best-selling products
 export const fetchByCategoryTag = async (categories : string, tags? : string | string[]): Promise<IProduct[]> => {

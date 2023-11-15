@@ -49,7 +49,7 @@ const ProductCardComponent: React.FC<ProductCardComponentProps> = ({ product, ca
             )}
             {product.images.length >= 1 && (
                 product.images[0].imagePath !== undefined && (
-                    <img className='product-card-img' src={product.images[0].imagePath} alt={product.name} />
+                    <img className='product-card-img' src={product.images[0].imagePath} alt={product.name}/>
             ))}
             <div className='product-card-info'>
                 <p className='product-card-rating'>{renderStars(product)} ({product.reviews?.length})</p>

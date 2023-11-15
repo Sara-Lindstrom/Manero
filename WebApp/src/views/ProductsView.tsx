@@ -7,7 +7,7 @@ import { SortByBestSeller, SortByNewest, SortBySale } from '../helpers/ProductSo
 import ProductListSection from '../sections/ProductListSection';
 import { useParams } from 'react-router-dom';
 
-const BestSellersView: React.FC = () => {
+const ProductsView: React.FC = () => {
     const { sorting } = useParams<{ sorting: string }>();
     const [isSliderDropdownVisible, setSliderDropdownVisible] = useState(false);
     const [categories, setCategories] = useState<ICategories[] | undefined>([]);
@@ -108,9 +108,9 @@ const BestSellersView: React.FC = () => {
 
     return (
         <>
-            <BreadcrumbSection currentPage="Best Sellers" showBackButton={true} onNavigateBack={handleNavigateBack} />
+            <BreadcrumbSection currentPage="products" showBackButton={true} onNavigateBack={handleNavigateBack} showCartItem={true} />
 
-            <div className='best-seller-filter'>
+            <div className='container products-filter'>
                 <div className="slider" onClick={toggleSliderDropdown}>
                     <i className="fa-solid fa-sliders"></i>
                     {isSliderDropdownVisible && (
@@ -150,9 +150,11 @@ const BestSellersView: React.FC = () => {
                     )}
                 </div>
             </div>
-            <ProductListSection products={products} cardType={CardType.SmallCard} />
+            <div className='container'>
+                <ProductListSection products={products} cardType={CardType.SmallCard}/>
+            </div>
         </>
     )
 }
 
-export default BestSellersView;
+export default ProductsView;

@@ -12,7 +12,7 @@ const CategoryView: React.FC = () => {
     
   return (
     <>
-        <BreadcrumbSection currentPage='Category' showBackButton={true} onNavigateBack={handleNavigateBack} showSearchField={true} showCartItem={true} />
+        <BreadcrumbSection currentPage='Category' showHamburgerButton={true} onNavigateBack={handleNavigateBack} showSearchField={true} showCartItem={true} />
         <CategoryNav />
         <IconsNavigationSection isAuthenticated={isAuthenticated}/>
     </>
