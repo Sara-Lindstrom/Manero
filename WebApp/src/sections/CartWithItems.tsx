@@ -75,16 +75,16 @@ const CartWithItems: React.FC<CartWithItemsProps> = ({ cartItems, userToken }) =
             <div className="container">
 
                 <div className="cart-product-cards">
-                    {internalCartItems.map((item) => (
-                        <ProductCardComponent
-                            key={item.id}
-                            product={item}
-                            cardType={CardType.SmallCard}
-                            showQuantityAdjustment={true}
-                            addToCart={addToCart}
-                            handleQuantityAdjustment={(productId, newQuantity) => handleQuantityAdjustment(productId, newQuantity)}
-                        />
-                    ))}
+                    {/*{internalCartItems.map((item) => (*/}
+                    {/*    <ProductCardComponent*/}
+                    {/*        key={item.id}*/}
+                    {/*        product={item}*/}
+                    {/*        cardType={CardType.SmallCard}*/}
+                    {/*        showQuantityAdjustment={true}*/}
+                    {/*        addToCart={addToCart}*/}
+                    {/*        handleQuantityAdjustment={(productId, newQuantity) => handleQuantityAdjustment(productId, newQuantity)}*/}
+                    {/*    />*/}
+                    {/*))}*/}
                 </div>
 
                 <p className='cart-promocode'>Promocode applied <i className="fa-solid fa-check"></i></p>
