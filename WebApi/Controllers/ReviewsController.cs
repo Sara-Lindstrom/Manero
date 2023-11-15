@@ -8,19 +8,16 @@ using WebApi.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
-
-// Need to add authorize later on
-
 [ApiController]
 [Route("api/[controller]")]
-public class TestReviewsController : ControllerBase
+public class ReviewsController : ControllerBase
 {
     private readonly ProductDbContext _productDbContext;
     private readonly UserManager<UserModel> _userManager;
     private readonly IRepo<ProductEntity, ProductDbContext> _productRepo;
     private readonly IRepo<ProductReviewEntity, ProductDbContext> _productReviewRepo;
 
-    public TestReviewsController(ProductDbContext productDbContext, UserManager<UserModel> userManager, IRepo<ProductEntity, ProductDbContext> productRepo, IRepo<ProductReviewEntity, ProductDbContext> productReviewRepo)
+    public ReviewsController(ProductDbContext productDbContext, UserManager<UserModel> userManager, IRepo<ProductEntity, ProductDbContext> productRepo, IRepo<ProductReviewEntity, ProductDbContext> productReviewRepo)
     {
         _productDbContext = productDbContext;
         _userManager = userManager;
@@ -72,6 +69,7 @@ public class TestReviewsController : ControllerBase
         return CreatedAtAction(nameof(GetReviewsByUser), new { id = review.ReviewID }, review);
     }
 
+    // Used by above method
     [HttpGet("GetUserReview")]
     public async Task<IActionResult> GetReviewsByUser()
     {
@@ -107,12 +105,14 @@ public class TestReviewsController : ControllerBase
         var reviews = await _productDbContext.ProductReviews
             .Where(review => review.ProductID == productId)
             .Select(r => new ReviewDTO
-            {
+                {
                 Comment = r.Comment,
                 Rating = r.Rating,
                 ProductId = r.ProductID,
+                ReviewDate = r.ReviewDate,
+                UserID = r.UserID
             })
-            .ToListAsync();
+                .ToListAsync();
 
         if (!reviews.Any())
         {

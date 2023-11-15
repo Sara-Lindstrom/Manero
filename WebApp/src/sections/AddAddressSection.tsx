@@ -146,12 +146,16 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
                         <div className="actions-container">
                         <div>
                             <div className="remember-me">
-                                <input type="checkbox" />
-                                <label>Use my current location</label>
+                            <input
+                                type="checkbox"
+                                checked={useCurrentLocation}
+                                onChange={(e) => setUseCurrentLocation(e.target.checked)}
+                            />
+                            <label>Use my current location</label>
                             </div>
                         </div>
                     </div>
-                        <button className="btn dark-btn form-btn" onClick={handleSaveAddress}>
+                    <button className="btn dark-btn form-btn" onClick={(e) => { e.preventDefault(); handleSaveAddress(); }}>
                         SAVE ADDRESS
                     </button>
                 </form>

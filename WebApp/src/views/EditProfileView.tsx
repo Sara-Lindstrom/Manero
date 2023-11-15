@@ -26,7 +26,7 @@ const EditProfileView: React.FC = () => {
     return (
 
         <>
-            <BreadcrumbSection currentPage='Edit Profile' showBackButton={true} onNavigateBack={handleNavigateBack} />
+            <BreadcrumbSection currentPage='Edit Profile' showCurrentPage={true} showBackButton={true} onNavigateBack={handleNavigateBack} />
             {isAuthenticated && <EditProfileSection />}
         </>
 
