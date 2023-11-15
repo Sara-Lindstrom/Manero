@@ -4,15 +4,11 @@ import BreadcrumbSection from '../sections/BreadcrumbSection';
 import EmptyCartSection from '../sections/EmptyCartSection';
 import CartWithItems from '../sections/CartWithItems';
 import IconsNavigationSection from '../sections/IconsNavigationSection';
-import { CartItems, fetchCartItems } from '../helpers/ProductHandler';
 import { IProduct } from '../Interfaces/IProduct';
-import { fetchUserId } from '../helpers/AddressHandler';
 
 const CartView: React.FC = () => {
-    const [internalCartItems, setInternalCartItems] = useState<CartItems[]>([]);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [userToken, setUserToken] = useState<string | null>(null);
-    const [userId, setUserId] = useState<string | null>(null);
+    const [cartItems, setCartItems] = useState<IProduct[]>([]);
 
     const navigate = useNavigate();
     const handleNavigateBack = () => {
@@ -20,65 +16,42 @@ const CartView: React.FC = () => {
     };
 
     useEffect(() => {
-        // Simulate authentication check based on the presence of a token
-        const token = localStorage.getItem('token');
-        setIsAuthenticated(!!token);
-        setUserToken(token);
+        const storedCartItems = localStorage.getItem('cartItems');
+        console.log('Stored Cart Items:', storedCartItems);
+        if (storedCartItems) {
+            setCartItems(prevCartItems => {
+                const parsedCartItems = JSON.parse(storedCartItems);
+                console.log('Parsed Cart Items:', parsedCartItems);
+                return parsedCartItems;
+            });
+        }
     }, []);
 
     useEffect(() => {
-        const fetchData = async () => {
-            // Check if a token exists before making the request
-            if (userToken) {
-                try {
-                    const id = await fetchUserId(userToken);
-                    setUserId(id);
-                } catch (error) {
-                    console.error("An error occurred while fetching user ID:", error);
-                    // Handle the error if needed
-                }
-            }
-        };
-
-        fetchData();
-    }, [userToken]);
-
+        console.log('Current Cart Items:', cartItems);
+    }, [cartItems]);
 
     useEffect(() => {
-        const fetchCartData = async () => {
-            // Fetch cart items using the obtained user ID
-            if (userId) {
-                try {
-                    const products: IProduct[] = await fetchCartItems(userId);
-
-                    // Convert products to cart items
-                    const cartItems: any[] = products.map(product => ({
-                        ...product,
-                        quantity: 1,  // Assuming a default quantity of 1
-                        userId: userId || '',  // Use the obtained user ID or an empty string as a fallback
-                    }));
-
-                    setInternalCartItems(cartItems);
-                } catch (error) {
-                    console.error("An error occurred while fetching cart items:", error);
-                    // Handle the error if needed
-                }
-            }
-        };
-
-        fetchCartData();
-    }, [userId]);
+        const token = localStorage.getItem('token');
+        setIsAuthenticated(!!token);
+    }, []);
 
     return (
         <>
-            <BreadcrumbSection currentPage="Cart" showCurrentPage={true} showBackButton={true} onNavigateBack={handleNavigateBack} showCartItem={isAuthenticated} cartItemCount={internalCartItems.length} />
+            <BreadcrumbSection currentPage="Cart" showCurrentPage={true} showBackButton={true} onNavigateBack={handleNavigateBack} showCartItem={isAuthenticated} cartItemCount={cartItems.length} />
 
-            {isAuthenticated && internalCartItems.length === 0 ? (
-                // View for authenticated user with an empty cart
-                <EmptyCartSection />
+            {isAuthenticated ? (
+                // View for authenticated user
+                cartItems.length > 0 ? (
+                    // View for cart with items
+                    <CartWithItems cartItems={cartItems} />
+                ) : (
+                    // View for empty cart
+                    <EmptyCartSection />
+                )
             ) : (
-                // View for cart with items or unauthenticated user
-                <CartWithItems cartItems={[]} userToken={''} products={[]} />
+                // View for unauthenticated user
+                <EmptyCartSection />
             )}
 
             <IconsNavigationSection isAuthenticated={isAuthenticated} />

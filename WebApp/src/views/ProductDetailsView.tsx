@@ -17,13 +17,6 @@ const ProductDetailsView = () => {
         }
     };
 
-    //const getProduct = async () => {
-    //if(productId !== undefined){
-    //    const dbResult = await fetchProductById(productId);
-    //    setProduct(dbResult);
-    //}
-    //}
-
     useEffect(() => {
     getProduct()
     }, [productId]);

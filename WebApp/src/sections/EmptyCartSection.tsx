@@ -1,4 +1,5 @@
-﻿import cartImg from '../Images/img_cart.png';
+﻿import { Link } from 'react-router-dom';
+import cartImg from '../Images/img_cart.png';
 
 const EmptyCartSection = () => {
 
@@ -12,7 +13,7 @@ const EmptyCartSection = () => {
                     <i className="fa-light fa-pipe"></i>
                     <h2 className="confirmation-message">Your cart is empty!</h2>
                     <p className="confirmation-description">Looks like you haven't made your order yet.</p>
-                    <button className='btn dark-btn form-btn'>SHOP NOW</button>
+                    <Link to="/home"><button className='btn dark-btn form-btn'>SHOP NOW</button></Link>
                 </div>
             </section>
         </>

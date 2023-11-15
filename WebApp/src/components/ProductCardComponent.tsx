@@ -1,7 +1,5 @@
-﻿import React, { useState } from 'react';
+﻿import React from 'react';
 import { IProduct, CardType } from '../Interfaces/IProduct';
-import { addToCart as addToCartHandler } from '../helpers/ProductHandler';
-import ProductCardActions from '../helpers/ProductCardActions';
 
 // Rendering a product card with either SmallCard or NormalCard as CardType
 interface ProductCardComponentProps {
@@ -42,7 +40,6 @@ const ProductCardComponent: React.FC<ProductCardComponentProps> = ({ product, ca
         e.preventDefault(); // Prevent the link from navigating from the view
         addToCart?.(product); // Call addToCart if it exists
     };
-
 
     // Need to change name to a more generic (this is Featured products list)
     const renderSmallCardLayout = () => (
