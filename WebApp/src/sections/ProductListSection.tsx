@@ -2,27 +2,32 @@
 import { IProduct, CardType as ICardType } from '../Interfaces/IProduct';
 import ProductCardComponent from '../components/ProductCardComponent';
 
-// A section that renders out product cards, can be reused in different views
+// A product list that renders out a product card, can be reused in different views. For specifics, see the ProductCardComponent
 interface ProductListSectionProps {
     products: IProduct[];
     cardType?: ICardType; 
     flexed?: boolean;
+    addToCart?: (product: IProduct) => void;
+    addToWishlist?: (product: IProduct) => void;
 }
 
-const ProductListSection: React.FC<ProductListSectionProps> = ({ products, cardType, flexed = true }) => {
+const ProductListSection: React.FC<ProductListSectionProps> = ({ products, addToCart, addToWishlist, cardType, flexed = true }) => {
+    const [wishlist, setWishlist] = useState<IProduct[]>([]);
+    const [cart, setCart] = useState<IProduct[]>([]);
+
     return (
         <section className={flexed ? "product-display-grid" : ""}>
             {products ? (
                 products.map((product) => (
                     <ProductCardComponent
-                        key={product.id}
-                        product={product}
-                        cardType={cardType}
-                        showQuantityAdjustment={false}
-                    />
-                ))
-            ) : (
-                <p>No products were found.</p>
+                    key={product.id}
+                    product={product}
+                    cardType={cardType}
+                    addToCart={addToCart}
+                    addToWishlist={addToWishlist}
+                />
+            ))) : (
+                <span className="noReviews">No products were found.</span>
             )}
         </section>
     );

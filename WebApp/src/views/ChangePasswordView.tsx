@@ -8,7 +8,7 @@ const ChangePasswordView: React.FC = () => {
     };
     return (
         <>
-            <BreadcrumbSection currentPage="Reset password" showBackButton={true} onNavigateBack={handleNavigateBack} />
+            <BreadcrumbSection currentPage="Reset password" showBackButton={true} onNavigateBack={handleNavigateBack} showCurrentPage={true} />
             <ChangePasswordSection />
         </>
     )

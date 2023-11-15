@@ -8,13 +8,11 @@ interface IBreadcrumbProps {
     showBackButton?: boolean; // show backbutton
     onNavigateBack?: () => void; //method for going back
     showHamburgerButton?: boolean; // show hamburgerbutton
-
     currentPage: string // current page string 
     showCurrentPage?: boolean; // show current page
     showSearchField?: boolean; // show search field
-
-    showCartItem?: boolean; // show cart
-    cartItemCount?: number; // number of items in the cart
+    cartItemCount?: number;
+    showCartItem?: boolean; // If we want to hide the CartItem
 }
 
 const BreadcrumbSection: React.FC<IBreadcrumbProps> = ({ currentPage, showBackButton, onNavigateBack, showCartItem, showCurrentPage, showSearchField, showHamburgerButton, cartItemCount }) => {
@@ -51,7 +49,6 @@ const BreadcrumbSection: React.FC<IBreadcrumbProps> = ({ currentPage, showBackBu
                         )}
                     </div>
 
-
                     <div className='third-column'>
                         <li className="cart">
                             {showCartItem ? (
@@ -64,7 +61,6 @@ const BreadcrumbSection: React.FC<IBreadcrumbProps> = ({ currentPage, showBackBu
                             ) : null}
                         </li>
                     </div>
-
                 </ul>
             </div>
         </section>

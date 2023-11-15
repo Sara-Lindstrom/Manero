@@ -1,5 +1,5 @@
 import BreadcrumbSection from '../sections/BreadcrumbSection';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import VerificationSection from '../sections/VerificationSection';
 
 const VerificationView: React.FC = () => {
@@ -14,7 +14,7 @@ const VerificationView: React.FC = () => {
             <BreadcrumbSection currentPage="Verify your phone number" showBackButton={true} onNavigateBack={handleNavigateBack} showCurrentPage={true} showCartItem={false} showHamburgerButton={false} />
 
             <div className="verification-container">
-                <NavLink className="link-outside" to="/accountconfirmed">Enter your OTP code here.</NavLink>
+                <div className="link-outside">Enter your OTP code here.</div>
             </div>
 
             <VerificationSection navigate={navigate} />

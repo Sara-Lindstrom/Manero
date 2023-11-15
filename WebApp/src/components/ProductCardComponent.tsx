@@ -8,81 +8,40 @@ interface ProductCardComponentProps {
     product: IProduct;
     cardType?: CardType;
     addToWishlist?: (product: IProduct) => void;
-    showQuantityAdjustment?: boolean;
+    addToCart?: (product: IProduct) => void;
 }
 
-const ProductCardComponent: React.FC<ProductCardComponentProps> = ({ product, cardType, addToWishlist, showQuantityAdjustment }) => {
-    const { addToCart, handleQuantityAdjustment, quantity } = ProductCardActions(product);
-
-    const handleAddToCart = async () => {
-        const productId = Number(product.id);
-        try {
-            const addedToCart = await addToCart(productId, quantity);
-
-            if (addedToCart) {
-                console.log("Product added to cart successfully!");
-            } else {
-                console.log("Failed to add product to cart.");
-            }
-        } catch (error) {
-            console.error("Error adding product to cart:", error);
-        }
-    };
-
-    const renderStars = (product: IProduct) => {
-        if (product.rating == undefined) {
-            product.rating = 0;
-        }
-
-        const filledStars = Math.floor(product.rating);
-        const hasHalfStar = product.rating % 1 !== 0;
-        const remainder = 5 - filledStars - (hasHalfStar ? 1 : 0);
-
-        const stars = [];
-
-        for (let i = 0; i < filledStars; i++) {
-            stars.push(<i className="fa-solid fa-star" key={"star_" + i}></i>);
-        }
-
-        if (hasHalfStar) {
-            stars.push(<i className="fa-solid fa-star-half-stroke" key={"half_star"}></i>);
-        }
-
-        for (let i = 0; i < remainder; i++) {
-            stars.push(<i className="fa-regular fa-star" key={"empty_star_" + i}></i>);
-        }
-        return stars
+const renderStars = (product : IProduct) => {
+    if(product.rating == undefined){
+        product.rating = 0;
     }
+    
+    const filledStars = Math.floor(product.rating);
+    const hasHalfStar = product.rating % 1 !== 0;
+    const remainder = 5 - filledStars - (hasHalfStar ? 1 : 0);
+  
+    const stars = [];
+  
+    for (let i = 0; i < filledStars; i++) {
+      stars.push(<i className="fa-solid fa-star" key={"star_"+i}></i>);
+    }
+  
+    if (hasHalfStar) {
+      stars.push(<i className="fa-solid fa-star-half-stroke" key={"half_star"}></i>);
+    }
+  
+    for (let i = 0; i < remainder; i++) {
+      stars.push(<i className="fa-regular fa-star" key={"empty_star_"+i}></i>);
+    }
+    return stars
+}  
 
-    const renderButtons = () => {
-        if (showQuantityAdjustment) {
-            // If showQuantityAdjustment is true, render only quantity adjustment buttons
-            return (
-                <div className='product-card-info-below-buttons'>
-                    <button className='product-card-info-below-button' onClick={() => handleQuantityAdjustment(true)}>
-                        <i className="fa-regular fa-plus"></i>
-                    </button>
-                    <span className='product-quantity'>{quantity}</span>
-                    <button className='product-card-info-below-button' onClick={() => handleQuantityAdjustment(false)}>
-                        <i className="fa-regular fa-minus"></i>
-                    </button>
-                </div>
-            );
-        }
+const ProductCardComponent: React.FC<ProductCardComponentProps> = ({ product, cardType, addToWishlist, addToCart }) => {
 
-        // If showQuantityAdjustment is false, render cart and wishlist buttons
-        return (
-            <>
-                <button className='product-card-button' onClick={() => addToWishlist && addToWishlist(product)}>
-                    <i className="fa-regular fa-heart"></i>
-                </button>
-                <button className='product-card-button' onClick={handleAddToCart}>
-                    <i className="fa-regular fa-shopping-cart"></i>
-                </button>
-            </>
-        );
+    const onAddToCartClicked = (e: React.MouseEvent) => {
+        e.preventDefault(); // Prevent the link from navigating from the view
+        addToCart?.(product); // Call addToCart if it exists
     };
-
 
 
     // Need to change name to a more generic (this is Featured products list)
@@ -93,7 +52,7 @@ const ProductCardComponent: React.FC<ProductCardComponentProps> = ({ product, ca
             )}
             {product.images.length >= 1 && (
                 product.images[0].imagePath !== undefined && (
-                    <img className='product-card-img' src={product.images[0].imagePath} alt={product.name} />
+                    <img className='product-card-img' src={product.images[0].imagePath} alt={product.name}/>
             ))}
             <div className='product-card-info'>
                 <p className='product-card-rating'>{renderStars(product)} ({product.reviews?.length})</p>
@@ -110,7 +69,13 @@ const ProductCardComponent: React.FC<ProductCardComponentProps> = ({ product, ca
                 </div>
             </div>
             <div className='product-card-buttons'>
-                {renderButtons()}
+                <button className='product-card-button' onClick={() => addToWishlist?.(product)}>
+                    <i className="fa-regular fa-heart"></i>
+                </button>
+
+                <button className='product-card-button' onClick={onAddToCartClicked}>
+                    <i className="fa-regular fa-shopping-cart"></i>
+                </button>
             </div>
         </a>
     ); 
@@ -143,10 +108,10 @@ const ProductCardComponent: React.FC<ProductCardComponentProps> = ({ product, ca
                     <p className='product-card-rating'>{renderStars(product)} ({product.reviews?.length})</p>
                 </div>
                 <div className='product-card-buttons'>
-                    <button className='product-card-button' onClick={() => addToWishlist && addToWishlist(product)}>
+                    <button className='product-card-button' onClick={() => addToWishlist?.(product)}>
                         <i className="fa-regular fa-heart"></i>
                     </button>
-                    <button className='product-card-button' onClick={handleAddToCart}>
+                    <button className='product-card-button' onClick={onAddToCartClicked}>
                         <i className="fa-regular fa-shopping-cart"></i>
                     </button>
                 </div>
