@@ -49,7 +49,6 @@ function App() {
                 <Route path='/signup' element={<SignUpView />} />
                 <Route path='/verifyPhone' element={<VerifyPhoneNumberView />} />
                 <Route path='/viewProfile' element={<ViewProfile />} />
-
                 <Route path='/testleaveAReview' element={<TestLeaveAReviewView />} />
             </Routes>
         </BrowserRouter>

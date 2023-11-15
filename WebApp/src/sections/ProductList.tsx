@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { IProduct } from '../Interfaces/IProduct';
+
 interface ProductListProps {
     products: IProduct[];
 }
