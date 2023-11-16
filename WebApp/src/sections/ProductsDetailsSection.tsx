@@ -20,6 +20,7 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
     const [activeSize, setActiveSize] = useState<ISize | null>(null);
     const [activeColor, setActiveColor] = useState<IColor | null>(null);
     const [counter, setCounter] = useState(0);
+    const [cart, setCart] = useState<{ [key: string]: number }>({});
 
     // Get product's total review
     let sum = 0;
@@ -82,6 +83,15 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
 
         fetchData();
     }, [product.id]);
+
+    const addToCart = (product: IProduct) => {
+        setCart(prevCart => {
+            const updatedCart = { ...prevCart };
+            updatedCart[product.id] = (updatedCart[product.id] || 0) + 1;
+            sessionStorage.setItem('cartItems', JSON.stringify(updatedCart));
+            return updatedCart;
+        });
+    };
 
     const processSizes = (sizesForProduct: ISize[]) => {
         // Create an array to store size names based on their IDs
@@ -277,7 +287,7 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
                             <p>{product?.description}</p>
                         </div>
                         <div className='add-to-cart-btn'>
-                            <button className='dark-btn add-cart-btn'>+ ADD TO CART</button>
+                            <button className='dark-btn add-cart-btn' onClick={() => addToCart(product)}>+ ADD TO CART</button>
                         </div>
                     </section>
 

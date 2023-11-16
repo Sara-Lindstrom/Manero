@@ -1,4 +1,4 @@
-﻿import React from 'react';
+﻿import React, { useState } from 'react';
 import { IProduct, CardType } from '../Interfaces/IProduct';
 
 // Rendering a product card with either SmallCard or NormalCard as CardType
@@ -7,6 +7,7 @@ interface ProductCardComponentProps {
     cardType?: CardType;
     addToWishlist?: (product: IProduct) => void;
     addToCart?: (product: IProduct) => void;
+    showQuantityAdjustment: boolean;
 }
 
 const renderStars = (product : IProduct) => {
@@ -34,11 +35,45 @@ const renderStars = (product : IProduct) => {
     return stars
 }  
 
-const ProductCardComponent: React.FC<ProductCardComponentProps> = ({ product, cardType, addToWishlist, addToCart }) => {
+const ProductCardComponent: React.FC<ProductCardComponentProps> = ({ product, cardType, addToWishlist, addToCart, showQuantityAdjustment }) => {
+    const [quantity, setQuantity] = useState(1);
 
     const onAddToCartClicked = (e: React.MouseEvent) => {
         e.preventDefault(); // Prevent the link from navigating from the view
         addToCart?.(product); // Call addToCart if it exists
+    };
+
+    const handleQuantityAdjustment = (increase: boolean) => {
+        setQuantity(prevQuantity => (increase ? prevQuantity + 1 : Math.max(prevQuantity - 1, 1)));
+    };
+
+    const renderButtons = () => {
+        if (showQuantityAdjustment) {
+            // If showQuantityAdjustment is true, render only quantity adjustment buttons
+            return (
+                <div className='product-card-info-below-buttons'>
+                    <button className='product-card-info-below-button' onClick={() => handleQuantityAdjustment(true)}>
+                        <i className="fa-regular fa-plus"></i>
+                    </button>
+                    <span className='product-quantity'>{quantity}</span>
+                    <button className='product-card-info-below-button' onClick={() => handleQuantityAdjustment(false)}>
+                        <i className="fa-regular fa-minus"></i>
+                    </button>
+                </div>
+            );
+        }
+
+        // If showQuantityAdjustment is false, render cart and wishlist buttons
+        return (
+            <>
+                <button className='product-card-button' onClick={() => addToWishlist && addToWishlist(product)}>
+                    <i className="fa-regular fa-heart"></i>
+                </button>
+                <button className='product-card-button' onClick={onAddToCartClicked}>
+                    <i className="fa-regular fa-shopping-cart"></i>
+                </button>
+            </>
+        );
     };
 
     // Need to change name to a more generic (this is Featured products list)
@@ -69,7 +104,6 @@ const ProductCardComponent: React.FC<ProductCardComponentProps> = ({ product, ca
                 <button className='product-card-button' onClick={() => addToWishlist?.(product)}>
                     <i className="fa-regular fa-heart"></i>
                 </button>
-
                 <button className='product-card-button' onClick={onAddToCartClicked}>
                     <i className="fa-regular fa-shopping-cart"></i>
                 </button>
@@ -104,14 +138,8 @@ const ProductCardComponent: React.FC<ProductCardComponentProps> = ({ product, ca
                     </div>
                     <p className='product-card-rating'>{renderStars(product)} ({product.reviews?.length})</p>
                 </div>
-                
                 <div className='product-card-buttons'>
-                    <button className='product-card-button' onClick={() => addToWishlist?.(product)}>
-                        <i className="fa-regular fa-heart"></i>
-                    </button>
-                    <button className='product-card-button' onClick={onAddToCartClicked}>
-                        <i className="fa-regular fa-shopping-cart"></i>
-                    </button>
+                    {renderButtons()}
                 </div>
             </a>
         </section>

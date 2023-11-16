@@ -20,11 +20,12 @@ const ProductListSection: React.FC<ProductListSectionProps> = ({ products, addTo
             {products ? (
                 products.map((product) => (
                     <ProductCardComponent
-                    key={product.id}
-                    product={product}
-                    cardType={cardType}
-                    addToCart={addToCart}
-                    addToWishlist={addToWishlist}
+                        key={product.id}
+                        product={product}
+                        cardType={cardType}
+                        addToCart={addToCart}
+                        addToWishlist={addToWishlist}
+                        showQuantityAdjustment={false}
                 />
             ))) : (
                 <span className="noReviews">No products were found.</span>
