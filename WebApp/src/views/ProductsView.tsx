@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
-import { fetchAllCategories, fetchBestSellingProducts, fetchByCategoryTag, fetchNewestProducts } from '../helpers/ProductHandler';
+import { fetchAllCategories, fetchBestSellingProducts, fetchByCategoryTag, fetchNewestProducts, getCartItemCount } from '../helpers/ProductHandler';
 import { ICategories } from '../Interfaces/ICategories';
 import { CardType, IProduct } from '../Interfaces/IProduct';
 import { SortByBestSeller, SortByNewest, SortBySale } from '../helpers/ProductSorting';
@@ -15,6 +15,7 @@ const ProductsView: React.FC = () => {
     const [isDropdownVisible, setDropdownVisible] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState<string>("");
     const [products, setProducts] = useState<IProduct[]>([]);
+    const [cart, setCart] = useState<{ [key: string]: number }>({});
 
     const sortinOptions = ['Newest', 'Popular', "Sale"];
 
@@ -106,9 +107,18 @@ const ProductsView: React.FC = () => {
         window.history.back();
     };
 
+    const addToCart = (product: IProduct) => {
+        setCart(prevCart => {
+            const updatedCart = { ...prevCart };
+            updatedCart[product.id] = (updatedCart[product.id] || 0) + 1;
+            sessionStorage.setItem('cartItems', JSON.stringify(updatedCart));
+            return updatedCart;
+        });
+    };
+
     return (
         <>
-            <BreadcrumbSection currentPage="products" showBackButton={true} onNavigateBack={handleNavigateBack} showCartItem={true} />
+            <BreadcrumbSection currentPage="products" showBackButton={true} onNavigateBack={handleNavigateBack} showCartItem={true} cartItemCount={getCartItemCount()} />
 
             <div className='container products-filter'>
                 <div className="slider" onClick={toggleSliderDropdown}>
@@ -151,7 +161,7 @@ const ProductsView: React.FC = () => {
                 </div>
             </div>
             <div className='container'>
-                <ProductListSection products={products} cardType={CardType.SmallCard}/>
+                <ProductListSection products={products} cardType={CardType.SmallCard} addToCart={addToCart} />
             </div>
         </>
     )

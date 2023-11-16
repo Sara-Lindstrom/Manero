@@ -44,15 +44,16 @@ const HomeView: React.FC = () => {
         setCart(prevCart => {
             const updatedCart = { ...prevCart };
             updatedCart[product.id] = (updatedCart[product.id] || 0) + 1;
+            sessionStorage.setItem('cartItems', JSON.stringify(updatedCart));
             return updatedCart;
         });
     };
 
-    const cartItemCount = Object.values(cart).reduce((total, quantity) => total + quantity, 0);
+    const cartItemCountWhenClicked = Object.values(cart).reduce((total, quantity) => total + quantity, 0);
     
     return (
         <>
-            <BreadcrumbSection cartItemCount={cartItemCount} showCartItem={true} currentPage="Home" showHamburgerButton={true} showBackButton={true} />
+            <BreadcrumbSection cartItemCount={cartItemCountWhenClicked} showCartItem={true} currentPage="Home" showHamburgerButton={true} showBackButton={true} />
             <HomePageCategoryNav />
             <HomepageShoecaseOffer />
             <div className='product-showcase-section-container container'>
