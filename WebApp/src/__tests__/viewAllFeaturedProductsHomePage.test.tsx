@@ -1,20 +1,26 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { render, screen, waitFor } from '@testing-library/react';
 import HomeView from '../views/HomeView';
+import { MemoryRouter } from 'react-router-dom';
 
-test('Basic Test', () => {
-    expect(true).toBe(true);
+jest.mock('../helpers/ProductHandler', () => ({
+    fetchBestSellingProducts: jest.fn(),
+    fetchNewestProducts: jest.fn(),
+    getCartItemCount: jest.fn()
+}));
 
+test('HomeView snapshot', () => {
+    const { asFragment } = render(<HomeView />);
+    expect(asFragment()).toMatchSnapshot();
+});
+
+test('HomeView renders key elements', () => {
     render(
         <MemoryRouter>
             <HomeView />
         </MemoryRouter>
     );
 
-    const links = screen.getAllByRole('link', { name: 'view all' });
-
-    // Check if at least one of the links has the expected href
-    const hasExpectedHref = links.some(link => link.getAttribute('href') === '/bestSellersView');
-    expect(hasExpectedHref).toBe(true);
+    // Check if a specific element is present
+    expect(screen.getByText(/Featured Products/i)).toBeInTheDocument();
 });

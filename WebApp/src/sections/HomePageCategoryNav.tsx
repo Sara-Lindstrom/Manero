@@ -1,14 +1,28 @@
+import { useEffect, useState } from 'react';
 import homepageCategoryImage from '../Images/homepageCategoryImage.png';
+import { fetchAllCategories } from '../helpers/ProductHandler';
+import { ICategories } from '../Interfaces/ICategories';
 
 const HomePageCategoryNav = () => {
+    const [categories, setCategories] = useState<ICategories[]>([]);
+
+    const getAllCategories = async () => {
+        setCategories(await fetchAllCategories())
+    }
+
+    useEffect(() => {
+      getAllCategories()
+    }, [])
+    
+
     return (
         <section className='categorynav'>
             <div className='container scrollsection'>
                 <div className="scrollmenu">
-                    <a href="/category#men" className='home-nav-text'><img className='HomepageCategoryImage' src={homepageCategoryImage} alt='CategoryImage' />Men</a>
-                    <a href="/category#women" className='home-nav-text'><img className='HomepageCategoryImage' src={homepageCategoryImage} alt='CategoryImage' />WOMEN</a>
-                    <a href="/category#kids" className='home-nav-text'><img className='HomepageCategoryImage' src={homepageCategoryImage} alt='CategoryImage' />KIDS</a>
-                    <a href="/category#accessories" className='home-nav-text'><img className='HomepageCategoryImage' src={homepageCategoryImage} alt='CategoryImage' />ACCESSORIES</a>
+                {categories!.length >= 1 && (
+                categories!.map((category) => (
+                    <a href={`/category#${category.categoryName}`} key={category.categoryID} className='home-nav-text'><img className='HomepageCategoryImage' src={homepageCategoryImage} alt='CategoryImage' />{category.categoryName.toUpperCase()}</a>
+                )))}
                 </div>
             </div>
         </section>
