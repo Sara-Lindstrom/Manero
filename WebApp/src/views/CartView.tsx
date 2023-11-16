@@ -51,9 +51,6 @@ const CartView: React.FC = () => {
         fetchCartItems();
     }, []);
 
-
-    console.log('Rendering CartView:', isAuthenticated, cartItems.length);
-
     return (
         <>
             <BreadcrumbSection currentPage="Cart" showCurrentPage={true} showBackButton={true} onNavigateBack={handleNavigateBack} showCartItem={isAuthenticated} cartItemCount={cartItems.length} />

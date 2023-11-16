@@ -40,20 +40,10 @@ const HomeView: React.FC = () => {
         // No logic implemented
     };
 
-    //const addToCart = (product: IProduct) => {
-    //    setCart(prevCart => {
-    //        const updatedCart = { ...prevCart };
-    //        updatedCart[product.id] = (updatedCart[product.id] || 0) + 1;
-    //        sessionStorage.setItem('cartItems', JSON.stringify(updatedCart));
-    //        return updatedCart;
-    //    });
-    //};
-
     const addToCart = (product: IProduct) => {
-        setCart((prevCart) => {
+        setCart(prevCart => {
             const updatedCart = { ...prevCart };
-            const productIdString = product.id.toString(); // Convert the ID to a string
-            updatedCart[productIdString] = (updatedCart[productIdString] || 0) + 1;
+            updatedCart[product.id] = (updatedCart[product.id] || 0) + 1;
             sessionStorage.setItem('cartItems', JSON.stringify(updatedCart));
             return updatedCart;
         });

@@ -19,6 +19,7 @@ const CartWithItems: React.FC<CartWithItemsProps> = ({ cartItems }) => {
                                 key={cartItem.id}
                                 product={cartItem}
                                 cardType={CardType.NormalCard}
+                                showQuantityAdjustment={true}
                             />
                         ))
                     ) : (
