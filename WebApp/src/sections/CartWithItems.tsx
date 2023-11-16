@@ -7,6 +7,27 @@ interface CartWithItemsProps {
 }
 
 const CartWithItems: React.FC<CartWithItemsProps> = ({ cartItems }) => {
+    const [subtotal, setSubtotal] = useState(0);
+    const [discount, setDiscount] = useState(0);
+    const [deliveryFee, setDeliveryFee] = useState(5);
+    const [total, setTotal] = useState(0);
+
+    useEffect(() => {
+        // Calculate subtotal
+        const calculatedSubtotal = cartItems.reduce((acc, item) => {
+            const itemPrice = item.salesPrice ?? item.price;
+            return acc + itemPrice;
+        }, 0);
+        setSubtotal(calculatedSubtotal);
+
+        // Placeholder for discount (you can replace this with your discount logic)
+        const calculatedDiscount = 0;
+        setDiscount(calculatedDiscount);
+
+        // Calculate total
+        const calculatedTotal = calculatedSubtotal - calculatedDiscount + deliveryFee;
+        setTotal(calculatedTotal);
+    }, [cartItems, deliveryFee]);
 
     return (
         <section className="cart-section">
@@ -31,19 +52,19 @@ const CartWithItems: React.FC<CartWithItemsProps> = ({ cartItems }) => {
                 <div className='cart-summary'>
                     <p className='cart-subtotal'>
                         <span>Subtotal:</span>
-                        {/*<span>${subtotal.toFixed(2)}</span>*/}
+                        <span>${subtotal.toFixed(2)}</span>
                     </p>
                     <p className='cart-discount'>
                         <span>Discount:</span>
-                        {/*<span>- {discount.toFixed(2)}</span>*/}
+                        <span>- ${discount.toFixed(2)}</span>
                     </p>
                     <p className='cart-delivery'>
                         <span>Delivery Fee:</span>
-                        {/*<span>{deliveryFee.toFixed(2)}</span>*/}
+                        <span>${deliveryFee.toFixed(2)}</span>
                     </p>
                     <p className='cart-total'>
                         <span>Total:</span>
-                        {/*<span>${total.toFixed(2)}</span>*/}
+                        <span>${total.toFixed(2)}</span>
                     </p>
                 </div>
                 <button className='btn dark-btn form-btn'>PROCEED TO CHECKOUT</button>
