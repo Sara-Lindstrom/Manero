@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ProductListSection from '../sections/ProductListSection';
 import HomepageShoecaseOffer from '../sections/HomepageShoecaseOffer';
@@ -6,7 +6,6 @@ import { CardType, IProduct } from '../Interfaces/IProduct';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
 import HomePageCategoryNav from '../sections/HomePageCategoryNav';
 import IconsNavigationSection from '../sections/IconsNavigationSection';
-import React from 'react';
 import { fetchBestSellingProducts, fetchNewestProducts } from '../helpers/ProductHandler';
 
 const HomeView: React.FC = () => {
