@@ -194,7 +194,7 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
                                 <button type='button' title="display-wishlist" onClick={e => { addWishList() }}><i className="fa-solid fa-heart" id='wishlist-btn'></i></button>
                             </div>
                             <div className='review-section-top'>
-                                <a href='/reviews'>{review_array} {"(" + number_of_reviews + ")"} </a>
+                                <a href='/leaveAReview'>{review_array} {"(" + number_of_reviews + ")"} </a>
                             </div>
                         </div>
                     </section>
@@ -233,7 +233,7 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
                             </div>
                         </div>
                         <div className='product-total-review'>
-                            <a href='/reviews'>{review_array} {"(" + number_of_reviews + ")"} </a>
+                            <a href='/leaveAReview'>{review_array} {"(" + number_of_reviews + ")"} </a>
                         </div>
                         <div className='price-section'>
                             <div className='price'>

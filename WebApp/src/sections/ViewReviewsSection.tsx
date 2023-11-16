@@ -4,8 +4,12 @@ import StarRating from '../components/StarRating'
 import { useNavigate } from 'react-router-dom'
 import { submitReview } from '../helpers/ReviewHandler';
 
+interface ViewReviewSectionProps {
+    productId: string;
+}
+
 // implement productId for connecting the review to the product
-const ViewReviewsSection: React.FC = () => {
+const ViewReviewsSection: React.FC<ViewReviewSectionProps> = ({ productId }) => {
 
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState('');
@@ -28,8 +32,6 @@ const ViewReviewsSection: React.FC = () => {
         if (comment.length < 2) {
             setErrorMessage('Comment must be at least 2 characters long.');
         } else {
-            const productId = "DDB9E337-B2E4-41FA-A97E-33BB39CBE80F"; // Change this to a new productID
-
             try {
                 await submitReview({ comment, rating, productId },
                     () => navigate('/home'),
