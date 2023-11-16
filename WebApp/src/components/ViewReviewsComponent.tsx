@@ -5,7 +5,6 @@ interface ReviewData {
     rating: number;
     reviewDate: string;
 }
-
 interface ReviewComponentProps {
     viewReviewData: ReviewData;
 }
