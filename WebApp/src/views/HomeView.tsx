@@ -44,7 +44,7 @@ const HomeView: React.FC = () => {
         setCart(prevCart => {
             const updatedCart = { ...prevCart };
             updatedCart[product.id] = (updatedCart[product.id] || 0) + 1;
-            localStorage.setItem('cartItems', JSON.stringify(updatedCart));
+            sessionStorage.setItem('cartItems', JSON.stringify(updatedCart));
             return updatedCart;
         });
     };

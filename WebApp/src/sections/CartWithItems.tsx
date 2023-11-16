@@ -7,7 +7,6 @@ interface CartWithItemsProps {
 }
 
 const CartWithItems: React.FC<CartWithItemsProps> = ({ cartItems }) => {
-    console.log('Received Cart Items:', cartItems);
 
     return (
         <section className="cart-section">

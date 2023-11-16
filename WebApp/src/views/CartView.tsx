@@ -17,7 +17,12 @@ const CartView: React.FC = () => {
     };
 
     useEffect(() => {
-        const storedCartItems = localStorage.getItem('cartItems');
+        const token = localStorage.getItem('token');
+        setIsAuthenticated(!!token);
+    }, []);
+
+    useEffect(() => {
+        const storedCartItems = sessionStorage.getItem('cartItems');
 
         const fetchCartItems = async () => {
             if (storedCartItems) {
@@ -44,11 +49,6 @@ const CartView: React.FC = () => {
         };
 
         fetchCartItems();
-    }, []);
-
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        setIsAuthenticated(!!token);
     }, []);
 
     console.log('Rendering CartView:', isAuthenticated, cartItems.length);
