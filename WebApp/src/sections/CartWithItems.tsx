@@ -11,7 +11,7 @@ const CartWithItems: React.FC<CartWithItemsProps> = ({ cartItems }) => {
 
     return (
         <section className="cart-section">
-            <div className="container">a
+            <div className="container">
 
                 <div className="cart-product-cards">
                     {cartItems.length > 0 ? (

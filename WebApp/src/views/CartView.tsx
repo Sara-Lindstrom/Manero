@@ -5,6 +5,7 @@ import EmptyCartSection from '../sections/EmptyCartSection';
 import CartWithItems from '../sections/CartWithItems';
 import IconsNavigationSection from '../sections/IconsNavigationSection';
 import { IProduct } from '../Interfaces/IProduct';
+import { fetchProductById } from '../helpers/ProductHandler';
 
 const CartView: React.FC = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -17,24 +18,40 @@ const CartView: React.FC = () => {
 
     useEffect(() => {
         const storedCartItems = localStorage.getItem('cartItems');
-        console.log('Stored Cart Items:', storedCartItems);
-        if (storedCartItems) {
-            setCartItems(prevCartItems => {
-                const parsedCartItems = JSON.parse(storedCartItems);
-                console.log('Parsed Cart Items:', parsedCartItems);
-                return parsedCartItems;
-            });
-        }
-    }, []);
 
-    useEffect(() => {
-        console.log('Current Cart Items:', cartItems);
-    }, [cartItems]);
+        const fetchCartItems = async () => {
+            if (storedCartItems) {
+                const parsedCartItems = JSON.parse(storedCartItems);
+
+                // Fetch product details for each product ID in the cart
+                const cartItemsArray: (IProduct | null)[] = await Promise.all(
+                    Object.entries(parsedCartItems).map(async ([productId, quantity]) => {
+                        try {
+                            const productDetails = await fetchProductById(productId);
+                            return { ...productDetails, quantity: quantity as number };
+                        } catch (error) {
+                            console.error(`Error fetching product with ID ${productId}:`, error);
+                            return null;
+                        }
+                    })
+                );
+
+                // Filter out null values (failed fetches) and assert the type to IProduct[]
+                const filteredCartItemsArray = cartItemsArray.filter(Boolean) as IProduct[];
+
+                setCartItems(filteredCartItemsArray);
+            }
+        };
+
+        fetchCartItems();
+    }, []);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
         setIsAuthenticated(!!token);
     }, []);
+
+    console.log('Rendering CartView:', isAuthenticated, cartItems.length);
 
     return (
         <>
