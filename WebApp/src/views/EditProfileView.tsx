@@ -33,7 +33,6 @@ const EditProfileView: React.FC = () => {
     };
 
 
-    /////////////////////////////////////////////////////////////
 
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
@@ -69,7 +68,6 @@ const EditProfileView: React.FC = () => {
             setError('Please sign in to see your addresses');
         }
     }, [token]);
-    //////////////////////////////////////////////////////////////
    
 
     

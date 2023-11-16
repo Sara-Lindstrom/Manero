@@ -6,7 +6,6 @@ import { fetchAddressData, AddressData } from '../helpers/AddressHandler';
 
 
 type AddressComponentProps = {
-    //streetName: string;
     addressId: number
     token: string;
     userSignedIn: boolean;
@@ -19,7 +18,6 @@ const EditProfileSection: React.FC <AddressComponentProps> = ({ addressId, token
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
-    //const [location, setLocation] = useState("Ankeborg");
     const [fileSelected, setFileSelected] = useState<string>("https://www.wilsoncenter.org/sites/default/files/media/images/person/james-person-1.jpg");
 
     const [localAddress, setLocalAddress] = useState<AddressData | null>(null);
@@ -219,7 +217,6 @@ const EditProfileSection: React.FC <AddressComponentProps> = ({ addressId, token
                             const newStreet = event.target.value;
                             const updatedLocalAddress = { ...localAddress, streetName: newStreet };
                             setLocalAddress(updatedLocalAddress);
-                            //setLocation(event.target.value);
                             const validationResult = FormValidation.ValidateName(event.target.value);
                             setLocationError(validationResult.error);
                         }} />
