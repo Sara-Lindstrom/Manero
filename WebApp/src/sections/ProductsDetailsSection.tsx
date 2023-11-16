@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { IProduct } from '../Interfaces/IProduct';
 import { fetchProductById, fetchColorsForProduct, fetchSizesForProduct, fetchImagesForProduct, shuffleArray } from '../helpers/ProductHandler';
 import { IColor } from '../Interfaces/IColor';
@@ -193,8 +194,9 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
                                 <h2>{product?.name}</h2>
                                 <button type='button' title="display-wishlist" onClick={e => { addWishList() }}><i className="fa-solid fa-heart" id='wishlist-btn'></i></button>
                             </div>
+
                             <div className='review-section-top'>
-                                <a href='/reviews'>{review_array} {"(" + number_of_reviews + ")"} </a>
+                                <Link to={`/leaveAReview/${product.id}`}>{review_array} {"(" + number_of_reviews + ")"}</Link>
                             </div>
                         </div>
                     </section>
@@ -233,7 +235,7 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
                             </div>
                         </div>
                         <div className='product-total-review'>
-                            <a href='/reviews'>{review_array} {"(" + number_of_reviews + ")"} </a>
+                            <Link to={`/leaveAReview/${product.id}`}>{review_array} {"(" + number_of_reviews + ")"}</Link>
                         </div>
                         <div className='price-section'>
                             <div className='price'>
