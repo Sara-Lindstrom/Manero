@@ -8,7 +8,6 @@ interface ReviewData {
     rating: number;
     reviewDate: string;
 }
-
 interface ReviewListComponentProps {
     productId: string;
 }

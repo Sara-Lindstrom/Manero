@@ -8,7 +8,6 @@ import ConfirmedPhoneVerificationView from './views/ConfirmedPhoneVerificationVi
 import EditProfileView from './views/EditProfileView';
 import ForgotPasswordView from './views/ForgotPasswordView';
 import HomeView from './views/HomeView';
-import LeaveAReviewView from './views/LeaveAReviewView';
 import MyAddresses from './views/MyAddresses';
 import OnboardingView from './views/OnboardingView';
 import PaymentMethodView from './views/PaymentMethodView';
@@ -21,7 +20,9 @@ import ViewProfile from './views/ViewProfileView';
 import AddNewAddressView from './views/AddNewAddressView';
 import PageNotFound from './views/PageNotFound';
 import ProductDetailsView from './views/ProductDetailsView';
-import ReviewsView from './views/ReviewsView';
+import CartView from './views/CartView';
+import AllReviewView from './views/AllReviewsView';
+import SubmitReviewView from './views/SubmitReviewView';
 
 function App() {
 
@@ -39,7 +40,6 @@ function App() {
                 <Route path='/editProfile' element={<EditProfileView />} />
                 <Route path='/forgotPassword' element={<ForgotPasswordView />} />
                 <Route path='/home' element={<HomeView />} />
-                <Route path='/leaveAReview' element={<LeaveAReviewView />} />
                 <Route path='/myAddresses' element={<MyAddresses />} />
                 <Route path='/pageNotFound' element={<PageNotFound />} />
                 <Route path='/paymentMethodView' element={<PaymentMethodView />} />
@@ -49,7 +49,9 @@ function App() {
                 <Route path='/signup' element={<SignUpView />} />
                 <Route path='/verifyPhone' element={<VerifyPhoneNumberView />} />
                 <Route path='/viewProfile' element={<ViewProfile />} />
-                <Route path='/reviews' element={<ReviewsView />} />
+                <Route path='/cart' element={<CartView />} />
+                <Route path="/product/:productId/all-reviews" element={<AllReviewView />} />
+                <Route path='/leaveAReview/:productId' element={<SubmitReviewView />} />
             </Routes>
         </BrowserRouter>
 

@@ -1,8 +1,9 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom';
+import React, { useEffect } from 'react'
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import logo from '../Images/logo.svg'
 import SearchField from '../components/SearchField';
 import BurgerMenuSection from './BurgerMenuSection';
+import { getCartItemCount } from '../helpers/ProductHandler';
 interface IBreadcrumbProps {
 
     showBackButton?: boolean; // show backbutton
@@ -54,7 +55,7 @@ const BreadcrumbSection: React.FC<IBreadcrumbProps> = ({ currentPage, showBackBu
                             {showCartItem ? (
                                 <NavLink to={'/cart'}>
                                     <span className="translate-middle badge rounded-pill">
-                                        {cartItemCount}
+                                        {String(getCartItemCount())}
                                     </span>
                                     <i className="fa-regular fa-bag-shopping"></i>
                                 </NavLink>
