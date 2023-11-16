@@ -91,7 +91,7 @@ const ViewProfileSection = () => {
                     <h5>{profile.email}</h5>
                 </div>
                 <div className='Fields-section'>
-                    <a className='field' href='/pageNotFound' id='order-history'>
+                    <a className='field' href='/pageNotFound' id='order-history' data-testid='order-history'>
                         <div className='field-details'>
                             <div className='icon-name'>
                                 <i className="fa-light fa-calendar"></i>
@@ -100,7 +100,7 @@ const ViewProfileSection = () => {
                             <i id='right-arrow' className="fa-solid fa-chevron-right"></i>
                         </div>
                     </a>
-                    <a className='field' href='/paymentMethodView' id='payment-method'>
+                    <a className='field' href='/paymentMethodView' id='payment-method' data-testid='payment-method'>
                         <div className='field-details'>
                             <div className='icon-name'>
                                 <i className="fa-light fa-credit-card"></i>
@@ -109,7 +109,7 @@ const ViewProfileSection = () => {
                             <i id='right-arrow' className="fa-solid fa-chevron-right"></i>
                         </div>
                     </a>
-                    <a className='field' href='/myAddresses' id='my-address'>
+                    <a className='field' href='/myAddresses' id='my-address' data-testid='my-address'>
                         <div className='field-details'>
                             <div className='icon-name'>
                                 <i className="fa-regular fa-location-dot"></i>
@@ -118,7 +118,7 @@ const ViewProfileSection = () => {
                             <i id='right-arrow' className="fa-solid fa-chevron-right"></i>
                         </div>
                     </a>
-                    <a className='field' href='pageNotFound' id='my-promocode'>
+                    <a className='field' href='pageNotFound' id='my-promocode' data-testid='my-promocode'>
                         <div className='field-details'>
                             <div className='icon-name'>
                                 <i className="fa-regular fa-gift"></i>
@@ -127,7 +127,7 @@ const ViewProfileSection = () => {
                             <i id='right-arrow' className="fa-solid fa-chevron-right"></i>
                         </div>
                     </a>
-                    <a className='field' href='#' onClick={e => { showPopup() }} id='signout'>
+                    <a className='field' href='#' onClick={e => { showPopup() }} id='signout' data-testid='signout'>
                         <div className='field-details'>
                             <div className='icon-name'>
                                 <i className="fa-regular fa-arrow-right-from-bracket"></i>
