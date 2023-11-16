@@ -1,21 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import * as FormValidation from '../helpers/FormValidation';
 import { fetchProfileData, handleUpdateProfile } from '../helpers/FormHandlers';
+import { fetchAddressData, AddressData } from '../helpers/AddressHandler';
 
-const EditProfileSection: React.FC = () => {
+
+
+type AddressComponentProps = {
+    //streetName: string;
+    addressId: number
+    token: string;
+    userSignedIn: boolean;
+};
+
+
+const EditProfileSection: React.FC <AddressComponentProps> = ({ addressId, token, userSignedIn }) => {
 
     //useStates for setting input values both for validation and populate new User
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
-    const [location, setLocation] = useState("Ankeborg");
+    //const [location, setLocation] = useState("Ankeborg");
     const [fileSelected, setFileSelected] = useState<string>("https://www.wilsoncenter.org/sites/default/files/media/images/person/james-person-1.jpg");
+
+    const [localAddress, setLocalAddress] = useState<AddressData | null>(null);
+    const [loading, setLoading] = useState(true);
 
     //UseStates for error messages in frontend validation
     const [nameError, setNameError] = useState('');
     const [emailError, setEmailError] = useState('');
     const [phoneNumberError, setPhoneNumberError] = useState('');
     const [locationError, setLocationError] = useState('');
+    
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -31,7 +46,43 @@ const EditProfileSection: React.FC = () => {
                 console.error('Error fetching profile data:', error);
             });
         }
+        
     }, []);
+
+    
+    useEffect(() => {
+        const fetchData = async () => {
+            if (!userSignedIn) {
+                setLoading(false);
+                return;
+            }
+            try {
+                const addressData = await fetchAddressData(addressId, token);
+
+                if (addressData) {
+                    setLocalAddress(addressData);
+                }
+            } catch (error) {
+                console.error('Error fetching user address:', error);
+            }
+            setLoading(false);
+        };
+        fetchData();
+    }, [addressId, token, userSignedIn]);
+
+    if (!userSignedIn) {
+        return <div>User not signed in. Please sign in to view the address.</div>;
+    }
+
+    if (loading) {
+        return <div>Loading</div>;
+    }
+
+    if (!localAddress) {
+        return <div>Address not found.</div>;
+    }
+    
+    
 
     // Validates form when user clicks submit and sends inputs to db
     const ValidateOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -40,14 +91,14 @@ const EditProfileSection: React.FC = () => {
         let validName = FormValidation.ValidateName(name).isValid;
         let validEmail = FormValidation.ValidateEmail(email).isValid;
         let validPhoneNumber = FormValidation.ValidatePhoneNumber(phoneNumber).isValid;
-        let validLocation = FormValidation.ValidateName(location).isValid;
+        let validLocation = FormValidation.ValidateName(localAddress.streetName).isValid;
 
         if (validName && validEmail && validPhoneNumber && validLocation) {
             const profileData = {
                 name: name,
                 email: email,
                 phoneNumber: phoneNumber || null,
-                location: location,
+                location: localAddress.streetName,
             };
 
             const token = localStorage.getItem('token');
@@ -163,9 +214,12 @@ const EditProfileSection: React.FC = () => {
                 <div className='input-container'>
                     <p className='input-label'>Location</p>
 
-                    <input className='input' id='Editname' value={location} aria-label='NEW LOCATION'
+                    <input className='input' id='Editname' value={localAddress.streetName} aria-label='NEW LOCATION'
                         onChange={(event) => {
-                            setLocation(event.target.value);
+                            const newStreet = event.target.value;
+                            const updatedLocalAddress = { ...localAddress, streetName: newStreet };
+                            setLocalAddress(updatedLocalAddress);
+                            //setLocation(event.target.value);
                             const validationResult = FormValidation.ValidateName(event.target.value);
                             setLocationError(validationResult.error);
                         }} />
