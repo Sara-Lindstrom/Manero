@@ -2,3 +2,13 @@
     width: 100%;
     height: 330px;
 }
+.error-field {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .error-message {
+        color: red;
+    }
+}
+

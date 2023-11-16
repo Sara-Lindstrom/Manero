@@ -18,6 +18,10 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
     const [token, setToken] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [postalCodeError, setPostalCodeError] = useState<string | null>(null);
+    const [titleError, setTitleError] = useState<string | null>(null);
+    const [streetNameError, setStreetNameError] = useState<string | null>(null);
+    const [cityError, setCityError] = useState<string | null>(null);
+    const [countryError, setCountryError] = useState<string | null>(null);
 
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
@@ -52,13 +56,10 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
                 }
             );
     
-            // Assuming your API returns the newly added address
             const newAddress = response.data;
     
-            // Call the callback function passed from the parent component to update the list of addresses after adding a new one
             onAddressAdded(newAddress);
     
-            // Clear the form fields after successfully adding the address
             setTitle('');
             setStreetName('');
             setCity('');
@@ -66,7 +67,6 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
             setPostalCode('');
             setUseCurrentLocation(false);
     
-            // Navigate to '/MyAddresses' after successful addition
             navigate('/myAddresses');
     
         } catch (error) {
@@ -74,12 +74,21 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
         }
     };
 
+    const validateInput = (value: string, setInputError: React.Dispatch<React.SetStateAction<string | null>>) => {
+        const inputRegex = /^[a-zA-Z0-9]{2,}$/;
+
+        if (!value.match(inputRegex)) {
+            setInputError('Needs to be at least 2 characters');
+        } else {
+            setInputError(null);
+        }
+    };
+
     const validatePostalCode = (value: string) => {
-        // Regular expression for postal code validation (you might need to adjust this based on the format of postal codes)
-        const postalCodeRegex = /^\d{3}\s\d{2}$/; // Example regex for US postal codes
+        const postalCodeRegex = /^\d{3}\s\d{2}$/;
 
         if (!value.match(postalCodeRegex)) {
-            setPostalCodeError('Invalid postal code format');
+            setPostalCodeError('Needs to be formatted as 123 45');
         } else {
             setPostalCodeError(null);
         }
@@ -89,7 +98,7 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
         <>
             <div className='container'>
                 <iframe
-                    className="custom-map-iframe" 
+                    className="custom-map-iframe"
                     title="OpenStreetMap"
                     frameBorder="0"
                     scrolling="no"
@@ -104,54 +113,66 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
                         <input
                             className="input"
                             value={title}
-                            onChange={(e) => setTitle(e.target.value)}
+                            onChange={(e) => {
+                                setTitle(e.target.value);
+                                validateInput(e.target.value, setTitleError);
+                            }}
                         />
                     </div>
+                        <div className='error-field'>{titleError && <p className='error-message'>{titleError}</p>}</div>
+
                     <div className='input-container'>
                         <p className='input-label'>STREET NAME</p>
                         <input
                             className="input"
                             value={streetName}
-                            onChange={(e) => setStreetName(e.target.value)}
-                        />
+                            onChange={(e) => {
+                                setStreetName(e.target.value);
+                                validateInput(e.target.value, setStreetNameError);
+                            }}
+                        /> 
                     </div>
+                        <div className='error-field'>{streetNameError && <p className='error-message'>{streetNameError}</p>}</div>
+
                     <div className='input-container'>
                         <p className='input-label'>CITY</p>
                         <input
                             className="input"
                             value={city}
-                            onChange={(e) => setCity(e.target.value)}
-                        />
+                            onChange={(e) => {
+                                setCity(e.target.value);
+                                validateInput(e.target.value, setCityError);
+                            }}
+                        /> 
                     </div>
+                        <div className='error-field'>{cityError && <p className='error-message'>{cityError}</p>}</div>
+
                     <div className='input-container'>
                         <p className='input-label'>COUNTRY</p>
                         <input
                             className="input"
                             value={country}
-                            onChange={(e) => setCountry(e.target.value)}
+                            onChange={(e) => {
+                                setCountry(e.target.value);
+                                validateInput(e.target.value, setCountryError);
+                            }}
                         />
                     </div>
-                            <div className='input-container'>
-                                <p className='input-label'>POSTAL CODE</p>
-                                <input
-                                className="input"
-                                value={postalCode}
-                                onChange={(e) => {
-                                    setPostalCode(e.target.value);
-                                    validatePostalCode(e.target.value); // Validate postal code on change
-                                }}
-                                />
-                                {postalCodeError && <p className='error-message'>{postalCodeError}</p>}
-                            </div>
-                        <div className="actions-container">
-                        <div>
-                            <div className="remember-me">
-                                <input type="checkbox" />
-                                <label>Use my current location</label>
-                            </div>
-                        </div>
+                        <div className='error-field'>{countryError && <p className='error-message'>{countryError}</p>}</div>
+                    
+                    <div className='input-container'>
+                        <p className='input-label'>POSTAL CODE</p>
+                        <input
+                            className="input"
+                            value={postalCode}
+                            onChange={(e) => {
+                                setPostalCode(e.target.value);
+                                validatePostalCode(e.target.value);
+                            }}
+                        />
                     </div>
-                        <button className="btn dark-btn form-btn" onClick={handleSaveAddress}>
+                        <div className='error-field'>{postalCodeError && <p className='error-message'>{postalCodeError}</p>}</div>
+                    <button className="btn dark-btn form-btn" onClick={handleSaveAddress}>
                         SAVE ADDRESS
                     </button>
                 </form>
@@ -161,3 +182,4 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
 };
 
 export default AddAddressSection;
+
