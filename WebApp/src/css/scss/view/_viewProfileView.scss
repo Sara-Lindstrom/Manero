@@ -48,20 +48,15 @@
         }
     }
 
-    .Fields-section {
+    .container {
         display: flex;
         flex-direction: column;
+        padding: 0;
         margin-top: 60px;
-        width: 100%;
         margin-bottom: 60px;
 
-        @media (min-width: 768px) {
-            padding: 0 100px;
-        }
 
-        @media (min-width: 1200px) {
-            padding: 0 150px;
-        }
+
 
         .field {
             text-decoration: none;
@@ -71,23 +66,16 @@
 
             .field-details {
                 display: flex;
-                flex-direction: row;
                 justify-content: space-between;
                 align-items: center;
 
-                .icon-name {
-                    display: flex;
-                    text-align: left;
-                    gap: 35px;
+                p {
+                    font-size: 16px;
+                    margin: 0;
+                }
 
-                    p {
-                        text-align: left;
-                        font-size: 16px;
-                    }
-
-                    i {
-                        font-size: 20px;
-                    }
+                i {
+                    font-size: 20px;
                 }
             }
         }
