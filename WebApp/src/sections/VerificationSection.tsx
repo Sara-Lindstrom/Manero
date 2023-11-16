@@ -109,7 +109,7 @@ const VerificationSection: React.FC<VerifyPhoneProps> = ({ navigate }: VerifyPho
             </div>
             <div className="verification-container">
                 <div className="verification-error">{verificationError && <p className="verification-error">{verificationError}</p>}</div>
-                <NavLink className="link-verify" to="#" onClick={resendOtp}>Didn't recieve the OTP? Resend.</NavLink>
+                <NavLink className="link-verify" to="#" onClick={resendOtp} data-testid="resend-link">Didn't recieve the OTP? Resend.</NavLink>
                 <button
                     className='btn dark-btn form-btn'
                     data-testid="verifyButton"
