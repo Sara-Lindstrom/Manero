@@ -1,8 +1,15 @@
 .iconsNav {
-    
-    margin-top: 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #fff;
+    z-index: 10;
+
+
+
         .container {
-            padding-top: 15px;
+            padding-top: 5px;
+            padding-bottom: 5px;
             border-top: 1px solid $color-blue;
 
             .icons {
@@ -12,6 +19,7 @@
                 align-items: center;
                 
             .icon {         
+
                 a {
                     font-size: 1.5rem;
                     padding: 8px;
