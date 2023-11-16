@@ -33,7 +33,7 @@ const CartView: React.FC = () => {
                     Object.entries(parsedCartItems).map(async ([productId, quantity]) => {
                         try {
                             const productDetails = await fetchProductById(productId);
-                            return { ...productDetails, quantity: quantity as number };
+                            return { ...productDetails, quantity: quantity as number, productId }; // Include productId in the cart item
                         } catch (error) {
                             console.error(`Error fetching product with ID ${productId}:`, error);
                             return null;
@@ -50,6 +50,7 @@ const CartView: React.FC = () => {
 
         fetchCartItems();
     }, []);
+
 
     console.log('Rendering CartView:', isAuthenticated, cartItems.length);
 

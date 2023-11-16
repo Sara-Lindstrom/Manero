@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
-import { fetchAllCategories, fetchBestSellingProducts, fetchByCategoryTag, fetchNewestProducts } from '../helpers/ProductHandler';
+import { fetchAllCategories, fetchBestSellingProducts, fetchByCategoryTag, fetchNewestProducts, getCartItemCount } from '../helpers/ProductHandler';
 import { ICategories } from '../Interfaces/ICategories';
 import { CardType, IProduct } from '../Interfaces/IProduct';
 import { SortByBestSeller, SortByNewest, SortBySale } from '../helpers/ProductSorting';
@@ -108,7 +108,7 @@ const ProductsView: React.FC = () => {
 
     return (
         <>
-            <BreadcrumbSection currentPage="products" showBackButton={true} onNavigateBack={handleNavigateBack} showCartItem={true} />
+            <BreadcrumbSection currentPage="products" showBackButton={true} onNavigateBack={handleNavigateBack} showCartItem={true} cartItemCount={getCartItemCount()} />
 
             <div className='container products-filter'>
                 <div className="slider" onClick={toggleSliderDropdown}>

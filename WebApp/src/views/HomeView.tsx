@@ -40,20 +40,30 @@ const HomeView: React.FC = () => {
         // No logic implemented
     };
 
+    //const addToCart = (product: IProduct) => {
+    //    setCart(prevCart => {
+    //        const updatedCart = { ...prevCart };
+    //        updatedCart[product.id] = (updatedCart[product.id] || 0) + 1;
+    //        sessionStorage.setItem('cartItems', JSON.stringify(updatedCart));
+    //        return updatedCart;
+    //    });
+    //};
+
     const addToCart = (product: IProduct) => {
-        setCart(prevCart => {
+        setCart((prevCart) => {
             const updatedCart = { ...prevCart };
-            updatedCart[product.id] = (updatedCart[product.id] || 0) + 1;
+            const productIdString = product.id.toString(); // Convert the ID to a string
+            updatedCart[productIdString] = (updatedCart[productIdString] || 0) + 1;
             sessionStorage.setItem('cartItems', JSON.stringify(updatedCart));
             return updatedCart;
         });
     };
 
-    const cartItemCount = Object.values(cart).reduce((total, quantity) => total + quantity, 0);
+    const cartItemCountWhenClicked = Object.values(cart).reduce((total, quantity) => total + quantity, 0);
     
     return (
         <>
-            <BreadcrumbSection cartItemCount={cartItemCount} showCartItem={true} currentPage="Home" showHamburgerButton={true} showBackButton={true} />
+            <BreadcrumbSection cartItemCount={cartItemCountWhenClicked} showCartItem={true} currentPage="Home" showHamburgerButton={true} showBackButton={true} />
             <HomePageCategoryNav />
             <HomepageShoecaseOffer />
             <div className='product-showcase-section-container container'>
