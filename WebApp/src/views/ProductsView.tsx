@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
-import { fetchAllCategories, fetchBestSellingProducts, fetchByCategoryTag, fetchNewestProducts } from '../helpers/ProductHandler';
+import { fetchAllCategories, fetchBestSellingProducts, fetchByCategoryTag, fetchNewestProducts, getCartItemCount } from '../helpers/ProductHandler';
 import { ICategories } from '../Interfaces/ICategories';
 import { CardType, IProduct } from '../Interfaces/IProduct';
 import { SortByBestSeller, SortByNewest, SortBySale } from '../helpers/ProductSorting';
 import ProductListSection from '../sections/ProductListSection';
 import { useParams } from 'react-router-dom';
 
-const BestSellersView: React.FC = () => {
+const ProductsView: React.FC = () => {
     const { sorting } = useParams<{ sorting: string }>();
     const [isSliderDropdownVisible, setSliderDropdownVisible] = useState(false);
     const [categories, setCategories] = useState<ICategories[] | undefined>([]);
@@ -15,6 +15,7 @@ const BestSellersView: React.FC = () => {
     const [isDropdownVisible, setDropdownVisible] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState<string>("");
     const [products, setProducts] = useState<IProduct[]>([]);
+    const [cart, setCart] = useState<{ [key: string]: number }>({});
 
     const sortinOptions = ['Newest', 'Popular', "Sale"];
 
@@ -106,11 +107,20 @@ const BestSellersView: React.FC = () => {
         window.history.back();
     };
 
+    const addToCart = (product: IProduct) => {
+        setCart(prevCart => {
+            const updatedCart = { ...prevCart };
+            updatedCart[product.id] = (updatedCart[product.id] || 0) + 1;
+            sessionStorage.setItem('cartItems', JSON.stringify(updatedCart));
+            return updatedCart;
+        });
+    };
+
     return (
         <>
-            <BreadcrumbSection currentPage="Best Sellers" showBackButton={true} onNavigateBack={handleNavigateBack} />
+            <BreadcrumbSection currentPage="products" showBackButton={true} onNavigateBack={handleNavigateBack} showCartItem={true} cartItemCount={getCartItemCount()} />
 
-            <div className='best-seller-filter'>
+            <div className='container products-filter'>
                 <div className="slider" onClick={toggleSliderDropdown}>
                     <i className="fa-solid fa-sliders"></i>
                     {isSliderDropdownVisible && (
@@ -150,9 +160,11 @@ const BestSellersView: React.FC = () => {
                     )}
                 </div>
             </div>
-            <ProductListSection products={products} cardType={CardType.SmallCard}/>
+            <div className='container'>
+                <ProductListSection products={products} cardType={CardType.SmallCard} addToCart={addToCart} />
+            </div>
         </>
     )
 }
 
-export default BestSellersView;
+export default ProductsView;

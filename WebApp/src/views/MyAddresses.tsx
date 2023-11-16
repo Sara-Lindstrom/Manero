@@ -65,7 +65,7 @@ const MyAddresses = () => {
                 <div>{error || 'User ID is not available.'}</div>
             )}
 
-            <Link to="/addNewAddress" className='add-address-link'>
+            <Link to="/addNewAddress" className='add-address-link' onClick={(e) => { e.preventDefault(); navigate('/addNewAddress'); }}>
                 <i className="add-address-icon fa-solid fa-plus"></i>
                 <p className="small-info">Add a new address</p>
             </Link>

@@ -1,25 +1,50 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
-import BestSellersView from '../views/BestSellersView'; // Import your component
+import { render, fireEvent, screen } from '@testing-library/react';
+import ProductsView from '../views/ProductsView';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
-test('toggleDropdown function is called when "Sorting By" is clicked', () => {
-  const { getByText, queryByText } = render(<BestSellersView />);
+jest.mock('../helpers/ProductSorting', () => ({
+    SortByBestSeller: jest.fn(),
+    SortByNewest: jest.fn(),
+    SortBySale: jest.fn()
+}));
 
-  // Initially, the dropdown is not visible
-  const sortingByElement = getByText('Sorting By');
-  expect(sortingByElement).toBeTruthy();
+jest.mock('../helpers/ProductHandler', () => ({
+    fetchAllCategories: jest.fn(),
+    fetchBestSellingProducts: jest.fn(),
+    fetchByCategoryTag: jest.fn(),
+    fetchNewestProducts: jest.fn(),
+    getCartItemCount: jest.fn()
+}));
 
-  // Click on "Sorting By" to toggle the dropdown
-  fireEvent.click(sortingByElement);
+const mockedUseParams = jest.fn();
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useParams: () => mockedUseParams(), // Provide a mock implementation for useParams
+}));
 
-  // After clicking, the dropdown should be visible
-  const categoryDropdown = queryByText('All');
-  expect(categoryDropdown).toBeTruthy();
+test('Dropdown is initially not visible and becomes visible after clicking "Sorting By"', () => {
+    mockedUseParams.mockReturnValue({ sorting: 'newest' });
 
-  // Click again to hide the dropdown
-  fireEvent.click(sortingByElement);
+    render(
+        <MemoryRouter initialEntries={['/products/newest']}>
+            <Routes>
+                <Route path="/products/:sorting" element={<ProductsView />} />
+            </Routes>
+        </MemoryRouter>
+    );
 
-  // After the second click, the dropdown should be hidden
-  const categoryDropdownHidden = queryByText('All');
-  expect(categoryDropdownHidden).toBeNull();
+    // Initially, the dropdown is not visible
+    const sortingByElement = screen.getByText(/Sorting By/i);
+    const dropdown = screen.queryByText(/Newest/i);
+
+    expect(sortingByElement).toBeTruthy();
+    expect(dropdown).toBeNull(); // Dropdown should not be visible initially
+
+    // Click on "Sorting By" to toggle the dropdown
+    fireEvent.click(sortingByElement);
+
+    // After clicking, the dropdown should be visible
+    const visibleDropdown = screen.getByText(/Newest/i); // Adjust the text based on your dropdown content
+    expect(visibleDropdown).toBeTruthy();
 });

@@ -3,7 +3,7 @@ import BreadcrumbSection from '../sections/BreadcrumbSection'
 import ProductsDetailsSection from '../sections/ProductsDetailsSection'
 import { useParams } from 'react-router-dom';
 import { IProduct } from '../Interfaces/IProduct';
-import { fetchProductById } from '../helpers/ProductHandler';
+import { fetchProductById, getCartItemCount } from '../helpers/ProductHandler';
 import ReviewListComponent from '../components/ReviewListComponent';
 
 const ProductDetailsView = () => {  
@@ -17,20 +17,13 @@ const ProductDetailsView = () => {
         }
     };
 
-    //const getProduct = async () => {
-    //if(productId !== undefined){
-    //    const dbResult = await fetchProductById(productId);
-    //    setProduct(dbResult);
-    //}
-    //}
-
     useEffect(() => {
     getProduct()
     }, [productId]);
 
     return (
         <>
-            <BreadcrumbSection currentPage='Product Details' showCurrentPage={false} showHamburgerButton={true} showCartItem={true} />
+            <BreadcrumbSection currentPage='Product Details' showCurrentPage={false} showHamburgerButton={true} showCartItem={true} cartItemCount={getCartItemCount()} />
             {product && (
                 <>
                     <ProductsDetailsSection product={product} />

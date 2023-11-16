@@ -90,49 +90,39 @@ const ViewProfileSection = () => {
                     <h2>{profile.name}</h2>
                     <h5>{profile.email}</h5>
                 </div>
-                <div className='Fields-section'>
+                <div className='Fields-section container'>
                     <a className='field' href='/pageNotFound' id='order-history' data-testid='order-history'>
                         <div className='field-details'>
-                            <div className='icon-name'>
-                                <i className="fa-light fa-calendar"></i>
-                                <p>Order history</p>
-                            </div>
+                            <i className="fa-light fa-calendar"></i>
+                            <p>Order history</p>
                             <i id='right-arrow' className="fa-solid fa-chevron-right"></i>
                         </div>
                     </a>
                     <a className='field' href='/paymentMethodView' id='payment-method' data-testid='payment-method'>
                         <div className='field-details'>
-                            <div className='icon-name'>
-                                <i className="fa-light fa-credit-card"></i>
-                                <p>Payment method</p>
-                            </div>
+                            <i className="fa-light fa-credit-card"></i>
+                            <p>Payment method</p>
                             <i id='right-arrow' className="fa-solid fa-chevron-right"></i>
                         </div>
                     </a>
                     <a className='field' href='/myAddresses' id='my-address' data-testid='my-address'>
                         <div className='field-details'>
-                            <div className='icon-name'>
-                                <i className="fa-regular fa-location-dot"></i>
-                                <p>My address</p>
-                            </div>
+                            <i className="fa-regular fa-location-dot"></i>
+                            <p>My address</p>
                             <i id='right-arrow' className="fa-solid fa-chevron-right"></i>
                         </div>
                     </a>
                     <a className='field' href='pageNotFound' id='my-promocode' data-testid='my-promocode'>
                         <div className='field-details'>
-                            <div className='icon-name'>
-                                <i className="fa-regular fa-gift"></i>
-                                <p>My promocodes</p>
-                            </div>
+                            <i className="fa-regular fa-gift"></i>
+                            <p>My promocodes</p>
                             <i id='right-arrow' className="fa-solid fa-chevron-right"></i>
                         </div>
                     </a>
                     <a className='field' href='#' onClick={e => { showPopup() }} id='signout' data-testid='signout'>
                         <div className='field-details'>
-                            <div className='icon-name'>
-                                <i className="fa-regular fa-arrow-right-from-bracket"></i>
-                                <p>Sign out</p>
-                            </div>
+                            <i className="fa-regular fa-arrow-right-from-bracket"></i>
+                            <p>Sign out</p>
                             <i id='right-arrow' className="fa-solid fa-chevron-right"></i>
                         </div>
                     </a>

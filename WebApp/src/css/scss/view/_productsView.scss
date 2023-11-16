@@ -1,11 +1,11 @@
-.best-seller-filter {
+.products-filter {
     display: flex;
-    align-items: start;
+    align-items: center;
     justify-content: space-between;
+    padding-bottom: 20px;
 
     .slider {
         position: relative;
-        margin-left: 20px;
         font-size: 14px;
 
         .category-dropdown {
@@ -57,7 +57,6 @@
 
     .sorting-by {
         position: relative;
-        margin-right: 20px;
         font-size: 14px;
 
         .category-dropdown {
