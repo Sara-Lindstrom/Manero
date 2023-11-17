@@ -4,9 +4,10 @@ import { BrowserRouter } from 'react-router-dom';
 import EditProfileSection from '../sections/EditProfileSection';
 
 
+
 describe('EditProfileSection', () => {
     test('renders EditProfileSection component', () => {
-        render(<BrowserRouter><EditProfileSection/></BrowserRouter>);
+        render(<BrowserRouter><EditProfileSection addressId={0} token={''} userSignedIn={false}/></BrowserRouter>);
         
         // Kontrollera att texter "Name, Email, Phone Number and location" visas
         const element1 = screen.getByText(/NAME/i);
@@ -20,7 +21,7 @@ describe('EditProfileSection', () => {
     });
 
     test('User enters valid data', () => {
-        render(<BrowserRouter><EditProfileSection /></BrowserRouter>);
+        render(<BrowserRouter><EditProfileSection addressId={0} token={''} userSignedIn={false} /></BrowserRouter>);
         
         // Simulate user entering a valid data
          const nameInput = screen.getByLabelText('NEW NAME');
@@ -38,7 +39,7 @@ describe('EditProfileSection', () => {
     });
 
     test('Button functionality navigates to profile page', () => {
-        render(<BrowserRouter><EditProfileSection /></BrowserRouter>);
+        render(<BrowserRouter><EditProfileSection addressId={0} token={''} userSignedIn={false} /></BrowserRouter>);
         
         // Hitta "Save Chanes"-knappen och simulera ett klick
         const saveButton = screen.getByTestId('save-btn');
