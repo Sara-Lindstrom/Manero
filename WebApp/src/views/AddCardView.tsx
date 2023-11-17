@@ -9,7 +9,7 @@ const AddCardView: React.FC = () => {
 
     return (
         <>
-            <BreadcrumbSection currentPage='Add a new card' showBackButton={true} showCurrentPage={true} onNavigateBack={handleNavigateBack} />
+            <BreadcrumbSection currentPage='Add a new card' showBackButton={true} onNavigateBack={handleNavigateBack} showCurrentPage={true} />
             <AddCardSection />
         </>
     )

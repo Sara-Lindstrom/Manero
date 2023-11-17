@@ -2,3 +2,15 @@
     width: 100%;
     height: 330px;
 }
+.error-field {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+
+    .error-message {
+        color: red;
+        margin-bottom: 0;
+    }
+}
+
