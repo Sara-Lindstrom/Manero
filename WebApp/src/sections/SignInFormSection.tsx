@@ -3,6 +3,7 @@ import * as FormValidation from '../helpers/FormValidation'
 import { handleSigninSubmit, FormDataSignIn } from '../helpers/FormHandlers';
 import { NavigateFunction } from 'react-router-dom';
 
+// User can sign in if the user exists in the database
 type SignInProps = {
     navigate: NavigateFunction
 }

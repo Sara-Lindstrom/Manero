@@ -39,6 +39,7 @@ const VerifyPhoneNumberSection: React.FC<VerifyPhoneProps> = ({ navigate }:
             setPhoneNumberError(validationResult.error);
         }
     };
+
     return (
         <div className="container">
             <p className='page-titel'>We have sent you an SMS with a code to number +17 0123456789.</p>

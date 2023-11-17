@@ -1,6 +1,7 @@
 ﻿import { Link } from 'react-router-dom';
 import cartImg from '../Images/img_cart.png';
 
+// Display an empty cart
 const EmptyCartSection = () => {
 
     return (

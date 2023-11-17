@@ -6,6 +6,7 @@ import { submitReview } from '../helpers/ReviewHandler';
 interface SubmitReviewSectionProps {
     productId: string;
 }
+
 const SubmitReviewSection: React.FC<SubmitReviewSectionProps> = ({ productId }) => {
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState('');
@@ -18,7 +19,7 @@ const SubmitReviewSection: React.FC<SubmitReviewSectionProps> = ({ productId }) 
 
     const handleCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setComment(event.target.value);
-        setErrorMessage(''); 
+        setErrorMessage('');
     };
 
     // Add and save a review on the productID
@@ -28,7 +29,7 @@ const SubmitReviewSection: React.FC<SubmitReviewSectionProps> = ({ productId }) 
         } else {
             try {
                 await submitReview({ comment, rating, productId },
-                    () => navigate('/home'), 
+                    () => navigate('/home'),
                     () => setErrorMessage('There was a problem submitting your review.')
                 );
             } catch (error) {

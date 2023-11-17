@@ -11,7 +11,7 @@ interface Review {
 
 const AllReviewView: React.FC = () => {
     const { productId } = useParams<{ productId: string }>();
-    const [reviews, setReviews] = useState<Review[]>([]); 
+    const [reviews, setReviews] = useState<Review[]>([]);
     const navigate = useNavigate();
 
     useEffect(() => {

@@ -22,7 +22,6 @@ const BurgerMenu = () => {
             // redirect to tracking page
             navigate('/trackorder');
         }
-
     }
 
     return (

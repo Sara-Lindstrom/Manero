@@ -39,7 +39,7 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
                 setError('User not signed in. Please sign in to add an address.');
                 return;
             }
-    
+
             const response = await axios.post(
                 'https://localhost:7055/api/Addresses/AddAddress',
                 {
@@ -55,20 +55,20 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
                     },
                 }
             );
-    
+
             const newAddress = response.data;
-    
+
             onAddressAdded(newAddress);
-    
+
             setTitle('');
             setStreetName('');
             setCity('');
             setCountry('');
             setPostalCode('');
             setUseCurrentLocation(false);
-    
+
             navigate('/myAddresses');
-    
+
         } catch (error) {
             setError('Error saving address. Please try again later.');
         }
@@ -119,7 +119,7 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
                             }}
                         />
                     </div>
-                        <div className='error-field'>{titleError && <p className='error-message'>{titleError}</p>}</div>
+                    <div className='error-field'>{titleError && <p className='error-message'>{titleError}</p>}</div>
 
                     <div className='input-container'>
                         <p className='input-label'>STREET NAME</p>
@@ -130,9 +130,9 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
                                 setStreetName(e.target.value);
                                 validateInput(e.target.value, setStreetNameError);
                             }}
-                        /> 
+                        />
                     </div>
-                        <div className='error-field'>{streetNameError && <p className='error-message'>{streetNameError}</p>}</div>
+                    <div className='error-field'>{streetNameError && <p className='error-message'>{streetNameError}</p>}</div>
 
                     <div className='input-container'>
                         <p className='input-label'>CITY</p>
@@ -143,9 +143,9 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
                                 setCity(e.target.value);
                                 validateInput(e.target.value, setCityError);
                             }}
-                        /> 
+                        />
                     </div>
-                        <div className='error-field'>{cityError && <p className='error-message'>{cityError}</p>}</div>
+                    <div className='error-field'>{cityError && <p className='error-message'>{cityError}</p>}</div>
 
                     <div className='input-container'>
                         <p className='input-label'>COUNTRY</p>
@@ -158,33 +158,33 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
                             }}
                         />
                     </div>
-                    
+
                     <div className='error-field'>{countryError && <p className='error-message'>{countryError}</p>}</div>
 
-                            <div className='input-container'>
-                                <p className='input-label'>POSTAL CODE</p>
-                                <input
-                                className="input"
-                                value={postalCode}
-                                onChange={(e) => {
-                                    setPostalCode(e.target.value);
-                                    validatePostalCode(e.target.value); // Validate postal code on change
-                                }}
-                                />
-                                {postalCodeError && <p className='error-message'>{postalCodeError}</p>}
-                            </div>
-                        
-                        <div>
-                            <div className="remember-me">
+                    <div className='input-container'>
+                        <p className='input-label'>POSTAL CODE</p>
+                        <input
+                            className="input"
+                            value={postalCode}
+                            onChange={(e) => {
+                                setPostalCode(e.target.value);
+                                validatePostalCode(e.target.value); // Validate postal code on change
+                            }}
+                        />
+                        {postalCodeError && <p className='error-message'>{postalCodeError}</p>}
+                    </div>
+
+                    <div>
+                        <div className="remember-me">
                             <input
                                 type="checkbox"
                                 checked={useCurrentLocation}
                                 onChange={(e) => setUseCurrentLocation(e.target.checked)}
                             />
                             <label>Use my current location</label>
-                            </div>
                         </div>
-                        <div className='error-field'>{postalCodeError && <p className='error-message'>{postalCodeError}</p>}</div>
+                    </div>
+                    <div className='error-field'>{postalCodeError && <p className='error-message'>{postalCodeError}</p>}</div>
                     <button className="btn dark-btn form-btn" onClick={(e) => { e.preventDefault(); handleSaveAddress(); }}>
                         SAVE ADDRESS
                     </button>
@@ -195,4 +195,3 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
 };
 
 export default AddAddressSection;
-

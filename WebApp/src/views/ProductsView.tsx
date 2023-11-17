@@ -30,31 +30,31 @@ const ProductsView: React.FC = () => {
     const fetchNewestProductList = async () => {
         let allProductsFromDb = await fetchNewestProducts();
         setProducts(allProductsFromDb);
-    }  
-    
+    }
+
     const fetchByCategory = async () => {
-        if(selectedCategory == ""){
+        if (selectedCategory == "") {
             let allProductsFromDb = await fetchNewestProducts();
             setProducts(allProductsFromDb);
         }
-        else{
+        else {
             let productsFromDb = await fetchByCategoryTag(selectedCategory);
             setProducts(productsFromDb);
         }
     }
-    const fetchBestSelling = async () =>{
+    const fetchBestSelling = async () => {
         let productsFromDb = await fetchBestSellingProducts();
         setProducts(productsFromDb);
-    } 
+    }
 
     useEffect(() => {
-        if(sorting === "newest"){
+        if (sorting === "newest") {
             fetchNewestProductList();
         }
-        else if (sorting === "bestseller"){
+        else if (sorting === "bestseller") {
             fetchBestSelling()
         }
-        else{
+        else {
             fetchByCategory();
         }
     }, [selectedCategory]);
@@ -119,7 +119,6 @@ const ProductsView: React.FC = () => {
     return (
         <>
             <BreadcrumbSection currentPage="products" showBackButton={true} onNavigateBack={handleNavigateBack} showCartItem={true} cartItemCount={getCartItemCount()} />
-
             <div className='container products-filter'>
                 <div className="slider" onClick={toggleSliderDropdown}>
                     <i className="fa-solid fa-sliders"></i>
@@ -135,7 +134,7 @@ const ProductsView: React.FC = () => {
                                             >
                                                 {String(category.categoryName)}
                                             </li>
-                                    ))))}
+                                        ))))}
                             </ul>
                         </div>
                     )}
@@ -154,7 +153,7 @@ const ProductsView: React.FC = () => {
                                             >
                                                 {String(option)}
                                             </li>
-                                    ))))}
+                                        ))))}
                             </ul>
                         </div>
                     )}

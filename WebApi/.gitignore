@@ -1,5 +1,2 @@
 # Windows folder view settings
 **/obj/
-
-# Migration folder for the local db
-/Migrations/

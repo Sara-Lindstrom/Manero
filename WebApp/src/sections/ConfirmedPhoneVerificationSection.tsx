@@ -1,7 +1,7 @@
 import confirmUser from '../Images/confirmuser.png';
 import { useNavigate } from 'react-router-dom';
 
-// Confirmation page after successful phone verification
+// Display a confirmation page after successful phone verification
 const ConfirmedPhoneVerificationSection = () => {
     const navigate = useNavigate();
 

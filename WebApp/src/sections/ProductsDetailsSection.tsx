@@ -6,12 +6,20 @@ import { IColor } from '../Interfaces/IColor';
 import { ISize } from '../Interfaces/ISize';
 import { IImage } from '../Interfaces/IImage';
 import { Review, fetchReviewsByProduct } from '../helpers/ReviewHandler';
-
 interface IProductsDetailsSectionProps {
     product: IProduct;
+    addToWishlist?: (product: IProduct) => void;
+    addToCart?: (product: IProduct) => void;
 }
 
-const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ product }) => {
+const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ product, addToWishlist, addToCart }) => {
+    const [quantity, setQuantity] = useState(1);
+
+    const onAddToCartClicked = (e: React.MouseEvent) => {
+        e.preventDefault(); 
+        addToCart?.(product); // Call addToCart if it exists
+    };
+
     const [localProduct, setLocalProduct] = useState<IProduct | null>(null);
     const [colors, setColors] = useState<IColor[]>([]);
     const [sizes, setSizes] = useState<ISize[]>([]);
@@ -33,8 +41,8 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
             sum = sum + reviews[i].rating;
             number_of_reviews++;
         }
-
     }
+
     total_review = sum / number_of_reviews;
 
     const fullStars = Math.floor(total_review);
@@ -84,15 +92,6 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
 
         fetchData();
     }, [product.id]);
-
-    const addToCart = (product: IProduct) => {
-        setCart(prevCart => {
-            const updatedCart = { ...prevCart };
-            updatedCart[product.id] = (updatedCart[product.id] || 0) + 1;
-            sessionStorage.setItem('cartItems', JSON.stringify(updatedCart));
-            return updatedCart;
-        });
-    };
 
     const processSizes = (sizesForProduct: ISize[]) => {
         // Create an array to store size names based on their IDs
@@ -289,7 +288,7 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
                             <p>{product?.description}</p>
                         </div>
                         <div className='add-to-cart-btn'>
-                            <button className='dark-btn add-cart-btn' onClick={() => addToCart(product)}>+ ADD TO CART</button>
+                            <button className='dark-btn add-cart-btn' onClick={onAddToCartClicked}>+ ADD TO CART</button>
                         </div>
                     </section>
 
@@ -301,7 +300,7 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
                             <button type='button' className='increment' onClick={e => { incrementCounter() }}><span>+</span></button>
                         </div>
                         <div className='add-to-cart-btn'>
-                            <button className='dark-btn add-cart-btn'>+ ADD TO CART</button>
+                            <button className='dark-btn add-cart-btn' onClick={onAddToCartClicked}>+ ADD TO CART</button>
                         </div>
                     </div>
 
@@ -311,4 +310,4 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
     )
 }
 
-export default ProductsDetailsSection
+export default ProductsDetailsSection;
