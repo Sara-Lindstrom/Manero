@@ -22,4 +22,4 @@ const VerificationView: React.FC = () => {
     )
 }
 
-export default VerificationView
+export default VerificationView;

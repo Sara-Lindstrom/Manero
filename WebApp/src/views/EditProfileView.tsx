@@ -10,9 +10,6 @@ const EditProfileView: React.FC = () => {
     const [token, setToken] = useState<string>('');
     const [addresses, setAddresses] = useState<AddressData[]>([]);
     const [error, setError] = useState<string | null>(null);
-   
-
-
     const navigate = useNavigate();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -32,8 +29,6 @@ const EditProfileView: React.FC = () => {
         window.history.back();
     };
 
-
-
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
         if (storedToken) {
@@ -41,8 +36,8 @@ const EditProfileView: React.FC = () => {
             fetchUserId(storedToken)
                 .then((userId) => {
                     if (userId) {
-                        setUserId(userId);                   
-                            
+                        setUserId(userId);
+
                         // Both token and userId are available, so we can fetch user addresses
                         if (token) {
                             fetchUserAddresses(token)
@@ -54,9 +49,9 @@ const EditProfileView: React.FC = () => {
                                 .catch((error) => {
                                     console.error('Error fetching user addresses:', error);
                                     setError('Error fetching user addresses.');
-                                })   
+                                })
                         }
-                    } 
+                    }
                     else {
                         setError('User ID is empty or null.');
                     }
@@ -68,19 +63,14 @@ const EditProfileView: React.FC = () => {
             setError('Please sign in to see your addresses');
         }
     }, [token]);
-   
-
-    
 
     return (
 
         <>
             <BreadcrumbSection currentPage='Edit Profile' showBackButton={true} onNavigateBack={handleNavigateBack} />
             {addresses.length > 0 && isAuthenticated && (
-            <EditProfileSection key={addresses[0].id} addressId={addresses[0].id} token={token} userSignedIn={true} />
-)}
-
-
+                <EditProfileSection key={addresses[0].id} addressId={addresses[0].id} token={token} userSignedIn={true} />
+            )}
         </>
 
     )

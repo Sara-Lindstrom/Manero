@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ProductListSection from '../sections/ProductListSection';
-import HomepageShoecaseOffer from '../sections/HomepageShoecaseOffer';
+import HomepageShowcaseOffer from '../sections/HomepageShowcaseOffer';
 import { CardType, IProduct } from '../Interfaces/IProduct';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
 import HomePageCategoryNav from '../sections/HomePageCategoryNav';
@@ -54,7 +54,7 @@ const HomeView: React.FC = () => {
         <>
             <BreadcrumbSection cartItemCount={cartItemCountWhenClicked} showCartItem={true} currentPage="Home" showHamburgerButton={true} showBackButton={true} />
             <HomePageCategoryNav />
-            <HomepageShoecaseOffer />
+            <HomepageShowcaseOffer />
             <div className='product-showcase-section-container container'>
                 <section className='product-showcase-section'>
                     <div className='product-showcase-section-header'>
@@ -79,7 +79,7 @@ const HomeView: React.FC = () => {
                     <ProductListSection products={bestSellerProducts.slice(0, 3)} cardType={CardType.NormalCard} flexed={false} addToCart={addToCart} addToWishlist={addToWishlist} />
                 </section>
             </div>
-            <HomepageShoecaseOffer />
+            <HomepageShowcaseOffer />
             <IconsNavigationSection isAuthenticated={isAuthenticated} />
         </>
 

@@ -10,7 +10,6 @@ const ConfirmedPhoneVerificationView: React.FC = () => {
     return (
         <>
             <BreadcrumbSection currentPage="Account confirmed" showBackButton={false} onNavigateBack={handleNavigateBack} showCurrentPage={false} showCartItem={false} showHamburgerButton={false} />
-
             <ConfirmedPhoneVerificationSection />
         </>
     )

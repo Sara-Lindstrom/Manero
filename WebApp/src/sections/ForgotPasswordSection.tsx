@@ -3,6 +3,7 @@ import { ValidateEmail } from '../helpers/FormValidation';
 import { useNavigate } from 'react-router-dom';
 import { checkEmailExists } from '../helpers/FormHandlers';
 
+// Display a input field for email, if email address is valid the user can change its password
 const ForgotPasswordSection = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');

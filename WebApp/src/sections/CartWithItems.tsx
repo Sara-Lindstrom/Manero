@@ -73,4 +73,4 @@ const CartWithItems: React.FC<CartWithItemsProps> = ({ cartItems }) => {
     )
 }
 
-export default CartWithItems
+export default CartWithItems;

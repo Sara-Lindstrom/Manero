@@ -3,6 +3,7 @@ import * as FormValidation from '../helpers/FormValidation'
 import { handleSignupSubmit, FormData } from '../helpers/FormHandlers'
 import { NavigateFunction } from 'react-router-dom';
 
+// User can create a new user
 type SignUpFormProps = {
     navigate: NavigateFunction
 }
@@ -65,7 +66,6 @@ const SignUpFormSection: React.FC<SignUpFormProps> = ({ navigate }: SignUpFormPr
                             const validationResult = FormValidation.ValidateName(event.target.value);
                             setNameError(validationResult.error);
                         }} />
-                    {/* if input valid show tick else show ex */}
                     {nameError === "" ?
                         <div className='input-validation-icon'>
                             <i className="fa-solid fa-check"></i>
@@ -87,7 +87,6 @@ const SignUpFormSection: React.FC<SignUpFormProps> = ({ navigate }: SignUpFormPr
                             const validationResult = FormValidation.ValidateEmail(event.target.value);
                             setEmailError(validationResult.error);
                         }} />
-                    {/* if input valid show tick else show ex */}
                     {emailError === "" ?
                         <div className='input-validation-icon'>
                             <i className="fa-solid fa-check"></i>
@@ -110,7 +109,6 @@ const SignUpFormSection: React.FC<SignUpFormProps> = ({ navigate }: SignUpFormPr
                             const confirmValidationResult = FormValidation.ValidateConfirmPassword(event.target.value, confirmPassword);
                             setConfirmPasswordError(confirmValidationResult.error);
                         }} />
-                    {/* button for display of password text */}
                     <div className='input-validation-icon'>
                         <button type="button" className='invisible-btn' onClick={() => setPasswordVisible(!passwordVisible)}><i className={passwordVisible ? "fa-regular fa-eye" : "fa-regular fa-eye-slash"}></i></button>
                     </div>
@@ -125,7 +123,6 @@ const SignUpFormSection: React.FC<SignUpFormProps> = ({ navigate }: SignUpFormPr
                             const validationResult = FormValidation.ValidateConfirmPassword(password, event.target.value);
                             setConfirmPasswordError(validationResult.error);
                         }} />
-                    {/* button for display of confirm password text */}
                     <div className='input-validation-icon'>
                         <button type="button" className='invisible-btn' onClick={() => setPasswordConfirmVisible(!passwordConfirmVisible)}><i className={passwordConfirmVisible ? "fa-regular fa-eye" : "fa-regular fa-eye-slash"}></i></button>
                     </div>
