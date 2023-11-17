@@ -158,6 +158,29 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
                             }}
                         />
                     </div>
+                            <div className='input-container'>
+                                <p className='input-label'>POSTAL CODE</p>
+                                <input
+                                className="input"
+                                value={postalCode}
+                                onChange={(e) => {
+                                    setPostalCode(e.target.value);
+                                    validatePostalCode(e.target.value); // Validate postal code on change
+                                }}
+                                />
+                                {postalCodeError && <p className='error-message'>{postalCodeError}</p>}
+                            </div>
+                        <div className="actions-container">
+                        <div>
+                            <div className="remember-me">
+                            <input
+                                type="checkbox"
+                                checked={useCurrentLocation}
+                                onChange={(e) => setUseCurrentLocation(e.target.checked)}
+                            />
+                            <label>Use my current location</label>
+                            </div>
+                        </div>
                         <div className='error-field'>{countryError && <p className='error-message'>{countryError}</p>}</div>
                     
                     <div className='input-container'>
@@ -172,7 +195,7 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
                         />
                     </div>
                         <div className='error-field'>{postalCodeError && <p className='error-message'>{postalCodeError}</p>}</div>
-                    <button className="btn dark-btn form-btn" onClick={handleSaveAddress}>
+                    <button className="btn dark-btn form-btn" onClick={(e) => { e.preventDefault(); handleSaveAddress(); }}>
                         SAVE ADDRESS
                     </button>
                 </form>

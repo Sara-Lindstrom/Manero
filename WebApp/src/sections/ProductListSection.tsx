@@ -2,48 +2,33 @@
 import { IProduct, CardType as ICardType } from '../Interfaces/IProduct';
 import ProductCardComponent from '../components/ProductCardComponent';
 
-// A section that renders out product cards, can be reused in different views
+// A product list that renders out a product card, can be reused in different views. For specifics, see the ProductCardComponent
 interface ProductListSectionProps {
     products: IProduct[];
     cardType?: ICardType; 
     flexed?: boolean;
+    addToCart?: (product: IProduct) => void;
+    addToWishlist?: (product: IProduct) => void;
 }
 
-const ProductListSection: React.FC<ProductListSectionProps> = ({ products, cardType, flexed = true }) => {
-    const [cart, setCart] = useState<{ [key: string]: number }>({});
+const ProductListSection: React.FC<ProductListSectionProps> = ({ products, addToCart, addToWishlist, cardType, flexed = true }) => {
     const [wishlist, setWishlist] = useState<IProduct[]>([]);
-
-    const addToCart = (product: IProduct) => {
-        setCart((prevCart) => {
-            const updatedCart = { ...prevCart };
-            if (updatedCart[product.id]) {
-                updatedCart[product.id]++;
-            } else {
-                updatedCart[product.id] = 1;
-            }
-            return updatedCart;
-        });
-    };
-
-    const addToWishlist = (product: IProduct) => {
-        if (!wishlist.find((item) => item.name === product.name && item.size === product.size && item.color === product.color)) {
-            setWishlist([...wishlist, product]);
-        }
-    };
+    const [cart, setCart] = useState<IProduct[]>([]);
 
     return (
         <section className={flexed ? "product-display-grid" : ""}>
             {products ? (
                 products.map((product) => (
                     <ProductCardComponent
-                    key={product.id}
-                    product={product}
-                    cardType={cardType}
-                    addToCart={addToCart}
-                    addToWishlist={addToWishlist}
+                        key={product.id}
+                        product={product}
+                        cardType={cardType}
+                        addToCart={addToCart}
+                        addToWishlist={addToWishlist}
+                        showQuantityAdjustment={false}
                 />
             ))) : (
-                <p>No products were found.</p>
+                <span className="noReviews">No products were found.</span>
             )}
         </section>
     );

@@ -9,6 +9,15 @@ import { ITags } from '../Interfaces/ITags';
 
 const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Product';
 
+export const getCartItemCount = (): number => {
+    const existingCart = sessionStorage.getItem('cartItems');
+    if (existingCart) {
+        const cartItems: { [key: string]: number } = JSON.parse(existingCart);
+        return Object.values(cartItems).reduce((total: number, quantity: number) => total + quantity, 0);
+    }
+    return 0;
+};
+
 // Utility function to shuffle an array
 export const shuffleArray = <T>(array: T[]): T[] => {
     const shuffledArray = [...array];
@@ -18,10 +27,6 @@ export const shuffleArray = <T>(array: T[]): T[] => {
     }
     return shuffledArray;
 };
-
-
-
-// type Navigate = (path: string) => void;
  
 // Function to fetch best-selling products
 export const fetchByCategoryTag = async (categories : string, tags? : string | string[]): Promise<IProduct[]> => {
@@ -69,7 +74,6 @@ export const fetchAllCategories = async (): Promise<ICategories[]> => {
     }
 }
 
-
 export const fetchAllTags = async (category : string,) => {
     const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Product/GetCategoryTags';
     const params = new URLSearchParams();
@@ -84,7 +88,6 @@ export const fetchAllTags = async (category : string,) => {
         return [];
     }
 };
-
 
 export const fetchNewestProducts = async (): Promise<IProduct[]> => {
     const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Product/GetNewest';
@@ -111,6 +114,7 @@ export const fetchBestSellingProducts = async (): Promise<IProduct[]> => {
     }
 }
 
+//Function to fetch by Id
 export const fetchProductById = async ( productId: string ): Promise<IProduct> => {
     const API_URL = process.env.REACT_APP_API_URL || 'https://localhost:7055/api/Product/GetById';
     const params = { id: productId };  

@@ -4,22 +4,27 @@ import { BrowserRouter } from 'react-router-dom';
 import ViewProfileSection from '../sections/ViewProfileSection';
 
 
-// Needs to be updated since the ViewProfile is not reachable without accessing localStorage
-// Dont forget to remove the .skip after "describe" to include the test when its fixed.
+jest.mock('../helpers/FormHandlers', () => ({
+    handleSignOut: jest.fn(),
+}));
+  
+const mockedUsedNavigate = jest.fn();
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => mockedUsedNavigate,
+}));
 
-describe.skip('ViewProfileSection', () => {
-    test('Find the links and simulate a click', () => {
-        render(<BrowserRouter><ViewProfileSection /></BrowserRouter>);
+test('Find the links and simulate a click', () => {
+    render(<BrowserRouter><ViewProfileSection /></BrowserRouter>);
 
-        const orderHistoryLink = document.getElementById('order-history') as HTMLElement;
-        fireEvent.click(orderHistoryLink);
-        const paymentMethodLink = document.getElementById('payment-method') as HTMLElement;
-        fireEvent.click(paymentMethodLink);
-        const myAddressLink = document.getElementById('my-address') as HTMLElement;
-        fireEvent.click(myAddressLink);
-        const myPromocodeLink = document.getElementById('my-promocode') as HTMLElement;
-        fireEvent.click(myPromocodeLink);
-        const SignOutLink = document.getElementById('signout') as HTMLElement;
-        fireEvent.click(SignOutLink);
-    })
+    const orderHistoryLink = screen.getByTestId('order-history') as HTMLElement;
+    fireEvent.click(orderHistoryLink);
+    const paymentMethodLink = screen.getByTestId('payment-method') as HTMLElement;
+    fireEvent.click(paymentMethodLink);
+    const myAddressLink = screen.getByTestId('my-address') as HTMLElement;
+    fireEvent.click(myAddressLink);
+    const myPromocodeLink = screen.getByTestId('my-promocode') as HTMLElement;
+    fireEvent.click(myPromocodeLink);
+    const SignOutLink = screen.getByTestId('signout') as HTMLElement;
+    fireEvent.click(SignOutLink);        
 })

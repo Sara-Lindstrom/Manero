@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { IProduct } from '../Interfaces/IProduct';
 import { fetchProductById, fetchColorsForProduct, fetchSizesForProduct, fetchImagesForProduct, shuffleArray } from '../helpers/ProductHandler';
 import { IColor } from '../Interfaces/IColor';
 import { ISize } from '../Interfaces/ISize';
 import { IImage } from '../Interfaces/IImage';
-import { fetchUserId } from '../helpers/AddressHandler';
-import { Review, fetchReviewsForProduct } from '../helpers/TestReviewHelper';
+import { Review, fetchReviewsByProduct } from '../helpers/ReviewHandler';
 
 interface IProductsDetailsSectionProps {
     product: IProduct;
@@ -17,18 +17,45 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
     const [sizes, setSizes] = useState<ISize[]>([]);
     const [images, setImages] = useState<IImage[]>([]);
     const [reviews, setReviews] = useState<Review[]>([]);
-    const [displayedReviews, setDisplayedReviews] = useState<JSX.Element[]>([]);
     const [sizeArray, setSizeArray] = useState<string[]>([]);
     const [activeSize, setActiveSize] = useState<ISize | null>(null);
     const [activeColor, setActiveColor] = useState<IColor | null>(null);
     const [counter, setCounter] = useState(0);
-
-    let review_array: JSX.Element[] = [];
+    const [cart, setCart] = useState<{ [key: string]: number }>({});
 
     // Get product's total review
     let sum = 0;
-    let number_of_reviews = 0;
+    let number_of_reviews = 0
     let total_review = 0;
+    let review_array = [];
+    for (let i = 0; i < reviews.length; i++) {
+        if (product.id == reviews[i].productId) {
+            sum = sum + reviews[i].rating;
+            number_of_reviews++;
+        }
+
+    }
+    total_review = sum / number_of_reviews;
+
+    const fullStars = Math.floor(total_review);
+    const halfStar = Math.ceil(total_review - fullStars);
+    const emptyStars = 5 - fullStars - halfStar;
+
+    let stars = 0;
+    for (let i = 0; i < fullStars; i++) {
+        review_array[stars] = <i className="fa-solid fa-star"></i>
+        stars++;
+    }
+
+    for (let i = 0; i < halfStar; i++) {
+        review_array[stars] = <i className="fa-regular fa-star-half-stroke"></i>
+        stars++;
+    }
+
+    for (let i = 0; i < emptyStars; i++) {
+        review_array[stars] = <i className="fa-regular fa-star"></i>
+        stars++;
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -41,17 +68,15 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
                 ]);
 
                 setLocalProduct(fetchedProduct);
-                setSizes(fetchedSizes); 
+                setSizes(fetchedSizes);
                 setColors(fetchedColors);
                 setImages(fetchedImages);
 
                 processSizes(fetchedSizes);
 
-                const productReviews = await fetchReviewsForProduct(product.id);
+                const productReviews = await fetchReviewsByProduct(product.id);
                 setReviews(productReviews);
 
-                // Display 2 random reviews of the product
-                fetchAndDisplayReviews();
             } catch (error) {
                 console.error('Error fetching product details:', error);
             }
@@ -59,6 +84,15 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
 
         fetchData();
     }, [product.id]);
+
+    const addToCart = (product: IProduct) => {
+        setCart(prevCart => {
+            const updatedCart = { ...prevCart };
+            updatedCart[product.id] = (updatedCart[product.id] || 0) + 1;
+            sessionStorage.setItem('cartItems', JSON.stringify(updatedCart));
+            return updatedCart;
+        });
+    };
 
     const processSizes = (sizesForProduct: ISize[]) => {
         // Create an array to store size names based on their IDs
@@ -72,10 +106,6 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
         // Update the state with the processed sizes
         setSizeArray(sizeArray);
     };
-
-    useEffect(() => {
-        fetchAndDisplayReviews();
-    }, [product.id]);
 
     //(Add to whishlist) button
     let isAddedToWishlist = false;
@@ -136,93 +166,9 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
         setActiveSize((prevSize) => (prevSize === selectedSize ? null : selectedSize));
     }
 
-    function activeClickColor(clickedColor: IColor) {
-        setActiveColor((prevColor) => (prevColor?.colorId === clickedColor.colorId ? null : clickedColor));
+    function activeClickColor(selectedColor: IColor) {
+        setActiveColor((prevColor) => (prevColor === selectedColor ? null : selectedColor));
     }
-
-    const fetchAndDisplayReviews = async () => {
-        try {
-            const allReviews = await fetchReviewsForProduct(product.id);
-
-            const shuffledReviews = shuffleArray(allReviews);
-
-            const reviewsToDisplay = await Promise.all(
-                shuffledReviews.slice(0, 2).map(async (randomReview, index) => {
-                    try {
-                        const userData = await fetchUserId(randomReview.userId) as { name: string } | null;
-
-                        if (userData) {
-                            const filledStars = Array.from({ length: randomReview.rating }, (_, i) => (
-                                <i key={i} className="fas fa-star rating"></i>
-                            ));
-
-                            const emptyStars = Array.from({ length: 5 - randomReview.rating }, (_, i) => (
-                                <i key={i} className="far fa-star rating"></i>
-                            ));
-
-                            return (
-                                <div className='review' key={index}>
-                                    <div className='user-img'>
-                                        <img src="https://www.wilsoncenter.org/sites/default/files/media/images/person/james-person-1.jpg" alt={userData.name} />
-                                    </div>
-                                    <div className='display-review'>
-                                        <div className='review-header'>
-                                            <div className='user-name'>
-                                                <p>{userData.name}</p>
-                                                <p className='date'>{randomReview.date}</p>
-                                            </div>
-                                            <div className='review-stars'>
-                                                {filledStars}{emptyStars}
-                                            </div>
-                                        </div>
-                                        <div className='review-content'>
-                                            {randomReview.comment}
-                                        </div>
-                                    </div>
-                                </div>
-                            );
-                        } else {
-                            return (
-                                <div className='review' key={index}>
-                                    <div className='user-img'>
-                                        <img src={'path-to-default-image'} alt={'Default User'} />
-                                    </div>
-                                    <div className='display-review'>
-                                        <div className='review-header'>
-                                            <div className='user-name'>
-                                                <p>Default User</p>
-                                                <p className='date'>{randomReview.date}</p>
-                                            </div>
-                                            <div className='review-stars'>
-                                                {Array.from({ length: randomReview.rating }, (_, i) => (
-                                                    <i key={i} className="fas fa-star rating"></i>
-                                                ))}
-                                                {Array.from({ length: 5 - randomReview.rating }, (_, i) => (
-                                                    <i key={i} className="far fa-star rating"></i>
-                                                ))}
-                                            </div>
-                                        </div>
-                                        <div className='review-content'>
-                                            {randomReview.comment}
-                                        </div>
-                                    </div>
-                                </div>
-                            );
-                        }
-                    } catch (error) {
-                        console.error('Error fetching user data:', error);
-                        return null;
-                    }
-                })
-            );
-
-            setDisplayedReviews(reviewsToDisplay.filter(review => review !== null) as JSX.Element[]);
-        } catch (error) {
-            console.error('Error fetching reviews:', error);
-            setDisplayedReviews([]);
-        }
-    };
-
 
     //Find if the price is discounted
     let current_price;
@@ -242,18 +188,19 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
         <>
             <section className='product-details-section'>
                 <div className='container'>
-
                     <section className='details-section-widescreen'>
                         <div className='details'>
                             <div className='product-name'>
                                 <h2>{product?.name}</h2>
                                 <button type='button' title="display-wishlist" onClick={e => { addWishList() }}><i className="fa-solid fa-heart" id='wishlist-btn'></i></button>
                             </div>
+
                             <div className='review-section-top'>
-                                <a href='/allproductreview'>{review_array} {"(" + number_of_reviews + ")"} </a>
+                                <Link to={`/leaveAReview/${product.id}`}>{review_array} {"(" + number_of_reviews + ")"}</Link>
                             </div>
                         </div>
                     </section>
+
                     <section className="image-section">
                         <div className='icons'>
                             {img}
@@ -275,6 +222,7 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
                             {dotButtons}
                         </div>
                     </section>
+
                     <div className='description-section-widescreen'>
                         <h2>Decription</h2>
                         <p>{product?.description}</p>
@@ -287,7 +235,7 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
                             </div>
                         </div>
                         <div className='product-total-review'>
-                            <a href='/allproductreview'>{review_array} {"(" + number_of_reviews + ")"} </a>
+                            <Link to={`/leaveAReview/${product.id}`}>{review_array} {"(" + number_of_reviews + ")"}</Link>
                         </div>
                         <div className='price-section'>
                             <div className='price'>
@@ -299,6 +247,7 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
                                 <button type='button' className='increment' onClick={e => { incrementCounter() }}><span>+</span></button>
                             </div>
                         </div>
+
                         <div className='size-section'>
                             <p>Size</p>
                             <div className='sizes' id='sizes'>
@@ -340,16 +289,7 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
                             <p>{product?.description}</p>
                         </div>
                         <div className='add-to-cart-btn'>
-                            <button className='dark-btn add-cart-btn'>+ ADD TO CART</button>
-                        </div>
-                    </section>
-                    <section className='review-section'>
-                        <div className='view-all-reviews'>
-                            <h2>Reviews ({reviews.length})</h2>
-                            <a href='allproductreview'>view all <i className="fa-solid fa-chevron-right"></i></a>
-                        </div>
-                        <div className='reviews'>
-                            {displayedReviews}
+                            <button className='dark-btn add-cart-btn' onClick={() => addToCart(product)}>+ ADD TO CART</button>
                         </div>
                     </section>
 
@@ -364,16 +304,6 @@ const ProductsDetailsSection: React.FC<IProductsDetailsSectionProps> = ({ produc
                             <button className='dark-btn add-cart-btn'>+ ADD TO CART</button>
                         </div>
                     </div>
-
-                    <section className='review-section-widescreen'>
-                        <div className='view-all-reviews'>
-                            <h2>Reviews ({reviews.length})</h2>
-                            <a href='allproductreview'>view all <i className="fa-solid fa-chevron-right"></i></a>
-                        </div>
-                        <div className='reviews'>
-                            {displayedReviews}
-                        </div>
-                    </section>
 
                 </div>
             </section>

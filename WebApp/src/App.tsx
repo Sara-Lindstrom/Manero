@@ -1,14 +1,13 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './css/Style.min.css';
 import AddCardView from './views/AddCardView';
-import BestSellersView from './views/BestSellersView';
+import ProductsView from './views/ProductsView';
 import CategoryView from './views/CategoryView';
 import ChangePasswordView from './views/ChangePasswordView';
 import ConfirmedPhoneVerificationView from './views/ConfirmedPhoneVerificationView';
 import EditProfileView from './views/EditProfileView';
 import ForgotPasswordView from './views/ForgotPasswordView';
 import HomeView from './views/HomeView';
-import LeaveAReviewView from './views/LeaveAReviewView';
 import MyAddresses from './views/MyAddresses';
 import OnboardingView from './views/OnboardingView';
 import PaymentMethodView from './views/PaymentMethodView';
@@ -21,7 +20,9 @@ import ViewProfile from './views/ViewProfileView';
 import AddNewAddressView from './views/AddNewAddressView';
 import PageNotFound from './views/PageNotFound';
 import ProductDetailsView from './views/ProductDetailsView';
-import TestLeaveAReviewView from './views/TestLeaveAReviewView';
+import CartView from './views/CartView';
+import AllReviewView from './views/AllReviewsView';
+import SubmitReviewView from './views/SubmitReviewView';
 
 function App() {
 
@@ -33,13 +34,12 @@ function App() {
                 <Route path='/activate' element={<VerificationView />} />
                 <Route path='/addCardView' element={<AddCardView />} />
                 <Route path='/addNewAddress' element={<AddNewAddressView />} />
-                <Route path='/products/:sorting' element={<BestSellersView />} />
+                <Route path='/products/:sorting' element={<ProductsView />} />
                 <Route path='/category' element={<CategoryView />} />
                 <Route path='/changePassword' element={<ChangePasswordView />} />
                 <Route path='/editProfile' element={<EditProfileView />} />
                 <Route path='/forgotPassword' element={<ForgotPasswordView />} />
                 <Route path='/home' element={<HomeView />} />
-                <Route path='/leaveAReview' element={<LeaveAReviewView />} />
                 <Route path='/myAddresses' element={<MyAddresses />} />
                 <Route path='/pageNotFound' element={<PageNotFound />} />
                 <Route path='/paymentMethodView' element={<PaymentMethodView />} />
@@ -49,7 +49,9 @@ function App() {
                 <Route path='/signup' element={<SignUpView />} />
                 <Route path='/verifyPhone' element={<VerifyPhoneNumberView />} />
                 <Route path='/viewProfile' element={<ViewProfile />} />
-                <Route path='/testleaveAReview' element={<TestLeaveAReviewView />} />
+                <Route path='/cart' element={<CartView />} />
+                <Route path="/product/:productId/all-reviews" element={<AllReviewView />} />
+                <Route path='/leaveAReview/:productId' element={<SubmitReviewView />} />
             </Routes>
         </BrowserRouter>
 

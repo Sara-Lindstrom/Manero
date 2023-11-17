@@ -1,22 +1,22 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom';
+import React, { useEffect } from 'react'
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import logo from '../Images/logo.svg'
 import SearchField from '../components/SearchField';
 import BurgerMenuSection from './BurgerMenuSection';
+import { getCartItemCount } from '../helpers/ProductHandler';
 interface IBreadcrumbProps {
 
     showBackButton?: boolean; // show backbutton
     onNavigateBack?: () => void; //method for going back
     showHamburgerButton?: boolean; // show hamburgerbutton
-
     currentPage: string // current page string 
     showCurrentPage?: boolean; // show current page
     showSearchField?: boolean; // show search field
-
-    showCartItem?: boolean; // show cart
+    cartItemCount?: number;
+    showCartItem?: boolean; // If we want to hide the CartItem
 }
 
-const BreadcrumbSection: React.FC<IBreadcrumbProps> = ({ currentPage, showBackButton, onNavigateBack, showCartItem, showCurrentPage, showSearchField, showHamburgerButton }) => {
+const BreadcrumbSection: React.FC<IBreadcrumbProps> = ({ currentPage, showBackButton, onNavigateBack, showCartItem, showCurrentPage, showSearchField, showHamburgerButton, cartItemCount }) => {
     return (
         <section className='breadcrumb'>
             <div className='container'>
@@ -50,18 +50,18 @@ const BreadcrumbSection: React.FC<IBreadcrumbProps> = ({ currentPage, showBackBu
                         )}
                     </div>
 
-
                     <div className='third-column'>
                         <li className="cart">
                             {showCartItem ? (
-                                <NavLink to={'/pageNotFound'}>
-                                    <span className="translate-middle badge rounded-pill">1</span>
+                                <NavLink to={'/cart'}>
+                                    <span className="translate-middle badge rounded-pill">
+                                        {String(getCartItemCount())}
+                                    </span>
                                     <i className="fa-regular fa-bag-shopping"></i>
                                 </NavLink>
                             ) : null}
                         </li>
                     </div>
-
                 </ul>
             </div>
         </section>
