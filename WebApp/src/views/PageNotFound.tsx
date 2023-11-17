@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import BreadcrumbSection from '../sections/BreadcrumbSection';
 import portalparrot from '../Images/portalparrot.gif';
 
+// If page is not found display this page
 const PageNotFound = () => {
     const handleNavigateBack = () => {
         window.history.back();

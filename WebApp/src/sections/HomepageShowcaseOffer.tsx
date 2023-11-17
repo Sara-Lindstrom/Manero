@@ -1,4 +1,4 @@
-const HomepageShoecaseOffer = () => {
+const HomepageShowcaseOffer = () => {
     return (
         <section className='home-page-showcase'>
             <div className='container showcase-offers'>
@@ -9,4 +9,4 @@ const HomepageShoecaseOffer = () => {
     )
 }
 
-export default HomepageShoecaseOffer;
+export default HomepageShowcaseOffer;

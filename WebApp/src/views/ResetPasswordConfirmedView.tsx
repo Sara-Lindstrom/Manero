@@ -10,7 +10,6 @@ const ResetPasswordConfirmedView: React.FC = () => {
     return (
         <>
             <BreadcrumbSection currentPage="Forgot Password" showBackButton={false} onNavigateBack={handleNavigateBack} showCurrentPage={false} showCartItem={false} showHamburgerButton={false} />
-
             <ResetPasswordConfirmedSection />
         </>
     )

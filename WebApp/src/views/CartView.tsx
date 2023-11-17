@@ -74,4 +74,4 @@ const CartView: React.FC = () => {
     )
 }
 
-export default CartView
+export default CartView;

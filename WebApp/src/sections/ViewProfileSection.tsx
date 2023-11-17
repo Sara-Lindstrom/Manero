@@ -41,7 +41,6 @@ const ViewProfileSection = () => {
         );
         closePopup();
     }
-
     function showPopup() {
         const popup = document.getElementById("popup");
         const img = document.getElementById("photo-section");
@@ -58,7 +57,6 @@ const ViewProfileSection = () => {
         field4?.classList.add("opened-popup");
         field5?.classList.add("opened-popup");
     }
-
     function closePopup() {
         const popup = document.getElementById("popup");
         const img = document.getElementById("photo-section");
@@ -128,7 +126,6 @@ const ViewProfileSection = () => {
                     </a>
                 </div>
             </div>
-
             <div className='modal-section' id='popup'>
                 <div className='container'>
                     <div className='content'>

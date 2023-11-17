@@ -2,11 +2,11 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-import HomepageShoecaseOffer from '../sections/HomepageShoecaseOffer';
+import HomepageShowcaseOffer from '../sections/HomepageShowcaseOffer';
 
-describe('HomepageShoecaseOffer', () => {
+describe('HomepageShowcaseOffer', () => {
   it('visar knappen "SHOP NOW" och reagerar på klick', () => {
-    render(<HomepageShoecaseOffer />);
+    render(<HomepageShowcaseOffer />);
     
     const button = screen.getByText('SHOP NOW');
     

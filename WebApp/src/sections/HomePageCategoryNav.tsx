@@ -11,18 +11,17 @@ const HomePageCategoryNav = () => {
     }
 
     useEffect(() => {
-      getAllCategories()
+        getAllCategories()
     }, [])
-    
 
     return (
         <section className='categorynav'>
             <div className='container scrollsection'>
                 <div className="scrollmenu">
-                {categories!.length >= 1 && (
-                categories!.map((category) => (
-                    <a href={`/category#${category.categoryName}`} key={category.categoryID} className='home-nav-text'><img className='HomepageCategoryImage' src={homepageCategoryImage} alt='CategoryImage' />{category.categoryName.toUpperCase()}</a>
-                )))}
+                    {categories!.length >= 1 && (
+                        categories!.map((category) => (
+                            <a href={`/category#${category.categoryName}`} key={category.categoryID} className='home-nav-text'><img className='HomepageCategoryImage' src={homepageCategoryImage} alt='CategoryImage' />{category.categoryName.toUpperCase()}</a>
+                        )))}
                 </div>
             </div>
         </section>

@@ -6,6 +6,7 @@ const ChangePasswordView: React.FC = () => {
     const handleNavigateBack = () => {
         window.history.back();
     };
+
     return (
         <>
             <BreadcrumbSection currentPage="Reset password" showBackButton={true} onNavigateBack={handleNavigateBack} showCurrentPage={true} />

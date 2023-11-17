@@ -35,7 +35,7 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
                 setError('User not signed in. Please sign in to add an address.');
                 return;
             }
-    
+
             const response = await axios.post(
                 'https://localhost:7055/api/Addresses/AddAddress',
                 {
@@ -51,13 +51,13 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
                     },
                 }
             );
-    
+
             // Assuming your API returns the newly added address
             const newAddress = response.data;
-    
+
             // Call the callback function passed from the parent component to update the list of addresses after adding a new one
             onAddressAdded(newAddress);
-    
+
             // Clear the form fields after successfully adding the address
             setTitle('');
             setStreetName('');
@@ -65,10 +65,10 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
             setCountry('');
             setPostalCode('');
             setUseCurrentLocation(false);
-    
+
             // Navigate to '/MyAddresses' after successful addition
             navigate('/myAddresses');
-    
+
         } catch (error) {
             setError('Error saving address. Please try again later.');
         }
@@ -89,7 +89,7 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
         <>
             <div className='container'>
                 <iframe
-                    className="custom-map-iframe" 
+                    className="custom-map-iframe"
                     title="OpenStreetMap"
                     frameBorder="0"
                     scrolling="no"
@@ -131,27 +131,27 @@ const AddAddressSection: React.FC<AddAddressSectionProps> = ({ onAddressAdded })
                             onChange={(e) => setCountry(e.target.value)}
                         />
                     </div>
-                            <div className='input-container'>
-                                <p className='input-label'>POSTAL CODE</p>
-                                <input
-                                className="input"
-                                value={postalCode}
-                                onChange={(e) => {
-                                    setPostalCode(e.target.value);
-                                    validatePostalCode(e.target.value); // Validate postal code on change
-                                }}
-                                />
-                                {postalCodeError && <p className='error-message'>{postalCodeError}</p>}
-                            </div>
-                        <div className="actions-container">
+                    <div className='input-container'>
+                        <p className='input-label'>POSTAL CODE</p>
+                        <input
+                            className="input"
+                            value={postalCode}
+                            onChange={(e) => {
+                                setPostalCode(e.target.value);
+                                validatePostalCode(e.target.value); // Validate postal code on change
+                            }}
+                        />
+                        {postalCodeError && <p className='error-message'>{postalCodeError}</p>}
+                    </div>
+                    <div className="actions-container">
                         <div>
                             <div className="remember-me">
-                            <input
-                                type="checkbox"
-                                checked={useCurrentLocation}
-                                onChange={(e) => setUseCurrentLocation(e.target.checked)}
-                            />
-                            <label>Use my current location</label>
+                                <input
+                                    type="checkbox"
+                                    checked={useCurrentLocation}
+                                    onChange={(e) => setUseCurrentLocation(e.target.checked)}
+                                />
+                                <label>Use my current location</label>
                             </div>
                         </div>
                     </div>

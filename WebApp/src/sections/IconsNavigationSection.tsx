@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-
 interface IconsNavigationSectionProps {
     isAuthenticated: boolean;
 }

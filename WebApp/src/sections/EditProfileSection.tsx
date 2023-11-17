@@ -3,16 +3,14 @@ import * as FormValidation from '../helpers/FormValidation';
 import { fetchProfileData, handleUpdateProfile } from '../helpers/FormHandlers';
 import { fetchAddressData, AddressData } from '../helpers/AddressHandler';
 
-
-
+// Displays and make it possible for the user to edit its profile
 type AddressComponentProps = {
     addressId: number
     token: string;
     userSignedIn: boolean;
 };
 
-
-const EditProfileSection: React.FC <AddressComponentProps> = ({ addressId, token, userSignedIn }) => {
+const EditProfileSection: React.FC<AddressComponentProps> = ({ addressId, token, userSignedIn }) => {
 
     //useStates for setting input values both for validation and populate new User
     const [name, setName] = useState("");
@@ -28,7 +26,6 @@ const EditProfileSection: React.FC <AddressComponentProps> = ({ addressId, token
     const [emailError, setEmailError] = useState('');
     const [phoneNumberError, setPhoneNumberError] = useState('');
     const [locationError, setLocationError] = useState('');
-    
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -44,10 +41,9 @@ const EditProfileSection: React.FC <AddressComponentProps> = ({ addressId, token
                 console.error('Error fetching profile data:', error);
             });
         }
-        
+
     }, []);
 
-    
     useEffect(() => {
         const fetchData = async () => {
             if (!userSignedIn) {
@@ -79,8 +75,6 @@ const EditProfileSection: React.FC <AddressComponentProps> = ({ addressId, token
     if (!localAddress) {
         return <div>Address not found.</div>;
     }
-    
-    
 
     // Validates form when user clicks submit and sends inputs to db
     const ValidateOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -113,7 +107,6 @@ const EditProfileSection: React.FC <AddressComponentProps> = ({ addressId, token
 
         }
     };
-
     function convertFile(files: FileList | null) {
         if (files) {
             const fileRef = files[0] || ""
@@ -234,10 +227,10 @@ const EditProfileSection: React.FC <AddressComponentProps> = ({ addressId, token
                 </div>
                 <p className='input-error'>{locationError}</p>
 
-      <button className='btn dark-btn form-btn' data-testid='save-btn' type='submit'>SAVE CHANGES</button>
-    </form>
-</div>
-  )
+                <button className='btn dark-btn form-btn' data-testid='save-btn' type='submit'>SAVE CHANGES</button>
+            </form>
+        </div>
+    )
 }
 
 export default EditProfileSection;

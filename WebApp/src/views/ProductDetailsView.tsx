@@ -6,7 +6,7 @@ import { IProduct } from '../Interfaces/IProduct';
 import { fetchProductById, getCartItemCount } from '../helpers/ProductHandler';
 import ReviewListComponent from '../components/ReviewListComponent';
 
-const ProductDetailsView = () => {  
+const ProductDetailsView = () => {
     const { productId } = useParams<{ productId?: string }>();
     const [product, setProduct] = useState<IProduct>();
 
@@ -18,16 +18,20 @@ const ProductDetailsView = () => {
     };
 
     useEffect(() => {
-    getProduct()
+        getProduct()
     }, [productId]);
+
+    const handleNavigateBack = () => {
+        window.history.back();
+    };
+
 
     return (
         <>
-            <BreadcrumbSection currentPage='Product Details' showCurrentPage={false} showHamburgerButton={true} showCartItem={true} cartItemCount={getCartItemCount()} />
+            <BreadcrumbSection currentPage='Product Details' showCurrentPage={false} showHamburgerButton={false} showBackButton={true} onNavigateBack={handleNavigateBack} showCartItem={true} cartItemCount={getCartItemCount()} />
             {product && (
                 <>
                     <ProductsDetailsSection product={product} />
-                    {/* Check if productId is not undefined before rendering ReviewListComponent */}
                     {productId && <ReviewListComponent productId={productId} />}
                 </>
             )}

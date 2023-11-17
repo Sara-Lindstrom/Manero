@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { handleResetPassword } from '../helpers/FormHandlers';
 import { ValidatePassword, ValidateConfirmPassword } from '../helpers/FormValidation';
 
+// User can change its password
 const ChangePasswordSection = () => {
     const location = useLocation();
     const { email } = location.state || {};

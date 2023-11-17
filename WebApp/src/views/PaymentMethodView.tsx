@@ -8,8 +8,6 @@ const paymentMethodView: React.FC = () => {
         window.history.back();
     };
 
-    // state true or false on showBackbutton
-
     return (
         <>
             <BreadcrumbSection currentPage='Payment Method' showBackButton={true} onNavigateBack={handleNavigateBack} showCurrentPage={true} />

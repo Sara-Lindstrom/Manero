@@ -54,7 +54,6 @@ function App() {
                 <Route path='/leaveAReview/:productId' element={<SubmitReviewView />} />
             </Routes>
         </BrowserRouter>
-
     );
 };
 
