@@ -34,7 +34,7 @@ const AddNewAddressView: React.FC = () => {
 
     return (
         <>
-            <BreadcrumbSection currentPage='Add a new address' showBackButton={true} onNavigateBack={handleNavigateBack} />
+            <BreadcrumbSection currentPage='Add a new address' showBackButton={true} onNavigateBack={handleNavigateBack} showCurrentPage={true}/>
             <AddAddressSection  {...addAddressSectionProps} />
         </>
     )
